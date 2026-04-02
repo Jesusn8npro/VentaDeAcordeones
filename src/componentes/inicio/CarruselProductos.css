@@ -1,0 +1,84 @@
+/*
+  ================================================================================
+  CARRUSEL DE PRODUCTOS - REFACTORIZADO PARA ESTABILIDAD
+  ================================================================================
+  OBJETIVO: Mostrar un número de columnas estricto y predecible en cada
+            tamaño de pantalla para evitar desbordamientos.
+
+  LÓGICA:
+  - Se usa CSS Grid con `grid-auto-flow: column` para crear el layout horizontal.
+  - `grid-auto-columns` define el ancho de cada item. La fórmula es clave:
+    `calc((100% - (ESPACIOS * TAMAÑO_GAP)) / NUMERO_DE_ITEMS)`
+    Esto asegura que los items ocupen el 100% del contenedor visible.
+  - El contenedor principal (`.carrusel-productos-container`) tiene `overflow: hidden`
+    para cortar cualquier contenido que se desborde, aunque la nueva lógica
+    debería prevenirlo.
+  - El contenedor de scroll (`.carrusel-scroll-container`) tiene `overflow-x: auto`
+    para permitir el desplazamiento del contenido que no es visible.
+*/
+
+.carrusel-productos-container {
+  width: 100%;
+  overflow: hidden; /* CRÍTICO: Previene el desbordamiento del layout general */
+  position: relative;
+}
+
+.carrusel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem; /* Pequeño padding para que el título no pegue a los bordes */
+}
+
+.carrusel-navigation {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carrusel-scroll-container {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Oculta la barra de scroll en Firefox */
+  -ms-overflow-style: none; /* Oculta la barra de scroll en IE/Edge */
+  padding-bottom: 1rem; /* Espacio para que la sombra de las tarjetas no se corte */
+}
+
+.carrusel-scroll-container::-webkit-scrollbar {
+  display: none; /* Oculta la barra de scroll en Chrome/Safari */
+}
+
+.carrusel-item {
+  scroll-snap-align: start; /* Alinea los items al inicio del contenedor al hacer scroll-snap */
+}
+
+/* ==============================================================================
+   MEDIA QUERIES: Control del número de columnas
+   ============================================================================== */
+
+/* Escritorio (Default): 3 Columnas */
+.carrusel-scroll-container {
+  /* (100% del contenedor - 2 gaps) / 3 items */
+  grid-auto-columns: calc((100% - 2rem) / 3);
+}
+
+/* Tablet: 2 Columnas */
+@media (max-width: 1024px) {
+  .carrusel-scroll-container {
+    /* (100% del contenedor - 1 gap) / 2 items */
+    grid-auto-columns: calc((100% - 1rem) / 2);
+  }
+}
+
+/* Móvil: 2 Columnas */
+@media (max-width: 768px) {
+  .carrusel-scroll-container {
+    /* (100% del contenedor - 1 gap) / 2 items */
+    grid-auto-columns: calc((100% - 0.75rem) / 2);
+    gap: 0.75rem; /* Reducimos el gap en móvil */
+  }
+}

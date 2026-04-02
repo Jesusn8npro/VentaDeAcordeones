@@ -1,0 +1,56 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "uuid_generate_v4()"
+  },
+  {
+    "nombre_columna": "codigo_descuento_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "usuario_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "pedido_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "monto_descuento_aplicado",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "subtotal_pedido",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "direccion_ip",
+    "tipo_dato": "inet",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "agente_usuario",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "usado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  }
+]

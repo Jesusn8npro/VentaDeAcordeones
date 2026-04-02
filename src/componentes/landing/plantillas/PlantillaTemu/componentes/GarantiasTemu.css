@@ -1,0 +1,184 @@
+/* ================================================================
+   GARANTÍAS TEMU - SECCIÓN SIMPLE Y CONFIABLE
+   ================================================================ */
+
+/* SECCIÓN PRINCIPAL */
+.garantias-temu-seccion {
+  width: 100%;
+  background: #ffffff;
+  padding: 80px 0;
+  position: relative;
+}
+
+/* HEADER */
+.garantias-temu-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 50px auto;
+  padding: 0 20px;
+}
+
+.garantias-temu-titulo {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 800;
+  color: #1a202c;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.garantias-temu-subtitulo {
+  font-size: 18px;
+  color: #6b7280;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 40px;
+}
+
+/* IMAGEN ANIMADA DE CONFIANZA */
+.garantias-temu-imagen-animada {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.garantias-temu-animacion {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    0 5px 15px rgba(255, 68, 68, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: garantias-temu-float 4s ease-in-out infinite;
+}
+
+.garantias-temu-animacion:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 20px 45px rgba(0, 0, 0, 0.15),
+    0 8px 25px rgba(255, 68, 68, 0.1);
+}
+
+@keyframes garantias-temu-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* GRID DE GARANTÍAS */
+.garantias-temu-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* ITEM DE GARANTÍA */
+.garantias-temu-item {
+  background: #f8fafc;
+  padding: 30px 25px;
+  border-radius: 16px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.garantias-temu-item:hover {
+  background: white;
+  border-color: rgba(255, 68, 68, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.08),
+    0 5px 15px rgba(255, 68, 68, 0.05);
+}
+
+.garantias-temu-icono {
+  font-size: 48px;
+  margin-bottom: 20px;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.garantias-temu-item-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.garantias-temu-item-descripcion {
+  font-size: 15px;
+  color: #4a5568;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ANIMACIONES DE ENTRADA */
+.garantias-temu-item-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 992px) {
+  .garantias-temu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .garantias-temu-seccion {
+    padding: 60px 0;
+  }
+  
+  .garantias-temu-header {
+    margin-bottom: 40px;
+  }
+  
+  .garantias-temu-imagen-animada {
+    max-width: 400px;
+  }
+  
+  .garantias-temu-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .garantias-temu-item {
+    padding: 25px 20px;
+  }
+  
+  .garantias-temu-icono {
+    font-size: 40px;
+    margin-bottom: 15px;
+  }
+  
+  .garantias-temu-item-titulo {
+    font-size: 18px;
+  }
+  
+  .garantias-temu-item-descripcion {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .garantias-temu-item {
+    padding: 20px 15px;
+  }
+  
+  .garantias-temu-icono {
+    font-size: 36px;
+  }
+  
+  .garantias-temu-item-titulo {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,18 @@
+.seccion-doble-productos {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  margin: 0 auto;
+}
+
+.columna-carrusel {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .seccion-doble-productos {
+    flex-direction: column;
+    gap: 0;
+  }
+}

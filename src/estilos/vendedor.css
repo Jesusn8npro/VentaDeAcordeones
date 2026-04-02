@@ -1,0 +1,401 @@
+/* Estilos Ultra Vendedores - ME LLEVO ESTO */
+
+/* Efectos de urgencia y escasez */
+.urgencia {
+  background: linear-gradient(45deg, #ff6b35, #ff8c42);
+  color: var(--color-blanco);
+  padding: var(--espacio-sm) var(--espacio-md);
+  border-radius: var(--radio-md);
+  font-weight: 700;
+  text-align: center;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.escasez {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  color: var(--color-blanco);
+  padding: var(--espacio-xs) var(--espacio-sm);
+  border-radius: var(--radio-sm);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  position: absolute;
+  top: var(--espacio-sm);
+  right: var(--espacio-sm);
+  animation: shake 1s infinite;
+}
+
+.descuento-destacado {
+  background: linear-gradient(45deg, #27ae60, #2ecc71);
+  color: var(--color-blanco);
+  padding: var(--espacio-sm) var(--espacio-md);
+  border-radius: var(--radio-md);
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.descuento-destacado::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Testimonios y reseñas */
+.testimonio {
+  background-color: var(--color-blanco);
+  padding: var(--espacio-lg);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-md);
+  border-left: 4px solid var(--color-primario);
+  position: relative;
+}
+
+.testimonio::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: var(--espacio-md);
+  font-size: 4rem;
+  color: var(--color-primario);
+  font-family: serif;
+}
+
+.testimonio-texto {
+  font-style: italic;
+  margin-bottom: var(--espacio-md);
+  line-height: 1.6;
+}
+
+.testimonio-autor {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+}
+
+.testimonio-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonio-nombre {
+  font-weight: 600;
+  color: var(--color-gris-oscuro);
+}
+
+.testimonio-estrellas {
+  color: #ffc107;
+  font-size: var(--texto-sm);
+}
+
+/* CTAs (Call to Action) */
+.cta-principal {
+  background: linear-gradient(135deg, var(--color-primario), var(--color-primario-hover));
+  color: var(--color-blanco);
+  padding: var(--espacio-lg) var(--espacio-xl);
+  border-radius: var(--radio-lg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--sombra-lg);
+}
+
+.cta-principal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.cta-titulo {
+  font-size: var(--texto-2xl);
+  font-weight: 800;
+  margin-bottom: var(--espacio-md);
+  position: relative;
+  z-index: 1;
+}
+
+.cta-subtitulo {
+  font-size: var(--texto-lg);
+  margin-bottom: var(--espacio-lg);
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-boton {
+  background-color: var(--color-blanco);
+  color: var(--color-primario);
+  padding: var(--espacio-md) var(--espacio-xl);
+  border: none;
+  border-radius: var(--radio-md);
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transicion-normal);
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--sombra-md);
+}
+
+.cta-boton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-xl);
+}
+
+/* Comparativas */
+.comparativa {
+  background-color: var(--color-blanco);
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  box-shadow: var(--sombra-md);
+}
+
+.comparativa-header {
+  background: linear-gradient(135deg, var(--color-secundario), var(--color-secundario-hover));
+  color: var(--color-blanco);
+  padding: var(--espacio-md);
+  text-align: center;
+  font-weight: 700;
+}
+
+.comparativa-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparativa-tabla th,
+.comparativa-tabla td {
+  padding: var(--espacio-sm) var(--espacio-md);
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.comparativa-tabla th {
+  background-color: var(--fondo-secundario);
+  font-weight: 600;
+  color: var(--color-gris-oscuro);
+}
+
+.comparativa-tabla tr:hover {
+  background-color: var(--fondo-secundario);
+}
+
+.check-verde {
+  color: var(--color-exito);
+  font-weight: 700;
+}
+
+.x-roja {
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+/* FAQ */
+.faq-contenedor {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background-color: var(--color-blanco);
+  border-radius: var(--radio-md);
+  margin-bottom: var(--espacio-md);
+  box-shadow: var(--sombra-sm);
+  overflow: hidden;
+}
+
+.faq-pregunta {
+  background-color: var(--fondo-secundario);
+  padding: var(--espacio-md);
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-gris-oscuro);
+  transition: background-color var(--transicion-rapida);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-pregunta:hover {
+  background-color: #e9ecef;
+}
+
+.faq-respuesta {
+  padding: var(--espacio-md);
+  color: var(--color-gris-medio);
+  line-height: 1.6;
+  border-top: 1px solid #e9ecef;
+}
+
+.faq-icono {
+  transition: transform var(--transicion-rapida);
+}
+
+.faq-item.abierto .faq-icono {
+  transform: rotate(180deg);
+}
+
+/* Beneficios */
+.beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--espacio-lg);
+  margin: var(--espacio-xl) 0;
+}
+
+.beneficio-item {
+  text-align: center;
+  padding: var(--espacio-lg);
+  background-color: var(--color-blanco);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-sm);
+  transition: all var(--transicion-normal);
+}
+
+.beneficio-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-lg);
+}
+
+.beneficio-icono {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--espacio-md);
+  background: linear-gradient(135deg, var(--color-primario), var(--color-primario-hover));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blanco);
+  font-size: var(--texto-xl);
+}
+
+.beneficio-titulo {
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  color: var(--color-gris-oscuro);
+  margin-bottom: var(--espacio-sm);
+}
+
+.beneficio-descripcion {
+  color: var(--color-gris-medio);
+  line-height: 1.6;
+}
+
+/* Contador de tiempo */
+.contador-tiempo {
+  background: linear-gradient(135deg, var(--color-error), #c0392b);
+  color: var(--color-blanco);
+  padding: var(--espacio-md);
+  border-radius: var(--radio-md);
+  text-align: center;
+  font-weight: 700;
+  margin: var(--espacio-md) 0;
+}
+
+.contador-tiempo-titulo {
+  font-size: var(--texto-lg);
+  margin-bottom: var(--espacio-sm);
+}
+
+.contador-tiempo-numeros {
+  display: flex;
+  justify-content: center;
+  gap: var(--espacio-md);
+}
+
+.contador-item {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: var(--espacio-sm);
+  border-radius: var(--radio-sm);
+  min-width: 50px;
+}
+
+.contador-numero {
+  font-size: var(--texto-xl);
+  font-weight: 800;
+}
+
+.contador-etiqueta {
+  font-size: var(--texto-xs);
+  opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .beneficios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-principal {
+    padding: var(--espacio-md);
+  }
+  
+  .cta-titulo {
+    font-size: var(--texto-xl);
+  }
+  
+  .cta-subtitulo {
+    font-size: var(--texto-base);
+  }
+  
+  .contador-tiempo-numeros {
+    flex-wrap: wrap;
+    gap: var(--espacio-sm);
+  }
+  
+  .comparativa-tabla {
+    font-size: var(--texto-sm);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,276 @@
+/* Página de Contacto - Diseño Minimalista */
+.contacto-minimal {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 4rem 2rem;
+}
+
+.contacto-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.contacto-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.contacto-title {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.contacto-subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Content Layout */
+.contacto-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+/* Info Section */
+.info-section {
+  background: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1e293b;
+  margin-bottom: 2rem;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.info-icon {
+  color: #0f172a;
+  margin-top: 0.25rem;
+}
+
+.info-content h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.info-link {
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.info-link:hover {
+  color: #334155;
+}
+
+.info-text {
+  color: #475569;
+  margin: 0;
+}
+
+.info-detail {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Form Section */
+.form-section {
+  background: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-input,
+.form-textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: #fafafa;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #0f172a;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+/* WhatsApp Destacado */
+.whatsapp-destacado {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  border-radius: 1rem;
+  padding: 2rem;
+  color: white;
+}
+
+.whatsapp-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.whatsapp-icon {
+  flex-shrink: 0;
+}
+
+.whatsapp-text {
+  flex: 1;
+}
+
+.whatsapp-text h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.whatsapp-text p {
+  opacity: 0.9;
+  margin: 0;
+}
+
+.whatsapp-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: white;
+  color: #25d366;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.whatsapp-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contacto-minimal {
+    padding: 2rem 1rem;
+  }
+  
+  .contacto-title {
+    font-size: 2rem;
+  }
+  
+  .contacto-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .info-section,
+  .form-section {
+    padding: 2rem;
+  }
+  
+  .whatsapp-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .whatsapp-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contacto-title {
+    font-size: 1.75rem;
+  }
+  
+  .info-section,
+  .form-section {
+    padding: 1.5rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+

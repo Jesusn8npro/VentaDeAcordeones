@@ -1,0 +1,866 @@
+/* ============================================
+   PUNTOS DE DOLOR TEMU - TIMELINE VERTICAL
+   Sección de problemas y soluciones estilo dropshipping
+   ============================================ */
+
+/* SECCIÓN PRINCIPAL */
+.puntos-dolor-temu-seccion {
+  width: 100%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.puntos-dolor-temu-seccion::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(255, 68, 68, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 10%, rgba(255, 215, 0, 0.04) 0%, transparent 30%),
+    radial-gradient(circle at 20% 90%, rgba(0, 200, 81, 0.04) 0%, transparent 35%);
+  pointer-events: none;
+  animation: puntos-dolor-temu-fondo-float 20s ease-in-out infinite;
+}
+
+@keyframes puntos-dolor-temu-fondo-float {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% { 
+    transform: translateY(-10px) rotate(1deg);
+    opacity: 0.8;
+  }
+  50% { 
+    transform: translateY(-5px) rotate(-0.5deg);
+    opacity: 1;
+  }
+  75% { 
+    transform: translateY(-15px) rotate(0.8deg);
+    opacity: 0.7;
+  }
+}
+
+.puntos-dolor-temu-contenedor {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   HEADER DE LA SECCIÓN
+   ============================================ */
+.puntos-dolor-temu-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.puntos-dolor-temu-titulo {
+  font-size: 42px;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.puntos-dolor-temu-subtitulo {
+  font-size: 20px;
+  color: #666;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   TIMELINE VERTICAL
+   ============================================ */
+.puntos-dolor-temu-timeline {
+  position: relative;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+/* LÍNEA CENTRAL */
+.puntos-dolor-temu-linea-central {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg, #FF4444 0%, #0ea5e9 50%, #FF4444 100%);
+  transform: translateX(-50%);
+  border-radius: 3px;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+  animation: puntos-dolor-temu-linea-pulse 4s ease-in-out infinite;
+}
+
+.puntos-dolor-temu-linea-central::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  border-radius: 3px;
+  animation: puntos-dolor-temu-linea-shine 3s ease-in-out infinite;
+}
+
+@keyframes puntos-dolor-temu-linea-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 25px rgba(255, 68, 68, 0.6);
+  }
+}
+
+@keyframes puntos-dolor-temu-linea-shine {
+  0%, 100% { 
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  50% { 
+    opacity: 1;
+    transform: translateY(100%);
+  }
+}
+
+/* ============================================
+   ITEMS DEL TIMELINE
+   ============================================ */
+.puntos-dolor-temu-item {
+  position: relative;
+  margin-bottom: -120px;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.puntos-dolor-temu-item-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.puntos-dolor-temu-derecha.puntos-dolor-temu-item-visible {
+  opacity: 1;
+  transform: translateY(-40px);
+}
+
+/* POSICIONAMIENTO ALTERNADO */
+.puntos-dolor-temu-izquierda {
+  padding-right: 54%;
+  padding-left: 0;
+}
+
+.puntos-dolor-temu-derecha {
+  padding-left: 54%;
+  padding-right: 0;
+  margin-left: auto;
+  transform: translateY(-40px);
+}
+
+.puntos-dolor-temu-izquierda .puntos-dolor-temu-contenido {
+  margin-right: 50px;
+  text-align: right;
+}
+
+.puntos-dolor-temu-derecha .puntos-dolor-temu-contenido {
+  margin-left: 50px;
+  text-align: left;
+}
+
+/* ============================================
+   PUNTO CONECTOR
+   ============================================ */
+.puntos-dolor-temu-punto {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 6px 25px rgba(255, 68, 68, 0.5),
+    0 0 0 6px #fff,
+    0 0 0 12px rgba(255, 68, 68, 0.3);
+  z-index: 10;
+  animation: puntos-dolor-temu-punto-pulse 2s ease-in-out infinite;
+}
+
+.puntos-dolor-temu-icono {
+  font-size: 32px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes puntos-dolor-temu-punto-pulse {
+  0%, 100% { 
+    transform: translateX(-50%) scale(1);
+    box-shadow: 
+      0 4px 20px rgba(255, 68, 68, 0.4),
+      0 0 0 4px #fff,
+      0 0 0 8px rgba(255, 68, 68, 0.2);
+  }
+  50% { 
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 
+      0 6px 25px rgba(255, 68, 68, 0.6),
+      0 0 0 4px #fff,
+      0 0 0 12px rgba(255, 68, 68, 0.3);
+  }
+}
+
+/* ============================================
+   CONTENIDO DEL BLOQUE
+   ============================================ */
+.puntos-dolor-temu-contenido {
+  background: #fff;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 68, 68, 0.08);
+  border: 2px solid rgba(255, 68, 68, 0.05);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  animation: puntos-dolor-temu-contenido-float 6s ease-in-out infinite;
+}
+
+/* Delays diferentes para cada elemento */
+.puntos-dolor-temu-item:nth-child(1) .puntos-dolor-temu-contenido {
+  animation-delay: 0s;
+}
+
+.puntos-dolor-temu-item:nth-child(2) .puntos-dolor-temu-contenido {
+  animation-delay: 1.2s;
+}
+
+.puntos-dolor-temu-item:nth-child(3) .puntos-dolor-temu-contenido {
+  animation-delay: 2.4s;
+}
+
+.puntos-dolor-temu-item:nth-child(4) .puntos-dolor-temu-contenido {
+  animation-delay: 3.6s;
+}
+
+.puntos-dolor-temu-item:nth-child(5) .puntos-dolor-temu-contenido {
+  animation-delay: 4.8s;
+}
+
+@keyframes puntos-dolor-temu-contenido-float {
+  0%, 100% { 
+    transform: translateY(0);
+  }
+  50% { 
+    transform: translateY(-3px);
+  }
+}
+
+.puntos-dolor-temu-contenido::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 68, 68, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+
+.puntos-dolor-temu-contenido:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.18),
+    0 12px 25px rgba(255, 68, 68, 0.25),
+    0 0 0 2px rgba(255, 68, 68, 0.15);
+}
+
+.puntos-dolor-temu-contenido:hover::before {
+  left: 100%;
+}
+
+/* ============================================
+   IMAGEN/GIF DEL PUNTO DE DOLOR
+   ============================================ */
+.puntos-dolor-temu-imagen-container {
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  border: 3px solid rgba(255, 68, 68, 0.1);
+}
+
+.puntos-dolor-temu-imagen-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.puntos-dolor-temu-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.4s ease;
+  filter: brightness(0.9) contrast(1.1);
+}
+
+.puntos-dolor-temu-imagen:hover {
+  transform: scale(1.1);
+  filter: brightness(1) contrast(1.2);
+}
+
+/* Efecto especial para GIFs */
+.puntos-dolor-temu-imagen[src*="giphy"] {
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+  animation: puntos-dolor-temu-gif-glow 3s ease-in-out infinite;
+}
+
+@keyframes puntos-dolor-temu-gif-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
+  }
+}
+
+/* PROBLEMA */
+.puntos-dolor-temu-problema {
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.puntos-dolor-temu-contenido:hover .puntos-dolor-temu-problema {
+  transform: translateY(-2px);
+}
+
+.puntos-dolor-temu-nombre {
+  font-size: 24px;
+  font-weight: 800;
+  color: #FF4444;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.puntos-dolor-temu-nombre::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FF4444, #CC0000);
+  transition: width 0.4s ease;
+  border-radius: 2px;
+}
+
+.puntos-dolor-temu-contenido:hover .puntos-dolor-temu-nombre::after {
+  width: 100%;
+}
+
+.puntos-dolor-temu-descripcion {
+  font-size: 16px;
+  color: #555;
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
+
+.puntos-dolor-temu-contenido:hover .puntos-dolor-temu-descripcion {
+  color: #333;
+  opacity: 1;
+}
+
+/* FLECHA SEPARADORA */
+.puntos-dolor-temu-flecha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.puntos-dolor-temu-izquierda .puntos-dolor-temu-flecha {
+  justify-content: flex-end;
+}
+
+.puntos-dolor-temu-derecha .puntos-dolor-temu-flecha {
+  justify-content: flex-start;
+}
+
+.puntos-dolor-temu-flecha-icono {
+  font-size: 20px;
+  color: #0ea5e9;
+  animation: puntos-dolor-temu-flecha-bounce 2s ease-in-out infinite;
+}
+
+.puntos-dolor-temu-flecha-texto {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0ea5e9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@keyframes puntos-dolor-temu-flecha-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* SOLUCIÓN */
+.puntos-dolor-temu-solucion {
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border-left: 4px solid #00C851;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.puntos-dolor-temu-solucion::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 200, 81, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.puntos-dolor-temu-contenido:hover .puntos-dolor-temu-solucion {
+  transform: translateX(5px);
+  box-shadow: 0 4px 15px rgba(0, 200, 81, 0.2);
+}
+
+.puntos-dolor-temu-contenido:hover .puntos-dolor-temu-solucion::before {
+  left: 100%;
+}
+
+.puntos-dolor-temu-solucion-texto {
+  font-size: 16px;
+  color: #155724;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.puntos-dolor-temu-contenido:hover .puntos-dolor-temu-solucion-texto {
+  color: #0d4419;
+  font-weight: 700;
+}
+
+/* ============================================
+   CALL TO ACTION FINAL
+   ============================================ */
+.puntos-dolor-temu-cta {
+  text-align: center;
+  margin-top: 80px;
+  padding: 40px;
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%);
+  border-radius: 20px;
+  color: white;
+  box-shadow: 0 12px 40px rgba(255, 68, 68, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.puntos-dolor-temu-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: puntos-dolor-temu-cta-shine 3s ease-in-out infinite;
+}
+
+@keyframes puntos-dolor-temu-cta-shine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.puntos-dolor-temu-cta-titulo {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.puntos-dolor-temu-cta-texto {
+  font-size: 18px;
+  margin: 0 0 30px 0;
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+.puntos-dolor-temu-cta-boton {
+  background: #fff;
+  color: #FF4444;
+  border: none;
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.puntos-dolor-temu-cta-boton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  background: #f8f9fa;
+}
+
+/* ============================================
+   MODAL DE IMAGEN - PUNTOS DE DOLOR
+   ============================================ */
+.puntos-dolor-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: puntos-dolor-modal-fade-in 0.3s ease;
+  padding: 20px;
+}
+
+.puntos-dolor-modal-contenido {
+  position: relative;
+  max-width: 800px;
+  max-height: 600px;
+  width: 90%;
+  height: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform: scale(0.9);
+  animation: puntos-dolor-modal-scale-in 0.3s ease forwards;
+}
+
+.puntos-dolor-modal-cerrar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.puntos-dolor-modal-cerrar:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.puntos-dolor-modal-cerrar:active {
+  transform: scale(0.95);
+}
+
+.puntos-dolor-modal-imagen-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0;
+}
+
+.puntos-dolor-modal-imagen {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+@keyframes puntos-dolor-modal-fade-in {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+@keyframes puntos-dolor-modal-scale-in {
+  from { 
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive - MÓVIL */
+@media (max-width: 768px) {
+  .puntos-dolor-modal-overlay {
+    padding: 10px;
+  }
+  
+  .puntos-dolor-modal-contenido {
+    max-width: 95%;
+    max-height: 80vh;
+    width: 95%;
+    border-radius: 12px;
+  }
+  
+  .puntos-dolor-modal-cerrar {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .puntos-dolor-modal-imagen {
+    max-height: 70vh;
+    border-radius: 12px;
+  }
+}
+
+/* Responsive - MÓVIL PEQUEÑO */
+@media (max-width: 480px) {
+  .puntos-dolor-modal-overlay {
+    padding: 5px;
+  }
+  
+  .puntos-dolor-modal-contenido {
+    max-width: 98%;
+    max-height: 85vh;
+    width: 98%;
+    border-radius: 8px;
+  }
+  
+  .puntos-dolor-modal-imagen {
+    max-height: 75vh;
+    border-radius: 8px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* TABLETS */
+@media (max-width: 768px) {
+  .puntos-dolor-temu-seccion {
+    padding: 60px 0;
+  }
+  /* ============================================
+   ITEMS DEL TIMELINE
+   ============================================ */
+.puntos-dolor-temu-item {
+  margin-bottom: 100px;
+}
+  
+  .puntos-dolor-temu-titulo {
+    font-size: 32px;
+  }
+  
+  .puntos-dolor-temu-subtitulo {
+    font-size: 18px;
+  }
+  
+  /* Timeline centrado en tablet */
+  .puntos-dolor-temu-linea-central {
+    left: 40px;
+  }
+  
+  .puntos-dolor-temu-izquierda,
+  .puntos-dolor-temu-derecha {
+    padding-left: 100px;
+    padding-right: 0;
+    transform: none !important;
+  }
+  
+  .puntos-dolor-temu-izquierda .puntos-dolor-temu-contenido,
+  .puntos-dolor-temu-derecha .puntos-dolor-temu-contenido {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+  
+  .puntos-dolor-temu-punto {
+    left: 40px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  .puntos-dolor-temu-icono {
+    font-size: 28px;
+  }
+  
+  .puntos-dolor-temu-imagen-container {
+    height: 220px;
+  }
+  
+  .puntos-dolor-temu-flecha {
+    justify-content: flex-start !important;
+  }
+}
+
+/* MÓVILES */
+@media (max-width: 480px) {
+  .puntos-dolor-temu-contenedor {
+    padding: 0 15px;
+  }
+  
+  .puntos-dolor-temu-titulo {
+    font-size: 28px;
+    animation: puntos-dolor-temu-titulo-mobile 1s ease-out;
+  }
+  
+  .puntos-dolor-temu-subtitulo {
+    font-size: 16px;
+  }
+  
+  .puntos-dolor-temu-contenido {
+    padding: 20px;
+  }
+  
+  .puntos-dolor-temu-imagen-container {
+    height: 180px;
+  }
+  
+  .puntos-dolor-temu-nombre {
+    font-size: 20px;
+  }
+  
+  .puntos-dolor-temu-descripcion,
+  .puntos-dolor-temu-solucion-texto {
+    font-size: 14px;
+  }
+  
+  .puntos-dolor-temu-cta {
+    padding: 30px 20px;
+    animation: puntos-dolor-temu-cta-mobile 0.8s ease-out;
+  }
+  
+  .puntos-dolor-temu-cta-titulo {
+    font-size: 24px;
+  }
+  
+  .puntos-dolor-temu-cta-texto {
+    font-size: 16px;
+  }
+  
+  .puntos-dolor-temu-cta-boton {
+    padding: 16px 30px;
+    font-size: 18px;
+    animation: puntos-dolor-temu-boton-pulse 2s ease-in-out infinite;
+  }
+}
+
+/* ANIMACIONES MÓVILES */
+@keyframes puntos-dolor-temu-titulo-mobile {
+  0% { 
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% { 
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes puntos-dolor-temu-cta-mobile {
+  0% { 
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes puntos-dolor-temu-boton-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 68, 68, 0.4);
+  }
+}
+
+/* ACCESIBILIDAD */
+@media (prefers-reduced-motion: reduce) {
+  .puntos-dolor-temu-item {
+    transition: opacity 0.3s ease;
+  }
+  
+  .puntos-dolor-temu-punto {
+    animation: none;
+  }
+  
+  .puntos-dolor-temu-flecha-icono {
+    animation: none;
+  }
+  
+  .puntos-dolor-temu-cta::before {
+    animation: none;
+  }
+}

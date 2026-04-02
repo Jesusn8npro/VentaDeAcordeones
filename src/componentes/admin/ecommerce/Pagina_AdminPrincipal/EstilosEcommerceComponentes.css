@@ -1,0 +1,370 @@
+/* ===== MÉTRICAS ECOMMERCE ===== */
+.metricas-ecommerce-contenedor {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.metricas-ecommerce-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.metricas-ecommerce-cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: var(--color-fondo);
+  border-radius: var(--radio-borde-lg);
+  border: 1px solid var(--color-borde);
+}
+
+.metrica-card {
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-lg);
+  padding: 1.5rem;
+  transition: all var(--transicion-rapida);
+}
+
+.metrica-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.metrica-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radio-borde);
+  margin-bottom: 1rem;
+}
+
+.metrica-icono svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.metrica-icono-clientes {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.metrica-icono-pedidos {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.metrica-icono-productos {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.metrica-icono-ingresos {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+
+.metrica-contenido {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.metrica-info {
+  flex: 1;
+}
+
+.metrica-label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 0.5rem;
+}
+
+.metrica-valor {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin: 0;
+}
+
+.metrica-badge {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radio-borde);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.metrica-badge-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.metrica-badge-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.metrica-badge-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.metrica-porcentaje::before {
+  content: '↗';
+  margin-right: 0.25rem;
+}
+
+.metrica-badge-warning .metrica-porcentaje::before {
+  content: '↘';
+}
+
+/* ===== PEDIDOS RECIENTES ===== */
+.admin-theme .pedidos-recientes-card {
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-lg);
+  overflow: hidden;
+}
+
+.admin-theme .pedidos-recientes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.admin-theme .pedidos-recientes-titulo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-texto);
+  margin: 0;
+}
+
+.admin-theme .pedidos-recientes-ver-todos {
+  color: var(--color-primario);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color var(--transicion-rapida);
+}
+
+.admin-theme .pedidos-recientes-ver-todos:hover {
+  color: var(--color-primario-hover);
+}
+
+.admin-theme .pedidos-recientes-contenido {
+  padding: 0;
+}
+
+.admin-theme .pedidos-recientes-cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem;
+}
+
+.admin-theme .pedidos-recientes-vacio {
+  padding: 3rem;
+  text-align: center;
+  color: var(--color-texto-secundario);
+}
+
+.admin-theme .pedidos-recientes-tabla {
+  width: 100%;
+}
+
+.admin-theme .tabla-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--color-fondo-secundario);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.admin-theme .tabla-columna {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-theme .tabla-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-theme .tabla-fila {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+  transition: background-color var(--transicion-rapida);
+}
+
+.admin-theme .tabla-fila:hover {
+  background-color: var(--color-fondo-terciario);
+}
+
+.admin-theme .tabla-fila:last-child {
+  border-bottom: none;
+}
+
+.admin-theme .tabla-celda {
+  display: flex;
+  align-items: center;
+}
+
+.admin-theme .cliente-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-theme .cliente-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--color-primario);
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.admin-theme .cliente-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.admin-theme .cliente-nombre {
+  font-weight: 500;
+  color: var(--color-texto);
+  font-size: 0.875rem;
+}
+
+.admin-theme .cliente-email {
+  font-size: 0.75rem;
+  color: var(--color-texto-secundario);
+}
+
+.admin-theme .pedido-numero {
+  font-weight: 500;
+  color: var(--color-texto);
+  font-size: 0.875rem;
+}
+
+.admin-theme .pedido-fecha {
+  font-size: 0.875rem;
+  color: var(--color-texto-secundario);
+}
+
+.admin-theme .pedido-total {
+  font-weight: 600;
+  color: var(--color-texto);
+  font-size: 0.875rem;
+}
+
+.admin-theme .estado-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radio-borde);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.admin-theme .estado-completado {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.admin-theme .estado-pendiente {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+
+.admin-theme .estado-cancelado {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.admin-theme .estado-procesando {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+/* ===== SPINNER ===== */
+.admin-theme .spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--color-borde);
+  border-top: 2px solid var(--color-primario);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .admin-theme .metricas-ecommerce-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .admin-theme .metrica-card {
+    padding: 1rem;
+  }
+  
+  .admin-theme .metrica-valor {
+    font-size: 1.5rem;
+  }
+  
+  .admin-theme .tabla-header,
+  .admin-theme .tabla-fila {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .admin-theme .tabla-columna {
+    display: none;
+  }
+  
+  .admin-theme .tabla-celda {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-borde);
+  }
+  
+  .admin-theme .tabla-celda:last-child {
+    border-bottom: none;
+  }
+  
+  .admin-theme .tabla-celda::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--color-texto-secundario);
+    margin-right: 1rem;
+    min-width: 100px;
+    display: inline-block;
+  }
+}

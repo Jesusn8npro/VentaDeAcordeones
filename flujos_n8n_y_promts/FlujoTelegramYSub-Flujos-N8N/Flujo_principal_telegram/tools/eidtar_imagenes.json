@@ -1,0 +1,421 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "PromtParaEditarLaImagen"
+            },
+            {
+              "name": "IdDeLaImagen"
+            },
+            {
+              "name": "tipo_de_imagen"
+            },
+            {
+              "name": "id_del_producto"
+            },
+            {
+              "name": "nombre_para_la_nueva_imagen"
+            },
+            {
+              "name": "url_de_la_imagen"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -2448,
+        320
+      ],
+      "id": "c5d13fd2-55ab-424f-bde0-14c5a2223963",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('When Executed by Another Workflow').item.json.url_de_la_imagen }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2208,
+        320
+      ],
+      "id": "50ae90b1-6487-42b7-b993-776caefe9e85",
+      "name": "Descargar desde Supabase1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/nano-banana/edit",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key 21f46ed9-0225-40f6-9ffc-25661e559c38:851595cba3c58067fd73c650a492aeb7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"{{ $('When Executed by Another Workflow').item.json.PromtParaEditarLaImagen.replace(/\\\"/g, '\\\\\\\"').replace(/(\\r\\n|\\n|\\r)/g, '\\\\n') }}\",\n  \"image_urls\": [\n    \"{{ $json.url_de_la_imagen }}\"\n  ],\n  \"num_images\": 1,\n  \"output_format\": \"jpeg\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1936,
+        320
+      ],
+      "id": "e1fbecf0-85d0-4e2f-9922-a6afe83ce79c",
+      "name": "Crear Imagen1"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images[0].url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1088,
+        176
+      ],
+      "id": "a8d01b29-4d2b-4718-80d2-57c2d4677c96",
+      "name": "Descargar Imagen1"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1536,
+        320
+      ],
+      "id": "c7a15470-4c33-415a-bf31-29ec41c0f58b",
+      "name": "10 Segundos1",
+      "webhookId": "caad73e3-58d8-4fbd-a3e9-c42424f2d1ee"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -1088,
+        368
+      ],
+      "id": "6c8b92ea-3e61-412e-bfdc-85127215855f",
+      "name": "5 Segundos1",
+      "webhookId": "5f6bbd1e-a155-48de-b737-a225c6fd7a84"
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/nano-banana/requests/{{ $json.request_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key 21f46ed9-0225-40f6-9ffc-25661e559c38:851595cba3c58067fd73c650a492aeb7"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1312,
+        320
+      ],
+      "id": "5d4b9569-77a4-4b00-93d5-68d09f555508",
+      "name": "Obtener Resultado1",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes/{{ $('When Executed by Another Workflow').item.json.nombre_para_la_nueva_imagen }}.jpg",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -880,
+        176
+      ],
+      "id": "6e9540c5-e69a-43f7-b431-072c5f096eec",
+      "name": "Subir a Supabase3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "producto_imagenes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "=044e8aef-1a97-4d5d-a360-62b2a5e99170"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -576,
+        176
+      ],
+      "id": "c7209e09-87cf-4b45-a248-d0502c8aa87e",
+      "name": "Buscar Producto Imágenes",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "producto_imagenes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $('When Executed by Another Workflow').item.json.id_del_producto }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $('When Executed by Another Workflow').item.json.tipo_de_imagen }}",
+              "fieldValue": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/public/imagenes/{{ $('When Executed by Another Workflow').item.json.nombre_para_la_nueva_imagen }}.jpg"
+            },
+            {
+              "fieldId": "total_imagenes_generadas",
+              "fieldValue": "={{ $('Buscar Producto Imágenes').item.json.total_imagenes_generadas + 1 }}"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "completado"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        176
+      ],
+      "id": "e1d420c1-ccd5-42fb-a61d-5ee2a8beeb0b",
+      "name": "Actualizar Contador1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "producto_imagenes",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $('When Executed by Another Workflow').item.json.id_del_producto }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $('When Executed by Another Workflow').item.json.tipo_de_imagen }}",
+              "fieldValue": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes/{{ $('When Executed by Another Workflow').item.json.nombre_para_la_nueva_imagen }}.jpg"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "procesando"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        176
+      ],
+      "id": "b0a717cf-93e0-4908-83f9-99f0ef6f805d",
+      "name": "Actualizar Imagen Supabase1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Descargar desde Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar desde Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Crear Imagen1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Imagen1": {
+      "main": [
+        [
+          {
+            "node": "10 Segundos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar Imagen1": {
+      "main": [
+        [
+          {
+            "node": "Subir a Supabase3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "10 Segundos1": {
+      "main": [
+        [
+          {
+            "node": "Obtener Resultado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5 Segundos1": {
+      "main": [
+        [
+          {
+            "node": "Obtener Resultado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Resultado1": {
+      "main": [
+        [
+          {
+            "node": "Descargar Imagen1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "5 Segundos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subir a Supabase3": {
+      "main": [
+        [
+          {
+            "node": "Buscar Producto Imágenes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Producto Imágenes": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Imagen Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Imagen Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Contador1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

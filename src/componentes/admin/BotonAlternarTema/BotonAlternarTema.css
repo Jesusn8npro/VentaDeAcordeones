@@ -1,0 +1,20 @@
+/* ===== Estilos BotonAlternarTema (scoped) ===== */
+.admin-theme .boton-alternar-tema {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: 50%;
+  color: var(--color-texto-secundario);
+  cursor: pointer;
+  transition: all var(--transicion-rapida);
+}
+.admin-theme .boton-alternar-tema:hover { background-color: var(--color-fondo-terciario); border-color: var(--color-borde-hover); color: var(--color-texto); }
+.admin-theme .boton-alternar-tema .icono-sol { display: block; }
+.admin-theme .boton-alternar-tema .icono-luna { display: none; }
+.admin-theme.dark .boton-alternar-tema .icono-sol, .dark .admin-theme .boton-alternar-tema .icono-sol { display: none; }
+.admin-theme.dark .boton-alternar-tema .icono-luna, .dark .admin-theme .boton-alternar-tema .icono-luna { display: block; }

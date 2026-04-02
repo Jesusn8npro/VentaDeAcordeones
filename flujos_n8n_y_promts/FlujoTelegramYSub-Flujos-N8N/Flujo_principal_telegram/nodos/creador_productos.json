@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "description": "=Llama a esta herramienta para crear la informacion total de los productos, pasa los datos como De_que_trata_el_producto, precio, nombre del producto y caracteristicas para crear el producto, debe ser un producto totalmente profesional! ",
+        "workflowId": {
+          "__rl": true,
+          "value": "nDYphNM8xLTjjJrD",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/nDYphNM8xLTjjJrD",
+          "cachedResultName": "🤪Creador de productos_Sub agente 2.0"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "De_que_trata_el_producto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('De_que_trata_el_producto', ``, 'string') }}",
+            "precio": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('precio', ``, 'string') }}",
+            "nombre_producto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre_producto', ``, 'string') }}",
+            "caracteristicas": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('caracteristicas', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "De_que_trata_el_producto",
+              "displayName": "De_que_trata_el_producto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "precio",
+              "displayName": "precio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "nombre_producto",
+              "displayName": "nombre_producto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "caracteristicas",
+              "displayName": "caracteristicas",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -928,
+        352
+      ],
+      "id": "83be7957-797e-4642-8d74-25ab731d53a5",
+      "name": "creador_de_productos"
+    }
+  ],
+  "connections": {
+    "creador_de_productos": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

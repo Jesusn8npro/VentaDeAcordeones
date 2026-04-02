@@ -1,0 +1,525 @@
+/* Estilos de Tarjeta de Producto Lujo (completamente en español) */
+
+.tarjeta-lujo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 0px;
+  box-shadow: 0 8px 24px rgba(20, 20, 20, 0.06);
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.tarjeta-lujo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(20, 20, 20, 0.12);
+}
+
+.insignias-lujo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px; /* menos padding lateral en badges */
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: saturate(180%) blur(6px);
+}
+
+.insignia-descuento {
+  background: #fff3;
+  color: #d84040;
+  border: 1px solid #f4c4c4;
+  background-color: #fff;
+}
+
+.insignia-destacado {
+  background: #ffe7d6;
+  color: #c05a00;
+  border: 1px solid #ffd1a8;
+}
+
+.insignia-estado {
+  background: #eef1f7;
+  color: #354052;
+  border: 1px solid #d9dee7;
+}
+
+.zona-imagen-lujo {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.imagen-principal {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.imagen-secundaria {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.tarjeta-lujo:hover .imagen-principal {
+  opacity: 0;
+  transform: scale(1.02);
+}
+
+.tarjeta-lujo:hover .imagen-secundaria {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.acciones-flotantes {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 4;
+}
+
+.accion-flotante {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  color: #333;
+  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.08);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 180ms ease;
+}
+
+.tarjeta-lujo:hover .accion-flotante {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accion-flotante:hover {
+  background: #fff;
+}
+
+.contenido-lujo {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fila-titulo {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 38px;
+}
+
+.nombre-producto {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1c1f26;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cinta-mega-oferta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  align-self: flex-start;
+  flex-shrink: 0;
+  padding: 2px 4px; /* menos padding a los lados */
+  border-radius: 0;
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(90deg, #ff5a1f, #ff7a00);
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.25);
+  border: 1px solid rgba(255, 122, 0, 0.35);
+  line-height: 1.05;
+  gap: 0;
+}
+
+.cinta-mega-oferta .linea-mega {
+  display: block;
+}
+
+/* Espacio mínimo entre líneas para estilo compacto tipo Temu */
+.cinta-mega-oferta .linea-mega + .linea-mega {
+  margin-top: 1px;
+}
+
+/* Responsive: móvil (primer breakpoint) */
+@media (max-width: 765px) {
+  .fila-titulo {
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+    min-height: unset;
+    order: 0;
+    text-align: center;
+  }
+  .calificacion {
+    order: 1;
+    margin-top: 0;
+    gap: 2px;
+  }
+  .precio {
+    order: 5; /* mover precio debajo del bloque de información dinámica */
+    gap: 3px;
+  }
+  .info-secundaria {
+    order: 3;
+    font-size: 9px;
+    gap: 1px;
+  }
+  .info-dinamica {
+    order: 4;
+  }
+
+  /* Compactar estructura general en móvil */
+  .contenido-lujo { gap: 2px; }
+  .fila-titulo { min-height: 34px; }
+  .info-dinamica { margin-top: 2px; min-height: 22px; height: 22px; }
+
+  /* Compactación adicional en móvil */
+  .nombre-producto {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  /* Ajustes de tamaño de estrella y visibilidad de textos */
+  .estrella {
+    width: 15px;
+    height: 15px;
+    color: #ff7a00;
+  }
+  .conteo-calificacion,
+  .resenas-calificacion {
+    display: none;
+  }
+
+  /* Mostrar ventas junto a las estrellas en móvil */
+  .ventas-en-linea { display: inline; margin-left: 6px; font-size: 10px; color: #6c757d; }
+
+
+  /* Ocultar el contador de ventas junto al precio para evitar duplicar */
+  .ventas-pie { display: none; }
+
+  /* Compactación agresiva del ahorro + contador */
+  .insignia-ahorro {
+    min-height: 14px;
+    border-radius: 3px;
+    line-height: 1;
+  }
+
+  .insignia-ahorro .lado-derecho .lucide-alert-circle {
+    display: none;
+  }
+
+  /* Reducir aún más la separación interna del bloque de precio en móvil */
+  .tarjeta-lujo .precio { gap: 3px; }
+  .tarjeta-lujo .precio-info { gap: 2px; }
+  /* Ajuste directo del precio original con su padre para mayor control */
+  .tarjeta-lujo .precio .precio-original { font-size: 10px; }
+
+
+  .precio .precio-actual {
+  color: #111;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+ .precio .precio-original {
+  color: #a0a8b3;
+  text-decoration: line-through;
+  font-size: 10px;
+}
+
+
+}
+
+.metadatos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #54657e;
+}
+
+.calificacion {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.estrella {
+  color: #ff7a00;
+}
+
+.conteo-calificacion {
+  color: #8b98a9;
+  margin-left: 2px;
+}
+
+.resenas-calificacion {
+  color: #8b98a9;
+  margin-left: 2px;
+}
+
+.ventas-en-linea {
+  display: none;
+}
+
+.ventas {
+  color: #4f7d3a;
+  font-weight: 600;
+}
+
+
+.precio {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.precio-actual {
+  color: #111;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.precio-original {
+  color: #a0a8b3;
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
+.ventas-pie {
+  margin-left: auto;
+  font-size: 12px;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+/* Información secundaria: ahorro y stock */
+.info-secundaria {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #54657e;
+  gap: 4px;
+}
+
+.ahorro {
+  color: #1f8b4c;
+  font-weight: 700;
+}
+
+.stock {
+  color: #6c757d;
+}
+
+/* Contenedor dinámico tipo slider vertical */
+.info-dinamica {
+  position: relative;
+  overflow: hidden; /* evita que el contenido desborde y provoque saltos */
+  border: none;
+  background: #ffffff;
+  color: #1c1f26;
+  border-radius: 8px;
+  padding: 2px 4px; /* menos padding lateral del bloque dinámico */
+  margin-top: 4px;
+  font-weight: 500;
+  font-size: 11px;
+  min-height: 24px; /* altura fija para evitar movimientos de scroll */
+  height: 24px; /* asegura consistencia entre cambios de mensaje */
+}
+
+.item-informacion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 22px;
+  width: 100%;
+  white-space: nowrap; /* fuerza una sola línea */
+}
+
+.icono-informacion {
+  color: #8b98a9;
+  flex-shrink: 0;
+}
+
+.mas-comprados {
+  color: #1f8b4c;
+  font-weight: 700;
+}
+
+@keyframes aparecer-suave {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aparecer {
+  animation: aparecer-suave 240ms ease both;
+}
+
+/* El texto del item ocupa el espacio restante y se corta con elipsis */
+.item-informacion span {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Insignia combinada: ahorro a la izquierda (naranja) y contador a la derecha (blanco) */
+.insignia-ahorro {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  border: 1px solid #ff9d00;
+  border-radius: 6px;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+.insignia-ahorro .lado-izquierdo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ff7a00;
+  color: #fff;
+  padding: 1px 4px; /* menos padding lateral */
+}
+
+.insignia-ahorro .lado-derecho {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #ffffff;
+  color: #ff7a00;
+  padding: 1px 4px; /* menos padding lateral */
+  border-left: 1px solid #ffd1a8;
+}
+
+.insignia-ahorro .tiempo {
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+}
+
+.escasez {
+  font-size: 12px;
+  color: #c05a00;
+  background: #fff5eb;
+  border: 1px solid #ffd8b4;
+  border-radius: 8px;
+  padding: 4px 6px; /* menos padding para ocupar menos ancho */
+  font-weight: 600;
+}
+
+/* Mostrar ventas junto a estrellas: reglas consolidadas en el breakpoint 765px arriba */
+/* ==== Ajustes Temu: colores de precio y botón junto al precio ==== */
+.precio-actual.naranja { color: #ff7a00; }
+.precio-actual.negro { color: #111; }
+
+.btn-precio-accion {
+  margin-left: auto;
+  padding: 4px 8px;
+  font-size: 11px;
+  border: 1px solid #d9dee7;
+  border-radius: 999px;
+  background: #fff;
+  color: #333;
+  line-height: 1;
+}
+.btn-precio-accion.ver { border-color: #d9dee7; }
+.btn-precio-accion.agregar { border-color: #d9dee7; }
+
+/* Compactaciones adicionales generales */
+.contenido-lujo > * { margin: 0; }
+.fila-titulo .nombre-producto { margin: 0; }
+
+
+/* ==== Mejorar legibilidad del precio y botón ==== */
+.precio { align-items: center; }
+.btn-precio-accion { flex-shrink: 0; min-width: 68px; text-align: center; }
+
+
+
+
+.precio { display: flex; justify-content: space-between; }
+.precio-info { display: inline-flex; align-items: baseline; gap: 6px; }
+
+/* Reglas finales para asegurar que el botón no se salga y el precio no se desborde */
+.precio-info { flex: 1 1 auto; min-width: 0; white-space: nowrap; }
+
+
+/* Eliminado: 520px consolidado en 480px */
+
+
+
+
+/* Compactar aún más el botón 'Agregar' y ampliar espacio del precio */
+.btn-precio-accion.agregar { padding: 2px 6px; min-width: 54px; }
+
+
+/* Eliminado: 430px y 360px consolidados en 480px */
+
+
+/* Reglas compactas para móvil: asegurar que el precio completo se vea */
+@media (max-width: 480px) {
+  .tarjeta-lujo .precio { gap: 3px; align-items: baseline; }
+  .tarjeta-lujo .precio-info { gap: 3px; white-space: nowrap; max-width: calc(100% - 46px);  }
+  .tarjeta-lujo .precio .precio-actual { font-size: 14px; letter-spacing: -0.5px; line-height: 1; }
+  .tarjeta-lujo .precio .precio-original { font-size: 9px; line-height: 1; }
+  .tarjeta-lujo .btn-precio-accion { font-size: 10px; padding: 5px 6px; min-width: 46px; }
+}
+
+
+

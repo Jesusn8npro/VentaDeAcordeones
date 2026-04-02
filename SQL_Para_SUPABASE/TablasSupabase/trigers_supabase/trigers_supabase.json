@@ -1,0 +1,128 @@
+[
+  {
+    "schema": "public",
+    "tabla": "carrito",
+    "trigger": "trigger_actualizar_carrito",
+    "definicion_trigger": "CREATE TRIGGER trigger_actualizar_carrito BEFORE UPDATE ON carrito FOR EACH ROW EXECUTE FUNCTION actualizar_timestamp()",
+    "funcion": "actualizar_timestamp",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_timestamp()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.actualizado_el = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "categorias",
+    "trigger": "trigger_actualizar_categorias",
+    "definicion_trigger": "CREATE TRIGGER trigger_actualizar_categorias BEFORE UPDATE ON categorias FOR EACH ROW EXECUTE FUNCTION actualizar_timestamp()",
+    "funcion": "actualizar_timestamp",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_timestamp()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.actualizado_el = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "categorias",
+    "trigger": "trigger_slug_categorias",
+    "definicion_trigger": "CREATE TRIGGER trigger_slug_categorias BEFORE INSERT OR UPDATE ON categorias FOR EACH ROW EXECUTE FUNCTION auto_generar_slug_categoria()",
+    "funcion": "auto_generar_slug_categoria",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.auto_generar_slug_categoria()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    IF NEW.slug IS NULL OR NEW.slug = '' THEN\r\n        NEW.slug := generar_slug(NEW.nombre);\r\n    END IF;\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "favoritos",
+    "trigger": "trigger_update_favoritos_updated_at",
+    "definicion_trigger": "CREATE TRIGGER trigger_update_favoritos_updated_at BEFORE UPDATE ON favoritos FOR EACH ROW EXECUTE FUNCTION update_favoritos_updated_at()",
+    "funcion": "update_favoritos_updated_at",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.update_favoritos_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.updated_at = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "leads_chat",
+    "trigger": "trg_leads_chat_updated_at",
+    "definicion_trigger": "CREATE TRIGGER trg_leads_chat_updated_at BEFORE UPDATE ON leads_chat FOR EACH ROW EXECUTE FUNCTION set_updated_at()",
+    "funcion": "set_updated_at",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.set_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n  NEW.updated_at = NOW();\r\n  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'leads_chat' AND column_name = 'ultima_actualizacion') THEN\r\n    NEW.ultima_actualizacion = NOW();\r\n  END IF;\r\n  RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "pedidos",
+    "trigger": "t_pedidos_updated_at",
+    "definicion_trigger": "CREATE TRIGGER t_pedidos_updated_at BEFORE UPDATE ON pedidos FOR EACH ROW EXECUTE FUNCTION actualizar_updated_at()",
+    "funcion": "actualizar_updated_at",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nbegin\r\n  new.updated_at = now();\r\n  return new;\r\nend;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "producto_imagenes",
+    "trigger": "trigger_update_producto_imagenes_timestamp",
+    "definicion_trigger": "CREATE TRIGGER trigger_update_producto_imagenes_timestamp BEFORE UPDATE ON producto_imagenes FOR EACH ROW EXECUTE FUNCTION update_producto_imagenes_timestamp()",
+    "funcion": "update_producto_imagenes_timestamp",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.update_producto_imagenes_timestamp()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.actualizado_el = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "productos",
+    "trigger": "trigger_actualizar_contador_productos",
+    "definicion_trigger": "CREATE TRIGGER trigger_actualizar_contador_productos AFTER INSERT OR DELETE OR UPDATE ON productos FOR EACH ROW EXECUTE FUNCTION actualizar_contador_productos_categoria()",
+    "funcion": "actualizar_contador_productos_categoria",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_contador_productos_categoria()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    -- Esta función ahora solo registra el cambio sin actualizar contadores\r\n    -- Los contadores se pueden calcular dinámicamente cuando se necesiten\r\n    \r\n    IF TG_OP = 'INSERT' THEN\r\n        RETURN NEW;\r\n    END IF;\r\n    \r\n    IF TG_OP = 'UPDATE' THEN\r\n        RETURN NEW;\r\n    END IF;\r\n    \r\n    IF TG_OP = 'DELETE' THEN\r\n        RETURN OLD;\r\n    END IF;\r\n    \r\n    RETURN NULL;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "productos",
+    "trigger": "trigger_actualizar_productos",
+    "definicion_trigger": "CREATE TRIGGER trigger_actualizar_productos BEFORE UPDATE ON productos FOR EACH ROW EXECUTE FUNCTION actualizar_timestamp()",
+    "funcion": "actualizar_timestamp",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_timestamp()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.actualizado_el = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "productos",
+    "trigger": "trigger_crear_producto_imagenes",
+    "definicion_trigger": "CREATE TRIGGER trigger_crear_producto_imagenes AFTER INSERT ON productos FOR EACH ROW EXECUTE FUNCTION crear_registro_imagenes_automatico()",
+    "funcion": "crear_registro_imagenes_automatico",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.crear_registro_imagenes_automatico()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    -- Crear registro en producto_imagenes cuando se crea un producto\r\n    INSERT INTO producto_imagenes (producto_id, estado)\r\n    VALUES (NEW.id, 'pendiente');\r\n    \r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "productos",
+    "trigger": "trigger_slug_productos",
+    "definicion_trigger": "CREATE TRIGGER trigger_slug_productos BEFORE INSERT OR UPDATE ON productos FOR EACH ROW EXECUTE FUNCTION auto_generar_slug_producto()",
+    "funcion": "auto_generar_slug_producto",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.auto_generar_slug_producto()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    IF NEW.slug IS NULL OR NEW.slug = '' THEN\r\n        NEW.slug := generar_slug(NEW.nombre);\r\n    END IF;\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "tareas_calendario",
+    "trigger": "tareas_calendario_actualizar_updated_at",
+    "definicion_trigger": "CREATE TRIGGER tareas_calendario_actualizar_updated_at BEFORE UPDATE ON tareas_calendario FOR EACH ROW EXECUTE FUNCTION actualizar_updated_at()",
+    "funcion": "actualizar_updated_at",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nbegin\r\n  new.updated_at = now();\r\n  return new;\r\nend;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "usuarios",
+    "trigger": "proteger_cambio_rol_usuarios",
+    "definicion_trigger": "CREATE TRIGGER proteger_cambio_rol_usuarios BEFORE UPDATE ON usuarios FOR EACH ROW EXECUTE FUNCTION proteger_cambio_rol_usuarios()",
+    "funcion": "proteger_cambio_rol_usuarios",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.proteger_cambio_rol_usuarios()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n  IF NEW.rol IS DISTINCT FROM OLD.rol THEN\r\n    -- Permitir cambios cuando no hay JWT (SQL Editor/Service role)\r\n    IF auth.uid() IS NULL THEN\r\n      RETURN NEW;\r\n    END IF;\r\n\r\n    -- Bloquear cambios si el usuario actual no es admin\r\n    IF NOT EXISTS (\r\n      SELECT 1 FROM public.usuarios u\r\n      WHERE u.id = auth.uid() AND u.rol = 'admin'\r\n    ) THEN\r\n      RAISE EXCEPTION 'Solo admin puede cambiar el rol';\r\n    END IF;\r\n  END IF;\r\n  RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  },
+  {
+    "schema": "public",
+    "tabla": "usuarios",
+    "trigger": "trigger_actualizar_usuarios",
+    "definicion_trigger": "CREATE TRIGGER trigger_actualizar_usuarios BEFORE UPDATE ON usuarios FOR EACH ROW EXECUTE FUNCTION actualizar_timestamp()",
+    "funcion": "actualizar_timestamp",
+    "definicion_funcion": "CREATE OR REPLACE FUNCTION public.actualizar_timestamp()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\r\nBEGIN\r\n    NEW.actualizado_el = NOW();\r\n    RETURN NEW;\r\nEND;\r\n$function$\n",
+    "habilitado": "O"
+  }
+]

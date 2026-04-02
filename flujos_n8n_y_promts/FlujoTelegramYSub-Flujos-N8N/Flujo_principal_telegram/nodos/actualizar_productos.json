@@ -1,0 +1,101 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "description": "🚨 HERRAMIENTA CRÍTICA PARA ACTUALIZAR PRODUCTOS, IMÁGENES Y VIDEOS 🚨\n\nREGLAS OBLIGATORIAS GENERALES:\n1. ✅ SIEMPRE usar consultar_productos ANTES de actualizar\n2. ✅ CONFIRMAR con el usuario: ID del producto, campo a actualizar y nuevo valor\n3. ✅ tipo_actualizacion SOLO puede ser: \"producto\", \"imagen\" o \"video\"\n4. ✅ Para campos complejos (JSON): SIEMPRE devolver OBJETO JSON COMPLETO, nunca texto escapado\n\nREGLAS PARA IMÁGENES (producto_imagenes):\n- Campos típicos: imagen_principal, imagen_secundaria_1..4, imagen_punto_dolor_1..2, imagen_solucion_1..2, imagen_testimonio_persona_1..3, imagen_testimonio_producto_1..3, imagen_caracteristicas, imagen_garantias, imagen_cta_final\n- Campo estado: valores permitidos -> \"pendiente\", \"procesando\", \"completado\"\n- Para puntos_dolor: SOLO usar iconos de caras básicas (😀😃😄😁😊😍😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🤩🥳😏😒😞😔😟😕🙁😣😖😫😩🥺😢😭😤😠😡🤬🤯😳🥵🥶😱😨😰😥😓🤗🤔🤭🤫🤥😶😐😑😬🙄😯😦😧😮😲🥱😴🤤😪😵🤐🥴🤢🤮🤧😷🤒🤕)\n- Para puntos_dolor: textoBoton DEBE variar entre: \"VER SOLUCIÓN\", \"DESCUBRE CÓMO\", \"CONOCE MÁS\", \"SABER MÁS\"\n- NUNCA usar iconos problemáticos: 🔋🔒💔🚫💧⚡🛡️📱💻🎮🎯\n\nREGLAS PARA PRODUCTOS (productos):\n- tipo_actualizacion = \"producto\"\n- Campos típicos: nombre, descripcion, beneficios, anuncio_1, anuncio_2, anuncio_3, testimonio, extra, estado\n- Campo estado: valores permitidos -> \"pendiente\", \"procesando\", \"completado\"\n- Para campos tipo texto largo o JSON (beneficios, testimonio, extra): devolver siempre el contenido limpio, bien estructurado, sin caracteres escapados\n\nREGLAS PARA VIDEOS (producto_videos):\n- tipo_actualizacion = \"video\"\n- ANTES de actualizar SIEMPRE usar la herramienta consultar_videos con el producto_id\n- Mostrar al usuario la lista de videos con: id, url_publica, titulo, descripcion, estado, activo, para_whatsapp\n- Preguntar SIEMPRE: sobre cuál video quiere hacer el cambio (por id del video) y qué campo de ese video quiere actualizar\n- Recordar y repetir al usuario la url_publica actual del video antes de reemplazarla\n- Campos que se pueden actualizar: url_publica, miniatura_url, titulo, descripcion, estado, para_whatsapp, activo\n- Campo estado en producto_videos: valores permitidos -> \"pendiente\", \"procesando\", \"completado\"\n- Campos que normalmente NO se tocan: bucket, ruta_storage, mime_type, tipo, creado_el, actualizado_el, tamanio_bytes, duracion_segundos, ancho, alto\n\nSIEMPRE validar que el campo_a_actualizar exista en la tabla correspondiente según tipo_actualizacion. SI NO estás seguro, PREGUNTA al usuario antes de actualizar.",
+        "workflowId": {
+          "__rl": true,
+          "value": "ioOUYjzmWWHeH5oc",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/ioOUYjzmWWHeH5oc",
+          "cachedResultName": "🎞️Actualizador_de_productos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id_del_producto_para_actualizar": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_del_producto_para_actualizar', 'El ID real del producto (UUID) obtenido de la herramienta consultar_productos. Debe ser un ID existente y confirmado con el usuario antes de actualizar.', 'string') }}",
+            "campo_a_actualizar": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('campo_a_actualizar', 'Nombre EXACTO de la columna que se desea actualizar, según el tipo_actualizacion.\\n\\nSi tipo_actualizacion = \"producto\": campos típicos -> nombre, descripcion, beneficios, anuncio_1, anuncio_2, anuncio_3, testimonio, extra, estado.\\nSi tipo_actualizacion = \"imagen\": campos típicos en producto_imagenes -> imagen_principal, imagen_secundaria_1..4, imagen_punto_dolor_1..2, imagen_solucion_1..2, imagen_testimonio_persona_1..3, imagen_testimonio_producto_1..3, imagen_caracteristicas, imagen_garantias, imagen_cta_final, estado.\\nSi tipo_actualizacion = \"video\": campos típicos en producto_videos -> url_publica, miniatura_url, titulo, descripcion, estado, para_whatsapp, activo.\\nSiempre usar el nombre de columna tal como existe en la base de datos.', 'string') }}",
+            "nuevo_valor": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nuevo_valor', '🚨 INFORMACIÓN PARA REEMPLAZAR EL VALOR 🚨\\n\\nPara puntos_dolor (producto_imagenes):\\n- OBJETO JSON COMPLETO con titulo, timeline (4 elementos), subtitulo.\\n- Iconos SOLO de caras básicas: 😀😃😄😁😊😍😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🤩🥳😏😒😞😔😟😕🙁😣😖😫😩🥺😢😭😤😠😡🤬🤯😳🥵🥶😱😨😰😥😓🤗🤔🤭🤫🤥😶😐😑😬🙄😯😦😧😮😲🥱😴🤤😪😵🤐🥴🤢🤮🤧😷🤒🤕\\n- textoBoton variado: VER SOLUCIÓN, DESCUBRE CÓMO, CONOCE MÁS, SABER MÁS.\\n- NUNCA usar iconos: 🔋🔒💔🚫💧⚡🛡️📱💻🎮🎯.\\n- NUNCA solo el array timeline.\\n- NUNCA string escapado.\\n\\nPara campos de producto (productos):\\n- Devolver el texto limpio o el JSON completo según el campo (ej: beneficios, anuncio_1, anuncio_2, anuncio_3, testimonio, extra).\\n- Para estado: SOLO usar \"pendiente\", \"procesando\" o \"completado\".\\n\\nPara videos (producto_videos):\\n- Si actualizas url_publica: debe ser una URL válida del video (normalmente de Supabase Storage).\\n- Si actualizas miniatura_url: URL de imagen válida.\\n- Si actualizas titulo o descripcion: texto claro y coherente con el video.\\n- Si actualizas estado: SOLO usar \"pendiente\", \"procesando\" o \"completado\".\\n- Si actualizas para_whatsapp o activo: usar true o false (booleanos).\\n\\nPara otros campos: devolver siempre el valor final EXACTO que se quiera guardar, sin caracteres escapados y con estructura correcta.', 'string') }}",
+            "tipo_actualizacion": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tipo_actualizacion', `Indica qué se desea actualizar. Valores válidos: \"producto\", \"imagen\" o \"video\".\\\\- \"producto\": actualiza campos de la tabla productos (ej: nombre, descripcion, beneficios, anuncio_1, anuncio_2, anuncio_3, testimonio, extra, estado).\\\\- \"imagen\": actualiza campos de la tabla producto_imagenes (URLs de imágenes, puntos de dolor, testimonios visuales, estado, etc.).\\\\- \"video\": actualiza campos de la tabla producto_videos (url_publica, miniatura_url, titulo, descripcion, estado, para_whatsapp, activo).\\\\Si el usuario no especifica claramente qué tipo es, debes preguntarle antes de continuar.\n\nSi lo que vas a actualizar esta en la tabla de video, envia tipo de actualizacion video, si es imagen envia imagen, y si es informacion del producto debes enviar producto`, 'string') }}",
+            "de_que_trata_el_producto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('de_que_trata_el_producto', 'Breve descripción de qué trata el producto (ej: tipo de producto, uso principal, beneficio clave). Esto sirve como contexto para generar textos o valores coherentes al actualizar.', 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "id_del_producto_para_actualizar",
+              "displayName": "id_del_producto_para_actualizar",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "campo_a_actualizar",
+              "displayName": "campo_a_actualizar",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "nuevo_valor",
+              "displayName": "nuevo_valor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "tipo_actualizacion",
+              "displayName": "tipo_actualizacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "de_que_trata_el_producto",
+              "displayName": "de_que_trata_el_producto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        352
+      ],
+      "id": "39494e74-74d0-42f0-9d7a-3d0dac00f4be",
+      "name": "Actualizador_de_productos1"
+    }
+  ],
+  "connections": {
+    "Actualizador_de_productos1": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

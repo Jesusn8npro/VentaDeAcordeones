@@ -1,0 +1,111 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "description": "🖼️ EDITAR IMAGEN - PROTOCOLO ESTRICTO OBLIGATORIO\n\n🚨 REGLAS CRÍTICAS ANTES DE USAR ESTA HERRAMIENTA:\n\n1. **NUNCA USAR SIN PREPARACIÓN PREVIA** - Esta herramienta SOLO se ejecuta después de completar TODOS los pasos obligatorios\n\n2. **PASO OBLIGATORIO 1 - BUSCAR IMAGEN REAL:**\n   - SIEMPRE usar 'Buscar Archivos Originales' PRIMERO\n   - Obtener: ID real, nombre real (.jpg), URL completa real\n   - NUNCA continuar sin estos datos reales\n\n3. **PASO OBLIGATORIO 2 - CONSULTAR PRODUCTO REAL:**\n   - SIEMPRE usar 'consultar_productos' con nombre EXACTO del producto\n   - Obtener UUID real del producto de la base de datos\n   - NUNCA inventar o asumir el id_del_producto\n   - EJEMPLO: Si es para 'Camiseta Azul', consultar exactamente 'Camiseta Azul'\n\n4. **PASO OBLIGATORIO 3 - CONSULTAR CONTENIDO (SI ES IMAGEN TEMÁTICA):**\n   - Para PUNTOS DE DOLOR: Consultar qué dice en 'puntos_de_dolor' del producto\n   - Para CARACTERÍSTICAS: Consultar características específicas del producto\n   - Para TESTIMONIOS: Consultar contenido de testimonios\n   - Generar prompt basado en contenido REAL consultado\n\n5. **FORMATO URL CORRECTO:**\n   - URL exacta: https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/public/imagenes/nombre-real.jpg\n   - NUNCA duplicar 'imagenes' en la URL\n   - Usar SOLO el nombre real obtenido con 'Buscar Archivos Originales'\n\n🚨 ESTA HERRAMIENTA SE EJECUTA SOLO DESPUÉS DE COMPLETAR TODOS LOS PASOS ANTERIORES",
+        "workflowId": {
+          "__rl": true,
+          "value": "jQoi0yBKSPgGJVdx",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/jQoi0yBKSPgGJVdx",
+          "cachedResultName": "Editar Imagenes Supabase"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tipo_de_imagen": "={{ $fromAI('tipo_de_imagen', `Tipo de imagen (ej: imagen_principal, imagen_punto_dolor_1)`, 'string') }}",
+            "PromtParaEditarLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('PromtParaEditarLaImagen', `🚨 PROMPT OBLIGATORIO BASADO EN CONTENIDO REAL: Si es imagen temática (puntos de dolor, características, testimonios), PRIMERO consultar el contenido específico del producto usando 'consultar_productos' y generar el prompt basado en esa información REAL. Para otras imágenes, crear prompt detallado, descriptivo y realista. SIEMPRE en español sin fallas.`, 'string') }}",
+            "IdDeLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('IdDeLaImagen', `🚨 ID REAL OBLIGATORIO: NUNCA inventar este ID. SIEMPRE obtener usando 'Buscar Archivos Originales' PRIMERO. Este debe ser el ID real de la imagen en Supabase.`, 'string') }}",
+            "id_del_producto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('id_del_producto', `🚨 UUID REAL OBLIGATORIO: NUNCA inventar este UUID. SIEMPRE usar 'consultar_productos' con el nombre EXACTO del producto ANTES de usar esta herramienta. Obtener el UUID real de la base de datos. EJEMPLO: Si es para 'Camiseta Azul', consultar exactamente 'Camiseta Azul' primero.`, 'string') }}",
+            "url_de_la_imagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('url_de_la_imagen', `🚨 URL REAL OBLIGATORIA: NUNCA inventar esta URL. SIEMPRE usar 'Buscar Archivos Originales' PRIMERO para obtener la URL real completa. Formato correcto: https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/public/imagenes/nombre-real.jpg - NO duplicar 'imagenes' en la URL. Usar SOLO el nombre real terminado en .jpg obtenido de la herramienta de búsqueda.`, 'string') }}",
+            "nombre_para_la_nueva_imagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('nombre_para_la_nueva_imagen', `el nombre para la nueva imagen sin espacios , sin tildes, sin mayusculas, sin \"ñ\" por ejemplo : nueva-imagen , siempre crea nombres diferentes para cada imagen por favor, en cada ejecucion cambia el nombre de la imagen por favor siempre varia los nombres nunca los repitas`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "PromtParaEditarLaImagen",
+              "displayName": "PromtParaEditarLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "IdDeLaImagen",
+              "displayName": "IdDeLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "tipo_de_imagen",
+              "displayName": "tipo_de_imagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "id_del_producto",
+              "displayName": "id_del_producto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "nombre_para_la_nueva_imagen",
+              "displayName": "nombre_para_la_nueva_imagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "url_de_la_imagen",
+              "displayName": "url_de_la_imagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -128,
+        352
+      ],
+      "id": "c3b6cdbb-7024-484f-ba3e-9c155add7bc7",
+      "name": "editar_imagen2"
+    }
+  ],
+  "connections": {
+    "editar_imagen2": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

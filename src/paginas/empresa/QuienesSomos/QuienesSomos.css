@@ -1,0 +1,285 @@
+/* About - Lujo con clases únicas (prefijo luxAbout) */
+.luxAbout {
+  --about-bg: #f6f8fc;
+  --about-card: #ffffff;
+  --about-border: #e5e7eb;
+  --about-text: #0f172a;
+  --about-muted: #64748b;
+  --about-primary: #111827;
+  --about-accent: #0ea5e9;
+  --about-success: #22c55e;
+
+  min-height: 80vh;
+  background: radial-gradient(1200px circle at 10% 10%, #f8fafc 0, #eef2f7 35%, #e8edf3 70%, #e2e8f0 100%);
+  padding: 2rem 1rem 4rem;
+}
+
+.luxAbout-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Hero */
+.luxAbout-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.luxAbout-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  background: #f1f5f9;
+  border: 1px solid var(--about-border);
+  color: var(--about-text);
+}
+
+.luxAbout-title {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.luxAbout-title span {
+  background: linear-gradient(90deg, #0f172a 0%, #334155 50%, #64748b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.luxAbout-subtitle {
+  font-size: 1.0625rem;
+  color: var(--about-muted);
+}
+
+.luxAbout-cta {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.luxAbout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.625rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.luxAbout-btn-primary { background: var(--about-primary); color: #fff; }
+.luxAbout-btn-primary:hover { background: #1f2937; transform: translateY(-1px); }
+.luxAbout-btn-secondary { background: #fff; color: var(--about-text); border-color: var(--about-border); }
+.luxAbout-btn-secondary:hover { background: #f8fafc; }
+
+/* Stats */
+.luxAbout-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.luxAbout-stat-card {
+  background: var(--about-card);
+  border: 1px solid var(--about-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.luxAbout-stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.luxAbout-stat-label {
+  font-size: 0.9375rem;
+  color: var(--about-muted);
+}
+
+/* Valores */
+.luxAbout-section-head {
+  display: grid;
+  grid-template-columns: 24px auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+
+.luxAbout-section-head h2 { font-size: 1.5rem; font-weight: 700; margin: 0; }
+.luxAbout-section-head p { margin: 0; color: var(--about-muted); }
+
+.luxAbout-values { margin-bottom: 1.5rem; }
+.luxAbout-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.luxAbout-value-card {
+  background: var(--about-card);
+  border: 1px solid var(--about-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.luxAbout-value-icon { color: var(--about-text); margin-bottom: 0.5rem; }
+.luxAbout-value-title { font-weight: 700; margin: 0 0 0.25rem; }
+.luxAbout-value-desc { color: var(--about-muted); margin: 0; }
+
+/* Historia */
+.luxAbout-story { margin-bottom: 1.5rem; }
+.luxAbout-story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.luxAbout-story-card {
+  background: var(--about-card);
+  border: 1px solid var(--about-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.luxAbout-story-card h3 { margin: 0 0 0.25rem; font-size: 1.125rem; }
+.luxAbout-story-card p { margin: 0; color: var(--about-muted); }
+
+/* Equipo */
+.luxAbout-team { margin-bottom: 1.5rem; }
+.luxAbout-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.luxAbout-team-card {
+  background: var(--about-card);
+  border: 1px solid var(--about-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.luxAbout-team-name { font-weight: 700; margin: 0 0 0.25rem; }
+.luxAbout-team-role { color: var(--about-text); font-weight: 600; margin: 0 0 0.25rem; }
+.luxAbout-team-desc { color: var(--about-muted); margin: 0; }
+
+/* Contacto */
+.luxAbout-contact-card {
+  background: var(--about-card);
+  border: 1px solid var(--about-border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.luxAbout-contact-info { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+.luxAbout-contact-item { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--about-muted); justify-content: center; }
+.luxAbout-contact-actions { display: flex; gap: 0.75rem; justify-content: center; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .luxAbout-values-grid,
+  .luxAbout-story-grid,
+  .luxAbout-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .luxAbout-title { font-size: 2.25rem; }
+  .luxAbout-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .luxAbout-values-grid,
+  .luxAbout-story-grid,
+  .luxAbout-team-grid { grid-template-columns: 1fr; }
+  .luxAbout-contact-info { grid-template-columns: 1fr; }
+}
+
+
+.whatsapp-button:hover {
+  background: #128c7e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .quienes-container {
+    padding: 0 1rem;
+  }
+  
+  .quienes-hero {
+    padding: 4rem 0 3rem;
+  }
+  
+  .quienes-title {
+    font-size: 2.5rem;
+  }
+  
+  .mision-vision-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .mision-card,
+  .vision-card {
+    padding: 2rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .valores-grid,
+  .equipo-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .valor-card,
+  .equipo-card {
+    padding: 2rem;
+  }
+  
+  .contacto-card {
+    padding: 2rem;
+  }
+  
+  .contacto-title {
+    font-size: 2rem;
+  }
+  
+  .contacto-text {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quienes-title {
+    font-size: 2rem;
+  }
+  
+  .section-title {
+    font-size: 1.75rem;
+  }
+  
+  .contacto-card {
+    padding: 1.5rem;
+  }
+  
+  .contacto-title {
+    font-size: 1.75rem;
+  }
+  
+  .whatsapp-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}

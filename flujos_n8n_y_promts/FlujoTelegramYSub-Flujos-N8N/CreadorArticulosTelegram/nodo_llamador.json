@@ -1,0 +1,46 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "tema_del_articulo"
+            },
+            {
+              "name": "tamano_del_articulo"
+            },
+            {
+              "name": "cuantas_imagenes"
+            },
+            {
+              "name": "tipo_de_contenido"
+            },
+            {
+              "name": "titulo_del_blog"
+            }
+          ]
+        }
+      },
+      "id": "004e3b9e-9990-4451-895f-6905b308448c",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -1856,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

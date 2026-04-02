@@ -1,0 +1,88 @@
+.admin-blog-container {
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.admin-blog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.admin-blog-header h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.btn-crear-articulo {
+  background-color: #007bff;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-crear-articulo:hover {
+  background-color: #0056b3;
+}
+
+.error-mensaje {
+  color: #d9534f;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+}
+
+.lista-articulos table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lista-articulos th,
+.lista-articulos td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.lista-articulos th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.estado-publicacion {
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.estado-publicacion.publicado {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.estado-publicacion.borrador {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.btn-editar {
+  background-color: #ffc107;
+  color: #212529;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+  background-color: #e0a800;
+}

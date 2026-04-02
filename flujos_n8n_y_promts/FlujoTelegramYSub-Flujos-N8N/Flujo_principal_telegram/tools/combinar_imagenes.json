@@ -1,0 +1,487 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6831d021-c2d0-42a4-b625-aabfed3d170b",
+              "name": "images",
+              "value": "=['{{ $json.UrlImagen1 }}','{{ $json.UrlImagen2 }}']",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1072,
+        96
+      ],
+      "id": "c711bb0d-1f10-44f9-8c64-7fe765fd95dd",
+      "name": "Editar Campos"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "images",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        96
+      ],
+      "id": "394ecd21-5b2e-4ddd-8ff1-2f75536d5e34",
+      "name": "Dividir"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/nano-banana/edit",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key 21f46ed9-0225-40f6-9ffc-25661e559c38:851595cba3c58067fd73c650a492aeb7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "=json",
+        "specifyBody": "json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"prompt\": \"{{ \n  $('When Executed by Another Workflow').item.json.prompt.replace(/\\\"/g, '\\\\\\\"').replace(/(\\r\\n|\\n|\\r)/g, '\\\\n') }}}}\",\n  \"image_urls\": [\n    \"{{ $('Editar Campos').item.json.images[0] }}\",\n    \"{{ $('Editar Campos').item.json.images[1] }}\"\n  ],\n  \"num_images\": 1,\n  \"output_format\": \"jpeg\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -496,
+        96
+      ],
+      "id": "33a8b56d-048c-41a5-b39c-2243a68a0a32",
+      "name": "Crear Imagen"
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/nano-banana/requests/{{ $json.request_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key 21f46ed9-0225-40f6-9ffc-25661e559c38:851595cba3c58067fd73c650a492aeb7"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        64,
+        96
+      ],
+      "id": "800ff63c-51b4-4fba-9eec-8358f27e1106",
+      "name": "Obtener Resultado",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images[0].url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        352,
+        -32
+      ],
+      "id": "3c50dd1c-03ed-4641-a677-245258a8580f",
+      "name": "Descargar Imagen"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        96
+      ],
+      "id": "7cc5d7e2-b18e-4e26-a2c9-7f0d2839b542",
+      "name": "10 Segundos",
+      "webhookId": "caad73e3-58d8-4fbd-a3e9-c42424f2d1ee"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        352,
+        224
+      ],
+      "id": "a1f42cad-4251-47ed-a306-aff7ee5dcb9d",
+      "name": "5 Segundos",
+      "webhookId": "5f6bbd1e-a155-48de-b737-a225c6fd7a84"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "prompt"
+            },
+            {
+              "name": "UrlImagen2"
+            },
+            {
+              "name": "UrlImagen1"
+            },
+            {
+              "name": "TituloDeLaImagen"
+            },
+            {
+              "name": "IdDelProducto"
+            },
+            {
+              "name": "TipoDeImagen"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1296,
+        96
+      ],
+      "id": "f529d5b6-7943-4ef3-b857-9d60f7d8133a",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -720,
+        96
+      ],
+      "id": "40c162bc-3d5c-4ac8-851e-07be3e574ff7",
+      "name": "Descargar desde Supabase1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "producto_imagenes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $('When Executed by Another Workflow').item.json.IdDelProducto }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        944,
+        -32
+      ],
+      "id": "9fcf580f-394c-4497-953e-3e3ce19d381c",
+      "name": "Buscar Producto Imágenes",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "producto_imagenes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $('When Executed by Another Workflow').item.json.id_del_producto }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $('When Executed by Another Workflow').item.json.tipo_de_imagen }}",
+              "fieldValue": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/public/imagenes/{{ $('When Executed by Another Workflow').item.json.nombre_para_la_nueva_imagen }}.jpg"
+            },
+            {
+              "fieldId": "total_imagenes_generadas",
+              "fieldValue": "={{ $('Buscar Producto Imágenes').item.json.total_imagenes_generadas + 1 }}"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "completado"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        -32
+      ],
+      "id": "fc3f83cc-4fcc-40ee-b301-957ca5e0d2d7",
+      "name": "Actualizar Contador1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "producto_imagenes",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.producto_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $('When Executed by Another Workflow').item.json.tipo_de_imagen }}",
+              "fieldValue": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes/{{ $('When Executed by Another Workflow').item.json.nombre_para_la_nueva_imagen }}.jpg"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "procesando"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        -32
+      ],
+      "id": "90c8cfa2-0564-49af-ae15-5596e06f501e",
+      "name": "Actualizar Imagen Supabase1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes/{{ $('When Executed by Another Workflow').item.json.TituloDeLaImagen }}.jpg",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        624,
+        -32
+      ],
+      "id": "2bfbac32-05c0-49cf-b079-c46af4570d24",
+      "name": "Subir a Supabase3",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Editar Campos": {
+      "main": [
+        [
+          {
+            "node": "Dividir",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dividir": {
+      "main": [
+        [
+          {
+            "node": "Descargar desde Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Imagen": {
+      "main": [
+        [
+          {
+            "node": "10 Segundos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Resultado": {
+      "main": [
+        [
+          {
+            "node": "Descargar Imagen",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "5 Segundos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar Imagen": {
+      "main": [
+        [
+          {
+            "node": "Subir a Supabase3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "10 Segundos": {
+      "main": [
+        [
+          {
+            "node": "Obtener Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5 Segundos": {
+      "main": [
+        [
+          {
+            "node": "Obtener Resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Editar Campos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar desde Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Crear Imagen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Producto Imágenes": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Imagen Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Imagen Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Contador1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subir a Supabase3": {
+      "main": [
+        [
+          {
+            "node": "Buscar Producto Imágenes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

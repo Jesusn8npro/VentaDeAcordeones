@@ -1,0 +1,98 @@
+[
+  {
+    "pos": 1,
+    "nombre": "id",
+    "tipo": "uuid",
+    "nulable": "NO",
+    "defecto": "uuid_generate_v4()",
+    "comentario": null
+  },
+  {
+    "pos": 2,
+    "nombre": "nombre",
+    "tipo": "character varying",
+    "nulable": "NO",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 3,
+    "nombre": "slug",
+    "tipo": "character varying",
+    "nulable": "NO",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 4,
+    "nombre": "descripcion",
+    "tipo": "text",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 5,
+    "nombre": "icono",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 6,
+    "nombre": "imagen_url",
+    "tipo": "text",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 7,
+    "nombre": "destacado",
+    "tipo": "boolean",
+    "nulable": "YES",
+    "defecto": "false",
+    "comentario": null
+  },
+  {
+    "pos": 8,
+    "nombre": "orden",
+    "tipo": "integer",
+    "nulable": "YES",
+    "defecto": "0",
+    "comentario": null
+  },
+  {
+    "pos": 9,
+    "nombre": "activo",
+    "tipo": "boolean",
+    "nulable": "YES",
+    "defecto": "true",
+    "comentario": null
+  },
+  {
+    "pos": 10,
+    "nombre": "creado_el",
+    "tipo": "timestamp with time zone",
+    "nulable": "YES",
+    "defecto": "now()",
+    "comentario": null
+  },
+  {
+    "pos": 11,
+    "nombre": "actualizado_el",
+    "tipo": "timestamp with time zone",
+    "nulable": "YES",
+    "defecto": "now()",
+    "comentario": null
+  },
+  {
+    "pos": 12,
+    "nombre": "total_productos",
+    "tipo": "integer",
+    "nulable": "YES",
+    "defecto": "0",
+    "comentario": null
+  }
+]

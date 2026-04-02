@@ -1,0 +1,128 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "uuid_generate_v4()"
+  },
+  {
+    "nombre_columna": "numero_pedido",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "usuario_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "nombre_cliente",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "email_cliente",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "telefono_cliente",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "direccion_envio",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "productos",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "subtotal",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "descuento_aplicado",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "0"
+  },
+  {
+    "nombre_columna": "costo_envio",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "0"
+  },
+  {
+    "nombre_columna": "total",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "estado",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "'pendiente'::character varying"
+  },
+  {
+    "nombre_columna": "metodo_pago",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "'epayco'::character varying"
+  },
+  {
+    "nombre_columna": "referencia_pago",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "notas_cliente",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "notas_admin",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "fecha_envio",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "fecha_entrega",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "creado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "actualizado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  }
+]

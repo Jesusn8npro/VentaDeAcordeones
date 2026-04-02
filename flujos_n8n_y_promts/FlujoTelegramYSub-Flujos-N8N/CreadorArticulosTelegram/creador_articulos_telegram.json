@@ -1,0 +1,440 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d68b5fd9-1033-4275-b885-59c5df10db98",
+              "name": "TeQueTrataElArticulo",
+              "value": "={{ $json.TeQueTrataElArticulo }}",
+              "type": "string"
+            },
+            {
+              "id": "31c1c19d-2d4c-47a9-aada-8596b8368478",
+              "name": "tamañoDelArticulo",
+              "value": "={{ $json['tamañoDelArticulo'] }}",
+              "type": "string"
+            },
+            {
+              "id": "cdb5cc52-8281-4572-8214-b59c41f497ed",
+              "name": "CuantasImagenes",
+              "value": "={{ $json.CuantasImagenes }}",
+              "type": "string"
+            },
+            {
+              "id": "8d047064-2273-4bef-a1ae-3da616aa31dc",
+              "name": "TipoDeConrtenido",
+              "value": "={{ $json.TipoDeConrtenido }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Extraer Datos de Entrada",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1504,
+        0
+      ],
+      "id": "ef3bf6d4-6174-4ff0-87de-707220325125"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Modelo Chat Google Gemini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1648,
+        304
+      ],
+      "id": "9c389dd8-ab50-4c5c-8ec6-45d9f950af55",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "afEdUlo465aPlyDq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres el creador de articulos de blog experto en SEO y Copyrigh persuasivo, El usuario quiere un blog sobre esto:  {{ $json.TeQueTrataElArticulo }} el cual quiere que se llame asi: {{ $('When Executed by Another Workflow').item.json.TituloDelBlog }} necesita estas imagenes que las crees por favor: {{ $('When Executed by Another Workflow').item.json.CuantasImagenes }} y este seria el tamaño del articulo {{ $('When Executed by Another Workflow').item.json['tamañoDelArticulo'] }} y el tipo de contenido seria {{ $('When Executed by Another Workflow').item.json.TipoDeConrtenido }}",
+        "options": {
+          "systemMessage": "=# ASISTENTE EXPERTO CREADOR DE ARTÍCULOS - MODO CONVERSACIONAL\n\n## Tu Identidad\nEres un asistente IA experto en redacción de artículos. Tu objetivo es primero conversar con el usuario para entender sus necesidades y luego, cuando tengas toda la información, generar un artículo de alta calidad en formato JSON.\nUsa la herramienta `SerpAPI` para consultar información en internet y la herramienta `CrearImagenesParaBlog` para generar las imágenes del artículo.\nTe comunicas de manera amigable, usando expresiones como 'parcero', 'hermano', o 'mi bro', para generar confianza y motivar al usuario con su tienda MELLEVOESTO.COM.\n\n## Contexto de Sesión\n- Solicitud usuario:\nEl usuario quiere un blog sobre esto:  {{ $json.TeQueTrataElArticulo }} el cual quiere que se llame asi: {{ $('When Executed by Another Workflow').item.json.TituloDelBlog }} necesita estas imagenes que las crees por favor: {{ $('When Executed by Another Workflow').item.json.CuantasImagenes }} y este seria el tamaño del articulo {{ $('When Executed by Another Workflow').item.json['tamañoDelArticulo'] }} y el tipo de contenido seria {{ $('When Executed by Another Workflow').item.json.TipoDeConrtenido }}\n\n## REGLAS ESTRICTAS DE OPERACIÓN\n\n### FASE 1: CONVERSACIÓN (Modo por defecto)\n1.  **Inicio**: Si no estas claro sobre como crear el pregunta sobre qué tema quiere el artículo.\n2.  **Recopilación**: Haz UNA pregunta a la vez para obtener los detalles. (Ej: público objetivo, extensión, palabras clave).\n3.  **Confirmación**: Una vez que tengas el tema claro, confirma con el usuario. Ejemplo: \"¡Listo, parcero! Entonces vamos a crear un artículo sobre 'X'. ¿Quieres que genere unas 3 imágenes para acompañar el texto?\".\n4.  **Transición**: Si el usuario confirma, anuncia que empezarás a crear las imágenes ANTES de escribir el artículo. NO uses la palabra clave `***ARTICULO_LISTO***` en esta fase.\n\n### FASE 2: CREACIÓN DE IMÁGENES (Uso de Herramienta)\n1.  **Activación**: Esta fase se activa después de que el usuario confirma la creación de imágenes.\n2.  **Llamada a Herramienta**: Debes llamar a la herramienta `CrearImagenesParaBlog` UNA VEZ POR CADA IMAGEN que necesites. \n3.  **Parámetros de la Herramienta**:\n    - `DeQueTrataElArticulo`: El tema principal que acordaste con el usuario.\n    - `PromtParaCrearLaImagen`: Un prompt detallado y creativo en español para la imagen. Debe ser diferente para cada imagen. (Ej: \"Fotografía realista de un carro eléctrico moderno cargando en una estación de carga en Bogotá, con los cerros de fondo\".\n    - `NombreParaLaImagen`: Un nombre de archivo único y descriptivo, basado en el slug del artículo y un número. (Ej: `compra-carros-colombia-2025-img-1`).\n4.  **Recopilación de URLs**: La herramienta te devolverá la URL de la imagen ya en Supabase. Debes guardar estas URLs. Anuncia al usuario el progreso, ej: \"¡Imagen 1/3 creada y guardada, mi bro! Voy con la siguiente...\".\n5.  **Finalización**: Cuando tengas TODAS las URLs de las imágenes, pasa a la siguiente fase.\n\n### FASE 3: GENERACIÓN DE ARTÍCULO (Respuesta Final)\n1.  **Activación**: Se activa SOLO cuando ya tienes todas las URLs de las imágenes.\n2.  **Respuesta Final**: Tu respuesta debe ser EXCLUSIVAMENTE: `***ARTICULO_LISTO***` seguido del objeto JSON completo del artículo.\n3.  **¡REGLA CRÍTICA!**: El JSON debe ser puro, sin formato markdown, comentarios, ni los delimitadores ```json o ```. La respuesta debe empezar directamente con `{` después del marcador.\n4.  **Integración de Imágenes**: Usa la URL de la **primera imagen** que generaste para los campos `portada_url` y `og_imagen_url`. Luego, distribuye las imágenes restantes (si las hay) dentro del array `secciones`, asegurándote de que el `tipo` sea `imagen` y que la `url` sea la correcta.\n5.  **No incluyas texto adicional**: La respuesta debe ser solo el marcador y el JSON.\n\n## ESTRUCTURA JSON REQUERIDA\n{\n  \"slug\": \"slug-del-articulo-en-minusculas\",\n  \"titulo\": \"Título Atractivo y Optimizado para SEO\",\n  \"autor_id\": 080c5e86-3c9a-449f-92a0-b92ce3a06845,\n  \"portada_url\": \"URL_DE_SUPABASE_DE_LA_PRIMERA_IMAGEN_GENERADA\",\n  \"resumen_breve\": \"Un resumen corto y conciso del artículo.\",\n  \"resumen_completo\": \"Un resumen más detallado del contenido del artículo.\",\n  \"secciones\": [\n    { \"tipo\": \"encabezado\", \"nivel\": 2, \"contenido\": \"Primer Subtítulo\" },\n    { \"tipo\": \"parrafo\", \"contenido\": \"Párrafo de introducción...\" },\n    { \"tipo\": \"imagen\", \"url\": \"URL_DE_SUPABASE_GENERADA_PARA_LA_SECCION\", \"alt\": \"Descripción de la imagen\" }\n  ],\n  \"cta\": { \"texto_boton\": \"Leer más\", \"url\": \"/contacto\", \"subtexto\": \"Contáctanos\" },\n  \"meta_titulo\": \"Meta Título para SEO\",\n  \"meta_descripcion\": \"Meta Descripción para SEO\",\n  \"meta_keywords\": \"keyword1, keyword2, keyword3\",\n  \"canonical_url\": \"https://example.com/url-canonica\",\n  \"og_titulo\": \"Título para Open Graph\",\n  \"og_descripcion\": \"Descripción para Open Graph\",\n  \"og_imagen_url\": \"USA_LA_MISMA_URL_QUE_PORTADA_URL\",\n  \"twitter_card\": \"summary_large_image\"\n}"
+        }
+      },
+      "name": "Agente IA Conversacional",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -1248,
+        0
+      ],
+      "id": "a142dd70-0439-4e9a-881b-1f878b56fb80"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "articulo-listo-check",
+              "leftValue": "={{ $('Agente IA Conversacional').item.json.output }}",
+              "rightValue": "***ARTICULO_LISTO***",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "¿Es Artículo Completo?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -896,
+        0
+      ],
+      "id": "b5703f6d-3773-4739-b0bd-5793b10864ef"
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawOutput = $input.first().json.output || '';\nconst marker = '***ARTICULO_LISTO***';\nconst jsonStart = rawOutput.indexOf(marker);\n\nif (jsonStart === -1) {\n  return { json: { error: 'Marcador ***ARTICULO_LISTO*** no encontrado.' } };\n}\n\nconst jsonString = rawOutput.substring(jsonStart + marker.length).trim();\n\ntry {\n  const articleJson = JSON.parse(jsonString);\n  return { json: { articulo_generado: articleJson } };\n} catch (error) { \n  return { json: { error: 'Error al parsear el JSON del artículo.', details: error.message, raw: jsonString } };\n}"
+      },
+      "name": "Procesar JSON del Artículo",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        -160
+      ],
+      "id": "c1b86cdf-747e-4149-af5f-670324f4c40d"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        352
+      ],
+      "id": "a7b85169-cfed-425e-b876-47c8a73a35bb",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "8eVV36Lq9ymfrIE3",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Tu funcione es crear las imagenes del articulo que el usuario esta pidiendo ayuda! Debes crear maximo 3 imagenes por articulo para cada seccion!",
+        "workflowId": {
+          "__rl": true,
+          "value": "z00Ozcpd9ebDl9Zx",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/z00Ozcpd9ebDl9Zx",
+          "cachedResultName": "Creador_Imagenes_Articulos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PromtParaCrearLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('PromtParaCrearLaImagen', `Las imagenes todas deben ser completamente en español, deben llamar la atencion del usuario y contener banners y cosas asi par apoyar las imagenes, todo muy realista.\nNo utilices caracteres raros para generar las imagenes ni signos de exclamacion, ni arteriscos ni caracteres raros.`, 'string') }}",
+            "NombreParaLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('NombreParaLaImagen', `En cada peticion siempre usa un nombre diferente sin signos raros ni cosas raras por favor`, 'string') }}",
+            "DeQueTrataElArticulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DeQueTrataElArticulo', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "PromtParaCrearLaImagen",
+              "displayName": "PromtParaCrearLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "NombreParaLaImagen",
+              "displayName": "NombreParaLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "DeQueTrataElArticulo",
+              "displayName": "DeQueTrataElArticulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -1104,
+        320
+      ],
+      "id": "4e6b94c6-688c-443f-831b-c0f4d84ab2a5",
+      "name": "CrearImagenesParaBlog"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "TeQueTrataElArticulo"
+            },
+            {
+              "name": "tamañoDelArticulo"
+            },
+            {
+              "name": "CuantasImagenes"
+            },
+            {
+              "name": "TipoDeConrtenido"
+            },
+            {
+              "name": "TituloDelBlog"
+            }
+          ]
+        }
+      },
+      "id": "004e3b9e-9990-4451-895f-6905b308448c",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -1856,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "articulos_web",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{ $json.articulo_generado.slug }}"
+            },
+            {
+              "fieldId": "titulo",
+              "fieldValue": "={{ $json.articulo_generado.titulo }}"
+            },
+            {
+              "fieldId": "autor",
+              "fieldValue": "={{ $json.articulo_generado.autor }}"
+            },
+            {
+              "fieldId": "autor_iniciales",
+              "fieldValue": "={{ $json.articulo_generado.autor_iniciales }}"
+            },
+            {
+              "fieldId": "lectura_min",
+              "fieldValue": "={{ (function(){ const l = $json.articulo_generado.lectura_min; if (typeof l === 'number' && l >= 0) return l; if (typeof l === 'string' && !isNaN(parseInt(l))) return parseInt(l); return 0; })() }}"
+            },
+            {
+              "fieldId": "calificacion",
+              "fieldValue": "={{ (function(){ const c = $json.articulo_generado.calificacion; if (typeof c === 'number' && c >= 0) return c; if (typeof c === 'string' && !isNaN(parseFloat(c))) return parseFloat(c); return 0; })() }}"
+            },
+            {
+              "fieldId": "autor_id",
+              "fieldValue": "={{ $json.articulo_generado.autor_id }}"
+            },
+            {
+              "fieldId": "portada_url",
+              "fieldValue": "={{ $json.articulo_generado.portada_url }}"
+            },
+            {
+              "fieldId": "resumen_breve",
+              "fieldValue": "={{ $json.articulo_generado.resumen_breve }}"
+            },
+            {
+              "fieldId": "resumen_completo",
+              "fieldValue": "={{ $json.articulo_generado.resumen_completo }}"
+            },
+            {
+              "fieldId": "secciones",
+              "fieldValue": "={{ $json.articulo_generado.secciones }}"
+            },
+            {
+              "fieldId": "cta",
+              "fieldValue": "={{ $json.articulo_generado.cta }}"
+            },
+            {
+              "fieldId": "estado_publicacion",
+              "fieldValue": "={{ $json.articulo_generado.estado_publicacion }}"
+            },
+            {
+              "fieldId": "meta_titulo",
+              "fieldValue": "={{ $json.articulo_generado.meta_titulo }}"
+            },
+            {
+              "fieldId": "meta_descripcion",
+              "fieldValue": "={{ $json.articulo_generado.meta_descripcion }}"
+            },
+            {
+              "fieldId": "meta_keywords",
+              "fieldValue": "={{ $json.articulo_generado.meta_keywords }}"
+            },
+            {
+              "fieldId": "canonical_url",
+              "fieldValue": "={{ $json.articulo_generado.canonical_url }}"
+            },
+            {
+              "fieldId": "og_titulo",
+              "fieldValue": "={{ $json.articulo_generado.og_titulo }}"
+            },
+            {
+              "fieldId": "og_descripcion",
+              "fieldValue": "={{ $json.articulo_generado.og_descripcion }}"
+            },
+            {
+              "fieldId": "og_imagen_url",
+              "fieldValue": "={{ $json.articulo_generado.og_imagen_url }}"
+            },
+            {
+              "fieldId": "twitter_card",
+              "fieldValue": "={{ $json.articulo_generado.twitter_card }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -160
+      ],
+      "id": "639521b9-7b31-4841-bbe3-07dda400805c",
+      "name": "Crear Articulo en Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Extraer Datos de Entrada": {
+      "main": [
+        [
+          {
+            "node": "Agente IA Conversacional",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modelo Chat Google Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente IA Conversacional",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente IA Conversacional": {
+      "main": [
+        [
+          {
+            "node": "¿Es Artículo Completo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Artículo Completo?": {
+      "main": [
+        [
+          {
+            "node": "Procesar JSON del Artículo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar JSON del Artículo": {
+      "main": [
+        [
+          {
+            "node": "Crear Articulo en Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente IA Conversacional",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CrearImagenesParaBlog": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente IA Conversacional",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos de Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

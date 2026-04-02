@@ -1,0 +1,10 @@
+# Configuración optimizada para EasyPanel - Forzar redeploy
+[variables]
+NODE_ENV = "production"
+PORT = "4173"
+
+[phases.build]
+cmd = "npm run build"
+
+[phases.start]
+cmd = "node server.js"

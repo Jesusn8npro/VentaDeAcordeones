@@ -1,0 +1,132 @@
+.formulario-articulo {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.formulario-articulo h2 {
+  font-size: 1.5em;
+  color: #111827;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.form-columna {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grupo label {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.form-grupo input[type="text"],
+.form-grupo textarea,
+.form-grupo select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-grupo input[type="text"]:focus,
+.form-grupo textarea:focus,
+.form-grupo select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.3);
+}
+
+.form-grupo textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-grupo-meta {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.form-grupo-meta h3 {
+  font-size: 1.2em;
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* Estilos para el acordeón */
+.form-grupo-acordeon {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden; /* Para que el borde redondeado se aplique a los hijos */
+}
+
+.form-grupo-acordeon summary {
+  padding: 12px 16px;
+  font-weight: 500;
+  background-color: #f9fafb;
+  cursor: pointer;
+  outline: none;
+  border-bottom: 1px solid #e5e7eb; /* Línea divisoria */
+}
+
+.form-grupo-acordeon[open] summary {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.form-grupo-acordeon > div {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-acciones {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-acciones button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.form-acciones button:hover {
+  background-color: #1d4ed8;
+}
+
+.form-acciones button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}

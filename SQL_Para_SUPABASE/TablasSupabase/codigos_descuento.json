@@ -1,0 +1,140 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "uuid_generate_v4()"
+  },
+  {
+    "nombre_columna": "codigo",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "nombre",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "descripcion",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "tipo_descuento",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "valor_descuento",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "monto_minimo_compra",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "0"
+  },
+  {
+    "nombre_columna": "descuento_maximo",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "fecha_inicio",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "fecha_fin",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "usos_maximos",
+    "tipo_dato": "integer",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "usos_por_usuario",
+    "tipo_dato": "integer",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "1"
+  },
+  {
+    "nombre_columna": "usos_actuales",
+    "tipo_dato": "integer",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "0"
+  },
+  {
+    "nombre_columna": "activo",
+    "tipo_dato": "boolean",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "true"
+  },
+  {
+    "nombre_columna": "solo_primera_compra",
+    "tipo_dato": "boolean",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "false"
+  },
+  {
+    "nombre_columna": "aplicable_envio",
+    "tipo_dato": "boolean",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "false"
+  },
+  {
+    "nombre_columna": "productos_incluidos",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "productos_excluidos",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "categorias_incluidas",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "categorias_excluidas",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "creado_por",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "creado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "actualizado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "uuid_generate_v4()"
+  },
+  {
+    "nombre_columna": "usuario_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "session_id",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "producto_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "cantidad",
+    "tipo_dato": "integer",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "1"
+  },
+  {
+    "nombre_columna": "precio_unitario",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "creado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "actualizado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  }
+]

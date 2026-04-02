@@ -1,0 +1,26 @@
+[
+  {
+    "pos": 1,
+    "nombre": "id",
+    "tipo": "integer",
+    "nulable": "NO",
+    "defecto": "nextval('chats_de_la_web_id_seq'::regclass)",
+    "comentario": null
+  },
+  {
+    "pos": 2,
+    "nombre": "session_id",
+    "tipo": "character varying",
+    "nulable": "NO",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 3,
+    "nombre": "message",
+    "tipo": "jsonb",
+    "nulable": "NO",
+    "defecto": null,
+    "comentario": null
+  }
+]

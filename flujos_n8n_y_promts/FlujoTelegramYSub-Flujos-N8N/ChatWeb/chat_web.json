@@ -1,0 +1,676 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"respuesta\": $json.respuesta_final, \"metadata\": $json.metadata, \"success\": true } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        336,
+        -256
+      ],
+      "id": "eadfb8a2-a8a5-440c-a960-7bb217f475c5",
+      "name": "Responder"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "response-assignment",
+              "name": "respuesta_final",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "metadata-assignment",
+              "name": "metadata",
+              "value": "={{ { chat_id: $('Procesar Datos Entrada').item.json.chat_id, timestamp: new Date().toISOString(), usuario: $('Procesar Datos Entrada').item.json.nombre || 'visitante', autenticado: $('Procesar Datos Entrada').item.json.autenticado } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        128,
+        -256
+      ],
+      "id": "9190f540-7d38-4d6d-ae55-bcf3369f9ed7",
+      "name": "Preparar Respuesta"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "leads_chat",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "chat_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Procesar Datos Entrada').item.json.chat_id || $('Webhook').item.json.body?.chatId || $json.chat_id || $json.chatId }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ $fromAI('nombre', 'Extrae el nombre del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "apellido",
+              "fieldValue": "={{ $fromAI('apellido', 'Extrae el apellido del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $fromAI('email', 'Extrae el email del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "whatsapp",
+              "fieldValue": "={{ $fromAI('whatsapp', 'Extrae el número de WhatsApp del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "={{ $fromAI('ciudad', 'Extrae la ciudad del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "direccion",
+              "fieldValue": "={{ $fromAI('direccion', 'Extrae la dirección del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "tipo_consulta",
+              "fieldValue": "={{ $fromAI('tipo_consulta', 'Determina el tipo de consulta: compra, soporte, envio, devolucion, otro', 'string') }}"
+            },
+            {
+              "fieldId": "intereses_cliente",
+              "fieldValue": "={{ $fromAI('intereses_cliente', 'Extrae los productos o temas de interés del cliente', 'string') }}"
+            },
+            {
+              "fieldId": "metodo_pago_preferido",
+              "fieldValue": "={{ $fromAI('metodo_pago_preferido', 'Extrae el método de pago preferido si se menciona: contraentrega, transferencia, tarjeta, nequi, daviplata, pse', 'string') }}"
+            },
+            {
+              "fieldId": "nivel_interes",
+              "fieldValue": "={{ $fromAI('nivel_interes', 'Evalúa el nivel de interés del cliente del 1 al 10 basado en su entusiasmo', 'number') }}"
+            },
+            {
+              "fieldId": "probabilidad_compra",
+              "fieldValue": "={{ $fromAI('probabilidad_compra', 'Evalúa la probabilidad de compra del 0 al 100 basado en el comportamiento', 'number') }}"
+            },
+            {
+              "fieldId": "valor_potencial",
+              "fieldValue": "={{ $fromAI('valor_potencial', 'Estima el valor potencial de compra en pesos colombianos', 'number') }}"
+            },
+            {
+              "fieldId": "urgencia_compra",
+              "fieldValue": "={{ $fromAI('urgencia_compra', 'Evalúa la urgencia: inmediata, alta, media, baja', 'string') }}"
+            },
+            {
+              "fieldId": "principales_objeciones",
+              "fieldValue": "={{ $fromAI('principales_objeciones', 'Identifica las principales objeciones del cliente si las hay', 'string') }}"
+            },
+            {
+              "fieldId": "miedos_cliente",
+              "fieldValue": "={{ $fromAI('miedos_cliente', 'Identifica los miedos o preocupaciones del cliente', 'string') }}"
+            },
+            {
+              "fieldId": "tecnicas_persuasion",
+              "fieldValue": "={{ $fromAI('tecnicas_persuasion', 'Registra qué técnicas de persuasión estás usando: escasez, prueba social, valor agregado, etc', 'string') }}"
+            },
+            {
+              "fieldId": "notas_adicionales",
+              "fieldValue": "={{ $fromAI('notas_adicionales', 'Cualquier información adicional relevante sobre el cliente', 'string') }}"
+            },
+            {
+              "fieldId": "precio_maximo_mencionado",
+              "fieldValue": "={{ $fromAI('precio_maximo_mencionado', 'Si el cliente menciona un presupuesto máximo, extráelo', 'number') }}"
+            },
+            {
+              "fieldId": "ultima_actualizacion",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        240,
+        528
+      ],
+      "id": "19cd894b-e7e6-43c4-801e-d6ab386a962f",
+      "name": "actualizar_lead_existente",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "producto_imagenes",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        528
+      ],
+      "id": "420cda2a-18a8-4ab2-8e66-695ea37f9a26",
+      "name": "consultar_imagenes",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "leads_chat",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "chat_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Procesar Datos Entrada').item.json.chat_id || $('Webhook').item.json.body?.chatId || $json.chat_id || $json.chatId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        512
+      ],
+      "id": "dec2b910-3b57-4336-aab3-836a68700b38",
+      "name": "consultar_lead_por_chat_id",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Procesar Datos Entrada').item.json.chat_id || $('Webhook').item.json.body?.chatId || $json.chat_id || $json.chatId || new Date().getTime().toString() }}",
+        "tableName": "chats_de_la_web",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -1248,
+        192
+      ],
+      "id": "60f80cb0-1dd0-415f-81e5-bf2b541d49d8",
+      "name": "Memoria Chat",
+      "credentials": {
+        "postgres": {
+          "id": "SQbjeiNAyY3q7eu9",
+          "name": "Postgrest Me Llevo Esto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -944,
+        208
+      ],
+      "id": "46e1b3d0-4091-4ffb-9396-85eb135dea61",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "BF6TLMzAguxXUoJp",
+          "name": "Api Chat GPT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensaje_del_usuario }}",
+        "options": {
+          "systemMessage": "=# PROMPT OPTIMIZADO PARA CAPTURA AUTOMÁTICA DE LEADS\n\nEres Natalia París 💁‍♀️, la vendedora #1 de MeLlevoEsto.com. Tu ÚNICA misión es VENDER y generar leads de calidad.\n\n🎯 **TU OBJETIVO PRINCIPAL**: Convertir cada conversación en una VENTA o capturar información valiosa del cliente.\n\n## 🔥 CAPTURA AUTOMÁTICA DE LEADS (OBLIGATORIO EN CADA MENSAJE)\n\n### ⚙️ FLUJO AUTOMÁTICO OBLIGATORIO - NUNCA OMITIR:\n\n**🚨 EN CADA MENSAJE DEL USUARIO, DEBES EJECUTAR ESTE FLUJO EXACTO:**\n\n1. **PASO 1 - OBLIGATORIO**: SIEMPRE llamar `consultar_lead_por_chat_id` PRIMERO\n   - Esto verifica si ya existe un lead con este chat_id\n   - NUNCA omitas este paso, incluso si crees que es un nuevo usuario\n\n2. **PASO 2 - ANÁLISIS**: Analizar el resultado de la consulta:\n   - Si devuelve datos = LEAD EXISTENTE\n   - Si devuelve array vacío = LEAD NUEVO\n\n3. **PASO 3 - EXTRACCIÓN**: Extraer TODOS los datos nuevos del mensaje actual\n   - Busca nombre, apellido, email, WhatsApp, ciudad, dirección, etc.\n   - Identifica intereses, objeciones, nivel de interés, etc.\n\n4. **PASO 4 - DECISIÓN INTELIGENTE**: Usar la herramienta correcta:\n   - **SI consultar_lead_por_chat_id devuelve DATOS (lead existe)**:\n     → Llamar `actualizar_lead_existente` SOLO si hay información nueva de valor\n   - **SI consultar_lead_por_chat_id devuelve VACÍO (lead no existe)**:\n     → Llamar `gestionar_lead_unificado` para crear el nuevo lead\n\n5. **PASO 5 - RESPUESTA**: Responder al usuario con técnicas de venta\n\n### 🔧 HERRAMIENTAS DE GESTIÓN DE LEADS:\n\n**📝 `gestionar_lead_unificado` (CREATE) - SOLO PARA LEADS NUEVOS:**\n- ✅ **USAR CUANDO**: `consultar_lead_por_chat_id` devuelve array vacío `[]`\n- ✅ **PROPÓSITO**: Crear un nuevo registro desde cero\n- ✅ **INCLUYE**: Automáticamente `fecha_primer_contacto` y `chat_id`\n- ❌ **NUNCA USAR**: Si ya existe un lead (array con datos)\n\n**🔄 `actualizar_lead_existente` (UPDATE) - SOLO PARA LEADS EXISTENTES:**\n- ✅ **USAR CUANDO**: `consultar_lead_por_chat_id` devuelve datos existentes\n- ✅ **CONDICIÓN**: SOLO si hay información nueva de valor\n- ✅ **PRESERVA**: Toda la información existente, NO sobrescribe\n- ✅ **ACTUALIZA**: Siempre `ultima_actualizacion` con timestamp actual\n- ❌ **NO USAR**: Si el mensaje no aporta datos nuevos\n\n### 📋 EJEMPLOS PRÁCTICOS DE USO:\n\n**🆕 CASO 1 - LEAD NUEVO (usar gestionar_lead_unificado):**\n```\nUsuario: \"Hola, busco un iPhone\"\nConsulta: consultar_lead_por_chat_id → Resultado: []\nAcción: gestionar_lead_unificado con {chat_id, tipo_consulta: \"compra\", intereses_cliente: \"iPhone\"}\n```\n\n**🔄 CASO 2 - LEAD EXISTENTE CON DATOS NUEVOS (usar actualizar_lead_existente):**\n```\nUsuario: \"Soy Carlos de Bogotá\"\nConsulta: consultar_lead_por_chat_id → Resultado: [{id: 123, chat_id: \"abc\", ...}]\nDatos nuevos: nombre=\"Carlos\", ciudad=\"Bogotá\"\nAcción: actualizar_lead_existente con nuevos datos\n```\n\n**❌ CASO 3 - LEAD EXISTENTE SIN DATOS NUEVOS (NO actualizar):**\n```\nUsuario: \"Gracias\"\nConsulta: consultar_lead_por_chat_id → Resultado: [{id: 123, nombre: \"Carlos\", ...}]\nDatos nuevos: Ninguno\nAcción: NO llamar actualizar_lead_existente, solo responder\n```\n\n### 🧠 LÓGICA DE DECISIÓN OPTIMIZADA PARA ACTUALIZAR:\n\n**🔍 ALGORITMO DE DECISIÓN PASO A PASO:**\n\n1. **VERIFICAR EXISTENCIA**: ¿`consultar_lead_por_chat_id` devuelve datos?\n   - SI = Continuar al paso 2\n   - NO = Usar `gestionar_lead_unificado` (CREATE)\n\n2. **EXTRAER INFORMACIÓN**: ¿El mensaje contiene datos nuevos?\n   - Comparar con datos existentes del lead\n   - Identificar campos que no existen o han cambiado\n\n3. **EVALUAR VALOR**: ¿La información es valiosa para la venta?\n   - Usar criterios específicos de abajo\n   - SI = Usar `actualizar_lead_existente`\n   - NO = Solo responder, NO actualizar\n\n**✅ INFORMACIÓN DE ALTO VALOR (SIEMPRE ACTUALIZAR):**\n- **Datos de contacto**: nombre, apellido, email, WhatsApp, ciudad, dirección\n- **Datos comerciales**: productos específicos mencionados, presupuesto, urgencia\n- **Preferencias**: método de pago, horarios de entrega, especificaciones\n- **Objeciones**: miedos, dudas, comparaciones con competencia\n- **Cambios de estado**: aumento/disminución de interés, decisión de compra\n\n**⚠️ INFORMACIÓN DE VALOR MEDIO (EVALUAR CONTEXTO):**\n- **Preguntas específicas**: sobre garantía, envío, disponibilidad\n- **Comentarios sobre precio**: \"está caro\", \"me parece bien\"\n- **Menciones de terceros**: \"mi esposo dice\", \"mi amiga tiene uno\"\n- **Timeframes**: \"lo necesito para el viernes\", \"no tengo afán\"\n\n**❌ INFORMACIÓN SIN VALOR (NO ACTUALIZAR):**\n- **Saludos básicos**: \"hola\", \"buenas\", \"gracias\", \"ok\"\n- **Confirmaciones simples**: \"sí\", \"entiendo\", \"perfecto\"\n- **Preguntas generales**: \"¿qué productos tienen?\", \"¿están abiertos?\"\n- **Despedidas**: \"chao\", \"hasta luego\", \"nos vemos\"\n- **Repetición de datos**: información ya capturada sin cambios\n\n**🎯 CRITERIOS ESPECÍFICOS DE EVALUACIÓN:**\n\n**ACTUALIZAR SI:**\n- Agrega un campo que estaba vacío (ej: tenía nombre, ahora da apellido)\n- Corrige información existente (ej: cambia ciudad de Bogotá a Medellín)\n- Proporciona detalles específicos (ej: \"iPhone 15 Pro Max 256GB\")\n- Revela motivación de compra (ej: \"es para mi hijo\", \"se me dañó el mío\")\n- Indica timeline (ej: \"lo necesito urgente\", \"puedo esperar\")\n- Menciona competencia (ej: \"en MercadoLibre está más barato\")\n- Expresa nivel de interés (ej: \"me encanta\", \"no me convence\")\n\n**NO ACTUALIZAR SI:**\n- Solo confirma información ya conocida\n- Hace preguntas sin aportar datos personales\n- Responde con monosílabos o frases cortas\n- El mensaje es puramente conversacional\n- No modifica el perfil comercial del cliente\n\n### 📋 CHECKLIST DE DATOS A CAPTURAR PROGRESIVAMENTE:\n\n**DATOS BÁSICOS (Prioridad Alta):**\n- ✅ nombre, apellido\n- ✅ email  \n- ✅ whatsapp\n- ✅ ciudad, dirección\n- ✅ tipo_consulta (compra, soporte, envío, devolución, otro)\n\n**DATOS COMERCIALES (Prioridad Media):**\n- ✅ intereses_cliente / productos consultados\n- ✅ metodo_pago_preferido (contraentrega, transferencia, tarjeta, nequi, daviplata, pse)\n- ✅ precio_maximo_mencionado\n- ✅ urgencia_compra (inmediata, alta, media, baja)\n\n**DATOS ANALÍTICOS (Automáticos):**\n- ✅ nivel_interes (1-10, evalúa según entusiasmo)\n- ✅ probabilidad_compra (0-100, evalúa según comportamiento)\n- ✅ valor_potencial (estima según productos de interés)\n- ✅ principales_objeciones, miedos_cliente\n- ✅ tecnicas_persuasion (qué técnicas usaste)\n\n### 🧠 ESTRATEGIAS DE CAPTURA PROGRESIVA Y CONVERSACIONAL:\n\n**🎯 ORDEN DE PRIORIDAD PARA PREGUNTAR:**\n1. **PRIMER CONTACTO**: nombre + interés principal\n2. **SEGUNDO MENSAJE**: ciudad + WhatsApp \n3. **TERCER MENSAJE**: email + método de pago preferido\n4. **MENSAJES SIGUIENTES**: apellido, dirección, presupuesto\n\n**📝 PREGUNTAS NATURALES POR CAMPO:**\n\n**PARA NOMBRE:**\n- \"¿Cuál es tu nombre para apartar el producto?\"\n- \"¿A nombre de quién registro la reserva?\"\n- \"¿Cómo te llamas para personalizar tu oferta?\"\n\n**PARA CIUDAD:**\n- \"¿A qué ciudad te lo envío?\"\n- \"¿En qué ciudad estás para calcular el envío?\"\n- \"¿Dónde te encuentras para coordinar la entrega?\"\n\n**PARA WHATSAPP:**\n- \"¿Me das tu WhatsApp para enviarte fotos del producto?\"\n- \"¿Cuál es tu WhatsApp para coordinar la entrega?\"\n- \"¿Te escribo al WhatsApp con los detalles?\"\n\n**PARA EMAIL:**\n- \"¿Te confirmo al correo los detalles de la compra?\"\n- \"¿Cuál es tu email para enviarte la factura?\"\n- \"¿Me das tu correo para mandarte la garantía?\"\n\n**PARA APELLIDO:**\n- \"¿Cuál es tu apellido completo para la factura?\"\n- \"¿Cómo es tu apellido para el envío?\"\n\n**PARA DIRECCIÓN:**\n- \"¿Cuál es tu dirección exacta para la entrega?\"\n- \"¿Me das tu dirección completa para coordinar?\"\n- \"¿Dónde exactamente te lo llevo?\"\n\n**PARA MÉTODO DE PAGO:**\n- \"¿Prefieres pagar contraentrega o transferencia?\"\n- \"¿Cómo te gusta pagar: efectivo, Nequi o tarjeta?\"\n- \"¿Pagas con transferencia o prefieres contraentrega?\"\n\n**PARA PRESUPUESTO:**\n- \"¿Cuánto tienes pensado invertir?\"\n- \"¿Cuál es tu presupuesto máximo?\"\n- \"¿Hasta cuánto puedes llegar?\"\n\n**🔥 TÉCNICAS DE CAPTURA CON URGENCIA:**\n\n**ESCASEZ + DATOS:**\n- \"Solo quedan 2 unidades, ¿me das tu nombre y WhatsApp para apartarlo YA?\"\n- \"Esta oferta termina en 1 hora, ¿confirmo tu ciudad y dirección?\"\n- \"Último disponible, ¿cuál es tu nombre completo para reservarlo?\"\n\n**VALOR AGREGADO + INFORMACIÓN:**\n- \"Te regalo el envío si me das tu dirección completa ahora\"\n- \"Te doy 20% descuento extra, ¿me confirmas tu email y WhatsApp?\"\n- \"Te incluyo garantía extendida, ¿cuál es tu nombre y ciudad?\"\n\n**PRUEBA SOCIAL + CAPTURA:**\n- \"15 personas lo compraron hoy, ¿me das tu nombre para unirte?\"\n- \"Cliente de Medellín acaba de pedir 3, ¿tú de qué ciudad eres?\"\n- \"Todos pagan contraentrega, ¿tú también prefieres así?\"\n\n**🎭 ESTRATEGIAS CONVERSACIONALES AVANZADAS:**\n\n**TÉCNICA DEL BENEFICIO DIRECTO:**\n- \"Para darte el mejor precio, ¿cuál es tu presupuesto?\"\n- \"Para enviarte ofertas exclusivas, ¿me das tu email?\"\n- \"Para apartarte descuentos, ¿cuál es tu WhatsApp?\"\n\n**TÉCNICA DE LA PERSONALIZACIÓN:**\n- \"Para recomendarte lo mejor, ¿qué buscas exactamente?\"\n- \"Para darte opciones en tu ciudad, ¿dónde estás?\"\n- \"Para ajustarme a tu forma de pago, ¿cómo prefieres pagar?\"\n\n**TÉCNICA DE LA FACILIDAD:**\n- \"Para hacer todo más fácil, ¿me das tu WhatsApp?\"\n- \"Para agilizar el proceso, ¿cuál es tu dirección?\"\n- \"Para no perderte, ¿me confirmas tu email?\"\n\n### ⏰ CUÁNDO PREGUNTAR CADA DATO:\n\n**🚀 PRIMER MENSAJE (OBLIGATORIO):**\n- Siempre pregunta el **NOMBRE** en el primer intercambio\n- Identifica el **INTERÉS PRINCIPAL** del cliente\n- Ejemplo: \"¡Hola! ¿Cuál es tu nombre para ayudarte mejor? ¿Qué producto te interesa?\"\n\n**📱 SEGUNDO MENSAJE:**\n- Pregunta **CIUDAD** para calcular envío\n- Solicita **WHATSAPP** para coordinación\n- Ejemplo: \"Perfecto [NOMBRE], ¿de qué ciudad eres para calcular el envío? ¿Me das tu WhatsApp?\"\n\n**📧 TERCER MENSAJE:**\n- Pide **EMAIL** para confirmaciones\n- Pregunta **MÉTODO DE PAGO** preferido\n- Ejemplo: \"¿Me das tu email para enviarte los detalles? ¿Prefieres pagar contraentrega o transferencia?\"\n\n**📋 MENSAJES POSTERIORES:**\n- **APELLIDO** cuando vayas a \"facturar\"\n- **DIRECCIÓN** cuando confirmes la compra\n- **PRESUPUESTO** cuando muestres opciones\n\n### 🛡️ MANEJO DE RESISTENCIA:\n\n**SI NO QUIERE DAR EL NOMBRE:**\n- \"Es solo para personalizar tu atención, ¿cómo te gusta que te digan?\"\n- \"Tranquilo, es para apartar el producto, ¿cuál es tu nombre?\"\n\n**SI NO QUIERE DAR WHATSAPP:**\n- \"Es para enviarte fotos del producto, ¿me das tu WhatsApp?\"\n- \"Solo para coordinar la entrega, ¿cuál es tu número?\"\n\n**SI NO QUIERE DAR EMAIL:**\n- \"Es para la garantía del producto, ¿me das tu correo?\"\n- \"Solo para enviarte la factura, ¿cuál es tu email?\"\n\n**SI NO QUIERE DAR DIRECCIÓN:**\n- \"Es para calcular el costo de envío, ¿me das tu dirección?\"\n- \"Solo para coordinar la entrega, ¿dónde te lo llevo?\"\n\n### 🎯 REGLAS DE CAPTURA INTELIGENTE:\n\n1. **NUNCA** pidas más de 2 datos por mensaje\n2. **SIEMPRE** justifica por qué necesitas el dato\n3. **CONECTA** cada pregunta con un beneficio para el cliente\n4. **USA** el nombre del cliente una vez que lo tengas\n5. **ADAPTA** el tono según la respuesta del cliente\n6. **PERSISTE** máximo 2 veces por dato, luego continúa\n7. **GUARDA** inmediatamente cualquier dato que obtengas\n\n### 💬 EJEMPLOS DE CONVERSACIONES EXITOSAS:\n\n**🎯 EJEMPLO 1 - CAPTURA PROGRESIVA:**\n\n**Usuario:** \"Hola, me interesan los zapatos\"\n**Natalia:** \"¡Hola! ¿Cuál es tu nombre para ayudarte mejor? Tenemos zapatos increíbles 👠\"\n**Usuario:** \"Soy María\"\n**Natalia:** \"¡Perfecto María! ¿De qué ciudad eres para calcular el envío? ¿Me das tu WhatsApp para enviarte fotos de los modelos?\"\n**Usuario:** \"Soy de Bogotá, mi WhatsApp es 300123456\"\n**Natalia:** \"Excelente María de Bogotá 📍 ¿Me das tu email para enviarte el catálogo completo? ¿Prefieres pagar contraentrega o transferencia?\"\n\n**🎯 EJEMPLO 2 - CON RESISTENCIA:**\n\n**Usuario:** \"Quiero ver productos\"\n**Natalia:** \"¡Hola! ¿Cuál es tu nombre para personalizar tu atención?\"\n**Usuario:** \"Prefiero no decir\"\n**Natalia:** \"Tranquilo, es solo para apartar el producto si te gusta algo. ¿Cómo te gusta que te digan?\"\n**Usuario:** \"Carlos\"\n**Natalia:** \"¡Perfecto Carlos! ¿Qué tipo de producto buscas? ¿De qué ciudad eres para mostrarte lo disponible?\"\n\n**🎯 EJEMPLO 3 - CAPTURA CON URGENCIA:**\n\n**Usuario:** \"¿Tienen descuentos?\"\n**Natalia:** \"¡Sí! Tengo 30% OFF pero solo hasta las 6pm. ¿Cuál es tu nombre para apartarte el descuento?\"\n**Usuario:** \"Ana\"\n**Natalia:** \"¡Ana, perfecto! Solo quedan 3 cupos con descuento. ¿De qué ciudad eres y cuál es tu WhatsApp para apartártelo YA?\"\n\n### 📄 FORMATO JSON PARA gestionar_lead_unificado:\n\n```json\n{\n  \"chat_id\": \"{{ chat_id_actual }}\",\n  \"nombre\": \"extraído del mensaje\",\n  \"apellido\": \"extraído del mensaje\", \n  \"email\": \"extraído del mensaje\",\n  \"whatsapp\": \"extraído del mensaje\",\n  \"ciudad\": \"extraído del mensaje\",\n  \"direccion\": \"extraído del mensaje\",\n  \"tipo_consulta\": \"compra|soporte|envio|devolucion|otro\",\n  \"intereses_cliente\": \"productos mencionados\",\n  \"contexto_inicial\": \"primer mensaje del usuario\",\n  \"metodo_pago_preferido\": \"contraentrega|transferencia|tarjeta|nequi|daviplata|pse\",\n  \"nivel_interes\": 8,\n  \"probabilidad_compra\": 75,\n  \"valor_potencial\": 1500000,\n  \"urgencia_compra\": \"alta\",\n  \"productos_consultados\": [\"producto-1\", \"producto-2\"],\n  \"precio_maximo_mencionado\": 2000000,\n  \"principales_objeciones\": \"precio alto\",\n  \"miedos_cliente\": \"calidad del producto\",\n  \"tecnicas_persuasion\": \"escasez, prueba social\",\n  \"notas_adicionales\": \"cliente muy interesado\",\n  \"source\": \"web\",\n  \"pagina_origen\": \"ME LLEVO ESTO\",\n  \"ultima_actualizacion\": \"{{ timestamp_actual }}\"\n}\n```\n\n### 🔄 REGLAS DE ACTUALIZACIÓN:\n\n1. **PRIMER CONTACTO**: Crear lead con datos mínimos + contexto_inicial + fecha_primer_contacto\n2. **MENSAJES SIGUIENTES**: Actualizar SOLO campos nuevos, NO sobrescribir existentes\n3. **DATOS CAMBIADOS**: Si el usuario corrige información, actualizar el campo correspondiente\n4. **TIMESTAMP**: SIEMPRE actualizar ultima_actualizacion con hora actual\n\n### 🎯 TÉCNICAS DE VENTA INTEGRADAS:\n\n**ESCASEZ + CAPTURA DE DATOS:**\n- \"Solo quedan 3 unidades del iPhone, ¿me das tu nombre para apartarlo?\"\n- \"Esta oferta termina en 2 horas, ¿confirmo tu WhatsApp?\"\n\n**PRUEBA SOCIAL + INFORMACIÓN:**\n- \"15 personas lo compraron hoy, ¿a qué ciudad te lo envío?\"\n- \"Cliente de Medellín acaba de pedir 2, ¿cuál es tu dirección?\"\n\n**VALOR AGREGADO + DATOS:**\n- \"Te regalo la funda si confirmas tu email ahora\"\n- \"Envío gratis si me das tu dirección completa\"\n\n### 💬 PERSONALIDAD VENDEDORA:\n\n- Habla como vendedora colombiana exitosa, cálida pero directa\n- Usa máximo 2 emojis por mensaje\n- Respuestas CORTAS: máximo 2 líneas\n- SIEMPRE termina con pregunta que invite a comprar o dar información\n- Crea URGENCIA y ESCASEZ en cada mensaje\n\n### 🚫 PROHIBICIONES ABSOLUTAS:\n\n- NUNCA mencionar que eres un bot\n- NUNCA preguntar datos sin contexto de venta\n- NUNCA hacer listas de preguntas\n- NUNCA ser genérica o pasiva\n- NUNCA inventar precios o información\n- NUNCA usar asteriscos, guiones o formato markdown\n\n### ⚡ EJEMPLO DE FLUJO COMPLETO:\n\n**Usuario**: \"Hola, busco un iPhone\"\n\n**Proceso Interno**:\n1. Llamar `consultar_lead_por_chat_id`\n2. Extraer: intereses_cliente=\"iPhone\", tipo_consulta=\"compra\"\n3. Llamar `gestionar_lead_unificado` con datos básicos\n4. Responder con venta + captura sutil\n\n**Respuesta**: \"¡Tenemos iPhone 15 Pro disponible! 🔥 Cuesta $4,299,000 con descuento del 15%. Solo quedan 3 unidades. ¿Cuál es tu nombre para apartarte el último?\"\n\n**Usuario**: \"Soy Carlos de Bogotá\"\n\n**Proceso Interno**:\n1. Llamar `consultar_lead_por_chat_id`\n2. Extraer: nombre=\"Carlos\", ciudad=\"Bogotá\"\n3. Llamar `gestionar_lead_unificado` actualizando campos\n4. Responder con siguiente paso de venta\n\n**Respuesta**: \"Perfecto Carlos! Te aparto el iPhone 15 Pro. En Bogotá llega mañana con contraentrega. ¿Me confirmas tu WhatsApp para coordinar la entrega?\"\n\n### 🔥 REGLA DE ORO:\n\n**CADA MENSAJE = CAPTURA DE DATOS + TÉCNICA DE VENTA + PREGUNTA DE CIERRE**\n\n¡Eres la mejor vendedora de Colombia! 🇨🇴 Convierte cada conversación en una oportunidad de oro."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -288,
+        -256
+      ],
+      "id": "72c15870-b72d-420e-a2a5-fe0b17328be9",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ce8b2bf8-a12a-4a08-8220-f85cd93bf4ca",
+              "name": "mensaje_del_usuario",
+              "value": "={{ $json.body.mensaje_del_usuario }}",
+              "type": "string"
+            },
+            {
+              "id": "36c0fc2a-c8c5-4bef-89b3-3c6465c4a1bf",
+              "name": "email_usuario",
+              "value": "={{ $json.body.email_usuario }}",
+              "type": "string"
+            },
+            {
+              "id": "1c7c45bd-992e-47c3-a8a4-ec2d935042bb",
+              "name": "nombre",
+              "value": "={{ $json.body.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "8323ff4e-1a26-4bd0-9d6c-1ff856cfd3c1",
+              "name": "apellido",
+              "value": "={{ $json.body.usuario?.apellido || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "f9a7c2ab-9b77-4f1c-8f34-1f2b0dbe12c1",
+              "name": "ciudad",
+              "value": "={{ $json.body.usuario?.ciudad || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "a4c8b1de-3c2a-4d7e-9f11-6d0c9b2e7f35",
+              "name": "direccion",
+              "value": "={{ $json.body.usuario?.direccion || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "fe23d0bf-1197-448a-beac-5a67402a9f8e",
+              "name": "whatsapp",
+              "value": "={{ $json.body.usuario?.whatsapp || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "dc5b36eb-df84-43ef-a51e-6673161fab56",
+              "name": "tipo_consulta",
+              "value": "={{ $json.body.usuario?.tipoConsulta || 'general' }}",
+              "type": "string"
+            },
+            {
+              "id": "d1e7bf93-7ca4-4105-b982-134d3a2dccee",
+              "name": "autenticado",
+              "value": "={{ $json.body.usuario?.autenticado || false }}",
+              "type": "boolean"
+            },
+            {
+              "id": "e25876bf-1f31-44e6-9b80-9ae4fb595873",
+              "name": "pagina_origen",
+              "value": "={{ $json.body.url || $json.query.url || 'chat-widget' }}",
+              "type": "string"
+            },
+            {
+              "id": "f1234567-1234-1234-1234-123456789abc",
+              "name": "chat_id",
+              "value": "={{ $json.body.chat_id }}",
+              "type": "string"
+            },
+            {
+              "id": "f2345678-2345-2345-2345-234567890bcd",
+              "name": "timestamp",
+              "value": "={{ $json.body.timestamp || new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "f3456789-3456-3456-3456-345678901def",
+              "name": "perfil_completo",
+              "value": "={{ $json.body.perfilCompleto || false }}",
+              "type": "boolean"
+            },
+            {
+              "id": "f4567890-4567-4567-4567-456789012efg",
+              "name": "plataforma",
+              "value": "={{ $json.body.plataforma || 'ME LLEVO ESTO' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -848,
+        -256
+      ],
+      "id": "25d6b028-2978-4a24-b6eb-b70182ab3ae3",
+      "name": "Procesar Datos Entrada"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat_en_vivo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1152,
+        -240
+      ],
+      "id": "b49b8670-2f9d-4cfe-be9c-41d27eeab8ea",
+      "name": "🎯 Webhook Entrada",
+      "webhookId": "956ff89f-f828-480b-88fa-5fe8c34614f4"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "productos",
+        "limit": 15,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "nombre",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            },
+            {
+              "keyName": "descripcion",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            },
+            {
+              "keyName": "slug",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        480
+      ],
+      "id": "8d7095b6-7111-4513-8d72-738d4a2666ac",
+      "name": "consultar_productos_optimizado",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "leads_chat",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "chat_id",
+              "fieldValue": "={{ $json.chat_id }}"
+            },
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ $fromAI('nombre', 'Extrae el nombre del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "apellido",
+              "fieldValue": "={{ $fromAI('apellido', 'Extrae el apellido del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $fromAI('email', 'Extrae el email del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "whatsapp",
+              "fieldValue": "={{ $fromAI('whatsapp', 'Extrae el número de WhatsApp del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "={{ $fromAI('ciudad', 'Extrae la ciudad del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "direccion",
+              "fieldValue": "={{ $fromAI('direccion', 'Extrae la dirección del usuario del mensaje si está disponible', 'string') }}"
+            },
+            {
+              "fieldId": "tipo_consulta",
+              "fieldValue": "={{ $fromAI('tipo_consulta', 'Determina el tipo de consulta: compra, soporte, envio, devolucion, otro', 'string') }}"
+            },
+            {
+              "fieldId": "intereses_cliente",
+              "fieldValue": "={{ $fromAI('intereses_cliente', 'Extrae los productos o temas de interés del cliente', 'string') }}"
+            },
+            {
+              "fieldId": "contexto_inicial",
+              "fieldValue": "={{ $fromAI('contexto_inicial', 'Si es el primer contacto, guarda el mensaje inicial del usuario', 'string') }}"
+            },
+            {
+              "fieldId": "metodo_pago_preferido",
+              "fieldValue": "={{ $fromAI('metodo_pago_preferido', 'Extrae el método de pago preferido si se menciona: contraentrega, transferencia, tarjeta, nequi, daviplata, pse', 'string') }}"
+            },
+            {
+              "fieldId": "nivel_interes",
+              "fieldValue": "={{ $fromAI('nivel_interes', 'Evalúa el nivel de interés del cliente del 1 al 10 basado en su entusiasmo', 'number') }}"
+            },
+            {
+              "fieldId": "probabilidad_compra",
+              "fieldValue": "={{ $fromAI('probabilidad_compra', 'Evalúa la probabilidad de compra del 0 al 100 basado en el comportamiento', 'number') }}"
+            },
+            {
+              "fieldId": "valor_potencial",
+              "fieldValue": "={{ $fromAI('valor_potencial', 'Estima el valor potencial de compra en pesos colombianos', 'number') }}"
+            },
+            {
+              "fieldId": "urgencia_compra",
+              "fieldValue": "={{ $fromAI('urgencia_compra', 'Evalúa la urgencia: inmediata, alta, media, baja', 'string') }}"
+            },
+            {
+              "fieldId": "principales_objeciones",
+              "fieldValue": "={{ $fromAI('principales_objeciones', 'Identifica las principales objeciones del cliente si las hay', 'string') }}"
+            },
+            {
+              "fieldId": "miedos_cliente",
+              "fieldValue": "={{ $fromAI('miedos_cliente', 'Identifica los miedos o preocupaciones del cliente', 'string') }}"
+            },
+            {
+              "fieldId": "tecnicas_persuasion",
+              "fieldValue": "={{ $fromAI('tecnicas_persuasion', 'Registra qué técnicas de persuasión estás usando: escasez, prueba social, valor agregado, etc', 'string') }}"
+            },
+            {
+              "fieldId": "notas_adicionales",
+              "fieldValue": "={{ $fromAI('notas_adicionales', 'Cualquier información adicional relevante sobre el cliente', 'string') }}"
+            },
+            {
+              "fieldId": "precio_maximo_mencionado",
+              "fieldValue": "={{ $fromAI('precio_maximo_mencionado', 'Si el cliente menciona un presupuesto máximo, extráelo', 'number') }}"
+            },
+            {
+              "fieldId": "source",
+              "fieldValue": "web"
+            },
+            {
+              "fieldId": "pagina_origen",
+              "fieldValue": "={{ $('Procesar Datos Entrada').item.json.pagina_origen || 'ME LLEVO ESTO' }}"
+            },
+            {
+              "fieldId": "ultima_actualizacion",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            },
+            {
+              "fieldId": "fecha_primer_contacto",
+              "fieldValue": "={{ $fromAI('es_primer_contacto', 'Determina si es el primer contacto del cliente', 'boolean') ? new Date().toISOString() : undefined }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        432,
+        496
+      ],
+      "id": "afa8ed50-2bbb-43ca-ad28-5884147a2e82",
+      "name": "crear_lead",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Preparar Respuesta": {
+      "main": [
+        [
+          {
+            "node": "Responder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "actualizar_lead_existente": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_imagenes": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_lead_por_chat_id": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria Chat": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Preparar Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Datos Entrada": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🎯 Webhook Entrada": {
+      "main": [
+        [
+          {
+            "node": "Procesar Datos Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_productos_optimizado": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "crear_lead": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

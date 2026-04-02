@@ -1,0 +1,250 @@
+/* =================================================================
+   ESTILOS PRINCIPALES DEL CONTENEDOR Y CABECERA
+================================================================= */
+.creador-articulos-pr {
+  padding: 2rem;
+  background-color: #f0f2f5; /* Un gris más suave */
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.creador-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.creador-titulo {
+  font-size: 2rem; /* Más grande */
+  font-weight: 600; /* Un poco menos grueso que 700 */
+  color: #1f2937;
+}
+
+/* =================================================================
+   BARRA DE PESTAÑAS
+================================================================= */
+.pestañas-bar {
+  display: flex;
+  border-bottom: 1px solid #d1d5db;
+  margin-bottom: 2rem;
+}
+
+.pestaña-item {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px; /* Alinea con el borde inferior de la barra */
+}
+
+.pestaña-item:hover {
+  color: #1d4ed8;
+}
+
+.pestaña-item.activa {
+  color: #1d4ed8; /* Azul más intenso */
+  font-weight: 600;
+  border-bottom-color: #1d4ed8;
+}
+
+/* =================================================================
+   CONTENIDO PRINCIPAL Y LAYOUT
+================================================================= */
+.contenido-principal {
+  padding-bottom: 100px; /* Espacio para la barra de acciones fija */
+}
+
+.columna-principal {
+  width: 100%;
+  max-width: 1200px; /* Un ancho máximo razonable para el contenido */
+  margin: 0 auto; /* Centrar la columna principal */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Nueva clase para el contenedor del formulario de ancho completo */
+.formulario-ancho-completo .columna-principal {
+  max-width: none; /* Anular el ancho máximo para este caso específico */
+}
+
+.columna-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: sticky;
+  top: 2rem; /* Para que se quede fija al hacer scroll */
+}
+
+/* =================================================================
+   TARJETAS (CARDS) PARA AGRUPAR CONTENIDO
+================================================================= */
+.card {
+  background-color: #ffffff;
+  border-radius: 0.75rem; /* Bordes más redondeados */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  overflow: hidden; /* Para que los bordes redondeados se apliquen bien */
+}
+
+.card-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.card-titulo {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* =================================================================
+   ESTILOS PARA FORMULARIOS (INPUTS, LABELS, ETC.)
+================================================================= */
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-grupo label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-grupo input[type="text"],
+.form-grupo textarea,
+.form-grupo select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-grupo input[type="text"]:focus,
+.form-grupo textarea:focus,
+.form-grupo select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.form-grupo textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* =================================================================
+   BOTONES
+================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+}
+
+.btn-primario {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-primario:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-primario:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.btn-secundario {
+  background-color: #e5e7eb;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.btn-secundario:hover {
+  background-color: #d1d5db;
+}
+
+.acciones-fijas {
+  padding: 1rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  position: fixed; /* Changed from sticky */
+  bottom: 0;
+  left: 0; /* Added for full width */
+  right: 0; /* Added for full width */
+  backdrop-filter: blur(8px);
+  z-index: 100; /* Ensure it's on top */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* Add subtle shadow */
+}
+
+/* =================================================================
+   ACORDEÓN PARA SEO Y REDES SOCIALES
+================================================================= */
+.acordeon-item summary {
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+.acordeon-item:first-child summary {
+  border-top: none;
+}
+
+.acordeon-item summary::after {
+  content: '+';
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
+}
+
+.acordeon-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.acordeon-contenido {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}

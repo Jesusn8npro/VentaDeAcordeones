@@ -1,0 +1,537 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        272
+      ],
+      "id": "f4634321-0fa0-4ee5-a679-c0751008395c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "afEdUlo465aPlyDq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ [\n  {\n    \"tipo\": \"respuesta_con_opciones\",\n    \"campo_modificado\": $json.campo_actualizado?.campo_modificado || 'desconocido',\n    \"valor_anterior\": $json.campo_actualizado?.valor_anterior || '',\n    \"valor_nuevo\": $json.campo_actualizado?.valor_nuevo || '',\n    \"razon_cambio\": $json.campo_actualizado?.razon_cambio || '',\n    \"datos_actualizados\": $json.campo_actualizado?.datos_actualizados || {},\n    \"respuesta_agente\": \"¡Campo actualizado exitosamente! ✨ ¿Qué te gustaría hacer?\",\n    \"opciones\": [\n      {\n        \"tipo\": \"usar_producto\",\n        \"texto\": \"✅ Usar este producto actualizado\",\n        \"icono\": \"✅\"\n      },\n      {\n        \"tipo\": \"reemplazar_campo\",\n        \"texto\": \"🔄 Reemplazar solo este campo\",\n        \"campo\": $json.campo_actualizado?.campo_modificado || $json.campo_modificado || 'campo',\n        \"valor\": $json.campo_actualizado?.valor_nuevo || $json.valor_nuevo || '',\n        \"icono\": \"🔄\"\n      },\n      {\n        \"tipo\": \"continuar_conversacion\",\n        \"texto\": \"💬 Hacer más cambios\",\n        \"mensaje\": \"Quiero seguir editando\",\n        \"icono\": \"💬\"\n      }\n    ],\n    \"producto_sugerido\": $json.campo_actualizado?.datos_actualizados || {},\n    \"id_sesion\": $json.id_sesion || 'default',\n    \"estado\": \"actualizado\",\n    \"mensaje\": \"¡Actualización granular completada! 🔄\"\n  }\n] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1328,
+        144
+      ],
+      "id": "b01ab1ac-a07b-4a51-85cb-02098517eb65",
+      "name": "Responder Campo Actualizado1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "productos",
+        "limit": 1,
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Webhook Conversacional').item.json.body.producto_id }}"
+            },
+            {
+              "keyName": "activo",
+              "condition": "eq",
+              "keyValue": "true"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        288
+      ],
+      "id": "23214e62-df11-46f2-bc3c-55bfaa914aab",
+      "name": "consultar_productos1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "force-consultation",
+              "name": "mensaje_usuario",
+              "value": "={{ $json.mensaje_usuario + ' [CONSULTAR_PRIMERO_OBLIGATORIO]' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -272,
+        -256
+      ],
+      "id": "1da25ddd-2e45-49b5-82a1-6ace75d6fbb3",
+      "name": "Forzar Consulta Previa"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "actualizar-keyword",
+              "leftValue": "={{ $json.mensaje_usuario }}",
+              "rightValue": "actualizar|modificar|cambiar|mejorar|editar",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        -64
+      ],
+      "id": "e2d2baa7-9288-4198-84bc-350b0deec3bd",
+      "name": "¿Detectar Actualización?"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Procesar JSON del campo actualizado\nconst output = $input.first().json.output;\n\n// Extraer el JSON después de ***CAMPO_ACTUALIZADO***\nconst jsonStart = output.indexOf('***CAMPO_ACTUALIZADO***') + '***CAMPO_ACTUALIZADO***'.length;\nconst jsonString = output.substring(jsonStart).trim();\n\ntry {\n  const campoActualizado = JSON.parse(jsonString);\n  \n  return {\n    json: {\n      campo_actualizado: campoActualizado,\n      json_limpio: jsonString,\n      id_sesion: $input.first().json.id_sesion,\n      tipo_respuesta: 'campo_actualizado'\n    }\n  };\n} catch (error) {\n  return {\n    json: {\n      error: 'Error al procesar JSON del campo actualizado',\n      output_original: output,\n      id_sesion: $input.first().json.id_sesion,\n      tipo_respuesta: 'error'\n    }\n  };\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        144
+      ],
+      "id": "ccb9ef0a-da75-44ed-953f-d733c23e4079",
+      "name": "Procesar Campo JSON"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Procesar y adaptar JSON del producto a la estructura de Producto Prueba.json\nconst input = $input.first();\nconst rawOutput = String(input.json.output || '');\n\nfunction extraerJSON(text) {\n  // 1) Bloque de código ```json ... ```\n  const matchCode = text.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n  if (matchCode && matchCode[1]) {\n    try { return JSON.parse(matchCode[1]); } catch (e) {}\n  }\n  // 2) Después del marcador ***PRODUCTO_LISTO***\n  const marker = '***PRODUCTO_LISTO***';\n  const idx = text.indexOf(marker);\n  if (idx !== -1) {\n    const segment = text.substring(idx + marker.length).trim();\n    try { return JSON.parse(segment); } catch (e) {}\n  }\n  // 3) Primer { hasta último }\n  const start = text.indexOf('{');\n  const end = text.lastIndexOf('}');\n  if (start !== -1 && end !== -1 && end > start) {\n    const possible = text.substring(start, end + 1);\n    try { return JSON.parse(possible); } catch (e) {}\n  }\n  return null;\n}\n\nfunction primeraFrase(text, max = 80) {\n  if (!text) return '';\n  const s = String(text).trim();\n  const punto = s.indexOf('.');\n  const titulo = (punto > 0 ? s.slice(0, punto) : s).slice(0, max);\n  return titulo;\n}\n\nfunction asegurarArray(a) { return Array.isArray(a) ? a : []; }\n\nconst src = extraerJSON(rawOutput) || (input.json.producto_generado || null) || {};\n\nconst producto = {};\n\n// Campos base\nproducto.id = src.id ?? null;\nproducto.nombre = src.nombre ?? '';\nproducto.slug = src.slug ?? '';\nconst descObj = src.descripcion;\nproducto.descripcion_titulo = src.descripcion_titulo ?? (typeof descObj === 'string' ? primeraFrase(descObj) : (descObj?.titulo ?? ''));\nproducto.descripcion_contenido = src.descripcion_contenido ?? (typeof descObj === 'string' ? descObj : (descObj?.contenido ?? ''));\n\nproducto.precio = Number(src.precio ?? 0);\nproducto.precio_original = Number(src.precio_original ?? (producto.precio || 0));\nproducto.descuento = src.descuento ?? 0;\nproducto.categoria_id = src.categoria_id ?? '';\nproducto.estado = src.estado ?? 'nuevo';\nproducto.ganchos = asegurarArray(src.ganchos);\n\nproducto.palabras_clave = asegurarArray(src.palabras_clave);\nproducto.meta_title = src.meta_title ?? '';\nproducto.meta_description = src.meta_description ?? '';\n\nproducto.stock = Number(src.stock ?? 0);\nproducto.stock_minimo = Number(src.stock_minimo ?? 0);\nproducto.destacado = !!(src.destacado ?? false);\nproducto.activo = !!(src.activo ?? true);\nproducto.landing_tipo = src.landing_tipo ?? 'temu';\n\nproducto.peso = (src.peso ?? null);\nproducto.dimensiones = src.dimensiones ?? 'No especificado';\nproducto.marca = src.marca ?? 'No especificada';\nproducto.modelo = src.modelo ?? 'No especificado';\nproducto.color = src.color ?? 'No especificado';\nproducto.talla = src.talla ?? 'No especificado';\nproducto.material = src.material ?? 'No especificado';\n\nproducto.numero_de_ventas = src.numero_de_ventas ?? 0;\nproducto.calificacion_promedio = src.calificacion_promedio ?? 0;\nproducto.total_resenas = src.total_resenas ?? 0;\n\nproducto.banner_animado = src.banner_animado ?? { mensajes: [] };\n\nproducto.puntos_dolor = src.puntos_dolor ?? { titulo: '', timeline: [] };\n\n// Ventajas: aceptar viejo array o nuevo objeto.items\nconst ventajasItems = (src.ventajas?.items) ? asegurarArray(src.ventajas.items)\n  : Array.isArray(src.ventajas) ? src.ventajas.map((v, i) => ({ id: i + 1, icono: '⭐', titulo: `Ventaja ${i+1}`, descripcion: String(v) }))\n  : [];\nproducto.ventajas = {\n  items: ventajasItems,\n  titulo: src.ventajas?.titulo ?? '¿Por qué elegir este producto?',\n  subtitulo: src.ventajas?.subtitulo ?? 'Ventajas clave'\n};\n\n// Beneficios: aceptar viejo array, nuevo items o desde caracteristicas.beneficios\nlet beneficiosItems = [];\nif (src.beneficios?.items) {\n  beneficiosItems = asegurarArray(src.beneficios.items);\n} else if (Array.isArray(src.beneficios)) {\n  beneficiosItems = src.beneficios.map((b, i) => ({ id: i + 1, icono: '🛡️', titulo: `Beneficio ${i+1}`, descripcion: String(b) }));\n} else if (Array.isArray(src.caracteristicas?.beneficios)) {\n  beneficiosItems = src.caracteristicas.beneficios.map((b, i) => ({ id: b.id ?? i + 1, icono: b.icono ?? '🛡️', titulo: b.titulo ?? `Beneficio ${i+1}`, descripcion: b.descripcion ?? '' }));\n}\nproducto.beneficios = {\n  items: beneficiosItems,\n  titulo: src.beneficios?.titulo ?? 'Beneficios clave',\n  subtitulo: src.beneficios?.subtitulo ?? 'Lo que obtienes al comprar'\n};\n\n// Características: asegurar claves presentes\nproducto.caracteristicas = src.caracteristicas ?? { titulo: '', detalles: [], cta: { texto: '', subtexto: '' }, imagen: '', subtitulo: '' };\nif (!('imagen' in producto.caracteristicas)) producto.caracteristicas.imagen = '';\n\n// Testimonios y FAQ\nproducto.testimonios = src.testimonios ?? { titulo: '', subtitulo: '', testimonios: [], estadisticas: { recomiendan: 0, satisfaccion: 0, totalClientes: 0 } };\nproducto.faq = src.faq ?? { titulo: 'Preguntas Frecuentes', preguntas: [], subtitulo: '' };\n\n// Garantías: aceptar viejo campo 'garantias' o nuevo 'items'\nconst garantiasItems = src.garantias?.items ? asegurarArray(src.garantias.items)\n  : src.garantias?.garantias ? asegurarArray(src.garantias.garantias)\n  : [];\nproducto.garantias = {\n  items: garantiasItems,\n  titulo: src.garantias?.titulo ?? 'Garantía y Soporte'\n};\n\n// CTA Final: mapear claves al nuevo formato\nconst cta = src.cta_final ?? {};\nproducto.cta_final = {\n  url: cta.url ?? null,\n  titulo: cta.titulo ?? '¡ÚLTIMA OPORTUNIDAD!',\n  subtitulo: cta.subtitulo ?? '',\n  beneficios: asegurarArray(cta.beneficios?.length ? cta.beneficios : (Array.isArray(src.ganchos) ? src.ganchos.slice(0,3) : [])),\n  texto_boton: cta.texto_boton ?? cta.botonTexto ?? 'Comprar ahora',\n  precio_actual: cta.precio_actual ?? cta.precioActual ?? producto.precio,\n  precio_original: cta.precio_original ?? cta.precioAnterior ?? producto.precio_original\n};\n\nproducto.promociones = src.promociones ?? { titulo: '', subtitulo: '', promociones: [] };\n\n// Imágenes\nproducto.fotos_principales = asegurarArray(src.fotos_principales);\nproducto.fotos_secundarias = asegurarArray(src.fotos_secundarias);\n\n// Datos de control\nproducto.timestamp = new Date().toISOString();\nproducto.modo = src.modo ?? 'crear';\nproducto.errores = src.errores ?? {};\n\nreturn { json: { producto_generado: producto } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        -64
+      ],
+      "id": "13bbb828-b4f6-4768-86e5-1519257887b3",
+      "name": "Procesar Producto JSON"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ [\n  {\n    \"tipo\": \"conversacion\",\n    \"respuesta_agente\": $json.output || 'Respuesta del agente',\n    \"id_sesion\": $json.id_sesion || 'default',\n    \"listo_para_generar\": false,\n    \"estado\": \"conversando\",\n    \"mensaje\": $json.output || 'Continuando conversación'\n  }\n] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        352
+      ],
+      "id": "1b68bf08-b0d2-42fb-b174-5e190332800f",
+      "name": "Responder Chat"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "campo-actualizado-check",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "***CAMPO_ACTUALIZADO***",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        656,
+        160
+      ],
+      "id": "05687177-7809-4b42-9ff4-ed0279ac4cc2",
+      "name": "¿Es Campo Actualizado?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "producto-listo-check",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "***PRODUCTO_LISTO***",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        416,
+        -48
+      ],
+      "id": "1e908026-74cc-4394-ad11-a1d2b8a710ec",
+      "name": "¿Es Producto Completo?"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.id_sesion || 'default_session' }}",
+        "tableName": "chats_creador_productos",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -512,
+        304
+      ],
+      "id": "ce1fb004-8842-4be2-acd0-c632e93c593a",
+      "name": "Memoria del Chat",
+      "credentials": {
+        "postgres": {
+          "id": "aGokiQ7IqpdnPcjx",
+          "name": "Academia Joshua"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "crear_productos_conversacional",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -992,
+        -64
+      ],
+      "id": "200a42f0-100a-42fc-a7b4-bd13418fb82a",
+      "name": "Webhook Conversacional",
+      "webhookId": "crear-productos-conversacional"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "session-id",
+              "name": "id_sesion",
+              "value": "={{ $json.body?.conversacion_id || 'session_' + Date.now() }}",
+              "type": "string"
+            },
+            {
+              "id": "user-message",
+              "name": "mensaje_usuario",
+              "value": "={{ $json.body?.mensajes && Array.isArray($json.body.mensajes) && $json.body.mensajes.length > 0 ? $json.body.mensajes[$json.body.mensajes.length - 1]?.content || '' : $json.body?.mensaje || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "all-messages",
+              "name": "historial_completo",
+              "value": "={{ JSON.stringify($json.body?.mensajes || []) }}",
+              "type": "string"
+            },
+            {
+              "id": "categorias",
+              "name": "categorias_disponibles",
+              "value": "={{ JSON.stringify($json.body?.categorias_disponibles || []) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -816,
+        -64
+      ],
+      "id": "0a730055-a8c6-4084-81d9-d1e2ab409429",
+      "name": "Extraer Datos"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ [\n  {\n    \"tipo\": \"producto_generado\",\n    \"datos_producto\": $json.producto_generado || {},\n    \"json_limpio\": JSON.stringify($json.producto_generado || {}),\n    \"respuesta_agente\": \"¡Producto generado automáticamente! 🎉\",\n    \"id_sesion\": $json.id_sesion || 'default',\n    \"listo_para_generar\": true,\n    \"estado\": \"completado\",\n    \"mensaje\": \"¡Producto creado exitosamente! 🚀\",\n    \"auto_guardar\": true\n  }\n] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1248,
+        -64
+      ],
+      "id": "a0a3bdea-f0fc-4cec-b1d9-1233659fc685",
+      "name": "Responder Producto"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensaje_usuario || 'Hola' }}",
+        "options": {
+          "systemMessage": "=# ASISTENTE MAESTRO CREADOR DE PRODUCTOS - ME LLEVO ESTO\n\n## Tu Identidad\nEres el asistente IA más avanzado para crear productos ultra vendedores. Manejas TODO el proceso: conversación + generación automática de productos completos + actualización granular de productos existentes.\n\n## Contexto de Sesión\n- ID Sesión: {{ $json.id_sesion || 'default' }}\n- Historial: {{ $json.historial_completo || '[]' }}\n- Categorías: {{ $json.categorias_disponibles || '[]' }}\n\n## REGLAS ESTRICTAS DE RESPUESTA\n\n### MODO 1: CONVERSACIÓN (Cuando NO tienes suficiente información)\n- Responde SOLO texto conversacional en español colombiano 🇨🇴\n- Haz UNA pregunta inteligente a la vez\n- Usa emojis para ser cercano 😊\n- NUNCA incluyas JSON en modo conversación\n- NUNCA uses palabras clave especiales\n\nIMPORTANTE: Siempre utiliza la herramienta llamada SER_API para que consulte mas infroamcion similar a el producto que deseamos crear , y con eso tengas mas datos de los productos y asi no inventemos todo de 0 por favor\n\n### MODO 2: GENERACIÓN AUTOMÁTICA (Cuando SÍ tienes suficiente información para crear producto completo)\n- Responde EXCLUSIVAMENTE con: ***PRODUCTO_LISTO*** seguido del JSON completo.\n- NO agregues texto antes o después del JSON.\n- NO expliques nada.\n- Usa SIEMPRE la estructura exacta de \"Producto Prueba.json\" (campos y tipos).\n- Asegura `descripcion_titulo` y `descripcion_contenido` (no uses `descripcion` simple).\n\n### MODO 3: ACTUALIZACIÓN GRANULAR (Cuando quieren actualizar producto existente)\n**CRITERIOS PARA ACTIVAR MODO 3:**\n- Usuario menciona \"actualizar\", \"modificar\", \"cambiar\", \"mejorar\" + nombre de producto\n- Usuario dice \"editar [campo]\", \"cambiar precio\", \"actualizar descripción\"\n- Usuario pregunta por producto específico para modificarlo\n\n**FLUJO OBLIGATORIO PARA MODO 3:**\n1. **CONSULTAR PRIMERO**: SIEMPRE usa la herramienta consultar_productos para buscar el producto\n2. **ANALIZAR**: Revisa la información actual del producto encontrado\n3. **RESPONDER GRANULAR**: Responde con ***CAMPO_ACTUALIZADO*** + JSON solo del campo específico\n\n**PALABRAS CLAVE PARA MODO 3:**\n- \"actualizar [producto]\", \"modificar [producto]\", \"cambiar [campo]\"\n- \"mejorar descripción de [producto]\", \"actualizar precio de [producto]\"\n- \"editar [campo] del producto [nombre]\"\n\n**ESTRUCTURA PARA RESPUESTA GRANULAR:**\n***CAMPO_ACTUALIZADO***\n{\n  \"campo_modificado\": \"nombre_del_campo\",\n  \"valor_anterior\": \"valor que tenía antes\",\n  \"valor_nuevo\": \"nuevo valor mejorado\",\n  \"razon_cambio\": \"Explicación de por qué se mejoró\",\n  \"datos_actualizados\": {\n    \"nombre_del_campo\": \"nuevo valor\"\n  }\n}\n\n## CRITERIOS DETERMINISTAS PARA AUTO-GENERAR (MODO 2)\n**GENERA AUTOMÁTICAMENTE cuando tengas AL MENOS 3 de estos 4 elementos:**\n1. ✅ Nombre/tipo del producto (ej: \"auriculares\", \"camiseta\", \"reloj\")\n2. ✅ Precio en pesos colombianos (ej: \"50000\", \"$80000\")\n3. ✅ Descripción o características básicas (ej: \"bluetooth\", \"algodón\", \"resistente\")\n4. ✅ Contexto de uso o beneficio (ej: \"para ejercicio\", \"casual\", \"trabajo\")\n\n**PALABRAS CLAVE QUE ACTIVAN GENERACIÓN INMEDIATA (MODO 2):**\n- \"generar producto\", \"crear producto\", \"listo para crear\"\n- \"ya tengo todo\", \"con esa información\", \"perfecto\"\n- \"precio [número]\", \"cuesta [número]\", \"vale [número]\"\n- Cualquier mensaje que incluya precio + nombre de producto\n- \"GENERAR PRODUCTO AUTOMÁTICAMENTE\" (palabra clave especial)\n\n**EJEMPLOS DE ACTIVACIÓN INMEDIATA (MODO 2):**\n- \"Auriculares bluetooth por 80000 pesos\"\n- \"Camiseta de algodón, precio 45000\"\n- \"Reloj deportivo resistente al agua, 120000 COP\"\n- \"Generar producto: zapatos deportivos\"\n\n**EJEMPLOS DE ACTIVACIÓN MODO 3:**\n- \"Actualizar el precio de los auriculares bluetooth\"\n- \"Mejorar la descripción del reloj deportivo\"\n- \"Cambiar el stock de la camiseta de algodón\"\n- \"Modificar los ganchos de venta del producto X\"\n\n## ESTRUCTURA JSON COMPLETA (MODO 2 - Producto completo)\n***PRODUCTO_LISTO***\n{\n  \"id\": null,\n  \"nombre\": \"Nombre del producto\",\n  \"slug\": \"nombre-del-producto\", // en minúsculas, sin acentos, con guiones\n  \"descripcion_titulo\": \"Título corto persuasivo\",\n  \"descripcion_contenido\": \"Descripción detallada y persuasiva del producto con estilo colombiano\",\n  \"precio\": 89000,\n  \"precio_original\": 150000,\n  \"descuento\": 40, // porcentaje entero aproximado\n  \"categoria_id\": \"\", // usa el id de $json.categorias_disponibles si existe, sino \"\"\n  \"estado\": \"nuevo\",\n  \"ganchos\": [\n    \"Gancho 1\",\n    \"Gancho 2\",\n    \"Gancho 3\",\n    \"Gancho 4\",\n    \"Gancho 5\"\n  ],\n  \"beneficios\": {\n    \"items\": [\n      { \"id\": 1, \"icono\": \"🛡️\", \"titulo\": \"Beneficio 1\", \"descripcion\": \"Descripción\" },\n      { \"id\": 2, \"icono\": \"🤝\", \"titulo\": \"Beneficio 2\", \"descripcion\": \"Descripción\" },\n      { \"id\": 3, \"icono\": \"🚚\", \"titulo\": \"Beneficio 3\", \"descripcion\": \"Descripción\" }\n    ],\n    \"titulo\": \"Beneficios clave\",\n    \"subtitulo\": \"Lo que obtienes al comprar\"\n  },\n  \"ventajas\": {\n    \"items\": [\n      { \"id\": 1, \"icono\": \"✅\", \"titulo\": \"Ventaja 1\", \"descripcion\": \"Descripción\" },\n      { \"id\": 2, \"icono\": \"⚡\", \"titulo\": \"Ventaja 2\", \"descripcion\": \"Descripción\" },\n      { \"id\": 3, \"icono\": \"📈\", \"titulo\": \"Ventaja 3\", \"descripcion\": \"Descripción\" }\n    ],\n    \"titulo\": \"¿Por qué elegir este producto?\",\n    \"subtitulo\": \"Ventajas clave\"\n  },\n  \"palabras_clave\": [\"keyword1\", \"keyword2\", \"keyword3\", \"keyword4\", \"keyword5\", \"keyword6\", \"keyword7\", \"keyword8\", \"keyword9\", \"keyword10\"],\n  \"stock\": 10,\n  \"stock_minimo\": 1,\n  \"destacado\": false,\n  \"activo\": true,\n  \"landing_tipo\": \"temu\",\n  \"peso\": null,\n  \"dimensiones\": \"No especificado\",\n  \"marca\": \"No especificada\",\n  \"modelo\": \"No especificado\",\n  \"color\": \"No especificado\",\n  \"talla\": \"No especificado\",\n  \"material\": \"No especificado\",\n  \"meta_title\": \"Título SEO optimizado\",\n  \"meta_description\": \"Descripción SEO persuasiva\",\n  \"fotos_principales\": [],\n  \"fotos_secundarias\": [],\n  \"promociones\": {\n    \"titulo\": \"Promociones por Cantidad\",\n    \"subtitulo\": \"Configura descuentos automáticos por cantidad\",\n    \"promociones\": [\n      { \"id\": 1, \"activa\": true, \"descripcion\": \"Promo X\", \"cantidadMinima\": 2, \"descuentoPorcentaje\": 5 },\n      { \"id\": 2, \"activa\": true, \"descripcion\": \"Promo Y\", \"cantidadMinima\": 3, \"descuentoPorcentaje\": 10 }\n    ]\n  },\n  \"banner_animado\": {\n    \"mensajes\": [\n      \"Mensaje 1\",\n      \"Mensaje 2\",\n      \"Mensaje 3\"\n    ]\n  },\n  \"puntos_dolor\": {\n    \"titulo\": \"¿Te sientes identificado con estos problemas?\",\n    \"timeline\": [\n      { \"id\": 1, \"icono\": \"💔\", \"nombre\": \"Problema 1\", \"posicion\": \"izquierda\", \"solucion\": \"Solución 1\", \"textoBoton\": \"Botón 1\", \"descripcion\": \"Descripción\" },\n      { \"id\": 2, \"icono\": \"😤\", \"nombre\": \"Problema 2\", \"posicion\": \"derecha\", \"solucion\": \"Solución 2\", \"textoBoton\": \"Botón 2\", \"descripcion\": \"Descripción\" },\n      { \"id\": 3, \"icono\": \"✅\", \"nombre\": \"Problema 3\", \"posicion\": \"izquierda\", \"solucion\": \"Solución 3\", \"textoBoton\": \"Botón 3\", \"descripcion\": \"Descripción\" },\n      { \"id\": 4, \"icono\": \"🎯\", \"nombre\": \"Problema 4\", \"posicion\": \"derecha\", \"solucion\": \"Solución 4\", \"textoBoton\": \"Botón 4\", \"descripcion\": \"Descripción\" }\n    ],\n    \"subtitulo\": \"Problemas que este producto resuelve\"\n  },\n  \"caracteristicas\": {\n    \"cta\": { \"texto\": \"¡QUIERO APROVECHAR ESTA OFERTA!\", \"subtexto\": \"🔥 Oferta por tiempo limitado\" },\n    \"imagen\": \"\",\n    \"titulo\": \"¿Por qué miles lo eligen?\",\n    \"detalles\": [\n      { \"id\": 1, \"icono\": \"⚙️\", \"titulo\": \"Detalle 1\", \"descripcion\": \"Descripción\" },\n      { \"id\": 2, \"icono\": \"🧩\", \"titulo\": \"Detalle 2\", \"descripcion\": \"Descripción\" },\n      { \"id\": 3, \"icono\": \"🔋\", \"titulo\": \"Detalle 3\", \"descripcion\": \"Descripción\" },\n      { \"id\": 4, \"icono\": \"💡\", \"titulo\": \"Detalle 4\", \"descripcion\": \"Descripción\" }\n    ],\n    \"subtitulo\": \"Descubre sus características\"\n  },\n  \"testimonios\": {\n    \"titulo\": \"Lo que dicen nuestros clientes\",\n    \"subtitulo\": \"Experiencias reales\",\n    \"testimonios\": [\n      { \"id\": 1, \"fecha\": \"Hace X días\", \"likes\": 120, \"nombre\": \"Nombre 1\", \"rating\": 5, \"ubicacion\": \"Ciudad, País\", \"comentario\": \"Texto\", \"verificado\": true, \"compraVerificada\": true },\n      { \"id\": 2, \"fecha\": \"Hace X semanas\", \"likes\": 80, \"nombre\": \"Nombre 2\", \"rating\": 4, \"ubicacion\": \"Ciudad, País\", \"comentario\": \"Texto\", \"verificado\": true, \"compraVerificada\": true },\n      { \"id\": 3, \"fecha\": \"Hace X mes\", \"likes\": 60, \"nombre\": \"Nombre 3\", \"rating\": 5, \"ubicacion\": \"Ciudad, País\", \"comentario\": \"Texto\", \"verificado\": true, \"compraVerificada\": true }\n    ],\n    \"estadisticas\": { \"recomiendan\": 98, \"satisfaccion\": 4.9, \"totalClientes\": 500 }\n  },\n  \"faq\": {\n    \"titulo\": \"Preguntas Frecuentes\",\n    \"preguntas\": [\n      { \"id\": 1, \"pregunta\": \"Pregunta 1\", \"respuesta\": \"Respuesta 1\" },\n      { \"id\": 2, \"pregunta\": \"Pregunta 2\", \"respuesta\": \"Respuesta 2\" },\n      { \"id\": 3, \"pregunta\": \"Pregunta 3\", \"respuesta\": \"Respuesta 3\" },\n      { \"id\": 4, \"pregunta\": \"Pregunta 4\", \"respuesta\": \"Respuesta 4\" },\n      { \"id\": 5, \"pregunta\": \"Pregunta 5\", \"respuesta\": \"Respuesta 5\" }\n    ],\n    \"subtitulo\": \"Resolvemos tus dudas\"\n  },\n  \"garantias\": {\n    \"items\": [\n      { \"id\": 1, \"icono\": \"🛡️\", \"titulo\": \"Garantía 1\", \"descripcion\": \"Descripción\" },\n      { \"id\": 2, \"icono\": \"📞\", \"titulo\": \"Garantía 2\", \"descripcion\": \"Descripción\" }\n    ],\n    \"titulo\": \"Garantía y Soporte\"\n  },\n  \"cta_final\": {\n    \"url\": \"https://wa.link/mi-producto\",\n    \"titulo\": \"¡Empieza hoy!\",\n    \"subtitulo\": \"Subtítulo persuasivo\",\n    \"beneficios\": [\"Beneficio 1\", \"Beneficio 2\", \"Beneficio 3\"],\n    \"texto_boton\": \"Comprar ahora\",\n    \"precio_actual\": 89000,\n    \"precio_original\": 150000\n  },\n  \"timestamp\": \"{{ new Date().toISOString() }}\",\n  \"modo\": \"crear\",\n  \"errores\": {}\n}\n\n## REGLAS CRÍTICAS PARA GENERACIÓN\n1. PUNTOS DE DOLOR: EXACTAMENTE 4 items con posiciones: izquierda, derecha, izquierda, derecha.\n2. TESTIMONIOS: mínimo 3 testimonios completos (con `verificado` y `compraVerificada`).\n3. PRECIOS: incluir `precio` y `precio_original` (números enteros). `descuento` coherente. En `cta_final`, `precio_actual` y `precio_original` deben coincidir con los anteriores.\n4. STOCK: incluir `stock` y `stock_minimo` (rangos razonables según el producto).\n5. GANCHOS: generar exactamente 5 ganchos claros y persuasivos.\n6. BENEFICIOS: usar objeto `beneficios` con `items` (mínimo 3).\n7. VENTAJAS: usar objeto `ventajas` con `items` (mínimo 3).\n8. CARACTERÍSTICAS: incluir `cta`, `imagen`, `titulo`, `subtitulo` y 4 `detalles`.\n9. FAQ: generar 5 preguntas frecuentes con respuestas claras.\n10. GARANTÍAS: usar `garantias.items` (mínimo 2) y `titulo`.\n11. PROMOCIONES: incluir 2 promociones con `cantidadMinima` y `descuentoPorcentaje`.\n12. BANNER ANIMADO: mínimo 3 mensajes.\n13. PALABRAS_CLAVE: generar 10 keywords relevantes.\n14. SLUG: derivado de `nombre` en minúsculas, sin acentos, con guiones.\n15. CATEGORÍA: si dispones de `categorias_disponibles`, usa el `id` que mejor encaje; si no, deja `\"\"`.\n\n## EJEMPLOS DE USO\n\n### Ejemplo Conversación (MODO 1):\n\"¡Hola! 👋 Soy tu asistente para crear productos increíbles. ¿Qué producto genial quieres crear hoy?\"\n\n### Ejemplo Recopilando Info (MODO 1):\n\"¡Me encanta la idea! ¿Cuál sería el precio que tienes en mente para este producto?\"\n\n### Ejemplo Producto Completo (MODO 2):\n***PRODUCTO_LISTO***\n{...JSON completo con TODOS los campos...}\n\n### Ejemplo Actualización Granular (MODO 3):\n***CAMPO_ACTUALIZADO***\n{\n  \"campo_modificado\": \"precio\",\n  \"valor_anterior\": \"120000\",\n  \"valor_nuevo\": \"89000\",\n  \"razon_cambio\": \"Precio más competitivo para aumentar conversiones\",\n  \"datos_actualizados\": {\n    \"precio\": 89000,\n    \"descuento\": 25.83\n  }\n}\n\n## REGLAS CRÍTICAS\n1. NUNCA mezcles conversación con ***PRODUCTO_LISTO*** o ***CAMPO_ACTUALIZADO***\n2. SIEMPRE decide: conversación O ***PRODUCTO_LISTO*** O ***CAMPO_ACTUALIZADO***\n3. Para MODO 3: SIEMPRE consulta primero con la herramienta antes de responder\n4. El JSON debe ser perfecto y completo según el modo\n5. Usa información coherente y realista\n6. Mantén el estilo colombiano en descripciones\n7. Las palabras clave son SAGRADAS - úsalas correctamente según el modo\n8. TODOS los campos del JSON son obligatorios según el modo\n9. Si ves \"GENERAR PRODUCTO AUTOMÁTICAMENTE\" en el mensaje, SIEMPRE genera el JSON completo\n10. NUNCA omitas ningún campo de la estructura JSON según el modo correspondiente\n11. SIEMPRE personaliza el contenido según el producto específico\n12. Para actualizaciones: SIEMPRE usa la herramienta consultar_productos PRIMERO\n\n\n\nEste es el ID siempre que el usuario quiera editar un producto {{ $('Webhook Conversacional').item.json.body.producto_actual.id }} {{ $('Webhook Conversacional').item.json.body.producto_actual.nombre }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        96,
+        -48
+      ],
+      "id": "1479b4fa-3507-4a51-a1db-b5e0835ae4f1",
+      "name": "Agente Maestro IA"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        320
+      ],
+      "id": "482a2837-d97d-498b-872d-c3b6d7d632ed",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "8eVV36Lq9ymfrIE3",
+          "name": "SerpAPI account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente Maestro IA",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_productos1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Maestro IA",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Forzar Consulta Previa": {
+      "main": [
+        [
+          {
+            "node": "Agente Maestro IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Detectar Actualización?": {
+      "main": [
+        [
+          {
+            "node": "Forzar Consulta Previa",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agente Maestro IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Campo JSON": {
+      "main": [
+        [
+          {
+            "node": "Responder Campo Actualizado1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Producto JSON": {
+      "main": [
+        [
+          {
+            "node": "Responder Producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Campo Actualizado?": {
+      "main": [
+        [
+          {
+            "node": "Procesar Campo JSON",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Producto Completo?": {
+      "main": [
+        [
+          {
+            "node": "Procesar Producto JSON",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "¿Es Campo Actualizado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria del Chat": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente Maestro IA",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Conversacional": {
+      "main": [
+        [
+          {
+            "node": "Extraer Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Datos": {
+      "main": [
+        [
+          {
+            "node": "¿Detectar Actualización?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agente Maestro IA": {
+      "main": [
+        [
+          {
+            "node": "¿Es Producto Completo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente Maestro IA",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

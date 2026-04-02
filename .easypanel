@@ -1,0 +1,12 @@
+{
+  "build": {
+    "command": "npm run build"
+  },
+  "start": {
+    "command": "npm run preview"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "4173"
+  }
+}

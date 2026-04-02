@@ -1,0 +1,452 @@
+/* FormularioProducto.css */
+.formulario-producto {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Secciones */
+.seccion {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 3px solid #007bff;
+}
+
+.seccion h3 {
+  margin: 0 0 0.75rem 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Campos */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.campo:last-child {
+  margin-bottom: 0;
+}
+
+.campo label {
+  font-weight: 500;
+  color: #555;
+  font-size: 13px;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  padding: 0.75rem;
+  border: 1px solid #e1e5e9;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.campo input.error,
+.campo textarea.error,
+.campo select.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* Filas */
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Checkboxes */
+.campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.campo-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.campo-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  margin: 0;
+}
+
+/* Errores */
+.error-texto {
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Descripción para campos JSON */
+.descripcion-json {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 8px 0;
+  font-style: italic;
+}
+
+.descripcion-json-small {
+  font-size: 12px;
+  color: #666;
+  margin: 2px 0 4px 0;
+  font-style: italic;
+}
+
+/* Campos JSON especiales */
+.campo-json {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  background-color: #f8f9fa;
+  border: 2px solid #e1e5e9;
+  border-radius: 6px;
+  padding: 12px;
+  line-height: 1.4;
+}
+
+.campo-json:focus {
+  background-color: #fff;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Botones mejorados */
+.botones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 2px solid #e1e5e9;
+  margin-top: 24px;
+}
+
+.boton-guardar {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  position: relative;
+}
+
+.boton-guardar:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.boton-guardar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Indicador de atajo de teclado */
+.atajo-teclado {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 1000;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.atajo-teclado:hover {
+  opacity: 1;
+}
+
+/* Placeholders */
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: #adb5bd;
+  font-style: italic;
+}
+
+/* Animaciones */
+.formulario-producto {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estados de carga */
+.btn-guardar:disabled {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-guardar:disabled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .formulario-producto {
+    margin: 10px;
+    padding: 16px;
+  }
+  
+  .seccion {
+    padding: 16px;
+  }
+  
+  .botones {
+    flex-direction: column;
+  }
+  
+  .btn-guardar {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Mejoras visuales */
+.seccion:nth-child(1) { border-left-color: #28a745; }
+.seccion:nth-child(2) { border-left-color: #ffc107; }
+.seccion:nth-child(3) { border-left-color: #17a2b8; }
+.seccion:nth-child(4) { border-left-color: #fd7e14; }
+.seccion:nth-child(5) { border-left-color: #6f42c1; }
+.seccion:nth-child(6) { border-left-color: #e83e8c; }
+
+/* Contador de caracteres para campos con límite */
+.campo[data-maxlength]::after {
+  content: attr(data-count) "/" attr(data-maxlength);
+  font-size: 11px;
+  color: #6c757d;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* Estilos para ConvertidorAJson */
+.banner-animado-editor {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.mensajes-lista {
+  margin-bottom: 12px;
+}
+
+.mensaje-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.mensaje-numero {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.mensaje-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.mensaje-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.btn-eliminar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.btn-eliminar:hover {
+  background-color: #ffebee;
+}
+
+.btn-agregar-mensaje {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  margin-bottom: 12px;
+}
+
+.btn-agregar-mensaje:hover {
+  background-color: #218838;
+}
+
+.preview-banner {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.mensajes-preview {
+  margin-top: 8px;
+  font-style: italic;
+  color: #666;
+}
+
+.mensaje-preview {
+  color: #007bff;
+  font-weight: 500;
+}
+
+/* Responsive optimizations */
+@media (max-width: 768px) {
+  .formulario-producto {
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  
+  .formulario {
+    gap: 0.75rem;
+  }
+  
+  .seccion {
+    padding: 0.75rem;
+    border-radius: 4px;
+    border-left-width: 2px;
+  }
+  
+  .seccion h3 {
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .campo {
+    margin-bottom: 0.5rem;
+  }
+  
+  .campo label {
+    font-size: 12px;
+  }
+  
+  .campo input,
+  .campo textarea,
+  .campo select {
+    padding: 0.6rem;
+    font-size: 13px;
+  }
+  
+  .fila {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .campo textarea {
+    min-height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-producto {
+    padding: 0.25rem;
+  }
+  
+  .seccion {
+    padding: 0.5rem;
+  }
+  
+  .seccion h3 {
+    font-size: 14px;
+  }
+  
+  .campo input,
+  .campo textarea,
+  .campo select {
+    padding: 0.5rem;
+    font-size: 12px;
+  }
+}

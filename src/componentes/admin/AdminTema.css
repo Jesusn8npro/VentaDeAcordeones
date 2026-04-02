@@ -1,0 +1,107 @@
+/* ===== Tema base Admin (variables y modo oscuro) ===== */
+@import './EstilosBotonesAdmin.css';
+
+/* Variables del tema admin, scoped a .admin-theme */
+.admin-theme {
+  /* Colores primarios */
+  --color-primario: #465fff;
+  --color-primario-hover: #3641f5;
+  --color-primario-50: #ecf3ff;
+  --color-primario-100: #dde9ff;
+  --color-primario-500: #465fff;
+  --color-primario-600: #3641f5;
+  /* Intermedios para estados (focus/hover) */
+  --color-primario-300: #7085ff;
+
+  /* Colores de estado */
+  --color-exito: #10b981;
+  --color-exito-25: #f6fef9;
+  --color-exito-50: #ecfdf3;
+  --color-advertencia: #f59e0b;
+  --color-advertencia-25: #fffaf5;
+  --color-advertencia-50: #fff6ed;
+  --color-error: #ef4444;
+  --color-error-25: #fffbfa;
+  --color-error-50: #fef2f2;
+  --color-info: #06b6d4;
+
+  /* Fondo (modo claro) */
+  --color-fondo: #ffffff;
+  --color-fondo-secundario: #f9fafb;
+  --color-fondo-terciario: #f2f4f7;
+  --color-borde: #e4e7ec;
+  --color-borde-hover: #d0d5dd;
+
+  /* Texto (modo claro) */
+  --color-texto: #101828;
+  --color-texto-secundario: #475467;
+  --color-texto-terciario: #98a2b3;
+
+  /* Grises */
+  --color-gris-25: #fcfcfd;
+  --color-gris-50: #f9fafb;
+  --color-gris-100: #f2f4f7;
+  --color-gris-200: #e4e7ec;
+  --color-gris-300: #d0d5dd;
+  --color-gris-400: #98a2b3;
+  --color-gris-500: #667085;
+  --color-gris-600: #475467;
+  --color-gris-700: #344054;
+  --color-gris-800: #1d2939;
+  --color-gris-900: #101828;
+  --color-gris-950: #0c111d;
+
+  /* Sombras */
+  --sombra-pequena: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  --sombra-mediana: 0 4px 6px -1px rgba(16, 24, 40, 0.1), 0 2px 4px -1px rgba(16, 24, 40, 0.06);
+  --sombra-grande: 0 10px 15px -3px rgba(16, 24, 40, 0.1), 0 4px 6px -2px rgba(16, 24, 40, 0.05);
+  --sombra-extra-grande: 0 20px 25px -5px rgba(16, 24, 40, 0.1), 0 10px 10px -5px rgba(16, 24, 40, 0.04);
+
+  /* Bordes */
+  --radio-borde: 0.375rem;
+  --radio-borde-mediano: 0.5rem;
+  --radio-borde-grande: 0.75rem;
+  --radio-borde-xl: 1rem;
+  /* Alias de borde para compatibilidad con componentes */
+  --radio-borde-lg: var(--radio-borde-grande);
+
+  /* Transiciones */
+  --transicion-rapida: 100ms ease-in-out;
+  --transicion-mediana: 200ms ease-in-out;
+  --transicion-lenta: 300ms ease-in-out;
+
+  /* Dimensiones */
+  --ancho-barra-lateral: 280px;
+  --ancho-barra-lateral-colapsada: 80px;
+  --altura-encabezado: 70px;
+
+  /* Z-index */
+  --z-index-backdrop: 40;
+  --z-index-barra-lateral: 50;
+  --z-index-encabezado: 60;
+  --z-index-desplegable: 1000;
+
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* Modo oscuro: solo variables/colores */
+.admin-theme.dark,
+.dark .admin-theme {
+  --color-fondo: #1d2939;
+  --color-fondo-secundario: #101828;
+  --color-fondo-terciario: #344054;
+  --color-borde: #344054;
+  --color-borde-hover: #475467;
+
+  --color-texto: #ffffff;
+  --color-texto-secundario: #d0d5dd;
+  --color-texto-terciario: #98a2b3;
+}
+
+/* Base mínima */
+.admin-theme * { box-sizing: border-box; }

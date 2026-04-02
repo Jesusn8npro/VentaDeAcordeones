@@ -1,0 +1,444 @@
+/**
+ * Estilos para el componente de pruebas de rendimiento
+ * Diseño profesional con visualización de métricas
+ */
+
+.pruebas-rendimiento-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.header-pruebas {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.header-pruebas h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header-pruebas p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Controles de pruebas */
+.controles-pruebas {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.controles-pruebas button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ejecutar-pruebas {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.btn-ejecutar-pruebas:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.btn-ejecutar-pruebas:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-exportar {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: white;
+}
+
+.btn-exportar:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.btn-exportar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Indicador de carga */
+.indicador-carga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.indicador-carga p {
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Contenedor de resultados */
+.resultados-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.resultado-prueba {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.resultado-prueba h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.descripcion-prueba {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Tabla de resultados */
+.tabla-resultados {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-resultados table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.tabla-resultados th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-resultados td {
+  font-size: 14px;
+  color: #333;
+}
+
+.tabla-resultados tr:hover {
+  background-color: #f8f9fa;
+}
+
+.mejora {
+  font-weight: 600;
+}
+
+.mejora .excelente {
+  color: #28a745;
+  background: #d4edda;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.mejora .buena {
+  color: #ffc107;
+  background: #fff3cd;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* Métricas de memoria */
+.metricas-memoria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.metrica {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metrica .label {
+  font-weight: 600;
+  color: #666;
+  font-size: 14px;
+}
+
+.metrica .valor {
+  font-weight: 700;
+  color: #333;
+  font-size: 18px;
+}
+
+.error-prueba {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #f5c6cb;
+}
+
+/* Métricas de estrés */
+.metricas-estres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.metrica-grande {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  text-align: center;
+  padding: 30px;
+  border-radius: 16px;
+}
+
+.metrica-grande .label {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+.metrica-grande .valor {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+/* Comparativa final */
+.comparativa-final {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+  border: 2px solid #667eea;
+}
+
+.resumen-comparativo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.metrica-resumen {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.metrica-resumen .label {
+  display: block;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.metrica-resumen .valor {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+}
+
+.metrica-resumen .valor.excelente {
+  color: #28a745;
+}
+
+.metrica-resumen .valor.buena {
+  color: #ffc107;
+}
+
+.recomendaciones-finales {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recomendaciones-finales h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.recomendaciones-finales ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recomendaciones-finales li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+  font-size: 16px;
+}
+
+.recomendaciones-finales li:last-child {
+  border-bottom: none;
+}
+
+/* Información adicional */
+.info-adicional {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  margin-top: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.info-adicional h3 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.info-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+  font-size: 14px;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item strong {
+  color: #333;
+  margin-right: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pruebas-rendimiento-container {
+    padding: 16px;
+  }
+  
+  .header-pruebas h1 {
+    font-size: 2rem;
+  }
+  
+  .controles-pruebas {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .controles-pruebas button {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .resumen-comparativo {
+    grid-template-columns: 1fr;
+  }
+  
+  .tabla-resultados {
+    font-size: 12px;
+  }
+  
+  .tabla-resultados th,
+  .tabla-resultados td {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-pruebas {
+    padding: 30px 16px;
+  }
+  
+  .header-pruebas h1 {
+    font-size: 1.5rem;
+  }
+  
+  .metrica-grande .valor {
+    font-size: 24px;
+  }
+  
+  .metrica-resumen .valor {
+    font-size: 24px;
+  }
+}

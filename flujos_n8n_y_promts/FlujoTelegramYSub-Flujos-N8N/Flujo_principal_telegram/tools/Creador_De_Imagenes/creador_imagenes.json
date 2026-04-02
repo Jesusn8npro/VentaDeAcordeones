@@ -1,0 +1,329 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7665ae72-cb08-46b7-8882-4857ba953733",
+              "name": "url_imagen",
+              "value": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/{{ $('When Executed by Another Workflow').item.json.NombreParaLaImagen }}.jpg",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1360,
+        656
+      ],
+      "id": "6333a65f-ecdb-4b5e-8873-96bad38265b0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/{{ $('When Executed by Another Workflow').item.json.NombreParaLaImagen }}.jpg",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1168,
+        656
+      ],
+      "id": "e6d02f30-d7f0-410e-8be6-34f9c8b33dc6",
+      "name": "Subir a Supabase4",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.images[0].url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        960,
+        656
+      ],
+      "id": "4aec570c-2e36-4cce-8f53-5a3fd872bc2e",
+      "name": "Descargar Imagen2"
+    },
+    {
+      "parameters": {
+        "url": "=https://queue.fal.run/fal-ai/nano-banana/requests/{{ $json.request_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key 21f46ed9-0225-40f6-9ffc-25661e559c38:851595cba3c58067fd73c650a492aeb7"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        736,
+        784
+      ],
+      "id": "de3e88ad-fd9d-429b-aea0-5fdbaccf7f72",
+      "name": "Obtener Resultado2",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        832
+      ],
+      "id": "3c8ce302-53a7-42fa-85ae-5ef04e0d4d61",
+      "name": "5 Segundos2",
+      "webhookId": "5f6bbd1e-a155-48de-b737-a225c6fd7a84"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        784
+      ],
+      "id": "d81304b9-fa3c-40f3-82c2-08d838fb396a",
+      "name": "10 Segundos2",
+      "webhookId": "caad73e3-58d8-4fbd-a3e9-c42424f2d1ee"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/nano-banana",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Key 21f46ed9-0225-40f6-9ffc-25661e559c38:851595cba3c58067fd73c650a492aeb7"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "=json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"prompt\": \"{{ $json.output }}\",\n  \"num_images\": 1,\n  \"output_format\": \"jpeg\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        784
+      ],
+      "id": "dd939925-717d-41d2-bbca-fdccb6429da0",
+      "name": "Crear Imagen2"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "PromtParaCrearLaImagen"
+            },
+            {
+              "name": "NombreParaLaImagen"
+            },
+            {
+              "name": "DeQueTrataElProducto"
+            }
+          ]
+        }
+      },
+      "id": "0020d3d9-56a6-4a4d-ba4a-fc27d98ee19d",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -736,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.PromtParaCrearLaImagen }}",
+        "options": {
+          "systemMessage": "=Tu mision es con este promt:  {{ $json.PromtParaCrearLaImagen }} mejorar la instruccion al 100% para que des como respuesta un promt extremadamente increible, todo debe ser completamente en español, muy vendedor y realista.\nComo ooutput solo devuelve el promt para crear la imagen en base a el promt inicial: {{ $json.PromtParaCrearLaImagen }} y  en relacion a lo que trata el producto: {{ $json.DeQueTrataElProducto }}, se lo mas preciso y profesional prosible sin inventar nada."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -352,
+        784
+      ],
+      "id": "4dae5ec3-d55c-4ca8-9253-b7ca42e6f099",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -656,
+        1040
+      ],
+      "id": "c1adefee-e3a7-4a65-bb18-74e4b5d5e9a1",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "afEdUlo465aPlyDq",
+          "name": "Jesus Gonzalez Oficial"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Subir a Supabase4": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar Imagen2": {
+      "main": [
+        [
+          {
+            "node": "Subir a Supabase4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Resultado2": {
+      "main": [
+        [
+          {
+            "node": "Descargar Imagen2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "5 Segundos2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5 Segundos2": {
+      "main": [
+        [
+          {
+            "node": "Obtener Resultado2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "10 Segundos2": {
+      "main": [
+        [
+          {
+            "node": "Obtener Resultado2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Imagen2": {
+      "main": [
+        [
+          {
+            "node": "10 Segundos2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Crear Imagen2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

@@ -1,0 +1,248 @@
+/* 404 Lujo - Clases únicas (prefijo lux404) */
+.lux404 {
+  --lux404-bg: #f6f8fc;
+  --lux404-card-bg: #ffffff;
+  --lux404-border: #e5e7eb;
+  --lux404-text: #0f172a;
+  --lux404-muted: #64748b;
+  --lux404-primary: #111827;
+  --lux404-primary-2: #1f2937;
+  --lux404-accent: #0ea5e9;
+  --lux404-success: #22c55e;
+
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background: radial-gradient(1200px circle at 10% 10%, #f8fafc 0, #eef2f7 35%, #e8edf3 70%, #e2e8f0 100%);
+}
+
+.lux404-container {
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Header */
+.lux404-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.lux404-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: var(--lux404-primary);
+  background: #f1f5f9;
+  border: 1px solid var(--lux404-border);
+}
+
+.lux404-badge-icon {
+  color: var(--lux404-accent);
+}
+
+.lux404-code {
+  font-size: 7rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 1rem 0 0.5rem;
+  background: linear-gradient(90deg, #0f172a 0%, #334155 50%, #64748b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lux404-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--lux404-text);
+  margin-bottom: 0.5rem;
+}
+
+.lux404-subtitle {
+  font-size: 1.0625rem;
+  color: var(--lux404-muted);
+}
+
+/* Acciones */
+.lux404-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 2rem auto 2.5rem;
+  flex-wrap: wrap;
+}
+
+.lux404-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 0.625rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.9375rem;
+}
+
+.lux404-btn-primary {
+  background: var(--lux404-primary);
+  color: #fff;
+}
+
+.lux404-btn-primary:hover {
+  background: var(--lux404-primary-2);
+  transform: translateY(-1px);
+}
+
+.lux404-btn-secondary {
+  background: #fff;
+  color: var(--lux404-text);
+  border-color: var(--lux404-border);
+}
+
+.lux404-btn-secondary:hover {
+  background: #f8fafc;
+}
+
+.lux404-btn-tertiary {
+  background: transparent;
+  color: var(--lux404-muted);
+  border-color: var(--lux404-border);
+}
+
+.lux404-btn-tertiary:hover {
+  background: #f8fafc;
+}
+
+.lux404-btn-icon {
+  margin-left: 0.25rem;
+}
+
+/* Sugerencias */
+.lux404-suggestions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.lux404-card {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  background: var(--lux404-card-bg);
+  border: 1px solid var(--lux404-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.lux404-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 0.625rem;
+  background: #f1f5f9;
+  color: var(--lux404-text);
+}
+
+.lux404-card-content h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--lux404-text);
+  margin: 0 0 0.25rem 0;
+}
+
+.lux404-card-content p {
+  font-size: 0.9375rem;
+  color: var(--lux404-muted);
+  margin: 0;
+}
+
+.lux404-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-weight: 600;
+  color: var(--lux404-text);
+  text-decoration: none;
+  border: 1px solid var(--lux404-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.625rem;
+}
+
+.lux404-card-link:hover {
+  background: #f8fafc;
+}
+
+/* Contacto */
+.lux404-contact {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: 0.9375rem;
+  color: var(--lux404-muted);
+}
+
+.lux404-contact-link {
+  color: var(--lux404-success);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.lux404-contact-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .lux404-suggestions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .lux404-code {
+    font-size: 4.5rem;
+  }
+
+  .lux404-title {
+    font-size: 1.5rem;
+  }
+
+  .lux404-suggestions {
+    grid-template-columns: 1fr;
+  }
+
+  .lux404-actions {
+    flex-direction: column;
+  }
+
+  .lux404-btn,
+  .lux404-card-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+

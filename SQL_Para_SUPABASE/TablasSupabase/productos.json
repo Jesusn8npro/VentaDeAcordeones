@@ -1,0 +1,86 @@
+[
+  {
+    "column_name": "banner_animado",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"mensajes\": [\"🚚 ¡ENVÍO GRATIS a toda Colombia en compras mayores a $50.000!\", \"💳 Compra 100% SEGURA - Paga contraentrega sin riesgo\", \"🛡️ GARANTÍA TOTAL o te devolvemos el 100% de tu dinero\", \"⚡ OFERTA LIMITADA - Solo por hoy descuentos hasta 70% OFF\"], \"textColor\": \"#FFFFFF\", \"velocidad\": \"normal\", \"backgroundColor\": \"#FF4444\"}'::jsonb"
+  },
+  {
+    "column_name": "beneficios",
+    "tipo_exacto": "jsonb[]",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "column_name": "beneficios_jsonb",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"items\": [{\"id\": 1, \"icono\": \"🛡️\", \"titulo\": \"Garantía oficial\", \"descripcion\": \"Cobertura de satisfacción y calidad\"}, {\"id\": 2, \"icono\": \"🤝\", \"titulo\": \"Soporte dedicado\", \"descripcion\": \"Acompañamiento inicial y guía de uso\"}, {\"id\": 3, \"icono\": \"🚚\", \"titulo\": \"Envío seguro\", \"descripcion\": \"Seguimiento y entrega confiable\"}], \"titulo\": \"Beneficios clave\", \"subtitulo\": \"Lo que obtienes al comprar\"}'::jsonb"
+  },
+  {
+    "column_name": "caracteristicas",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"cta\": {\"texto\": \"¡QUIERO APROVECHAR ESTA OFERTA!\", \"subtexto\": \"🔥 Oferta por tiempo limitado\"}, \"imagen\": \"\", \"titulo\": \"¿Por qué miles de personas eligen nuestro producto?\", \"detalles\": [], \"subtitulo\": \"Descubre las características que lo hacen único y especial\", \"beneficios\": []}'::jsonb"
+  },
+  {
+    "column_name": "caracteristicas_jsonb",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"cta\": {\"texto\": \"¡QUIERO APROVECHAR ESTA OFERTA!\", \"subtexto\": \"🔥 Oferta por tiempo limitado\"}, \"imagen\": \"\", \"titulo\": \"¿Por qué miles de personas eligen nuestro producto?\", \"detalles\": [{\"id\": 1, \"icono\": \"⚙️\", \"titulo\": \"Material premium\", \"descripcion\": \"Resistente y duradero\"}, {\"id\": 2, \"icono\": \"🧩\", \"titulo\": \"Diseño inteligente\", \"descripcion\": \"Ergonomía y facilidad de uso\"}, {\"id\": 3, \"icono\": \"🔋\", \"titulo\": \"Eficiencia energética\", \"descripcion\": \"Optimiza consumo sin perder rendimiento\"}], \"subtitulo\": \"Descubre las características que lo hacen único y especial\"}'::jsonb"
+  },
+  {
+    "column_name": "faq",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"titulo\": \"Preguntas Frecuentes\", \"preguntas\": [], \"subtitulo\": \"Resolvemos todas tus dudas para que compres con total confianza\"}'::jsonb"
+  },
+  {
+    "column_name": "ganchos",
+    "tipo_exacto": "text[]",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "column_name": "garantias",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"titulo\": \"Compra con Total Confianza\", \"garantias\": [], \"subtitulo\": \"Tu satisfacción y seguridad son nuestra prioridad #1\"}'::jsonb"
+  },
+  {
+    "column_name": "puntos_dolor",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"titulo\": \"¿Te sientes identificado con estos problemas diarios?\", \"timeline\": [], \"subtitulo\": \"Miles de personas sufren estos inconvenientes cada día. ¡Tú no tienes que ser una de ellas!\"}'::jsonb"
+  },
+  {
+    "column_name": "testimonios",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": "'{\"titulo\": \"¡+15.847 CLIENTES YA TRANSFORMARON SU VIDA!\", \"subtitulo\": \"Lee lo que dicen nuestros clientes reales sobre su experiencia\", \"testimonios\": [], \"estadisticas\": {\"recomiendan\": 98, \"satisfaccion\": 4.9, \"totalClientes\": 0}}'::jsonb"
+  },
+  {
+    "column_name": "ventajas",
+    "tipo_exacto": "jsonb[]",
+    "data_type": "ARRAY",
+    "is_nullable": "YES",
+    "column_default": null
+  },
+  {
+    "column_name": "ventajas_jsonb",
+    "tipo_exacto": "jsonb",
+    "data_type": "jsonb",
+    "is_nullable": "YES",
+    "column_default": null
+  }
+]

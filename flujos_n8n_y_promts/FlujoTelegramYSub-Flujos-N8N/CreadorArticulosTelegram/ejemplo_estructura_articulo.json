@@ -1,0 +1,120 @@
+[
+  {
+    "articulo_generado": {
+      "slug": "5-consejos-para-evitar-estafas-mundo-digital",
+      "titulo": "¡Pilas! 5 Consejos Clave para No Caer en Estafas en el Nuevo Mundo Digital",
+      "autor": "Equipo MeLlevoEsto",
+      "autor_iniciales": "EM",
+      "lectura_min": 10,
+      "calificacion": 4.8,
+      "autor_id": "080c5e86-3c9a-449f-92a0-b92ce3a06845",
+      "portada_url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-1.jpg",
+      "resumen_breve": "Descubre cómo protegerte de las estafas más comunes en línea con 5 consejos prácticos. Mantén tu seguridad digital intacta.",
+      "resumen_completo": "En la era digital, las estafas están a la vuelta de la esquina. Este artículo te brinda 5 consejos esenciales y fáciles de aplicar para que navegues por internet con confianza y evites ser víctima de ciberdelincuentes. Aprende a identificar y prevenir los riesgos.",
+      "secciones": [
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "¿Por qué es clave protegerse en el mundo digital?"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "El mundo digital nos ofrece un sinfín de oportunidades: desde comprar lo que queramos sin salir de casa, hasta conectar con amigos y familiares en cualquier parte del planeta. Sin embargo, así como la tecnología avanza, también lo hacen las tácticas de los ciberdelincuentes. Las estafas digitales son cada vez más sofisticadas, y todos, desde el más joven hasta el más experimentado, estamos expuestos. Por eso, entender los riesgos y saber cómo protegernos es fundamental para disfrutar de los beneficios de internet sin preocupaciones. No se trata de vivir con miedo, sino de ser inteligentes y precavidos. En este artículo, te vamos a dar las herramientas para que no caigas en la trampa y navegues con total seguridad."
+        },
+        {
+          "tipo": "imagen",
+          "url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-1.jpg",
+          "alt": "Persona sonriendo usando un smartphone de forma segura con un escudo digital."
+        },
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "Consejo 1: Contraseñas Fuertes y Autenticación de Dos Factores (2FA), ¡Tu Doble Escudo!"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "Uno de los puntos más débiles de nuestra seguridad digital son las contraseñas. ¿Todavía usas '123456' o tu fecha de nacimiento? ¡Error, parcero! Una contraseña fuerte es una combinación de letras mayúsculas y minúsculas, números y símbolos, y debe ser única para cada una de tus cuentas importantes. Pero para elevar el nivel de seguridad, la autenticación de dos factores (2FA) es tu mejor amigo. Esta herramienta añade una capa extra de protección, pidiéndote un segundo método de verificación (como un código enviado a tu celular) después de introducir tu contraseña. Actívala en todas tus cuentas que lo permitan, ¡es como tener un segundo candado invisible!"
+        },
+        {
+          "tipo": "imagen",
+          "url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-2.jpg",
+          "alt": "Candado digital con códigos y números, representando contraseñas y 2FA."
+        },
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "Consejo 2: ¡Ojo con el Phishing y los Enlaces Sospechosos! No Todo lo que Brilla es Oro"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "El phishing es una de las estafas más comunes y peligrosas. Consiste en que los ciberdelincuentes se hacen pasar por empresas o instituciones conocidas (bancos, tiendas, redes sociales) para robar tu información. Te envían correos o mensajes con enlaces que parecen legítimos, pero que te llevan a sitios falsos. Antes de hacer clic en cualquier enlace, ¡piénsalo dos veces! Revisa la dirección de correo del remitente, busca errores ortográficos o gramaticales, y si algo te parece raro, es mejor ir directamente a la página oficial de la entidad. Recuerda, si te piden información personal sensible de forma inesperada, ¡es una señal de alarma!"
+        },
+        {
+          "tipo": "imagen",
+          "url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-3.jpg",
+          "alt": "Gráfico de burbujas de chat maliciosas y enlaces flotando en una pantalla de computadora."
+        },
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "Consejo 3: Mantén tu Software Actualizado y Usa un Buen Antivirus"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "Tu computadora, celular y tablet son tus herramientas en el mundo digital, y como cualquier herramienta, necesitan mantenimiento. Los fabricantes de software liberan constantemente actualizaciones que no solo añaden nuevas funciones, sino que también corrigen vulnerabilidades de seguridad. Ignorar estas actualizaciones es como dejar la puerta de tu casa abierta. Además, un buen programa antivirus y antimalware es esencial. Estas herramientas actúan como guardianes, detectando y eliminando amenazas antes de que puedan causarte daño. Invierte en un buen software de seguridad y acostúmbrate a escanear tus dispositivos regularmente. ¡Más vale prevenir que lamentar!"
+        },
+        {
+          "tipo": "imagen",
+          "url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-4.jpg",
+          "alt": "Red de computadoras interconectadas con escudos de seguridad protegiendo nodos."
+        },
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "Consejo 4: Sé Escéptico con las Ofertas Demasiado Buenas para Ser Reales"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "Todos amamos un buen descuento, ¿verdad? Pero en el mundo digital, si una oferta parece demasiado buena para ser verdad, ¡probablemente lo es! Las estafas a menudo se disfrazan de oportunidades increíbles: premios de loterías en las que no participaste, herencias de tíos lejanos que no conoces, productos de lujo a precios irrisorios, o inversiones que prometen retornos astronómicos en poco tiempo. Usa el sentido común. Investiga la empresa o la persona que hace la oferta, busca reseñas, y si te piden dinero por adelantado para 'liberar' un premio o una ganancia, ¡corre! La avaricia es uno de los cebos más usados por los estafadores."
+        },
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "Consejo 5: Educarte y Compartir Información de Seguridad es la Mejor Defensa"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "La información es poder, y en el ámbito de la ciberseguridad, es tu mejor arma. Mantente informado sobre las nuevas estafas y tendencias de los ciberdelincuentes. Sigue blogs de seguridad, noticias tecnológicas y recursos confiables. Pero no te quedes con la información para ti solo, ¡compártela! Habla con tus familiares, amigos y colegas sobre los riesgos y los consejos para protegerse. Un público más consciente y educado es un público más seguro. Recuerda que la seguridad digital es una responsabilidad compartida. ¡Juntos podemos construir un mundo digital más seguro para todos!"
+        },
+        {
+          "tipo": "imagen",
+          "url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-5.jpg",
+          "alt": "Grupo diverso de personas interactuando de forma segura con dispositivos digitales."
+        },
+        {
+          "tipo": "encabezado",
+          "nivel": 2,
+          "contenido": "¡Navega Seguro y Vive la Experiencia Digital sin Miedos!"
+        },
+        {
+          "tipo": "parrafo",
+          "contenido": "En MELLEVOESTO.COM, queremos que tu experiencia en línea sea siempre positiva y segura. Aplicando estos 5 consejos, estarás mucho más preparado para identificar y evitar las estafas en el nuevo mundo digital. La clave está en la prevención, el escepticismo saludable y el uso inteligente de las herramientas que tenemos a nuestra disposición. ¡Así que adelante, parcero, a disfrutar de todo lo bueno que nos ofrece internet con la tranquilidad de estar protegido!"
+        }
+      ],
+      "cta": {
+        "texto_boton": "Descubre Productos Seguros en MeLlevoEsto.com",
+        "url": "https://mellevoesto.com/productos",
+        "subtexto": "¡Tu compra segura y confiable en un clic!"
+      },
+      "estado_publicacion": "borrador",
+      "meta_titulo": "Evita Estafas Digitales: 5 Consejos Indispensables para 2024",
+      "meta_descripcion": "Aprende los 5 consejos clave para protegerte de estafas en el mundo digital. Mantén tus datos seguros y navega con confianza en línea.",
+      "meta_keywords": "estafas digitales, seguridad online, ciberseguridad, consejos, phishing, contraseñas seguras",
+      "canonical_url": "https://mellevoesto.com/blog/5-consejos-para-evitar-estafas-mundo-digital",
+      "og_titulo": "¡Pilas! 5 Consejos Clave para No Caer en Estafas en el Nuevo Mundo Digital",
+      "og_descripcion": "Aprende los 5 consejos clave para protegerte de estafas en el mundo digital. Mantén tus datos seguros y navega con confianza en línea.",
+      "og_imagen_url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/imagenes_articulos/consejos-estafas-mundo-digital-img-1.jpg",
+      "twitter_card": "summary_large_image"
+    }
+  }
+]

@@ -1,0 +1,103 @@
+/* Estilos aislados para ListaProductos */
+.lista-productos {
+  padding: 1.5rem;
+}
+
+.lista-productos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+.lista-productos .header-info .titulo-pagina {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+.lista-productos .header-info .subtitulo-pagina { color: var(--color-texto-secundario); }
+.lista-productos .header-acciones { display: flex; gap: 0.75rem; }
+.lista-productos .boton-primario { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--color-primario); color: #fff; border: none; border-radius: 8px; padding: 0.6rem 0.9rem; text-decoration: none; }
+.lista-productos .boton-primario:hover { opacity: 0.9; }
+
+.tabla-productos { width: 100%; border-collapse: collapse; }
+.tabla-productos th, .tabla-productos td { text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--color-borde); }
+.fila-producto .producto-info { display: flex; align-items: center; gap: 0.75rem; }
+.producto-imagen .imagen-miniatura { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
+.imagen-placeholder { width: 48px; height: 48px; border-radius: 8px; display: grid; place-items: center; border: 1px dashed var(--color-borde); color: var(--color-texto-secundario); }
+.producto-detalles .producto-nombre { margin: 0; font-weight: 600; }
+.producto-detalles .producto-sku { margin: 0; color: var(--color-texto-secundario); font-size: 0.85rem; }
+
+.precio-celda { white-space: nowrap; }
+.stock-info { display: flex; align-items: center; gap: 0.5rem; }
+.stock-estado.estado-agotado { color: var(--color-peligro); }
+.stock-estado.estado-bajo-stock { color: var(--color-advertencia, #c47f00); }
+.stock-estado.estado-disponible { color: var(--color-exito, #1a7f37); }
+
+.acciones-producto { display: flex; gap: 0.5rem; }
+.accion-boton { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--color-borde); border-radius: 8px; background: var(--color-fondo); color: var(--color-texto); text-decoration: none; }
+.accion-boton:hover { background: var(--color-gris-100); }
+.accion-boton.eliminar { color: var(--color-peligro); border-color: var(--color-peligro); }
+
+.estado-toggle { border: 1px solid var(--color-borde); background: var(--color-fondo); border-radius: 999px; padding: 0.3rem 0.6rem; cursor: pointer; }
+.estado-toggle.activo { color: var(--color-exito, #1a7f37); border-color: var(--color-exito, #1a7f37); }
+.estado-toggle.inactivo { color: var(--color-texto-secundario); }
+
+.paginacion { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
+.paginacion-info { color: var(--color-texto-secundario); }
+.paginacion-controles { display: flex; gap: 0.5rem; }
+.boton-paginacion { border: 1px solid var(--color-borde); background: var(--color-fondo); border-radius: 6px; padding: 0.35rem 0.6rem; cursor: pointer; }
+.boton-paginacion.activo { background: var(--color-gris-100); }
+
+@media (max-width: 768px) {
+  .lista-productos-header { flex-direction: column; gap: 0.75rem; }
+  .tabla-productos th, .tabla-productos td { padding: 0.5rem; }
+}
+
+/* === Estadísticas === */
+.estadisticas-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.estadistica-card { background: var(--color-fondo); border: 1px solid var(--color-borde); border-radius: 12px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+.estadistica-icono { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 999px; background: var(--color-gris-100); color: var(--color-texto); }
+.estadistica-contenido h3 { margin: 0; font-size: 0.9rem; color: var(--color-texto-secundario); }
+.estadistica-numero { margin: 0; font-size: 1.4rem; font-weight: 700; }
+.estadistica-cambio { font-size: 0.8rem; }
+.estadistica-cambio.positivo { color: var(--color-exito, #1a7f37); }
+.estadistica-cambio.negativo { color: var(--color-peligro); }
+
+/* === Filtros === */
+.filtros-productos { display: grid; grid-template-columns: 1fr auto auto; gap: 0.75rem; align-items: center; }
+.filtro-busqueda { display: flex; align-items: center; gap: 0.5rem; background: var(--color-fondo); border: 1px solid var(--color-borde); border-radius: 10px; padding: 0.5rem 0.75rem; }
+.filtro-icono { color: var(--color-texto-secundario); }
+.input-busqueda { flex: 1; border: none; outline: none; background: transparent; color: var(--color-texto); }
+.filtros-selectores { display: flex; gap: 0.5rem; }
+.selector-filtro { border: 1px solid var(--color-borde); background: var(--color-fondo); border-radius: 10px; padding: 0.45rem 0.6rem; color: var(--color-texto); }
+.boton-filtro { display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid var(--color-borde); background: var(--color-fondo); border-radius: 10px; padding: 0.45rem 0.6rem; color: var(--color-texto); cursor: pointer; }
+.boton-icono { width: 18px; height: 18px; }
+
+/* === Contenedor tabla === */
+.tabla-productos-contenedor { background: var(--color-fondo); border: 1px solid var(--color-borde); border-radius: 12px; overflow: hidden; }
+
+/* === Estados de carga y vacío === */
+.cargando-productos { display: flex; align-items: center; gap: 0.5rem; padding: 1rem; color: var(--color-texto-secundario); }
+.spinner { width: 20px; height: 20px; border: 3px solid var(--color-borde); border-top-color: var(--color-primario); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.productos-vacio { padding: 1.5rem; text-align: center; color: var(--color-texto-secundario); border-top: 1px dashed var(--color-borde); }
+.vacio-icono { width: 28px; height: 28px; color: var(--color-texto-secundario); }
+
+/* === Error === */
+.lista-productos-error { padding: 1.25rem; border: 1px solid var(--color-borde); border-radius: 12px; background: var(--color-fondo); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; }
+.lista-productos-error h3 { margin: 0; }
+.lista-productos-error p { margin: 0; color: var(--color-texto-secundario); }
+.error-icono { width: 24px; height: 24px; color: var(--color-peligro); }
+.boton-reintentar { border: 1px solid var(--color-borde); background: var(--color-fondo); border-radius: 8px; padding: 0.4rem 0.7rem; cursor: pointer; }
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+  .estadisticas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .lista-productos { padding: 1rem; }
+  .estadisticas-grid { grid-template-columns: 1fr; }
+  .filtros-productos { grid-template-columns: 1fr; }
+}

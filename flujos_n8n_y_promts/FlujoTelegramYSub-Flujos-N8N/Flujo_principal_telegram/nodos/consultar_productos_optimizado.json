@@ -1,0 +1,462 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"respuesta\": $json.respuesta_final, \"metadata\": $json.metadata, \"success\": true } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1392,
+        -400
+      ],
+      "id": "e789afe1-5274-4ddc-b792-4d391a1def84",
+      "name": "Responder"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "response-assignment",
+              "name": "respuesta_final",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "metadata-assignment",
+              "name": "metadata",
+              "value": "={{ { chat_id: $('Procesar Datos Entrada').item.json.chat_id, timestamp: new Date().toISOString(), usuario: $('Procesar Datos Entrada').item.json.nombre || 'visitante', autenticado: $('Procesar Datos Entrada').item.json.autenticado } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1184,
+        -400
+      ],
+      "id": "2138dd2c-2409-48ee-a823-968e6853d7ef",
+      "name": "Preparar Respuesta"
+    },
+    {
+      "parameters": {
+        "operation": "upsert"
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        352
+      ],
+      "id": "e4758fbe-4fc0-44da-a9e7-70991702edb8",
+      "name": "gestionar_lead_unificado",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "producto_imagenes",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        768,
+        352
+      ],
+      "id": "4e002d12-fda8-4708-97c6-b459487c0913",
+      "name": "consultar_imagenes",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "leads_chat",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "chat_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Procesar Datos Entrada').item.json.chat_id || $('Webhook').item.json.body?.chatId || $json.chat_id || $json.chatId }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        352
+      ],
+      "id": "cb006701-9725-41a0-8bbe-f709dd8a2d9f",
+      "name": "consultar_lead_por_chat_id",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Procesar Datos Entrada').item.json.chat_id || $('Webhook').item.json.body?.chatId || $json.chat_id || $json.chatId || new Date().getTime().toString() }}",
+        "tableName": "chats_de_la_web",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -176,
+        48
+      ],
+      "id": "fb22b8a8-5a0a-49b9-9ebd-dff4a175b9c0",
+      "name": "Memoria Chat",
+      "credentials": {
+        "postgres": {
+          "id": "SQbjeiNAyY3q7eu9",
+          "name": "Postgrest Me Llevo Esto"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        128,
+        64
+      ],
+      "id": "249ea691-6fcb-43d1-ba16-4d779c164a50",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "BF6TLMzAguxXUoJp",
+          "name": "Api Chat GPT"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.mensaje_del_usuario }}",
+        "options": {
+          "systemMessage": "=Eres Natalia París 💁‍♀️, la vendedora #1 de MeLlevoEsto.com. Tu ÚNICA misión es VENDER y generar leads de calidad.\n\n🎯 TU OBJETIVO: Convertir cada conversación en una VENTA o capturar información valiosa del cliente.\n\n💬 PERSONALIDAD VENDEDORA\n- Habla como una vendedora colombiana exitosa, cálida pero directa\n- Usa emojis estratégicamente (máximo 2 por mensaje)\n- Respuestas CORTAS: máximo 2 líneas\n- Siempre termina con una pregunta que invite a comprar\n- Crea URGENCIA y ESCASEZ en cada mensaje\n\n🔥 TÉCNICAS DE VENTA OBLIGATORIAS\n\n1️⃣ ESCASEZ INMEDIATA:\n- \"Solo quedan 2 unidades 🔥\"\n- \"Esta oferta termina HOY\"\n- \"El último cliente se llevó 3, te queda 1\"\n\n2️⃣ PRUEBA SOCIAL:\n- \"Producto más vendido esta semana\"\n- \"15 personas lo compraron hoy\"\n- \"Cliente de Medellín acaba de pedir 2\"\n\n3️⃣ VALOR AGREGADO:\n- \"Envío GRATIS si confirmas ahora\"\n- \"Te regalo la funda si pides hoy\"\n- \"Descuento especial solo para ti\"\n\n⚙️ HERRAMIENTAS (úsalas SIEMPRE que corresponda):\n\n🔍 consultar_productos_optimizado: Cuando mencionen cualquier producto (busca por nombre, descripción o slug)\n📸 consultar_imagenes: Para mostrar fotos del producto\n📝 gestionar_lead_unificado: Para crear o actualizar leads automáticamente\n📋 consultar_lead_por_chat_id: Para verificar si el lead ya existe\n\n🧠 CAPTURA AUTOMÁTICA DE LEAD DURANTE TODA LA CONVERSACIÓN (OBLIGATORIO)\n- Mantén un checklist interno y ve marcando datos capturados.\n- Si falta un dato, pídelo de a UNO por mensaje, sin interrumpir la venta.\n- No repitas preguntas si el dato ya está. Valida y corrige si el cliente cambia.\n\n✅ CHECKLIST DE DATOS A CAPTURAR\n- nombre, apellido\n- email\n- whatsapp\n- ciudad, dirección\n- tipo_consulta (compra, soporte, envío, devolución, otro)\n- intereses_cliente / producto de interés\n- pagina_origen (ya llega del sistema)\n\n📄 ARGUMENTOS PARA HERRAMIENTAS (JSON ESTRICTO)\n- Al llamar \"gestionar_lead_unificado\", envía los campos disponibles: nombre, apellido, email, whatsapp, ciudad, direccion, tipo_consulta, pagina_origen, source, intereses_cliente, tecnicas_persuasion, nivel_interes (1-10), probabilidad_compra (0-100), urgencia_compra (inmediata|alta|media|baja), principales_objeciones, miedos_cliente, valor_potencial (número), notas_adicionales, converted, contexto_inicial, fecha_primer_contacto (ISO), productos_consultados (array), precio_maximo_mencionado (número), ubicacion_usuario, metodo_pago_preferido (contraentrega|transferencia|tarjeta|nequi|daviplata|pse), datos_envio (objeto).\n- No envíes campos vacíos ni null; sólo valores válidos.\n- No sobrescribas \"fecha_primer_contacto\" si ya existe.\n\n📸 USO DE CONSULTAR_IMAGENES\n- Devuelve \"imagen_principal\", \"imagen_secundaria_1\" (Imagen 2) y \"imagen_secundaria_2\" (Imagen 3).\n- Si el cliente pide fotos, llama la herramienta y agrega a \"productos_consultados\" objetos con {producto_id, nombre, imagen_principal, imagen_2, imagen_3, precio}.\n\n🔄 FLUJO DE GUARDADO PROGRESIVO OPTIMIZADO (OBLIGATORIO, EN CADA MENSAJE)\n1) Primero llama \"consultar_lead_por_chat_id\" usando chat_id actual.\n2) Luego llama \"gestionar_lead_unificado\" que automáticamente:\n   - Crea el registro si NO existe\n   - Actualiza el registro si YA existe\n   - Usa UPSERT para evitar duplicados\n3) Siempre actualiza \"ultima_actualizacion\" con la hora actual.\n- No envíes valores vacíos ni \"undefined\".\n- Evita duplicados: usa \"chat_id\" como clave de sesión.\n\n🧩 FORMATO DE PREGUNTAS (máximo 2 líneas, con cierre)\n- \"¿Cuál es tu nombre y ciudad? Te aparto el último.\"\n- \"Para coordinar envío, ¿me confirmas WhatsApp y dirección?\"\n- \"¿Te escribo al correo para confirmar?\"\n\n📦 POLÍTICAS\n- Bogotá: Contraentrega (llega mañana). Fuera de Bogotá: Pago anticipado (2-3 días).\n- Garantía total por defectos. WhatsApp para seguimiento.\n\n⚡ REGLAS DE ORO\n- NUNCA menciones que eres un bot.\n- SIEMPRE usa datos reales de herramientas.\n- CAPTURA y ACTUALIZA el lead después de CADA dato nuevo del cliente.\n- Máximo 2 productos por mensaje. Crea urgencia en CADA respuesta.\n- Termina SIEMPRE con pregunta de cierre.\n\n🚫 PROHIBIDO\n- Textos largos, respuestas genéricas, inventar precios o enlaces, ser pasiva.\n\n💡 RECUERDA: Cada mensaje es una oportunidad de VENTA. Sé directa, persuasiva y efectiva. ¡Eres la mejor vendedora de Colombia! 🇨🇴\n\n🎨 FORMATO DE RESPUESTA OBLIGATORIO (CRÍTICO - NUNCA FALLAR):\n- SIEMPRE responde en texto natural y amigable\n- USA emojis apropiados (máximo 2 por mensaje)\n- NUNCA incluyas caracteres raros, códigos o símbolos extraños\n- NUNCA uses formato JSON en la respuesta al usuario\n- NUNCA muestres datos técnicos o IDs de base de datos\n- Cuando muestres productos, usa formato natural: \"Tengo el iPhone 14 📱 por $2.500.000\"\n- Cuando muestres imágenes, di: \"Te muestro las fotos 📸\" y luego describe el producto\n- SIEMPRE mantén el tono conversacional y vendedor\n\n🔍 BÚSQUEDA DE PRODUCTOS (CRÍTICO):\n- La herramienta consultar_productos_optimizado busca automáticamente en nombre, descripción y slug\n- Solo necesitas extraer la palabra clave del usuario (ej: \"iPhone\", \"celular\", \"laptop\")\n- NO agregues wildcards (%) - el sistema ya los maneja automáticamente\n- Si no encuentra productos, sugiere alternativas similares\n- SIEMPRE muestra precio y características principales\n\n📱 MANEJO DE IMÁGENES:\n- Cuando uses consultar_imagenes, NUNCA muestres las URLs directamente\n- Di algo natural como: \"Te muestro las fotos del producto 📸\"\n- Describe brevemente lo que se ve en las imágenes\n- Enfócate en vender, no en mostrar datos técnicos"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        784,
+        -400
+      ],
+      "id": "2572234c-22f8-43fc-a950-67287ec798d4",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ce8b2bf8-a12a-4a08-8220-f85cd93bf4ca",
+              "name": "mensaje_del_usuario",
+              "value": "={{ $json.body.mensaje_del_usuario }}",
+              "type": "string"
+            },
+            {
+              "id": "36c0fc2a-c8c5-4bef-89b3-3c6465c4a1bf",
+              "name": "email_usuario",
+              "value": "={{ $json.body.email_usuario }}",
+              "type": "string"
+            },
+            {
+              "id": "1c7c45bd-992e-47c3-a8a4-ec2d935042bb",
+              "name": "nombre",
+              "value": "={{ $json.body.nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "8323ff4e-1a26-4bd0-9d6c-1ff856cfd3c1",
+              "name": "apellido",
+              "value": "={{ $json.body.usuario?.apellido || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "f9a7c2ab-9b77-4f1c-8f34-1f2b0dbe12c1",
+              "name": "ciudad",
+              "value": "={{ $json.body.usuario?.ciudad || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "a4c8b1de-3c2a-4d7e-9f11-6d0c9b2e7f35",
+              "name": "direccion",
+              "value": "={{ $json.body.usuario?.direccion || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "fe23d0bf-1197-448a-beac-5a67402a9f8e",
+              "name": "whatsapp",
+              "value": "={{ $json.body.usuario?.whatsapp || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "dc5b36eb-df84-43ef-a51e-6673161fab56",
+              "name": "tipo_consulta",
+              "value": "={{ $json.body.usuario?.tipoConsulta || 'general' }}",
+              "type": "string"
+            },
+            {
+              "id": "d1e7bf93-7ca4-4105-b982-134d3a2dccee",
+              "name": "autenticado",
+              "value": "={{ $json.body.usuario?.autenticado || false }}",
+              "type": "boolean"
+            },
+            {
+              "id": "e25876bf-1f31-44e6-9b80-9ae4fb595873",
+              "name": "pagina_origen",
+              "value": "={{ $json.body.url || $json.query.url || 'chat-widget' }}",
+              "type": "string"
+            },
+            {
+              "id": "f1234567-1234-1234-1234-123456789abc",
+              "name": "chat_id",
+              "value": "={{ $json.body.chat_id }}",
+              "type": "string"
+            },
+            {
+              "id": "f2345678-2345-2345-2345-234567890bcd",
+              "name": "timestamp",
+              "value": "={{ $json.body.timestamp || new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "f3456789-3456-3456-3456-345678901def",
+              "name": "perfil_completo",
+              "value": "={{ $json.body.perfilCompleto || false }}",
+              "type": "boolean"
+            },
+            {
+              "id": "f4567890-4567-4567-4567-456789012efg",
+              "name": "plataforma",
+              "value": "={{ $json.body.plataforma || 'ME LLEVO ESTO' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        -384
+      ],
+      "id": "e9fae54a-69b6-42c6-8e16-c982b7dfb20a",
+      "name": "Procesar Datos Entrada"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chat_en_vivo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -80,
+        -384
+      ],
+      "id": "97cb441b-1916-491a-a457-2ed73173619e",
+      "name": "🎯 Webhook Entrada",
+      "webhookId": "956ff89f-f828-480b-88fa-5fe8c34614f4"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "productos",
+        "limit": 15,
+        "matchType": "anyFilter",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "nombre",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            },
+            {
+              "keyName": "descripcion",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            },
+            {
+              "keyName": "slug",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            },
+            {
+              "keyName": "categoria",
+              "condition": "ilike",
+              "keyValue": "={{ '%' + $fromAI('search_term', `Extrae ÚNICAMENTE la palabra clave principal del producto que busca el usuario. Ejemplos: si dice \"busco un iPhone\" devuelve \"iPhone\", si dice \"necesito una laptop\" devuelve \"laptop\", si dice \"quiero auriculares\" devuelve \"auriculares\". Solo la palabra clave, sin artículos ni palabras adicionales.`, 'string') + '%' }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        592,
+        32
+      ],
+      "id": "4540d2dd-c9b8-4887-805f-c959136eaa78",
+      "name": "consultar_productos_optimizado",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Preparar Respuesta": {
+      "main": [
+        [
+          {
+            "node": "Responder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gestionar_lead_unificado": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_imagenes": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_lead_por_chat_id": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria Chat": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Preparar Respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesar Datos Entrada": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🎯 Webhook Entrada": {
+      "main": [
+        [
+          {
+            "node": "Procesar Datos Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_productos_optimizado": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

@@ -1,0 +1,52 @@
+/* 
+ * Estilos para PlantillaTemu
+ * Optimizada para scroll natural y layout sticky
+ */
+
+:root { 
+  --header-h: 64px; /* ajusta a tu header real */
+}
+
+.plantilla-temu-sin-header {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+
+/* Contenido principal - sin restricciones de altura */
+.plantilla-temu-content {
+  width: 100%;
+  /* Sin max-width ni padding para que HeroSection controle su propio layout */
+}
+
+/* Placeholder temporal */
+.temp-placeholder {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+}
+
+.temp-placeholder h2 {
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.temp-placeholder p {
+  color: #6c757d;
+  margin: 0.5rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .plantilla-temu-content {
+    padding: 1rem 0.5rem;
+  }
+  
+  .temp-placeholder {
+    padding: 2rem 1rem;
+  }
+}

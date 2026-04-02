@@ -1,0 +1,228 @@
+/**
+ * 🎨 ESTILOS PARA IMAGEN OPTIMIZADA
+ * 
+ * Estilos modernos y responsivos para el componente ImagenOptimizada
+ */
+
+.imagen-optimizada {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.imagen-optimizada img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.imagen-optimizada.cargando img {
+  opacity: 0;
+}
+
+.imagen-optimizada:not(.cargando) img {
+  opacity: 1;
+}
+
+/* Placeholder mientras carga */
+.imagen-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #6c757d;
+  font-size: 14px;
+  min-height: 120px;
+}
+
+/* Spinner de carga */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e9ecef;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Información del archivo */
+.info-archivo {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: flex;
+  gap: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.tamaño-archivo {
+  font-weight: 500;
+}
+
+.dimensiones {
+  opacity: 0.8;
+}
+
+/* Mensaje de error */
+.mensaje-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8d7da;
+  color: #721c24;
+  font-size: 14px;
+  text-align: center;
+  min-height: 120px;
+}
+
+/* Estados hover */
+.imagen-optimizada:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.imagen-optimizada:hover img {
+  transform: scale(1.02);
+}
+
+/* Variantes de tamaño */
+.imagen-optimizada.thumbnail {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+}
+
+.imagen-optimizada.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .imagen-optimizada {
+    border-radius: 6px;
+  }
+  
+  .info-archivo {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+  
+  .imagen-optimizada:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .imagen-optimizada:hover img {
+    transform: none;
+  }
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .imagen-optimizada {
+    background-color: #343a40;
+  }
+  
+  .imagen-placeholder {
+    background: linear-gradient(135deg, #343a40 0%, #495057 100%);
+    color: #adb5bd;
+  }
+  
+  .spinner {
+    border-color: #495057;
+    border-top-color: #0d6efd;
+  }
+  
+  .mensaje-error {
+    background: #f5c2c7;
+    color: #842029;
+  }
+}
+
+/* Animaciones de entrada */
+.imagen-optimizada {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton loading effect */
+.imagen-optimizada.cargando::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Accesibilidad */
+.imagen-optimizada:focus-within {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .imagen-optimizada {
+    break-inside: avoid;
+  }
+  
+  .info-archivo,
+  .spinner {
+    display: none;
+  }
+}

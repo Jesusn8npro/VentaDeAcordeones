@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "description": "Tu función es crear las imágenes que el agente principal determine necesarias para el artículo. El número de imágenes es dinámico y se basa en el análisis del contenido para maximizar el impacto visual y la persuasión.",
+        "workflowId": {
+          "__rl": true,
+          "value": "z00Ozcpd9ebDl9Zx",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/z00Ozcpd9ebDl9Zx",
+          "cachedResultName": "Creador_Imagenes_Articulos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "PromtParaCrearLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('PromtParaCrearLaImagen', `Genera un prompt claro, directo y descriptivo en español. Concéntrate en UNA sola escena o concepto principal. Evita combinar múltiples ideas complejas o abstractas. No uses comillas dobles, solo comillas simples si es necesario. El prompt debe ser visualmente ejecutable por una IA de imagen.`, 'string') }}",
+            "NombreParaLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('NombreParaLaImagen', `Genera un nombre de archivo único y descriptivo, basado en el slug del artículo y un número (ej: compra-carros-colombia-img-1). Usa solo minúsculas, números y guiones.`, 'string') }}",
+            "DeQueTrataElArticulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('DeQueTrataElArticulo', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "PromtParaCrearLaImagen",
+              "displayName": "PromtParaCrearLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "NombreParaLaImagen",
+              "displayName": "NombreParaLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "DeQueTrataElArticulo",
+              "displayName": "DeQueTrataElArticulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -784,
+        640
+      ],
+      "id": "84d33d7e-a705-4596-8120-9d91f017c9af",
+      "name": "CrearImagenesParaBlog"
+    }
+  ],
+  "connections": {
+    "CrearImagenesParaBlog": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "description": "Usa esta herramienta para cuando el usuario necesite crear un articulo del blog, realiza las preguntas necesarias para qe se cree",
+        "workflowId": {
+          "__rl": true,
+          "value": "yXZKyDLtZzeDRvsd",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/yXZKyDLtZzeDRvsd",
+          "cachedResultName": "CreadorDeArticulos"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "TituloDelBlog": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TituloDelBlog', ``, 'string') }}",
+            "TipoDeConrtenido": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TipoDeConrtenido', ``, 'string') }}",
+            "CuantasImagenes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CuantasImagenes', ``, 'string') }}",
+            "tamañoDelArticulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('tama_oDelArticulo', ``, 'string') }}",
+            "TeQueTrataElArticulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TeQueTrataElArticulo', ``, 'string') }}",
+            "ContextoDelArticulo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('ContextoDelArticulo', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "TeQueTrataElArticulo",
+              "displayName": "TeQueTrataElArticulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "tamañoDelArticulo",
+              "displayName": "tamañoDelArticulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "CuantasImagenes",
+              "displayName": "CuantasImagenes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "TipoDeConrtenido",
+              "displayName": "TipoDeConrtenido",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "TituloDelBlog",
+              "displayName": "TituloDelBlog",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "ContextoDelArticulo",
+              "displayName": "ContextoDelArticulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        928
+      ],
+      "id": "0627626d-45f3-4e94-9132-1c9579426e1e",
+      "name": "Creador De Articulos"
+    }
+  ],
+  "connections": {
+    "Creador De Articulos": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

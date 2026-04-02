@@ -1,0 +1,113 @@
+{
+  "herramientas_leads": {
+    "consultar_lead_por_chat_id": {
+      "descripcion": "Consulta si ya existe un lead con el chat_id actual",
+      "operacion": "getAll",
+      "tabla": "leads_chat",
+      "filtros": {
+        "chat_id": "{{ $('Procesar Datos Entrada').item.json.chat_id }}"
+      },
+      "uso_automatico": "OBLIGATORIO antes de gestionar_lead_unificado"
+    },
+    "gestionar_lead_unificado": {
+      "descripcion": "Crea o actualiza un lead usando UPSERT automático",
+      "operacion": "upsert",
+      "tabla": "leads_chat",
+      "clave_unica": "chat_id",
+      "campos_obligatorios": {
+        "chat_id": "{{ $('Procesar Datos Entrada').item.json.chat_id }}",
+        "source": "web",
+        "pagina_origen": "{{ $('Procesar Datos Entrada').item.json.pagina_origen || 'ME LLEVO ESTO' }}",
+        "ultima_actualizacion": "{{ new Date().toISOString() }}"
+      },
+      "campos_opcionales": {
+        "nombre": "string",
+        "apellido": "string", 
+        "email": "string",
+        "whatsapp": "string",
+        "ciudad": "string",
+        "direccion": "string",
+        "tipo_consulta": "string (compra|soporte|envio|devolucion|otro)",
+        "intereses_cliente": "string",
+        "contexto_inicial": "string",
+        "notas_adicionales": "string",
+        "principales_objeciones": "string",
+        "miedos_cliente": "string",
+        "tecnicas_persuasion": "string",
+        "ubicacion_usuario": "string",
+        "metodo_pago_preferido": "string (contraentrega|transferencia|tarjeta|nequi|daviplata|pse)",
+        "nivel_interes": "integer (1-10)",
+        "probabilidad_compra": "integer (0-100)",
+        "valor_potencial": "numeric",
+        "productos_consultados": "array",
+        "precio_maximo_mencionado": "numeric",
+        "urgencia_compra": "string (inmediata|alta|media|baja)",
+        "converted": "boolean",
+        "datos_envio": "jsonb object",
+        "first_message": "string",
+        "fecha_primer_contacto": "timestamp (solo si es nuevo lead)"
+      },
+      "reglas_automaticas": {
+        "1": "SIEMPRE llamar consultar_lead_por_chat_id PRIMERO",
+        "2": "SIEMPRE actualizar ultima_actualizacion con timestamp actual",
+        "3": "NO sobrescribir fecha_primer_contacto si ya existe",
+        "4": "Usar UPSERT para evitar duplicados por chat_id",
+        "5": "Capturar datos progresivamente durante la conversación",
+        "6": "Actualizar después de CADA dato nuevo del cliente"
+      }
+    }
+  },
+  "flujo_automatico_recomendado": {
+    "paso_1": "Usuario envía mensaje",
+    "paso_2": "AI Agent procesa mensaje y extrae datos",
+    "paso_3": "Llamar consultar_lead_por_chat_id",
+    "paso_4": "Llamar gestionar_lead_unificado con datos disponibles",
+    "paso_5": "Responder al usuario con pregunta de venta",
+    "paso_6": "Repetir proceso en cada mensaje"
+  },
+  "ejemplos_uso": {
+    "primer_contacto": {
+      "datos_minimos": {
+        "chat_id": "web_12345",
+        "source": "web",
+        "pagina_origen": "ME LLEVO ESTO",
+        "contexto_inicial": "Usuario preguntó por iPhone",
+        "fecha_primer_contacto": "2024-01-15T10:30:00Z",
+        "ultima_actualizacion": "2024-01-15T10:30:00Z"
+      }
+    },
+    "segundo_mensaje": {
+      "datos_actualizados": {
+        "chat_id": "web_12345",
+        "nombre": "Carlos",
+        "ciudad": "Bogotá",
+        "tipo_consulta": "compra",
+        "intereses_cliente": "iPhone 15 Pro",
+        "nivel_interes": 8,
+        "probabilidad_compra": 75,
+        "ultima_actualizacion": "2024-01-15T10:35:00Z"
+      }
+    },
+    "mensaje_avanzado": {
+      "datos_completos": {
+        "chat_id": "web_12345",
+        "nombre": "Carlos",
+        "apellido": "Rodriguez",
+        "email": "carlos@email.com",
+        "whatsapp": "3001234567",
+        "ciudad": "Bogotá",
+        "direccion": "Calle 123 #45-67",
+        "tipo_consulta": "compra",
+        "intereses_cliente": "iPhone 15 Pro, AirPods",
+        "metodo_pago_preferido": "contraentrega",
+        "nivel_interes": 9,
+        "probabilidad_compra": 85,
+        "valor_potencial": 4500000,
+        "urgencia_compra": "alta",
+        "productos_consultados": ["iphone-15-pro", "airpods-pro"],
+        "precio_maximo_mencionado": 5000000,
+        "ultima_actualizacion": "2024-01-15T10:45:00Z"
+      }
+    }
+  }
+}

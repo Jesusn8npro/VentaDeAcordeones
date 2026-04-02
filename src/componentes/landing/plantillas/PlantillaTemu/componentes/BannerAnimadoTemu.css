@@ -1,0 +1,224 @@
+/* ============================================
+   BANNER ANIMADO TEMU - ESTILO DROPSHIPPING
+   Banner de texto continuo estilo Shopify/Temu
+   ============================================ */
+
+/* CONTENEDOR PRINCIPAL */
+.banner-animado-temu-contenedor {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  white-space: nowrap;
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 50%, #FF6B6B 100%);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 0;
+  box-shadow: 
+    0 2px 8px rgba(255, 68, 68, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* TRACK DE ANIMACIÓN */
+.banner-animado-temu-track {
+  display: flex;
+  align-items: center;
+  animation: banner-animado-temu-scroll 15s linear infinite;
+  will-change: transform;
+}
+
+/* ELEMENTOS INDIVIDUALES */
+.banner-animado-temu-item {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 60px;
+}
+
+.banner-animado-temu-texto {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  text-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+}
+
+.banner-animado-temu-separador {
+  margin-left: 30px;
+  font-size: 18px;
+  color: #FFD700;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.4);
+  animation: banner-animado-temu-estrella-brillo 2s ease-in-out infinite;
+}
+
+/* ANIMACIÓN PRINCIPAL - SCROLL CONTINUO SIN SALTOS */
+@keyframes banner-animado-temu-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* ANIMACIÓN DE ESTRELLA */
+@keyframes banner-animado-temu-estrella-brillo {
+  0%, 100% { 
+    transform: scale(1);
+    color: #FFD700;
+  }
+  50% { 
+    transform: scale(1.2);
+    color: #FFF;
+  }
+}
+
+/* VARIACIONES DE VELOCIDAD */
+.banner-animado-temu-lento .banner-animado-temu-track {
+  animation-duration: 25s;
+}
+
+.banner-animado-temu-normal .banner-animado-temu-track {
+  animation-duration: 20s;
+}
+
+.banner-animado-temu-rapido .banner-animado-temu-track {
+  animation-duration: 15s;
+}
+
+.banner-animado-temu-ultra-rapido .banner-animado-temu-track {
+  animation-duration: 10s;
+}
+
+/* EFECTOS HOVER */
+.banner-animado-temu-contenedor:hover .banner-animado-temu-track {
+  animation-play-state: paused;
+}
+
+.banner-animado-temu-contenedor:hover {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF4444 50%, #CC0000 100%);
+  box-shadow: 
+    0 4px 12px rgba(255, 68, 68, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .banner-animado-temu-contenedor {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  
+  .banner-animado-temu-texto {
+    font-size: 14px;
+    letter-spacing: 0.3px;
+  }
+  
+  .banner-animado-temu-separador {
+    font-size: 16px;
+    margin-left: 20px;
+  }
+  
+  .banner-animado-temu-item {
+    margin-right: 40px;
+  }
+  
+  /* Velocidad más rápida en móvil */
+  .banner-animado-temu-track {
+    animation-duration: 12s;
+  }
+  
+  .banner-animado-temu-ultra-rapido .banner-animado-temu-track {
+    animation-duration: 8s;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-animado-temu-contenedor {
+    font-size: 13px;
+    padding: 8px 0;
+  }
+  
+  .banner-animado-temu-texto {
+    font-size: 13px;
+  }
+  
+  .banner-animado-temu-separador {
+    font-size: 14px;
+    margin-left: 15px;
+  }
+  
+  .banner-animado-temu-item {
+    margin-right: 30px;
+  }
+}
+
+/* VARIANTES DE COLOR PREDEFINIDAS */
+.banner-animado-temu-verde {
+  background: linear-gradient(135deg, #00C851 0%, #00A041 50%, #00E676 100%);
+}
+
+.banner-animado-temu-azul {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #38bdf8 100%);
+}
+
+.banner-animado-temu-dorado {
+  background: linear-gradient(135deg, #FFD700 0%, #FFB800 50%, #FF8C00 100%);
+  color: #8B0000;
+}
+
+.banner-animado-temu-negro {
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 50%, #000 100%);
+}
+
+/* EFECTOS ESPECIALES */
+.banner-animado-temu-contenedor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: banner-animado-temu-shine 4s ease-in-out infinite;
+}
+
+@keyframes banner-animado-temu-shine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* ACCESIBILIDAD */
+@media (prefers-reduced-motion: reduce) {
+  .banner-animado-temu-track {
+    animation-duration: 120s;
+  }
+  
+  .banner-animado-temu-separador {
+    animation: none;
+  }
+  
+  .banner-animado-temu-contenedor::before {
+    animation: none;
+  }
+}
+
+/* OPTIMIZACIÓN DE RENDIMIENTO */
+.banner-animado-temu-track {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

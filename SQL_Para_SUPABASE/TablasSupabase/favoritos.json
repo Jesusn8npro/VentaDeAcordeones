@@ -1,0 +1,38 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "gen_random_uuid()"
+  },
+  {
+    "nombre_columna": "usuario_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "producto_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "fecha_agregado",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "created_at",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "updated_at",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  }
+]

@@ -1,0 +1,322 @@
+/* LayoutTienda.css - Layout principal de la tienda */
+
+.layout-tienda {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+/* Header móvil - OCULTO (usamos los botones de PaginaTienda) */
+.layout-header-movil {
+  display: none !important; /* Siempre oculto */
+}
+
+.btn-toggle-sidebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 12px;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-toggle-sidebar:hover {
+  background: #e9ecef;
+  color: #212529;
+}
+
+.titulo-tienda-movil {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+/* Overlay para móvil */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* Contenedor principal */
+.layout-contenedor {
+  display: flex;
+  min-height: 100vh;
+  margin-top: calc(-1 * var(--header-height, 80px));
+  padding-top: var(--header-height, 80px);
+}
+
+/* Sidebar */
+.layout-sidebar {
+  width: 300px;
+  background: white;
+  border-right: 1px solid #e9ecef;
+  position: relative;
+  min-height: 100vh;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.layout-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.layout-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.layout-sidebar::-webkit-scrollbar-thumb {
+  background: #dee2e6;
+  border-radius: 3px;
+}
+
+.layout-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+/* Contenido completo del sidebar (incluye header) */
+.sidebar-contenido-completo {
+  padding: 0;
+  transition: none; /* Sin transiciones para evitar saltos */
+}
+
+/* Header interno del sidebar */
+.sidebar-header-interno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e9ecef;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.sidebar-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.btn-cerrar-sidebar {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cerrar-sidebar:hover {
+  background: #e9ecef;
+  color: #495057;
+}
+
+/* Contenido de filtros */
+.sidebar-filtros-contenido {
+  padding: 20px 24px;
+  background: white;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Sidebar sticky activo */
+.sidebar-contenido-completo.sticky-activo {
+  background: white;
+  /* Sin border-radius ni box-shadow para evitar saltos visuales */
+}
+
+/* Scrollbar personalizada para sidebar sticky */
+.sidebar-contenido-completo.sticky-activo {
+  scrollbar-width: thin;
+  scrollbar-color: #dee2e6 transparent;
+}
+
+.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar-thumb {
+  background: #dee2e6;
+  border-radius: 3px;
+}
+
+.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+/* Contenido principal */
+.layout-contenido {
+  flex: 1;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.layout-contenido.sin-sidebar {
+  padding: 24px 40px;
+}
+
+/* Estados responsivos */
+@media (max-width: 1200px) {
+  .layout-sidebar {
+    width: 280px;
+  }
+  
+  .sidebar-header-interno {
+    padding: 12px 16px;
+  }
+  
+  .sidebar-filtros-contenido {
+    padding: 12px 16px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  /* Header móvil siempre oculto - usamos botones de PaginaTienda */
+  
+  .layout-sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    height: 100vh;
+    width: 300px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Desactivar sticky en tablet y móvil */
+  .sidebar-contenido-completo.sticky-activo {
+    position: static !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  
+  .layout-sidebar.abierto {
+    transform: translateX(0);
+  }
+  
+  .btn-cerrar-sidebar {
+    display: flex;
+  }
+  
+  .layout-contenido {
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .layout-contenido.sin-sidebar {
+    padding: 20px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 768px) {
+  .layout-header-movil {
+    padding: 12px 16px;
+  }
+  
+  .layout-sidebar {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .layout-contenido {
+    padding: 0; /* Sin padding en móvil */
+  }
+  
+  .layout-contenido.sin-sidebar {
+    padding: 0;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .sidebar-header-interno {
+    padding: 8px 12px;
+  }
+  
+  .sidebar-filtros-contenido {
+    padding: 8px 12px;
+  }
+  
+  .layout-contenido {
+    padding: 12px;
+  }
+}
+
+/* Animaciones suaves */
+@media (prefers-reduced-motion: no-preference) {
+  .layout-sidebar {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sidebar-overlay {
+    animation: fadeIn 0.2s ease;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Estados de focus para accesibilidad */
+.btn-toggle-sidebar:focus,
+.btn-cerrar-sidebar:focus {
+  outline: 2px solid #0d6efd;
+  outline-offset: 2px;
+}
+
+/* Mejoras para modo oscuro (futuro) */
+@media (prefers-color-scheme: dark) {
+  .layout-tienda {
+    background: #1a1a1a;
+  }
+  
+  .layout-header-movil,
+  .layout-sidebar,
+  .sidebar-header {
+    background: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .titulo-tienda-movil,
+  .sidebar-titulo {
+    color: #ffffff;
+  }
+  
+  .btn-toggle-sidebar,
+  .btn-cerrar-sidebar {
+    background: #404040;
+    color: #ffffff;
+  }
+  
+  .btn-toggle-sidebar:hover,
+  .btn-cerrar-sidebar:hover {
+    background: #4a4a4a;
+  }
+}

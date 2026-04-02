@@ -1,0 +1,654 @@
+/* ================================================================
+   TESTIMONIOS TEMU ULTRA ESPECÍFICOS - SIN CONFLICTOS 🔥
+   ================================================================ */
+
+.temu-testimonials-ultra-section {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.temu-testimonials-ultra-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 68, 68, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  animation: temu-testimonials-ultra-bg-float 15s ease-in-out infinite;
+}
+
+@keyframes temu-testimonials-ultra-bg-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(1deg); }
+}
+
+/* ================================================================
+   HEADER ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-header {
+  text-align: center;
+  margin-bottom: 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.temu-testimonials-ultra-badge-viral {
+  display: inline-block;
+  background: linear-gradient(45deg, #FF4444, #ff6b6b);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  animation: temu-testimonials-ultra-pulse-viral 2s ease-in-out infinite;
+  box-shadow: 
+    0 8px 25px rgba(255, 68, 68, 0.4),
+    0 0 0 0 rgba(255, 68, 68, 0.7);
+}
+
+@keyframes temu-testimonials-ultra-pulse-viral {
+  0% { 
+    transform: scale(1);
+    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4), 0 0 0 0 rgba(255, 68, 68, 0.7);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 68, 68, 0.6), 0 0 0 10px rgba(255, 68, 68, 0);
+  }
+  100% { 
+    transform: scale(1);
+    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4), 0 0 0 0 rgba(255, 68, 68, 0);
+  }
+}
+
+.temu-testimonials-ultra-titulo {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 900;
+  color: #1a202c;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #FF4444, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: temu-testimonials-ultra-titulo-shine 3s ease-in-out infinite;
+}
+
+@keyframes temu-testimonials-ultra-titulo-shine {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.temu-testimonials-ultra-subtitulo {
+  font-size: 20px;
+  color: #4a5568;
+  margin-bottom: 50px;
+  font-weight: 500;
+}
+
+/* ================================================================
+   ESTADÍSTICAS ULTRA ESPECÍFICAS
+   ================================================================ */
+
+.temu-testimonials-ultra-estadisticas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto 60px auto;
+}
+
+.temu-testimonials-ultra-stat {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 68, 68, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: temu-testimonials-ultra-stat-float 4s ease-in-out infinite;
+}
+
+.temu-testimonials-ultra-stat:nth-child(1) { animation-delay: 0s; }
+.temu-testimonials-ultra-stat:nth-child(2) { animation-delay: 0.5s; }
+.temu-testimonials-ultra-stat:nth-child(3) { animation-delay: 1s; }
+
+@keyframes temu-testimonials-ultra-stat-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.temu-testimonials-ultra-stat:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 68, 68, 0.3);
+}
+
+.temu-testimonials-ultra-stat-numero {
+  font-size: 36px;
+  font-weight: 900;
+  color: #FF4444;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.temu-testimonials-ultra-stat-texto {
+  font-size: 16px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ================================================================
+   GRID ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.temu-testimonials-ultra-card {
+  background: white;
+  border-radius: 32px;
+  padding: 40px;
+  box-shadow: 
+    0 25px 55px rgba(0, 0, 0, 0.15),
+    0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 3px solid rgba(255, 68, 68, 0.1);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  backdrop-filter: blur(15px);
+}
+
+.temu-testimonials-ultra-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #FF4444, #0ea5e9, #10b981);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease;
+}
+
+.temu-testimonials-ultra-card:hover::before {
+  transform: scaleX(1);
+}
+
+.temu-testimonials-ultra-card:hover {
+  transform: translateY(-25px) scale(1.04);
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.2),
+    0 20px 40px rgba(255, 68, 68, 0.2);
+  border-color: rgba(255, 68, 68, 0.3);
+}
+
+.temu-testimonials-ultra-item-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* ================================================================
+   HEADER DE TARJETA ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-card-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(255, 68, 68, 0.15);
+}
+
+.temu-testimonials-ultra-avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.temu-testimonials-ultra-person-avatar {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 5px solid #FF4444 !important;
+  box-shadow: 
+    0 12px 30px rgba(255, 68, 68, 0.5) !important,
+    0 6px 20px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: #f8f9fa !important;
+  position: relative !important;
+  display: block !important;
+}
+
+.temu-testimonials-ultra-person-avatar:hover {
+  transform: scale(1.15) !important;
+  border-color: #0ea5e9 !important;
+  box-shadow: 
+    0 18px 45px rgba(14, 165, 233, 0.5) !important,
+    0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.temu-testimonials-ultra-verified-badge {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 28px;
+  height: 28px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+}
+
+.temu-testimonials-ultra-person-info {
+  flex: 1;
+}
+
+.temu-testimonials-ultra-person-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a202c;
+  margin: 0 0 8px 0;
+}
+
+.temu-testimonials-ultra-person-location {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+}
+
+.temu-testimonials-ultra-person-date {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 600;
+}
+
+.temu-testimonials-ultra-rating-stars {
+  display: flex;
+  gap: 3px;
+  align-self: flex-start;
+}
+
+.temu-testimonials-ultra-star {
+  font-size: 20px;
+  animation: temu-testimonials-ultra-star-shine 2s ease-in-out infinite;
+}
+
+.temu-testimonials-ultra-star:nth-child(1) { animation-delay: 0s; }
+.temu-testimonials-ultra-star:nth-child(2) { animation-delay: 0.2s; }
+.temu-testimonials-ultra-star:nth-child(3) { animation-delay: 0.4s; }
+.temu-testimonials-ultra-star:nth-child(4) { animation-delay: 0.6s; }
+.temu-testimonials-ultra-star:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes temu-testimonials-ultra-star-shine {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.15); filter: brightness(1.4); }
+}
+
+/* ================================================================
+   IMAGEN DE PRODUCTO ULTRA ESPECÍFICA
+   ================================================================ */
+
+.temu-testimonials-ultra-product-image-container {
+  position: relative;
+  margin: 30px 0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 
+    0 18px 45px rgba(0, 0, 0, 0.18),
+    0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(255, 68, 68, 0.15);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8f9fa;
+}
+
+.temu-testimonials-ultra-product-image-container:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.25),
+    0 15px 40px rgba(255, 68, 68, 0.2);
+  border-color: rgba(255, 68, 68, 0.4);
+}
+
+.temu-testimonials-ultra-product-image {
+  width: 100% !important;
+  height: 240px !important;
+  object-fit: cover !important;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: #f8f9fa !important;
+  display: block !important;
+}
+
+.temu-testimonials-ultra-card:hover .temu-testimonials-ultra-product-image {
+  transform: scale(1.08) !important;
+  filter: brightness(1.15) contrast(1.08) !important;
+}
+
+.temu-testimonials-ultra-product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.temu-testimonials-ultra-card:hover .temu-testimonials-ultra-product-overlay {
+  opacity: 1;
+}
+
+.temu-testimonials-ultra-zoom-icon {
+  font-size: 28px;
+  color: white;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 15px;
+  border-radius: 50%;
+  backdrop-filter: blur(15px);
+}
+
+/* ================================================================
+   COMENTARIO ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-comment-section {
+  margin: 25px 0;
+}
+
+.temu-testimonials-ultra-comment-text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #374151;
+  font-weight: 500;
+  font-style: italic;
+  position: relative;
+  padding-left: 25px;
+}
+
+.temu-testimonials-ultra-comment-text::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -15px;
+  font-size: 45px;
+  color: #FF4444;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ================================================================
+   FOOTER ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.temu-testimonials-ultra-verified-purchase {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(45deg, #10b981, #059669);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 700;
+  align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.temu-testimonials-ultra-likes-count {
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ================================================================
+   BOTÓN VER MÁS ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-show-more {
+  text-align: center;
+  margin: 60px auto 0 auto;
+  max-width: 450px;
+}
+
+.temu-testimonials-ultra-show-more-button {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+  border: none;
+  padding: 18px 35px;
+  border-radius: 30px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+  width: 100%;
+}
+
+.temu-testimonials-ultra-show-more-button:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(14, 165, 233, 0.6);
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+}
+
+.temu-testimonials-ultra-show-more-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* ================================================================
+   MODAL ULTRA ESPECÍFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: temu-testimonials-ultra-modal-fade-in 0.4s ease;
+}
+
+@keyframes temu-testimonials-ultra-modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.temu-testimonials-ultra-modal-content {
+  background: white;
+  border-radius: 25px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: temu-testimonials-ultra-modal-slide-up 0.4s ease;
+}
+
+@keyframes temu-testimonials-ultra-modal-slide-up {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.temu-testimonials-ultra-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f3f4f6;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #6b7280;
+  transition: all 0.3s ease;
+}
+
+.temu-testimonials-ultra-modal-close:hover {
+  background: #e5e7eb;
+  color: #374151;
+  transform: scale(1.1);
+}
+
+.temu-testimonials-ultra-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.temu-testimonials-ultra-modal-avatar {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+
+.temu-testimonials-ultra-modal-rating {
+  display: flex;
+  gap: 3px;
+  margin-top: 10px;
+}
+
+.temu-testimonials-ultra-modal-image {
+  width: 100% !important;
+  max-height: 300px !important;
+  object-fit: contain !important;
+  border-radius: 15px !important;
+  margin: 20px 0 !important;
+}
+
+.temu-testimonials-ultra-modal-comment {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #374151;
+  font-style: italic;
+}
+
+/* ================================================================
+   RESPONSIVE ULTRA ESPECÍFICO
+   ================================================================ */
+
+@media (max-width: 1024px) {
+  .temu-testimonials-ultra-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+  }
+  
+  .temu-testimonials-ultra-estadisticas {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .temu-testimonials-ultra-section {
+    padding: 60px 0;
+  }
+  
+  .temu-testimonials-ultra-header {
+    margin-bottom: 50px;
+  }
+  
+  .temu-testimonials-ultra-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  
+  .temu-testimonials-ultra-card {
+    padding: 30px;
+  }
+  
+  .temu-testimonials-ultra-card-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .temu-testimonials-ultra-person-avatar {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  .temu-testimonials-ultra-modal-content {
+    padding: 30px 20px;
+    margin: 10px;
+  }
+  
+  .temu-testimonials-ultra-modal-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .temu-testimonials-ultra-estadisticas {
+    grid-template-columns: 1fr;
+  }
+  
+  .temu-testimonials-ultra-stat-numero {
+    font-size: 28px;
+  }
+  
+  .temu-testimonials-ultra-card {
+    padding: 25px;
+  }
+  
+  .temu-testimonials-ultra-comment-text {
+    font-size: 16px;
+  }
+}
+

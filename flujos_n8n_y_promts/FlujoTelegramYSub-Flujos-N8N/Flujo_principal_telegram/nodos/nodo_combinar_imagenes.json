@@ -1,0 +1,108 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "description": "Llama a esta herramienta para combinar dos imágenes. Debes pasar un prompt de generación de imagen, las URL de ambas imágenes y un título para esta nueva imagen. Para esto se debe consultar la herrmienta buscar_imagenes para esta funcion",
+        "workflowId": {
+          "__rl": true,
+          "value": "Pg0HU7Kw2J5qkOw5",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/Pg0HU7Kw2J5qkOw5",
+          "cachedResultName": "combinar_imagenes_nuevo"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "prompt": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('prompt', ``, 'string') }}",
+            "UrlImagen2": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('UrlImagen2', ``, 'string') }}",
+            "UrlImagen1": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('UrlImagen1', ``, 'string') }}",
+            "TituloDeLaImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TituloDeLaImagen', ``, 'string') }}",
+            "IdDelProducto": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('IdDelProducto', ``, 'string') }}",
+            "TipoDeImagen": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('TipoDeImagen', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "prompt",
+              "displayName": "prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "UrlImagen2",
+              "displayName": "UrlImagen2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "UrlImagen1",
+              "displayName": "UrlImagen1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "TituloDeLaImagen",
+              "displayName": "TituloDeLaImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "IdDelProducto",
+              "displayName": "IdDelProducto",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "TipoDeImagen",
+              "displayName": "TipoDeImagen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -288,
+        352
+      ],
+      "id": "ab9e2884-9515-4725-96ff-baf140de78de",
+      "name": "combinar_imagenes1"
+    }
+  ],
+  "connections": {
+    "combinar_imagenes1": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

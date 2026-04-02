@@ -1,0 +1,135 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "tableId": "leads_chat",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "chat_id",
+              "fieldValue": "={{ $json.chat_id }}"
+            },
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ $fromAI('nombre', 'Extrae el nombre del usuario del mensaje si está disponible', 'string') || null }}"
+            },
+            {
+              "fieldId": "apellido",
+              "fieldValue": "={{ $fromAI('apellido', 'Extrae el apellido del usuario del mensaje si está disponible', 'string') || null }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $fromAI('email', 'Extrae el email del usuario del mensaje si está disponible', 'string') || null }}"
+            },
+            {
+              "fieldId": "whatsapp",
+              "fieldValue": "={{ $fromAI('whatsapp', 'CRÍTICO: Extrae SOLO números de WhatsApp. EJEMPLOS: \"mi WhatsApp es 3123265004\", \"escríbeme al 300123456\", \"contacto WhatsApp +57 300 123 4567\". NO confundir con teléfono fijo.', 'string') || null }}"
+            },
+            {
+              "fieldId": "ciudad",
+              "fieldValue": "={{ $fromAI('ciudad', 'Extrae la ciudad del usuario del mensaje si está disponible', 'string') || null }}"
+            },
+            {
+              "fieldId": "direccion",
+              "fieldValue": "={{ $fromAI('direccion', 'Extrae la dirección del usuario del mensaje si está disponible', 'string') || null }}"
+            },
+            {
+              "fieldId": "tipo_consulta",
+              "fieldValue": "={{ $fromAI('tipo_consulta', 'OBLIGATORIO: Determina el tipo de consulta. VALORES EXACTOS PERMITIDOS: compra, soporte, envio, devolucion, otro. EJEMPLO: Si pregunta por productos usa \"compra\"', 'string') || 'compra' }}"
+            },
+            {
+              "fieldId": "contexto_inicial",
+              "fieldValue": "={{ $fromAI('contexto_inicial', 'Si es el primer contacto, guarda el mensaje inicial del usuario', 'string') || null }}"
+            },
+            {
+              "fieldId": "metodo_pago_preferido",
+              "fieldValue": "={{ $fromAI('metodo_pago_preferido', 'OBLIGATORIO: Extrae método de pago. VALORES EXACTOS PERMITIDOS: contraentrega, transferencia, tarjeta, nequi, daviplata, pse. EJEMPLO: \"pago contra entrega\" = \"contraentrega\"', 'string') || null }}"
+            },
+            {
+              "fieldId": "nivel_interes",
+              "fieldValue": "={{ $fromAI('nivel_interes', 'Evalúa el nivel de interés del cliente del 1 al 10 basado en su entusiasmo', 'number') || 5 }}"
+            },
+            {
+              "fieldId": "probabilidad_compra",
+              "fieldValue": "={{ $fromAI('probabilidad_compra', 'Evalúa la probabilidad de compra del 0 al 100 basado en el comportamiento', 'number') || 50 }}"
+            },
+            {
+              "fieldId": "valor_potencial",
+              "fieldValue": "={{ $fromAI('valor_potencial', 'Estima el valor potencial de compra en pesos colombianos', 'number') || null }}"
+            },
+            {
+              "fieldId": "urgencia_compra",
+              "fieldValue": "={{ $fromAI('urgencia_compra', 'OBLIGATORIO: Evalúa urgencia. VALORES EXACTOS PERMITIDOS: inmediata, alta, media, baja. EJEMPLO: \"necesito ya\" = \"inmediata\", \"esta semana\" = \"alta\"', 'string') || 'media' }}"
+            },
+            {
+              "fieldId": "principales_objeciones",
+              "fieldValue": "={{ $fromAI('principales_objeciones', 'Identifica las principales objeciones del cliente si las hay', 'string') || null }}"
+            },
+            {
+              "fieldId": "miedos_cliente",
+              "fieldValue": "={{ $fromAI('miedos_cliente', 'Identifica los miedos o preocupaciones del cliente', 'string') || null }}"
+            },
+            {
+              "fieldId": "tecnicas_persuasion",
+              "fieldValue": "={{ $fromAI('tecnicas_persuasion', 'Registra qué técnicas de persuasión estás usando: escasez, prueba social, valor agregado, etc', 'string') || null }}"
+            },
+            {
+              "fieldId": "notas_adicionales",
+              "fieldValue": "={{ $fromAI('notas_adicionales', 'Cualquier información adicional relevante sobre el cliente', 'string') || null }}"
+            },
+            {
+              "fieldId": "precio_maximo_mencionado",
+              "fieldValue": "={{ $fromAI('precio_maximo_mencionado', 'Si el cliente menciona un presupuesto máximo, extráelo', 'number') || null }}"
+            },
+            {
+              "fieldId": "source",
+              "fieldValue": "web"
+            },
+            {
+              "fieldId": "datos_envio",
+              "fieldValue": "={{ $fromAI('datos_envio', 'Extrae datos de envío si están disponibles como JSON', 'string') || null }}"
+            },
+            {
+              "fieldId": "productos_consultados",
+              "fieldValue": "={{ $fromAI('productos_consultados', 'Lista de productos consultados separados por comas', 'string') ? $fromAI('productos_consultados', 'Lista de productos consultados separados por comas', 'string').split(',').map(p => p.trim()).filter(p => p) : [] }}"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "activo"
+            },
+            {
+              "fieldId": "converted",
+              "fieldValue": false
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        432,
+        160
+      ],
+      "id": "a2e4634e-626f-47e9-aae7-d0742161fc8c",
+      "name": "crear_lead1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "crear_lead1": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

@@ -1,0 +1,169 @@
+/* ===== Estilos dedicados para la página de Inventario ===== */
+
+/* Contenedor principal */
+.inventario {
+  padding: 2rem;
+  background-color: var(--color-fondo);
+  min-height: 100vh;
+}
+
+/* Header */
+.inventario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.header-info .titulo-pagina {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin: 0 0 0.5rem 0;
+}
+
+.header-info .subtitulo-pagina {
+  font-size: 1rem;
+  color: var(--color-texto-secundario);
+  margin: 0;
+}
+
+.header-acciones { display: flex; gap: 1rem; align-items: center; }
+.header-navegacion { margin-bottom: 1rem; }
+
+.boton-volver {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+  color: var(--color-texto-secundario);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+.boton-volver:hover { background-color: var(--color-fondo-secundario); color: var(--color-texto); }
+
+/* Estadísticas */
+.estadisticas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+.estadistica-card { background: var(--color-fondo); border: 1px solid var(--color-borde); border-radius: var(--radio-borde-mediano); padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: var(--transicion-rapida); }
+.estadistica-card:hover { border-color: var(--color-primario-100); box-shadow: var(--sombra-pequena); }
+.estadistica-icono { width: 3rem; height: 3rem; border-radius: var(--radio-borde); display:flex; align-items:center; justify-content:center; background-color: var(--color-primario-50); color: var(--color-primario); }
+.estadistica-contenido h3 { font-size: .875rem; font-weight: 500; color: var(--color-texto-secundario); margin: 0 0 .25rem 0; text-transform: uppercase; letter-spacing: .05em; }
+.estadistica-numero { font-size: 1.875rem; font-weight: 700; color: var(--color-texto); margin: 0 0 .25rem 0; }
+.estadistica-cambio { font-size: .75rem; color: var(--color-texto-terciario); }
+.estadistica-cambio.positivo { color: var(--color-exito); }
+.estadistica-cambio.warning, .estadistica-cambio.negativo { color: var(--color-advertencia); }
+.estadistica-cambio.error { color: var(--color-error); }
+
+/* Filtros */
+.filtros-inventario { display:flex; justify-content: space-between; align-items:center; gap:1rem; margin-bottom:2rem; padding:1rem; background: var(--color-fondo-secundario); border-radius: var(--radio-borde); border:1px solid var(--color-borde); }
+.filtro-busqueda { position:relative; flex:1; max-width:400px; }
+.filtro-icono { position:absolute; left:.75rem; top:50%; transform: translateY(-50%); width:1rem; height:1rem; color: var(--color-texto-terciario); }
+.input-busqueda { width:100%; padding:.75rem .75rem .75rem 2.5rem; border:1px solid var(--color-borde); border-radius: var(--radio-borde); background: var(--color-fondo); color: var(--color-texto); font-size:.875rem; }
+.input-busqueda:focus { outline:none; border-color: var(--color-primario); box-shadow: 0 0 0 3px var(--color-primario-50); }
+.filtros-selectores { display:flex; gap:.75rem; align-items:center; }
+.selector-filtro { padding:.75rem; border:1px solid var(--color-borde); border-radius: var(--radio-borde); background: var(--color-fondo); color: var(--color-texto); font-size:.875rem; min-width:150px; }
+.boton-filtro { display:flex; align-items:center; gap:.5rem; padding:.75rem 1rem; background: var(--color-fondo); border:1px solid var(--color-borde); border-radius: var(--radio-borde); color: var(--color-texto-secundario); cursor:pointer; transition: var(--transicion-rapida); }
+.boton-filtro:hover { background: var(--color-primario); color:#fff; border-color: var(--color-primario); }
+
+/* Tabla de inventario */
+.tabla-inventario-contenedor { background: var(--color-fondo); border:1px solid var(--color-borde); border-radius: var(--radio-borde-mediano); overflow:hidden; }
+.tabla-inventario { width:100%; border-collapse: collapse; }
+.tabla-inventario th { background: var(--color-fondo-terciario); padding:1rem; text-align:left; font-weight:600; color: var(--color-texto); border-bottom:1px solid var(--color-borde); font-size:.875rem; text-transform: uppercase; letter-spacing:.05em; }
+.tabla-inventario td { padding:1rem; border-bottom:1px solid var(--color-borde); vertical-align: middle; }
+.fila-inventario:hover { background: var(--color-fondo-secundario); }
+
+/* Celdas específicas */
+.producto-info { display:flex; align-items:center; gap:.75rem; }
+.imagen-miniatura { width:2.5rem; height:2.5rem; border-radius: var(--radio-borde); overflow:hidden; background: var(--color-fondo-secundario); display:flex; align-items:center; justify-content:center; }
+.imagen-placeholder { color: var(--color-texto-terciario); }
+.producto-detalles h4 { font-size:.875rem; font-weight:600; color: var(--color-texto); margin:0 0 .25rem 0; }
+.producto-sku { font-size:.75rem; color: var(--color-texto-terciario); margin:0; }
+.slug-link { color: var(--color-primario); text-decoration: none; }
+.slug-link:hover { text-decoration: underline; }
+.precio-celda { font-weight:600; color: var(--color-texto); }
+
+/* Badge de categoría (migrado desde CSS global) */
+.celda-categoria .categoria-badge { display:inline-block; padding:.25rem .5rem; background: var(--color-primario-50); color: var(--color-primario); border-radius: var(--radio-borde); font-size:.75rem; font-weight:500; }
+
+/* Estados */
+.estado-badge { display:inline-flex; align-items:center; gap:.25rem; padding:.25rem .75rem; border-radius: var(--radio-borde); font-size:.75rem; font-weight:500; }
+.estado-badge.estado-warning { background: var(--color-advertencia-50); color: var(--color-advertencia); }
+.estado-badge.estado-info { background: var(--color-info-50); color: var(--color-info); }
+.estado-badge.estado-primary { background: var(--color-primario-50); color: var(--color-primario); }
+.estado-badge.estado-success { background: var(--color-exito-50); color: var(--color-exito); }
+.estado-badge.estado-error { background: var(--color-error-50); color: var(--color-error); }
+
+/* Acciones */
+.acciones-inventario { display:flex; gap:.25rem; align-items:center; }
+.accion-boton { width:2rem; height:2rem; border:none; border-radius: var(--radio-borde); display:flex; align-items:center; justify-content:center; cursor:pointer; transition: var(--transicion-rapida); color: var(--color-texto-terciario); background: transparent; text-decoration:none; }
+.accion-boton:hover { background: var(--color-fondo-secundario); color: var(--color-texto); }
+.accion-boton.ver:hover { background: var(--color-info-50); color: var(--color-info); }
+.accion-boton.editar:hover { background: var(--color-advertencia-50); color: var(--color-advertencia); }
+.accion-boton.eliminar:hover { background: var(--color-error-50); color: var(--color-error); }
+
+/* Paginación */
+.paginacion { display:flex; justify-content: space-between; align-items:center; padding:1rem; border-top:1px solid var(--color-borde); background: var(--color-fondo-secundario); }
+.paginacion-info { font-size:.875rem; color: var(--color-texto-secundario); }
+.paginacion-controles { display:flex; gap:.25rem; }
+.boton-paginacion { padding:.5rem .75rem; border:1px solid var(--color-borde); background: var(--color-fondo); color: var(--color-texto-secundario); border-radius: var(--radio-borde); cursor:pointer; transition: var(--transicion-rapida); }
+.boton-paginacion:hover:not(:disabled) { background: var(--color-primario); color:#fff; border-color: var(--color-primario); }
+.boton-paginacion.activo { background: var(--color-primario); color:#fff; border-color: var(--color-primario); }
+.boton-paginacion:disabled { opacity:.5; cursor:not-allowed; }
+
+/* Estados vacíos y carga */
+.inventario-vacio { text-align:center; padding:3rem; color: var(--color-texto-secundario); }
+.cargando-inventario { text-align:center; padding:3rem; }
+.spinner { width:2rem; height:2rem; border:2px solid var(--color-borde); border-top:2px solid var(--color-primario); border-radius:50%; animation: spin 1s linear infinite; margin:0 auto 1rem; }
+@keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+.inventario-error { text-align:center; padding:3rem; color: var(--color-error); }
+.error-icono { width:4rem; height:4rem; margin:0 auto 1rem; color: var(--color-error); }
+.boton-reintentar { margin-top:1rem; padding:.75rem 1.5rem; background: var(--color-error); color:#fff; border:none; border-radius: var(--radio-borde); cursor:pointer; transition: var(--transicion-rapida); }
+.boton-reintentar:hover { background: var(--color-error-600); }
+
+/* Modal ajuste de stock */
+.modal-overlay { position:fixed; inset:0; background: rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; z-index: 1000; }
+.modal-contenido { width: 100%; max-width: 680px; background: var(--color-fondo); border:1px solid var(--color-borde); border-radius: var(--radio-borde-mediano); box-shadow: var(--sombra-grande); overflow:hidden; }
+.modal-header { display:flex; justify-content: space-between; align-items:center; padding:1rem 1.25rem; background: linear-gradient(90deg,var(--color-primario-50),transparent); border-bottom:1px solid var(--color-borde); }
+.modal-header h3 { margin:0; font-size:1.125rem; font-weight:600; color: var(--color-texto); }
+.modal-cuerpo { padding:1rem 1.25rem; display:flex; flex-direction:column; gap:1rem; }
+.campo-grupo { display:flex; flex-direction:column; gap:.375rem; }
+.campo-label { font-size:.875rem; color: var(--color-texto-secundario); }
+.campo-input, .campo-select { padding:.75rem; border:1px solid var(--color-borde); border-radius: var(--radio-borde); background: var(--color-fondo); color: var(--color-texto); }
+.modal-acciones { display:flex; justify-content:flex-end; gap:.5rem; padding:1rem 1.25rem; border-top:1px solid var(--color-borde); }
+
+.producto-seleccionado { display:flex; align-items:center; gap:1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--color-borde); }
+.producto-seleccionado .producto-imagen { width:56px; height:56px; border-radius: var(--radio-borde); background: var(--color-fondo-secundario); display:flex; align-items:center; justify-content:center; color: var(--color-texto-terciario); }
+.producto-seleccionado .producto-info h4 { margin:0; font-size:1rem; font-weight:600; }
+.producto-seleccionado .producto-info p { margin:.125rem 0; font-size:.8125rem; color: var(--color-texto-secundario); }
+
+.radio-grupo { display:flex; gap:1rem; align-items:center; }
+.radio-label { display:flex; align-items:center; gap:.375rem; padding:.5rem .75rem; border:1px solid var(--color-borde); border-radius: var(--radio-borde); cursor:pointer; background: var(--color-fondo); color: var(--color-texto); }
+.radio-input { accent-color: var(--color-primario); }
+.radio-icono { width:1rem; height:1rem; color: var(--color-texto-terciario); }
+
+.resumen-ajuste { background: var(--color-fondo-secundario); border:1px solid var(--color-borde); border-radius: var(--radio-borde); padding: .75rem 1rem; display:flex; justify-content:space-between; align-items:center; }
+.resumen-item { font-size:.875rem; color: var(--color-texto-secundario); }
+.resumen-item strong { color: var(--color-texto); }
+.resumen-item .positivo { color: var(--color-exito); }
+.resumen-item .negativo { color: var(--color-error); }
+
+.boton-confirmar { padding:.75rem 1rem; background: var(--color-primario); color:#fff; border:none; border-radius: var(--radio-borde); cursor:pointer; font-weight:600; }
+.boton-confirmar:hover { background: var(--color-primario-600); }
+.boton-cancelar { padding:.75rem 1rem; background: var(--color-fondo); color: var(--color-texto); border:1px solid var(--color-borde); border-radius: var(--radio-borde); cursor:pointer; }
+.boton-cancelar:hover { background: var(--color-fondo-secundario); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inventario { padding: 1rem; }
+  .inventario-header { flex-direction: column; gap: 1rem; align-items: stretch; }
+  .estadisticas-grid { grid-template-columns: 1fr; }
+  .filtros-inventario { flex-direction: column; align-items: stretch; }
+  .filtros-selectores { flex-wrap: wrap; }
+  .tabla-inventario-contenedor { overflow-x: auto; }
+  .paginacion { flex-direction: column; gap: 1rem; }
+}

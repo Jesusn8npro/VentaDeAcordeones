@@ -1,0 +1,17 @@
+/* ===== Estilos DisposicionAdmin (scoped) ===== */
+
+.admin-theme .disposicion-admin { display: flex; min-height: 100vh; background-color: var(--color-fondo-secundario); isolation: isolate; }
+.admin-theme .disposicion-admin-contenido { flex: 1; display: flex; flex-direction: column; transition: margin-left var(--transicion-mediana); }
+.admin-theme .disposicion-contenido-expandido { margin-left: var(--ancho-barra-lateral); }
+.admin-theme .disposicion-contenido-colapsado { margin-left: var(--ancho-barra-lateral-colapsada); }
+@media (max-width: 1279px) { .admin-theme .disposicion-contenido-expandido, .admin-theme .disposicion-contenido-colapsado { margin-left: 0; } }
+.admin-theme .disposicion-admin-principal { flex: 1; padding: 1.5rem; overflow-y: auto; }
+
+/* ===== Backdrop móvil (fusionado desde FondoAdmin) ===== */
+.admin-theme .fondo-admin { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.5); z-index: var(--z-index-backdrop); opacity: 0; visibility: hidden; transition: opacity var(--transicion-rapida), visibility var(--transicion-rapida); }
+.admin-theme .fondo-admin-mostrar { opacity: 1; visibility: visible; }
+.admin-theme .fondo-admin-ocultar { opacity: 0; visibility: hidden; }
+@media (min-width: 769px) { .admin-theme .fondo-admin { display: none; } }
+
+/* Opcional: estilos móviles adicionales pueden vivir aquí si se usan clases como 'disposicion-contenido-movil' */
+.admin-theme .disposicion-contenido-movil { /* reservado para comportamientos móviles específicos */ }

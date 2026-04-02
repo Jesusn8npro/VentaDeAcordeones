@@ -1,0 +1,188 @@
+.feed-meta {
+  min-height: 100vh;
+  background: #f7f9fc;
+  padding: 24px;
+}
+
+.fm-contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.fm-header {
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  border-radius: 16px;
+  padding: 24px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fm-titulo {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.fm-subtitulo {
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+}
+
+.fm-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.fm-grid-estadisticas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.fm-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
+}
+
+.fm-card-header {
+  border-bottom: 1px solid #eef1f6;
+  padding: 16px 18px;
+}
+
+.fm-card-title {
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fm-card-description {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.fm-card-content {
+  padding: 18px;
+}
+
+.fm-estadistica-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fm-txt-pequeno { font-size: 13px; color: #6b7280; }
+.fm-txt-grande { font-size: 22px; font-weight: 800; color: #111827; }
+
+.fm-grid-acciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.fm-progress {
+  height: 8px;
+  width: 100%;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fm-progress-bar {
+  height: 100%;
+  background: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.fm-acciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.fm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.fm-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.fm-btn-primario { background: #2563eb; color: #fff; }
+.fm-btn-outlined { border: 1px solid #e5e7eb; background: #fff; color: #111827; }
+
+.fm-url-box {
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.fm-url-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; }
+.fm-url-text { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; font-size: 12px; word-break: break-all; }
+
+.fm-alert {
+  display: flex;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f9fafb;
+}
+.fm-alert-text { font-size: 13px; color: #374151; }
+
+.fm-pasos .fm-paso-num {
+  width: 24px; height: 24px; border-radius: 999px;
+  background: #2563eb; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px;
+}
+.fm-pasos .fm-paso { display: flex; gap: 10px; }
+.fm-pasos .fm-paso-titulo { font-weight: 600; }
+.fm-pasos .fm-paso-desc { font-size: 13px; color: #6b7280; }
+
+.fm-pasos-container { display: grid; gap: 16px; }
+.fm-pasos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fm-pasos-col { display: grid; gap: 12px; }
+
+.fm-logs { display: grid; gap: 8px; max-height: 260px; overflow-y: auto; }
+.fm-log { display: flex; gap: 10px; padding: 10px; border-radius: 12px; }
+.fm-log-info { background: #eff6ff; color: #1e40af; }
+.fm-log-exito { background: #ecfdf5; color: #065f46; }
+.fm-log-error { background: #fef2f2; color: #b91c1c; }
+.fm-log-texto { font-size: 14px; }
+.fm-log-time { font-size: 12px; opacity: 0.75; }
+
+@media (max-width: 1024px) {
+  .fm-grid-estadisticas { grid-template-columns: repeat(2, 1fr); }
+  .fm-grid-acciones { grid-template-columns: 1fr; }
+  .fm-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+@media (max-width: 640px) {
+  .feed-meta { padding: 16px; }
+  .fm-contenido { gap: 16px; }
+  .fm-titulo { font-size: 22px; }
+  .fm-subtitulo { font-size: 12px; }
+  .fm-card { border-radius: 12px; }
+  .fm-card-content { padding: 12px; }
+  .fm-card-header { padding: 12px; }
+  .fm-grid-estadisticas { grid-template-columns: 1fr; }
+  .fm-progress { height: 6px; }
+  .fm-acciones { grid-template-columns: 1fr; }
+  .fm-btn { width: 100%; }
+  .fm-url-text { font-size: 11px; }
+  .fm-logs { max-height: 200px; }
+  .fm-pasos-grid { grid-template-columns: 1fr; }
+}

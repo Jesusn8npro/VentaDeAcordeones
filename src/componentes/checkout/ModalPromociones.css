@@ -1,0 +1,383 @@
+/* Modal Promociones - Estilos principales */
+.modal-promociones-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.modal-promociones-contenido {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header del modal */
+.modal-promociones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-promociones-icono {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.modal-promociones-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.modal-promociones-cerrar {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.modal-promociones-cerrar:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* Mensaje de envío */
+.modal-promociones-envio {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Subtítulo */
+.modal-promociones-subtitulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin: 20px 24px 16px;
+}
+
+/* Lista de ofertas */
+.modal-promociones-ofertas {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-promociones-oferta {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-promociones-oferta:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.modal-promociones-oferta.seleccionada {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+}
+
+/* Radio button */
+.modal-promociones-oferta-radio {
+  margin-top: 2px;
+}
+
+.modal-promociones-oferta-radio input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #10b981;
+  cursor: pointer;
+}
+
+/* Badge de descuento */
+.modal-promociones-descuento-badge {
+  position: absolute;
+  top: -2px;
+  left: 16px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 0 0 8px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Contenido de la oferta */
+.modal-promociones-oferta-contenido {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.modal-promociones-oferta-info {
+  flex: 1;
+}
+
+.modal-promociones-oferta-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+
+.modal-promociones-oferta-descripcion {
+  font-size: 13px;
+  color: #10b981;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Precio */
+.modal-promociones-precio {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  white-space: nowrap;
+}
+
+/* Resumen de compra */
+.modal-promociones-resumen {
+  margin: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.modal-promociones-resumen-linea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.modal-promociones-resumen-linea:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-promociones-resumen-linea.total {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1f2937;
+  padding-top: 12px;
+}
+
+.modal-promociones-resumen-linea .gratis {
+  color: #10b981;
+  font-weight: 600;
+}
+
+/* Botón de confirmación */
+.modal-promociones-confirmar {
+  width: calc(100% - 48px);
+  margin: 0 24px 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.modal-promociones-confirmar:hover:not(.deshabilitado) {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.modal-promociones-confirmar.deshabilitado {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Información adicional */
+.modal-promociones-info-adicional {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-promociones-info-adicional p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .modal-promociones-overlay {
+    padding: 16px;
+  }
+  
+  .modal-promociones-contenido {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+  
+  .modal-promociones-header {
+    padding: 16px 20px 12px;
+  }
+  
+  .modal-promociones-titulo {
+    font-size: 18px;
+  }
+  
+  .modal-promociones-envio {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  
+  .modal-promociones-subtitulo {
+    margin: 16px 20px 12px;
+    font-size: 15px;
+  }
+  
+  .modal-promociones-ofertas {
+    padding: 0 20px;
+    gap: 10px;
+  }
+  
+  .modal-promociones-oferta {
+    padding: 14px;
+  }
+  
+  .modal-promociones-oferta-titulo {
+    font-size: 14px;
+  }
+  
+  .modal-promociones-precio {
+    font-size: 16px;
+  }
+  
+  .modal-promociones-resumen {
+    margin: 20px;
+    padding: 14px;
+  }
+  
+  .modal-promociones-confirmar {
+    width: calc(100% - 40px);
+    margin: 0 20px 16px;
+    padding: 14px;
+    font-size: 15px;
+  }
+  
+  .modal-promociones-info-adicional {
+    padding: 0 20px 20px;
+  }
+}
+
+/* Animaciones adicionales */
+.modal-promociones-oferta {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.modal-promociones-oferta:nth-child(1) { animation-delay: 0.1s; }
+.modal-promociones-oferta:nth-child(2) { animation-delay: 0.2s; }
+.modal-promociones-oferta:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar personalizado */
+.modal-promociones-contenido::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-promociones-contenido::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.modal-promociones-contenido::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.modal-promociones-contenido::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

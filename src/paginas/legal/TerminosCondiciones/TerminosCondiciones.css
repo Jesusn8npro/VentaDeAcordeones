@@ -1,0 +1,121 @@
+/* Términos y Condiciones — Estilo neutro y sobrio (prefijo termsNeutral) */
+.termsNeutral {
+  --terms-bg: #f8fafc;
+  --terms-card: #ffffff;
+  --terms-border: #e2e8f0;
+  --terms-text: #0f172a;
+  --terms-muted: #475569;
+
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 80vh;
+  background: var(--terms-bg);
+}
+
+.terms-header {
+  background: var(--terms-card);
+  border: 1px solid var(--terms-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.terms-nav { margin-bottom: 1rem; }
+.terms-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  color: var(--terms-muted);
+  border: 1px solid var(--terms-border);
+  text-decoration: none;
+  background: #f9fafb;
+}
+.terms-back:hover { background: #f1f5f9; color: #334155; }
+
+.terms-title-row { display: flex; align-items: center; gap: 0.75rem; }
+.terms-title { margin: 0; font-size: 2rem; font-weight: 700; color: var(--terms-text); }
+.terms-subtitle { margin: 0.5rem 0 0.75rem; color: var(--terms-muted); }
+.terms-date { display: inline-block; font-size: 0.875rem; color: #334155; background: #f1f5f9; border: 1px solid var(--terms-border); padding: 0.25rem 0.5rem; border-radius: 6px; }
+
+.terms-content {
+  background: var(--terms-card);
+  border: 1px solid var(--terms-border);
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.terms-section { margin-bottom: 1.25rem; }
+.terms-section:last-child { margin-bottom: 0; }
+.terms-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--terms-border);
+}
+.terms-icon { width: 22px; height: 22px; color: #334155; }
+.terms-section-title { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--terms-text); }
+.terms-section-body { color: var(--terms-muted); line-height: 1.7; font-size: 0.9875rem; }
+.terms-section-body p { margin: 0.75rem 0; }
+.terms-section-body ul { margin: 0.5rem 0 0.75rem; padding-left: 1.25rem; }
+.terms-section-body li { margin-bottom: 0.375rem; }
+
+/* Bloques informativos, alerta y nota, con estética tenue */
+.terms-info {
+  background: #f9fafb;
+  border: 1px solid var(--terms-border);
+  border-radius: 12px;
+  padding: 0.875rem;
+  margin: 0.75rem 0;
+}
+.terms-info h4 { margin: 0 0 0.5rem; color: var(--terms-text); font-size: 1rem; }
+.terms-info p { margin: 0.25rem 0; color: var(--terms-muted); }
+
+.terms-alert {
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 0.875rem;
+  margin: 0.75rem 0;
+  color: #374151;
+}
+.terms-alert strong { color: #b91c1c; }
+
+.terms-note {
+  background: #f8fafc;
+  border: 1px solid var(--terms-border);
+  border-radius: 12px;
+  padding: 0.875rem;
+  margin: 0.75rem 0;
+}
+.terms-note strong { color: var(--terms-text); }
+
+.terms-vehiculos {
+  background: #f9fafb;
+  border: 1px solid var(--terms-border);
+  border-radius: 12px;
+  padding: 0.875rem;
+  margin: 0.75rem 0;
+}
+.terms-vehiculos h4 { margin: 0 0 0.5rem; color: var(--terms-text); }
+.terms-vehiculos ul { color: var(--terms-muted); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .termsNeutral { padding: 1rem; }
+  .terms-title { font-size: 1.75rem; }
+  .terms-header, .terms-content { padding: 1rem; }
+}
+
+
+
+
+
+
+
+
+
+

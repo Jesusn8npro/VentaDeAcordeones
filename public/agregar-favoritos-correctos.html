@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Favoritos Correctos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .danger {
+            background: #dc3545;
+        }
+        .danger:hover {
+            background: #c82333;
+        }
+        .success {
+            background: #28a745;
+        }
+        .success:hover {
+            background: #218838;
+        }
+        .info {
+            background: #17a2b8;
+        }
+        .info:hover {
+            background: #138496;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #dee2e6;
+        }
+        .status {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛠️ Agregar Favoritos Correctos</h1>
+        <p>Esta herramienta agrega favoritos con la estructura correcta para probar la funcionalidad.</p>
+        
+        <div class="actions">
+            <button onclick="agregarFavoritosCorrectos()" class="success">
+                ➕ Agregar Favoritos de Prueba
+            </button>
+            <button onclick="verFavoritos()" class="info">
+                👀 Ver Favoritos Actuales
+            </button>
+            <button onclick="limpiarFavoritos()" class="danger">
+                🗑️ Limpiar Favoritos
+            </button>
+            <button onclick="abrirPaginaFavoritos()">
+                🔗 Abrir Página de Favoritos
+            </button>
+        </div>
+        
+        <div id="status"></div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        function mostrarStatus(mensaje, tipo = 'success') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${tipo}">${mensaje}</div>`;
+        }
+
+        function mostrarOutput(contenido) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `<pre>${contenido}</pre>`;
+        }
+
+        function agregarFavoritosCorrectos() {
+            try {
+                const favoritosCorrectos = [
+                    {
+                        id: "1704067200000",
+                        producto_id: "1",
+                        usuario_id: "temp-user",
+                        fecha_agregado: "2024-01-01T00:00:00.000Z",
+                        nombre: "Smartphone Samsung Galaxy A54",
+                        precio: 299.99,
+                        precio_oferta: 249.99,
+                        imagen: "/imagenes/productos/smartphone-samsung.jpg",
+                        disponible: true
+                    },
+                    {
+                        id: "1704153600000",
+                        producto_id: "2",
+                        usuario_id: "temp-user",
+                        fecha_agregado: "2024-01-02T00:00:00.000Z",
+                        nombre: "Laptop HP Pavilion 15",
+                        precio: 699.99,
+                        precio_oferta: null,
+                        imagen: "/imagenes/productos/laptop-hp.jpg",
+                        disponible: true
+                    },
+                    {
+                        id: "1704240000000",
+                        producto_id: "3",
+                        usuario_id: "temp-user",
+                        fecha_agregado: "2024-01-03T00:00:00.000Z",
+                        nombre: "Auriculares Sony WH-1000XM4",
+                        precio: 199.99,
+                        precio_oferta: 159.99,
+                        imagen: "/imagenes/productos/auriculares-sony.jpg",
+                        disponible: true
+                    }
+                ];
+
+                localStorage.setItem('favoritos', JSON.stringify(favoritosCorrectos));
+                mostrarStatus(`✅ Se agregaron ${favoritosCorrectos.length} favoritos correctamente`, 'success');
+                
+                // Mostrar los favoritos agregados
+                mostrarOutput(JSON.stringify(favoritosCorrectos, null, 2));
+                
+                console.log('✅ Favoritos agregados:', favoritosCorrectos);
+                
+            } catch (error) {
+                mostrarStatus(`❌ Error al agregar favoritos: ${error.message}`, 'error');
+                console.error('Error:', error);
+            }
+        }
+
+        function verFavoritos() {
+            try {
+                const favoritos = localStorage.getItem('favoritos');
+                
+                if (favoritos) {
+                    const favoritosParseados = JSON.parse(favoritos);
+                    mostrarStatus(`📊 Se encontraron ${favoritosParseados.length} favoritos`, 'success');
+                    mostrarOutput(JSON.stringify(favoritosParseados, null, 2));
+                } else {
+                    mostrarStatus('⚠️ No hay favoritos en localStorage', 'error');
+                    mostrarOutput('null');
+                }
+            } catch (error) {
+                mostrarStatus(`❌ Error al leer favoritos: ${error.message}`, 'error');
+                console.error('Error:', error);
+            }
+        }
+
+        function limpiarFavoritos() {
+            try {
+                localStorage.removeItem('favoritos');
+                mostrarStatus('🗑️ Favoritos eliminados correctamente', 'success');
+                mostrarOutput('localStorage limpio');
+            } catch (error) {
+                mostrarStatus(`❌ Error al limpiar favoritos: ${error.message}`, 'error');
+                console.error('Error:', error);
+            }
+        }
+
+        function abrirPaginaFavoritos() {
+            window.open('/favoritos', '_blank');
+        }
+
+        // Mostrar favoritos actuales al cargar la página
+        window.onload = function() {
+            verFavoritos();
+        };
+    </script>
+</body>
+</html>

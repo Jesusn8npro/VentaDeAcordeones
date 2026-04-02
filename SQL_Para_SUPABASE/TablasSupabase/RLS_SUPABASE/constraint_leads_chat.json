@@ -1,0 +1,50 @@
+[
+  {
+    "indexname": "leads_chat_pkey",
+    "indexdef": "CREATE UNIQUE INDEX leads_chat_pkey ON public.leads_chat USING btree (id)"
+  },
+  {
+    "indexname": "leads_chat_chat_id_key",
+    "indexdef": "CREATE UNIQUE INDEX leads_chat_chat_id_key ON public.leads_chat USING btree (chat_id)"
+  },
+  {
+    "indexname": "idx_leads_chat_chat_id",
+    "indexdef": "CREATE INDEX idx_leads_chat_chat_id ON public.leads_chat USING btree (chat_id)"
+  },
+  {
+    "indexname": "idx_leads_chat_estado",
+    "indexdef": "CREATE INDEX idx_leads_chat_estado ON public.leads_chat USING btree (estado)"
+  },
+  {
+    "indexname": "idx_leads_chat_converted",
+    "indexdef": "CREATE INDEX idx_leads_chat_converted ON public.leads_chat USING btree (converted)"
+  },
+  {
+    "indexname": "idx_leads_chat_created_at",
+    "indexdef": "CREATE INDEX idx_leads_chat_created_at ON public.leads_chat USING btree (created_at)"
+  },
+  {
+    "indexname": "idx_leads_chat_probabilidad",
+    "indexdef": "CREATE INDEX idx_leads_chat_probabilidad ON public.leads_chat USING btree (probabilidad_compra)"
+  },
+  {
+    "indexname": "idx_leads_chat_nivel_interes",
+    "indexdef": "CREATE INDEX idx_leads_chat_nivel_interes ON public.leads_chat USING btree (nivel_interes)"
+  },
+  {
+    "indexname": "idx_leads_chat_tipo_consulta",
+    "indexdef": "CREATE INDEX idx_leads_chat_tipo_consulta ON public.leads_chat USING btree (tipo_consulta)"
+  },
+  {
+    "indexname": "idx_leads_chat_ciudad",
+    "indexdef": "CREATE INDEX idx_leads_chat_ciudad ON public.leads_chat USING btree (ciudad)"
+  },
+  {
+    "indexname": "idx_leads_chat_email",
+    "indexdef": "CREATE INDEX idx_leads_chat_email ON public.leads_chat USING btree (email)"
+  },
+  {
+    "indexname": "idx_leads_chat_whatsapp",
+    "indexdef": "CREATE INDEX idx_leads_chat_whatsapp ON public.leads_chat USING btree (whatsapp)"
+  }
+]

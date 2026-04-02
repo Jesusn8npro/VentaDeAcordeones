@@ -1,0 +1,122 @@
+[
+  {
+    "pos": 1,
+    "nombre": "id",
+    "tipo": "uuid",
+    "nulable": "NO",
+    "defecto": "uuid_generate_v4()",
+    "comentario": null
+  },
+  {
+    "pos": 2,
+    "nombre": "nombre",
+    "tipo": "character varying",
+    "nulable": "NO",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 3,
+    "nombre": "email",
+    "tipo": "character varying",
+    "nulable": "NO",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 4,
+    "nombre": "rol",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": "'cliente'::character varying",
+    "comentario": null
+  },
+  {
+    "pos": 5,
+    "nombre": "foto",
+    "tipo": "text",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 6,
+    "nombre": "telefono",
+    "tipo": "text",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 7,
+    "nombre": "creado_el",
+    "tipo": "timestamp with time zone",
+    "nulable": "YES",
+    "defecto": "now()",
+    "comentario": null
+  },
+  {
+    "pos": 8,
+    "nombre": "actualizado_el",
+    "tipo": "timestamp with time zone",
+    "nulable": "YES",
+    "defecto": "now()",
+    "comentario": null
+  },
+  {
+    "pos": 9,
+    "nombre": "direccion_linea_1",
+    "tipo": "text",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 10,
+    "nombre": "direccion_linea_2",
+    "tipo": "text",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 11,
+    "nombre": "barrio",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 12,
+    "nombre": "ciudad",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 13,
+    "nombre": "departamento",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 14,
+    "nombre": "codigo_postal",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  },
+  {
+    "pos": 15,
+    "nombre": "pais",
+    "tipo": "character varying",
+    "nulable": "YES",
+    "defecto": null,
+    "comentario": null
+  }
+]

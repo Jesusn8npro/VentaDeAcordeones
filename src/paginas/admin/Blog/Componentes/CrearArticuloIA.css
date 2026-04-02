@@ -1,0 +1,129 @@
+.chat-ia-blog-creador {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chat-ia-blog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-ia-blog-header h3 {
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-ia-blog-btn-limpiar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.chat-ia-blog-container {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.chat-ia-blog-mensaje {
+  display: flex;
+  margin-bottom: 12px;
+  max-width: 80%;
+}
+
+.chat-ia-blog-mensaje .chat-ia-blog-avatar {
+  margin-right: 12px;
+}
+
+.chat-ia-blog-mensaje .chat-ia-blog-contenido {
+  padding: 10px 14px;
+  border-radius: 18px;
+  line-height: 1.5;
+}
+
+.chat-ia-blog-mensaje.usuario {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.chat-ia-blog-mensaje.usuario .chat-ia-blog-avatar {
+  margin-left: 12px;
+  margin-right: 0;
+}
+
+.chat-ia-blog-mensaje.usuario .chat-ia-blog-contenido {
+  background-color: #007bff;
+  color: white;
+}
+
+.chat-ia-blog-mensaje.agente .chat-ia-blog-contenido {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.chat-ia-blog-spinner {
+  animation: chat-ia-blog-spin 1s linear infinite;
+}
+
+@keyframes chat-ia-blog-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.chat-ia-blog-input {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #e0e0e0;
+  background-color: #f7f7f7;
+}
+
+.chat-ia-blog-input input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.chat-ia-blog-input button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.chat-ia-blog-input button:disabled {
+  background-color: #a0cfff;
+  cursor: not-allowed;
+}
+
+.chat-ia-blog-error-mensaje {
+  padding: 10px;
+  background-color: #ffebee;
+  color: #c62828;
+  text-align: center;
+}

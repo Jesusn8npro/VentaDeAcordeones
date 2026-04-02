@@ -1,0 +1,218 @@
+/* NotificacionCarrito.css - Estilos para notificaciones del carrito */
+
+.notificacion-carrito {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  max-width: 400px;
+  min-width: 300px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-left: 4px solid;
+  overflow: hidden;
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notificacion-carrito.saliendo {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* Colores por tipo */
+.notificacion-carrito.success {
+  border-left-color: #10b981;
+}
+
+.notificacion-carrito.error {
+  border-left-color: #ef4444;
+}
+
+.notificacion-carrito.warning {
+  border-left-color: #f59e0b;
+}
+
+.notificacion-contenido {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 12px;
+}
+
+.notificacion-icono {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.notificacion-icono .icono-success {
+  color: #10b981;
+}
+
+.notificacion-icono .icono-error {
+  color: #ef4444;
+}
+
+.notificacion-icono .icono-warning {
+  color: #f59e0b;
+}
+
+.notificacion-texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.notificacion-titulo {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.3;
+}
+
+.notificacion-mensaje {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.notificacion-cerrar {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #9ca3af;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notificacion-cerrar:hover {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Barra de progreso */
+.notificacion-progreso {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.notificacion-progreso-barra {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  width: 100%;
+  transform: translateX(-100%);
+  animation: progreso-notificacion linear forwards;
+}
+
+.notificacion-carrito.success .notificacion-progreso-barra {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.notificacion-carrito.error .notificacion-progreso-barra {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.notificacion-carrito.warning .notificacion-progreso-barra {
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+@keyframes progreso-notificacion {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Animación de entrada */
+.notificacion-carrito {
+  animation: entrada-notificacion 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes entrada-notificacion {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .notificacion-carrito {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    min-width: auto;
+  }
+  
+  .notificacion-contenido {
+    padding: 12px;
+  }
+  
+  .notificacion-titulo {
+    font-size: 15px;
+  }
+  
+  .notificacion-mensaje {
+    font-size: 13px;
+  }
+}
+
+/* Estados de hover para mejor UX */
+.notificacion-carrito:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.notificacion-carrito:hover .notificacion-progreso-barra {
+  animation-play-state: paused;
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .notificacion-carrito,
+  .notificacion-progreso-barra {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .notificacion-carrito {
+    background: #1f2937;
+    border-left-color: #374151;
+  }
+  
+  .notificacion-titulo {
+    color: #f9fafb;
+  }
+  
+  .notificacion-mensaje {
+    color: #d1d5db;
+  }
+  
+  .notificacion-cerrar:hover {
+    background: #374151;
+    color: #d1d5db;
+  }
+}

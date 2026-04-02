@@ -1,0 +1,164 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "bigint",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "nextval('leads_chat_id_seq'::regclass)"
+  },
+  {
+    "nombre_columna": "chat_id",
+    "tipo_dato": "text",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "source",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "'web'::text"
+  },
+  {
+    "nombre_columna": "created_at",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "updated_at",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "nombre",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "apellido",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "email",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "whatsapp",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "ciudad",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "direccion",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "datos_envio",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "tipo_consulta",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "productos_consultados",
+    "tipo_dato": "ARRAY",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "metodo_pago_preferido",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "precio_maximo_mencionado",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "urgencia_compra",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "nivel_interes",
+    "tipo_dato": "integer",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "5"
+  },
+  {
+    "nombre_columna": "probabilidad_compra",
+    "tipo_dato": "integer",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "50"
+  },
+  {
+    "nombre_columna": "valor_potencial",
+    "tipo_dato": "numeric",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "principales_objeciones",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "miedos_cliente",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "tecnicas_persuasion",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "estado",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "'activo'::text"
+  },
+  {
+    "nombre_columna": "converted",
+    "tipo_dato": "boolean",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "false"
+  },
+  {
+    "nombre_columna": "contexto_inicial",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "notas_adicionales",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  }
+]

@@ -1,0 +1,1064 @@
+/* Estilos principales para la gestión de cupones */
+.manejo-cupones {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+}
+
+.contenedor-cupones {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Header */
+.header-cupones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.titulo-seccion {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  
+}
+
+.header-cupones .titulo-seccion h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  
+  color: white !important;
+}
+
+.titulo-seccion p {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 1rem;
+  color: white !important;
+}
+
+.acciones-header {
+  display: flex;
+  gap: 1rem;
+}
+
+.boton-refrescar,
+.boton-crear {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.boton-refrescar {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  backdrop-filter: blur(10px);
+}
+
+.boton-refrescar:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.boton-refrescar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.boton-crear {
+  background: #4CAF50;
+  color: white;
+}
+
+.boton-crear:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+}
+
+.girando {
+  animation: girar 1s linear infinite;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Filtros y búsqueda */
+.filtros-cupones {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.busqueda-cupones {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.busqueda-cupones svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.busqueda-cupones input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.busqueda-cupones input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.filtros-grupo {
+  display: flex;
+  gap: 1rem;
+}
+
+.filtros-grupo select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  background: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filtros-grupo select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Estadísticas */
+.estadisticas-cupones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #f8f9fa;
+}
+
+.estadistica {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.estadistica:hover {
+  transform: translateY(-5px);
+}
+
+.estadistica-icono {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.estadistica-icono.activo {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+}
+
+.estadistica-icono.total {
+  background: linear-gradient(135deg, #2196F3, #1976D2);
+}
+
+.estadistica-icono.porcentaje {
+  background: linear-gradient(135deg, #FF9800, #F57C00);
+}
+
+.estadistica-icono.monto {
+  background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+}
+
+.estadistica-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.estadistica-numero {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.estadistica-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Mensajes */
+.mensaje-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: #fee;
+  color: #c53030;
+  border-left: 4px solid #c53030;
+  margin: 0 2rem;
+}
+
+/* Lista de cupones */
+.lista-cupones {
+  padding: 2rem;
+}
+
+.cargando-cupones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+}
+
+.cargando-cupones svg {
+  margin-bottom: 1rem;
+  color: #667eea;
+}
+
+.sin-cupones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #6c757d;
+}
+
+.sin-cupones svg {
+  margin-bottom: 1rem;
+  color: #dee2e6;
+}
+
+.sin-cupones h3 {
+  margin: 1rem 0 0.5rem 0;
+  color: #495057;
+}
+
+.boton-crear-vacio {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.boton-crear-vacio:hover {
+  background: #5a6fd8;
+  transform: translateY(-2px);
+}
+
+/* Tabla de cupones */
+.cupones-tabla-contenedor {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.cupones-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.cupones-tabla thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.cupones-tabla th {
+  color: white;
+  padding: 16px 12px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: left;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cupones-tabla th:last-child {
+  border-right: none;
+}
+
+.cupones-fila {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.cupones-fila:hover {
+  background: #f8f9ff;
+}
+
+.cupones-tabla td {
+  padding: 16px 12px;
+  border-right: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.cupones-tabla td:last-child {
+  border-right: none;
+}
+
+/* Código del cupón */
+.cupones-codigo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+}
+
+/* Nombre del cupón */
+.cupones-nombre {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+}
+
+.cupones-nombre h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cupones-nombre p {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+/* Información de descuento */
+.cupones-descuento {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+}
+
+/* Información de usos */
+.cupones-usos {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Información de vigencia */
+.cupones-vigencia {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+}
+
+.codigo-texto {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.boton-copiar {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boton-copiar:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+
+
+.descuento-valor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.minimo-compra {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.usos-actuales {
+  color: #fff;
+}
+
+.separador {
+  margin: 0 2px;
+}
+
+.usos-maximos {
+  color: #fff;
+}
+
+.fecha-inicio,
+.fecha-fin {
+  font-size: 11px;
+  line-height: 1.3;
+  margin: 2px 0;
+}
+
+.cupones-estado {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.cupones-estado.activo {
+  background: #d4edda;
+  color: #155724;
+}
+
+.cupones-estado.inactivo {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cupones-estado.programado {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.cupones-estado.expirado {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.cupones-acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cupones-accion {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  color: #495057;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cupones-accion:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cupones-accion:hover svg {
+  color: #007bff;
+}
+
+.cupones-accion.activar:hover svg {
+  color: #28a745;
+}
+
+.cupones-accion.desactivar:hover svg {
+  color: #dc3545;
+}
+
+.cupones-accion.eliminar:hover {
+  background: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.cupones-accion.eliminar:hover svg {
+  color: #dc3545;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.modal-cupon {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 20px 20px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.boton-cerrar {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-cerrar:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Formulario */
+.formulario-cupon {
+  padding: 2rem;
+}
+
+.campos-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.grupo-campos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grupo-campos h3 {
+  margin: 0;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.fila-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.campo label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  padding: 0.75rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.campo input:disabled,
+.campo select:disabled,
+.campo textarea:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #495057;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 5px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Acciones del modal */
+.acciones-modal {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.boton-cancelar,
+.boton-guardar {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.boton-cancelar {
+  background: #6c757d;
+  color: white;
+}
+
+.boton-cancelar:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.boton-guardar {
+  background: #28a745;
+  color: white;
+}
+
+.boton-guardar:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .cupones-tabla {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 992px) {
+  .manejo-cupones {
+    padding: 1rem;
+  }
+  
+  .header-cupones {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .acciones-header {
+    justify-content: center;
+  }
+  
+  .filtros-cupones {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .estadisticas-cupones {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .cupones-tabla {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .estadisticas-cupones {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .cupones-tabla-contenedor {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .cupones-tabla {
+    min-width: 500px;
+  }
+  
+  .cupones-tabla th,
+  .cupones-tabla td {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+  
+  .cupones-codigo,
+  .cupones-nombre,
+  .cupones-descuento,
+  .cupones-usos,
+  .cupones-vigencia {
+    padding: 6px 8px;
+  }
+  
+  .cupones-nombre h4 {
+    font-size: 12px;
+  }
+  
+  .cupones-nombre p {
+    font-size: 10px;
+  }
+  
+  .descuento-valor {
+    font-size: 12px;
+  }
+  
+  .minimo-compra {
+    font-size: 9px;
+  }
+  
+  .cupones-usos {
+    font-size: 12px;
+  }
+  
+  .fecha-inicio,
+  .fecha-fin {
+    font-size: 9px;
+  }
+  
+  .cupones-estado {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  
+  .cupones-acciones {
+    gap: 4px;
+  }
+  
+  .cupones-accion {
+    padding: 6px;
+  }
+  
+  /* Ajustes específicos para el contenido en móvil */
+  .codigo-cupon {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .codigo-texto {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.3rem;
+  }
+  
+  .boton-copiar {
+    padding: 0.2rem;
+    font-size: 0.7rem;
+  }
+  
+  .nombre-cupon {
+    text-align: center;
+  }
+  
+  .nombre-principal {
+    font-size: 0.75rem;
+    margin-bottom: 0.1rem;
+  }
+  
+  .descripcion-cupon {
+    font-size: 0.65rem;
+    line-height: 1.2;
+  }
+  
+  .descuento-info {
+    align-items: center;
+  }
+  
+  .modal-overlay {
+    padding: 1rem;
+  }
+  
+  .modal-cupon {
+    max-height: 95vh;
+  }
+  
+  .formulario-cupon {
+    padding: 1.5rem;
+  }
+  
+  .fila-campos {
+    grid-template-columns: 1fr;
+  }
+  
+  .acciones-modal {
+    flex-direction: column;
+  }
+  
+  .boton-cancelar,
+  .boton-guardar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .manejo-cupones {
+    padding: 0.5rem;
+  }
+  
+  .contenedor-cupones {
+    border-radius: 15px;
+  }
+  
+  .manejo-cupones .header-cupones {
+    padding: 1rem;
+  }
+  
+  .manejo-cupones .titulo-seccion {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .manejo-cupones .acciones-header {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .boton-refrescar,
+  .boton-crear {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .filtros-cupones {
+    padding: 1rem;
+  }
+  
+  .filtros-grupo {
+    flex-direction: column;
+  }
+  
+  .estadisticas-cupones {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .estadistica {
+    padding: 1rem;
+  }
+  
+  .estadistica-icono {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .estadistica-numero {
+    font-size: 1.5rem;
+  }
+  
+  .modal-header {
+    padding: 1rem;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .formulario-cupon {
+    padding: 1rem;
+  }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fila-cupon {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-cupon {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Mejoras de accesibilidad */
+.boton-refrescar:focus,
+.boton-crear:focus,
+.boton-cancelar:focus,
+.boton-guardar:focus,
+.acciones-cupon button:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Estados de carga */
+.cargando-cupones p {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Tooltips para acciones */
+.acciones-cupon button {
+  position: relative;
+}
+
+.acciones-cupon button:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 5px;
+}
+
+.acciones-cupon button:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #333;
+  z-index: 1000;
+}

@@ -1,0 +1,201 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "tableId": "productos",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ $json.producto_para_supabase.nombre }}"
+            },
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{ $json.producto_para_supabase.slug }}"
+            },
+            {
+              "fieldId": "descripcion",
+              "fieldValue": "={{ $json.producto_para_supabase.descripcion }}"
+            },
+            {
+              "fieldId": "ganchos",
+              "fieldValue": "={{ $json.producto_para_supabase.ganchos }}"
+            },
+            {
+              "fieldId": "precio",
+              "fieldValue": "={{ (function(){ const p = $json.producto_para_supabase.precio; if (typeof p === 'number' && p > 0) return p; if (typeof p === 'string' && !isNaN(parseFloat(p))) return parseFloat(p); return 0; })() }}"
+            },
+            {
+              "fieldId": "precio_original",
+              "fieldValue": "={{ (function(){ const p = $json.producto_para_supabase.precio_original; if (typeof p === 'number' && p > 0) return p; if (typeof p === 'string' && !isNaN(parseFloat(p))) return parseFloat(p); return 0; })() }}"
+            },
+            {
+              "fieldId": "descuento",
+              "fieldValue": "={{ (function(){ const d = $json.producto_para_supabase.descuento; if (typeof d === 'number' && d >= 0) return d; if (typeof d === 'string' && !isNaN(parseFloat(d))) return parseFloat(d); return 0; })() }}"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "={{ (function(){ const e = $json.producto_para_supabase.estado; const n = $json.producto_para_supabase.nombre || ''; const allowed = ['nuevo','usado','vendido','agotado','descontinuado']; const s = (typeof e==='string'? e.trim().toLowerCase(): ''); if (allowed.includes(s)) return s; if (typeof n==='string' && (n.toLowerCase().includes('usado') || n.toLowerCase().includes('usada'))) return 'usado'; return 'nuevo'; })() }}"
+            },
+            {
+              "fieldId": "categoria_id",
+              "fieldValue": "={{ $json.producto_para_supabase.categoria_id }}"
+            },
+            {
+              "fieldId": "stock",
+              "fieldValue": "={{ (function(){ const s = $json.producto_para_supabase.stock; if (typeof s === 'number' && s >= 0) return s; if (typeof s === 'string' && !isNaN(parseInt(s))) return parseInt(s); return 1; })() }}"
+            },
+            {
+              "fieldId": "stock_minimo",
+              "fieldValue": "={{ (function(){ const s = $json.producto_para_supabase.stock_minimo; if (typeof s === 'number' && s >= 0) return s; if (typeof s === 'string' && !isNaN(parseInt(s))) return parseInt(s); return 1; })() }}"
+            },
+            {
+              "fieldId": "peso",
+              "fieldValue": "={{ (function(){ const p = $json.producto_para_supabase.peso; if (typeof p === 'number' && p > 0) return p; if (typeof p === 'string' && !isNaN(parseFloat(p))) return parseFloat(p); return 1; })() }}"
+            },
+            {
+              "fieldId": "dimensiones",
+              "fieldValue": "={{ $json.producto_para_supabase.dimensiones }}"
+            },
+            {
+              "fieldId": "marca",
+              "fieldValue": "={{ $json.producto_para_supabase.marca }}"
+            },
+            {
+              "fieldId": "modelo",
+              "fieldValue": "={{ $json.producto_para_supabase.modelo }}"
+            },
+            {
+              "fieldId": "color",
+              "fieldValue": "={{ $json.producto_para_supabase.color }}"
+            },
+            {
+              "fieldId": "talla",
+              "fieldValue": "={{ $json.producto_para_supabase.talla }}"
+            },
+            {
+              "fieldId": "material",
+              "fieldValue": "={{ $json.producto_para_supabase.material }}"
+            },
+            {
+              "fieldId": "garantia_meses",
+              "fieldValue": "={{ (function(){ const g = $json.producto_para_supabase.garantia_meses; if (typeof g === 'number' && g > 0) return g; if (typeof g === 'string' && !isNaN(parseInt(g))) return parseInt(g); return null; })() }}"
+            },
+            {
+              "fieldId": "origen_pais",
+              "fieldValue": "={{ $json.producto_para_supabase.origen_pais }}"
+            },
+            {
+              "fieldId": "palabras_clave",
+              "fieldValue": "={{ $json.producto_para_supabase.palabras_clave }}"
+            },
+            {
+              "fieldId": "meta_title",
+              "fieldValue": "={{ $json.producto_para_supabase.meta_title }}"
+            },
+            {
+              "fieldId": "meta_description",
+              "fieldValue": "={{ $json.producto_para_supabase.meta_description }}"
+            },
+            {
+              "fieldId": "destacado",
+              "fieldValue": "={{ $json.producto_para_supabase.destacado }}"
+            },
+            {
+              "fieldId": "activo",
+              "fieldValue": "={{ $json.producto_para_supabase.activo }}"
+            },
+            {
+              "fieldId": "creado_el",
+              "fieldValue": "={{ $json.producto_para_supabase.creado_el }}"
+            },
+            {
+              "fieldId": "creado_por",
+              "fieldValue": "={{ $json.producto_para_supabase.creado_por }}"
+            },
+            {
+              "fieldId": "actualizado_el",
+              "fieldValue": "={{ $json.producto_para_supabase.actualizado_el }}"
+            },
+            {
+              "fieldId": "landing_tipo",
+              "fieldValue": "={{ $json.producto_para_supabase.landing_tipo }}"
+            },
+            {
+              "fieldId": "numero_de_ventas",
+              "fieldValue": "={{ (function(){ const n = $json.producto_para_supabase.numero_de_ventas; if (typeof n === 'number' && n >= 0) return n; if (typeof n === 'string' && !isNaN(parseInt(n))) return parseInt(n); return 0; })() }}"
+            },
+            {
+              "fieldId": "calificacion_promedio",
+              "fieldValue": "={{ (function(){ const c = $json.producto_para_supabase.calificacion_promedio; if (typeof c === 'number' && c >= 0) return c; if (typeof c === 'string' && !isNaN(parseFloat(c))) return parseFloat(c); return 0; })() }}"
+            },
+            {
+              "fieldId": "total_resenas",
+              "fieldValue": "={{ (function(){ const t = $json.producto_para_supabase.total_resenas; if (typeof t === 'number' && t >= 0) return t; if (typeof t === 'string' && !isNaN(parseInt(t))) return parseInt(t); return 0; })() }}"
+            },
+            {
+              "fieldId": "banner_animado",
+              "fieldValue": "={{ $json.producto_para_supabase.banner_animado }}"
+            },
+            {
+              "fieldId": "puntos_dolor",
+              "fieldValue": "={{ $json.producto_para_supabase.puntos_dolor }}"
+            },
+            {
+              "fieldId": "testimonios",
+              "fieldValue": "={{ $json.producto_para_supabase.testimonios }}"
+            },
+            {
+              "fieldId": "faq",
+              "fieldValue": "={{ $json.producto_para_supabase.faq }}"
+            },
+            {
+              "fieldId": "garantias",
+              "fieldValue": "={{ $json.producto_para_supabase.garantias }}"
+            },
+            {
+              "fieldId": "cta_final",
+              "fieldValue": "={{ $json.producto_para_supabase.cta_final }}"
+            },
+            {
+              "fieldId": "promociones",
+              "fieldValue": "={{ $json.producto_para_supabase.promociones }}"
+            },
+            {
+              "fieldId": "caracteristicas_jsonb",
+              "fieldValue": "={{ $json.producto_para_supabase.caracteristicas_jsonb }}"
+            },
+            {
+              "fieldId": "ventajas_jsonb",
+              "fieldValue": "={{ $json.producto_para_supabase.ventajas_jsonb }}"
+            },
+            {
+              "fieldId": "beneficios_jsonb",
+              "fieldValue": "={{ $json.producto_para_supabase.beneficios_jsonb }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1232,
+        -240
+      ],
+      "id": "42f97b8e-bb8c-4a29-be96-cbac46528462",
+      "name": "Crear Producto en Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {},
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

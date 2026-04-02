@@ -1,0 +1,505 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "id_del_producto_para_actualizar"
+            },
+            {
+              "name": "campo_a_actualizar"
+            },
+            {
+              "name": "nuevo_valor"
+            },
+            {
+              "name": "tipo_actualizacion"
+            },
+            {
+              "name": "de_que_trata_el_producto"
+            }
+          ]
+        }
+      },
+      "id": "72275461-2e8e-4d68-964f-8f1ef675d2d4",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -480,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1f5a4491-f1c0-4052-ab20-751290c155d7",
+              "name": "id_producto",
+              "value": "={{ $json.id_del_producto_para_actualizar }}",
+              "type": "string"
+            },
+            {
+              "id": "35d2de84-3f0b-48e6-9a5a-cec3f7702d49",
+              "name": "campo",
+              "value": "={{ $json.campo_a_actualizar }}",
+              "type": "string"
+            },
+            {
+              "id": "c67e1e95-bf7b-432f-a152-b8b18da2b7a5",
+              "name": "valor_usuario",
+              "value": "={{ $json.nuevo_valor }}",
+              "type": "auto"
+            },
+            {
+              "id": "474260b7-7946-49c9-b3b2-ce44aa7f860e",
+              "name": "tipo",
+              "value": "={{ $json.tipo_actualizacion }}",
+              "type": "string"
+            },
+            {
+              "id": "8a9b1c2d-3e4f-5678-9abc-def012345678",
+              "name": "descripcion",
+              "value": "={{ $json.de_que_trata_el_producto }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -272,
+        448
+      ],
+      "id": "c8674095-3716-4d4f-bdbd-9e84cc32fb5d",
+      "name": "Preparar Datos"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "03840f2f-dd06-4001-a4b8-e49f1a82d9b6",
+              "leftValue": "={{ $json.tipo }}",
+              "rightValue": "imagen",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -80,
+        448
+      ],
+      "id": "70193036-a458-4e0e-890f-e3e412f98b4a",
+      "name": "¿Es Imagen?"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "producto_imagenes",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Preparar Datos').item.json.id_producto }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        112,
+        352
+      ],
+      "id": "846d1ef1-ae61-47fb-a1ab-81f59bdcdbd0",
+      "name": "Consultar Imágenes",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "productos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Preparar Datos').item.json.id_producto }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        96,
+        560
+      ],
+      "id": "42433ac7-10be-4cf9-87a3-3d10c1863349",
+      "name": "Obtener Datos del Producto",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "producto-actual",
+              "name": "producto_actual",
+              "value": "={{ $('Obtener Datos del Producto').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "campo-actualizar",
+              "name": "campo_actualizar",
+              "value": "={{ $('Preparar Datos').item.json.campo }}",
+              "type": "string"
+            },
+            {
+              "id": "descripcion-contexto",
+              "name": "descripcion_contexto",
+              "value": "={{ $('Preparar Datos').item.json.descripcion }}",
+              "type": "string"
+            },
+            {
+              "id": "valor-inteligente",
+              "name": "valor_generado",
+              "value": "={{ $('Preparar Datos').item.json.valor_usuario }}",
+              "type": "auto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        560
+      ],
+      "id": "5014eb6a-1988-4559-9559-9216673b48a8",
+      "name": "Generar Valor Inteligente"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 🧹 LIMPIADOR DE JSON INTELIGENTE 🧹\n// Limpia escape characters y parsea JSON correctamente\n\nconst inputData = $input.all();\nconst outputData = [];\n\nfor (const item of inputData) {\n  let valorGenerado = item.json.valor_generado;\n  let valorLimpio = valorGenerado;\n  \n  // Si el valor es un string que parece JSON, intentar parsearlo\n  if (typeof valorGenerado === 'string') {\n    try {\n      // Limpiar escape characters comunes\n      let jsonLimpio = valorGenerado\n        .replace(/\\\\\"/g, '\"')  // Remover escape de comillas\n        .replace(/\\\\n/g, '\\n')   // Remover escape de saltos de línea\n        .replace(/\\\\r/g, '\\r')   // Remover escape de retorno de carro\n        .replace(/\\\\t/g, '\\t')   // Remover escape de tabs\n        .replace(/\\\\\\\\/g, '\\\\') // Remover escape de backslashes\n        .trim();\n      \n      // Si empieza y termina con comillas, removerlas\n      if (jsonLimpio.startsWith('\"') && jsonLimpio.endsWith('\"')) {\n        jsonLimpio = jsonLimpio.slice(1, -1);\n      }\n      \n      // Intentar parsear como JSON\n      if (jsonLimpio.startsWith('{') || jsonLimpio.startsWith('[')) {\n        valorLimpio = JSON.parse(jsonLimpio);\n        console.log('✅ JSON parseado correctamente:', typeof valorLimpio);\n      } else {\n        // Si no es JSON, mantener como string limpio\n        valorLimpio = jsonLimpio;\n      }\n    } catch (error) {\n      // Si falla el parseo, mantener el valor original\n      console.log('⚠️ No se pudo parsear JSON, manteniendo valor original:', error.message);\n      valorLimpio = valorGenerado;\n    }\n  }\n  \n  // Crear el output con el valor limpio\n  outputData.push({\n    json: {\n      ...item.json,\n      valor_generado: valorLimpio,\n      valor_limpio: valorLimpio,\n      tipo_valor: typeof valorLimpio,\n      es_objeto: typeof valorLimpio === 'object' && valorLimpio !== null\n    }\n  });\n}\n\nreturn outputData;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        560
+      ],
+      "id": "2b972034-b1b3-493d-af1e-dcfede85f47f",
+      "name": "Limpiar JSON"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "productos",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Preparar Datos').item.json.id_producto }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $('Preparar Datos').item.json.campo }}",
+              "fieldValue": "={{ $('Limpiar JSON').item.json.valor_limpio }}"
+            },
+            {
+              "fieldId": "actualizado_el",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        896,
+        624
+      ],
+      "id": "9885e0d1-0ef8-4c28-a8d1-0403f277f4fe",
+      "name": "Actualizar Campo Producto",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "success-id",
+              "name": "resultado",
+              "value": "éxito",
+              "type": "string"
+            },
+            {
+              "id": "message-id",
+              "name": "mensaje",
+              "value": "={{ $('Preparar Datos').item.json.tipo === 'imagen' ? 'Imagen ' + $('Preparar Datos').item.json.campo + ' actualizada correctamente en el producto ' + $('Preparar Datos').item.json.id_producto : 'Campo ' + $('Preparar Datos').item.json.campo + ' actualizado correctamente en el producto ' + $('Preparar Datos').item.json.id_producto }}",
+              "type": "string"
+            },
+            {
+              "id": "producto-id",
+              "name": "producto_id",
+              "value": "={{ $('Preparar Datos').item.json.id_producto }}",
+              "type": "string"
+            },
+            {
+              "id": "campo-actualizado",
+              "name": "campo_para_actualizar",
+              "value": "={{ $('Preparar Datos').item.json.campo }}",
+              "type": "string"
+            },
+            {
+              "id": "valor-anterior",
+              "name": "valor_anterior",
+              "value": "={{ $('Preparar Datos').item.json.tipo === 'imagen' ? 'N/A' : $('Obtener Datos del Producto').item.json[$('Preparar Datos').item.json.campo] || 'Sin valor previo' }}",
+              "type": "string"
+            },
+            {
+              "id": "valor-nuevo",
+              "name": "valor_nuevo",
+              "value": "={{ $('Preparar Datos').item.json.tipo === 'imagen' ? $('Preparar Datos').item.json.valor_usuario : $('Limpiar JSON').item.json.valor_limpio }}",
+              "type": "auto"
+            },
+            {
+              "id": "tipo-actualizacion",
+              "name": "tipo_actualizacion",
+              "value": "={{ $('Preparar Datos').item.json.tipo }}",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "version-producto",
+              "name": "version_producto",
+              "value": 1,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1120,
+        352
+      ],
+      "id": "1a7158de-6fa9-419b-8873-58b1564e1ce8",
+      "name": "Resultado Final"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "producto_imagenes",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "producto_id",
+              "condition": "eq",
+              "keyValue": "={{ $('When Executed by Another Workflow').item.json.id_del_producto_para_actualizar }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "={{ $('When Executed by Another Workflow').item.json.campo_a_actualizar }}",
+              "fieldValue": "={{ $('When Executed by Another Workflow').item.json.nuevo_valor }}"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "procesando"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        368,
+        352
+      ],
+      "id": "808e83aa-7e57-4be2-a685-763bb05219b6",
+      "name": "Actualizar Imagen Supabase1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Preparar Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Datos": {
+      "main": [
+        [
+          {
+            "node": "¿Es Imagen?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Imagen?": {
+      "main": [
+        [
+          {
+            "node": "Consultar Imágenes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Obtener Datos del Producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consultar Imágenes": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Imagen Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Datos del Producto": {
+      "main": [
+        [
+          {
+            "node": "Generar Valor Inteligente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Valor Inteligente": {
+      "main": [
+        [
+          {
+            "node": "Limpiar JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limpiar JSON": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Campo Producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Campo Producto": {
+      "main": [
+        [
+          {
+            "node": "Resultado Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Imagen Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Resultado Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "id_del_producto_para_actualizar": "9635f5ea-56d1-446e-876f-8f5e37bd88e9",
+        "campo_a_actualizar": "imagen_principal",
+        "nuevo_valor": "https://i.pinimg.com/736x/83/10/7e/83107eb75f910bab989794e17da012ec.jpg",
+        "tipo_actualizacion": "imagen",
+        "de_que_trata_el_producto": "Juego de aventura"
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

@@ -1,0 +1,307 @@
+/* ===== MODAL CATEGORÍA - ESTILOS INDEPENDIENTES ===== */
+
+/* Overlay del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal del modal */
+.modal-overlay .modal-contenido {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 500px;
+  max-height: calc(100vh - 40px); /* Altura máxima considerando el padding del overlay */
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding:  0;
+}
+
+/* Header del modal */
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-cerrar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.modal-cerrar:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Formulario del modal */
+.modal-form {
+  padding: 24px;
+  background: transparent;
+  border: none;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0; /* Permite que el flex funcione correctamente */
+}
+
+/* Upload de imagen (nuevas clases) */
+.imagen-upload-container { display: flex; flex-direction: column; gap: 0.75rem; }
+.imagen-upload-area { border: 2px dashed #e5e7eb; border-radius: 12px; padding: 1rem; text-align: center; cursor: pointer; background: #fafafa; }
+.imagen-upload-content { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: #6b7280; }
+.imagen-upload-text { margin: 0; font-size: 0.95rem; }
+.imagen-upload-subtext { margin: 0; font-size: 0.8rem; color: #9ca3af; }
+.imagen-preview-container { position: relative; }
+.imagen-preview { width: 100%; border-radius: 12px; border: 1px solid #e5e7eb; }
+.imagen-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.imagen-btn { border: none; border-radius: 8px; padding: 0.5rem 0.75rem; cursor: pointer; background: #eff6ff; color: #1d4ed8; display: inline-flex; align-items: center; gap: 0.4rem; }
+.imagen-btn.eliminar { background: #fef2f2; color: #dc2626; }
+
+/* Grupos de campos */
+.campo-grupo {
+  margin-bottom: 20px;
+}
+
+.campo-grupo label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.campo-grupo input,
+.campo-grupo textarea,
+.campo-grupo select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.campo-grupo input:focus,
+.campo-grupo textarea:focus,
+.campo-grupo select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.campo-grupo textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Sección de imagen */
+.imagen-seccion {
+  margin-bottom: 20px;
+}
+
+.imagen-preview {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.imagen-botones {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.btn-cambiar,
+.btn-eliminar {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btn-cambiar {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-cambiar:hover {
+  background-color: #2563eb;
+}
+
+.btn-eliminar {
+  background-color: #dc2626;
+  color: white;
+}
+
+.btn-eliminar:hover {
+  background-color: #b91c1c;
+}
+
+/* Checkboxes */
+.checkbox-grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.checkbox-grupo input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+/* Botones de acción del modal */
+.modal-acciones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 20px 24px;
+  border-top: 1px solid #e5e7eb;
+  margin: 0;
+  background: #f9fafb;
+  border-radius: 0 0 12px 12px;
+  flex-shrink: 0; /* Evita que se compriman */
+}
+
+.boton-cancelar,
+.boton-guardar {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+}
+
+.boton-cancelar {
+  background-color: #6b7280;
+  color: white;
+}
+
+.boton-cancelar:hover {
+  background-color: #4b5563;
+}
+
+.boton-guardar {
+  background-color: #10b981;
+  color: white;
+}
+
+.boton-guardar:hover {
+  background-color: #059669;
+}
+
+/* Spinner pequeño */
+.spinner-pequeno { width: 16px; height: 16px; border: 2px solid #e5e7eb; border-top-color: #10b981; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Mensaje de error */
+.error-mensaje {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+  
+  .modal-contenido {
+    width: 100%;
+    max-width: none;
+    max-height: calc(100vh - 20px);
+  }
+  
+  .modal-header {
+    padding: 16px;
+  }
+  
+  .modal-form {
+    padding: 20px;
+  }
+  
+  .modal-acciones {
+    padding: 16px 20px;
+    flex-direction: column;
+  }
+  
+  .boton-cancelar,
+  .boton-guardar {
+    width: 100%;
+  }
+  
+  .imagen-actions {
+    flex-direction: column;
+  }
+  
+  .imagen-btn,
+  .imagen-btn.eliminar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding: 0;
+  }
+  
+  .modal-contenido {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .modal-header {
+    border-radius: 0;
+  }
+  
+  .modal-botones {
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "id": "616f5299-09ca-4584-b8b4-2b20a1feb303",
+  "nombre": "Chevrolet SAIL 2016 - Excelente Estado",
+  "slug": "chevrolet-sail-2016-excelente-estado",
+  "descripcion_titulo": "Chevrolet SAIL 2016: Tu vehículo ideal en excelentes condiciones.",
+  "descripcion_contenido": "Descubre el Chevrolet SAIL 2016, un auto en excelente estado, listo para su traspaso. Este vehículo ha sido cuidado con esmero, nunca ha sido utilizado para aplicaciones, lo que garantiza que está como nuevo. Con un bajo kilometraje y transmisión manual, el SAIL es perfecto para quienes buscan un auto confiable y eficiente. Su color rojo vibrante hará que te destaque en la carretera mientras disfrutas de un manejo ágil y agradable. Con toda la documentación al día, estás a un paso de llevarte este magnífico automóvil que promete convertirse en tu compañero ideal para cualquier aventura.",
+  "precio": 279000000,
+  "precio_original": 300000000,
+  "descuento": 7,
+  "categoria_id": "e27db74a-5ef2-4c88-9f01-5d0a1a2be7e7",
+  "estado": "usado",
+  "ganchos": [
+    "🚗 ¡Listo para rodar!",
+    "🌟 Bajo kilometraje",
+    "✅ Documentación al día",
+    "💼 Ideal para el trabajo",
+    "💰 Precio accesible"
+  ],
+  "beneficios": [
+    "Excelente estado y mantenimiento",
+    "Bajo consumo de combustible",
+    "Listo para traspaso",
+    "Ideal para la ciudad y viajes cortos",
+    "Comodidad y estilo en cada viaje"
+  ],
+  "ventajas": [],
+  "palabras_clave": [
+    "Chevrolet",
+    "SAIL",
+    "auto usado",
+    "vehículo en excelente estado",
+    "traspaso",
+    "bajo kilometraje"
+  ],
+  "stock": 1,
+  "stock_minimo": 5,
+  "destacado": false,
+  "activo": true,
+  "landing_tipo": "temu",
+  "peso": 120000,
+  "dimensiones": {
+    "alto": 140,
+    "ancho": 170,
+    "profundidad": 430
+  },
+  "marca": "Chevrolet",
+  "modelo": "SAIL 2016",
+  "color": "Rojo",
+  "talla": "N/A",
+  "material": "Metal y Plástico",
+  "meta_title": "Chevrolet SAIL 2016 en Excellent Estado - ¡No Te Lo Pierdas!",
+  "meta_description": "Compra el Chevrolet SAIL 2016 en excelente estado. Bajo kilometraje, documentación lista y listo para traspaso. ¡Aprovecha esta oportunidad!",
+  "fotos_principales": [],
+  "fotos_secundarias": [],
+  "promociones": [],
+  "banner_animado": {
+    "mensajes": [
+      "🌟 Tu compañero ideal esperando por ti",
+      "🏁 Listo para disfrutar al máximo",
+      "🛠️ Inspeccionado y verificado antes de la venta"
+    ],
+    "textColor": "#FFFFFF",
+    "velocidad": "normal",
+    "backgroundColor": "#FF4444"
+  },
+  "puntos_dolor": {
+    "titulo": "¿Te enfrentas a estos problemas al buscar auto?",
+    "timeline": [
+      {
+        "id": 1,
+        "icono": "😩",
+        "nombre": "Dificultad para encontrar un vehículo confiable",
+        "posicion": "izquierda",
+        "solucion": "Programas de mantenimiento costosos y complicados",
+        "textoBoton": "¿Te pasa esto?",
+        "descripcion": "Es complicado encontrar un auto que no solo esté en buenas condiciones, sino que también sea confiable y económico."
+      },
+      {
+        "id": 2,
+        "icono": "😢",
+        "nombre": "Temor a las sorpresas mecánicas",
+        "posicion": "derecha",
+        "solucion": "Incertidumbre sobre el estado real del vehículo",
+        "textoBoton": "Conoce más",
+        "descripcion": "Los vehículos usados suelen venir con problemas ocultos o un mal mantenimiento que puede ser costoso a largo plazo."
+      },
+      {
+        "id": 3,
+        "icono": "✅",
+        "nombre": "Todo en regla y listo para uso inmediato",
+        "posicion": "izquierda",
+        "solucion": "Nuestro Chevrolet SAIL está preparado para su traspaso sin complicaciones",
+        "textoBoton": "Descubre cómo",
+        "descripcion": "Con toda la documentación al día, puedes tener la tranquilidad que necesitas al comprar un auto."
+      },
+      {
+        "id": 4,
+        "icono": "🏁",
+        "nombre": "Estilo y eficiencia a tu alcance",
+        "posicion": "derecha",
+        "solucion": "Tu nuevo auto está listo para disfrutarlo al máximo",
+        "textoBoton": "Comprobar disponibilidad",
+        "descripcion": "Disfruta de cada viaje con un auto que funciona perfectamente y que además te encanta conducir."
+      }
+    ],
+    "subtitulo": "Miles de personas pasan por estas frustraciones."
+  },
+  "caracteristicas": {
+    "cta": {
+      "texto": "¡QUIERO APROVECHAR ESTA OFERTA!",
+      "subtexto": "🔥 Stock limitado, no dejes pasar esta oportunidad"
+    },
+    "titulo": "Características que hacen especial al Chevrolet SAIL 2016",
+    "detalles": [
+      {
+        "id": 1,
+        "icono": "🔧",
+        "titulo": "Estado: Excelente",
+        "descripcion": "Este Chevrolet SAIL ha sido mantenido en perfectas condiciones, listo para su nuevo dueño."
+      },
+      {
+        "id": 2,
+        "icono": "🏎️",
+        "titulo": "Kilometraje: Bajo",
+        "descripcion": "Con poco uso, este vehículo está casi nuevo y listo para disfrutarlo."
+      },
+      {
+        "id": 3,
+        "icono": "⚙️",
+        "titulo": "Transmisión Manual",
+        "descripcion": "Ofrece un control completo sobre el manejo, ideal para conducción en ciudad."
+      },
+      {
+        "id": 4,
+        "icono": "🎨",
+        "titulo": "Color: Rojo vibrante",
+        "descripcion": "Un color que seguramente atraerá miradas y dará personalidad a tu automóvil."
+      },
+      {
+        "id": 5,
+        "icono": "📄",
+        "titulo": "Documentación al día",
+        "descripcion": "Todo en regla, listo para el traspaso sin complicaciones."
+      },
+      {
+        "id": 6,
+        "icono": "🏁",
+        "titulo": "Ideal para la ciudad",
+        "descripcion": "Compacto y ágil para maniobrar en el tráfico urbano."
+      }
+    ],
+    "subtitulo": "Descubre por qué este vehículo es tu mejor opción",
+    "beneficios": [
+      {
+        "id": 1,
+        "icono": "🛡️",
+        "titulo": "Tranquilidad y Seguridad",
+        "descripcion": "Compra un vehículo verificado que puedes llevarte sin inconvenientes."
+      },
+      {
+        "id": 2,
+        "icono": "🚗",
+        "titulo": "Listo para usar",
+        "descripcion": "Solo sube y disfruta de tu nuevo auto sin contratiempos."
+      },
+      {
+        "id": 3,
+        "icono": "💸",
+        "titulo": "Excelente relación calidad-precio",
+        "descripcion": "Un auto usado que ofrece grandes beneficios sin romper el presupuesto."
+      }
+    ]
+  },
+  "testimonios": {
+    "titulo": "+1000 clientes satisfechos con su compra",
+    "subtitulo": "Lee sobre la experiencia de compra de nuestros clientes",
+    "testimonios": [],
+    "estadisticas": {
+      "recomiendan": 98,
+      "satisfaccion": 4.9,
+      "totalClientes": 159
+    }
+  },
+  "faq": {
+    "titulo": "Preguntas Frecuentes",
+    "preguntas": [
+      {
+        "pregunta": "¿Cuánto tiempo tarda en hacer el traspaso?",
+        "respuesta": "El traspaso se realiza en el mismo día, solo necesitas llevar la documentación requerida."
+      },
+      {
+        "pregunta": "¿Este auto tiene garantía?",
+        "respuesta": "Sí, ofrecemos una garantía de funcionamiento por 6 meses."
+      },
+      {
+        "pregunta": "¿Puedo ver el auto antes de comprarlo?",
+        "respuesta": "Claro, puedes agendar una cita para inspeccionarlo."
+      },
+      {
+        "pregunta": "¿Se permite financiar el vehículo?",
+        "respuesta": "Sí, ofrecemos opciones de financiación a través de alianzas con entidades financieras."
+      },
+      {
+        "pregunta": "¿Cuál es el consumo de combustible?",
+        "respuesta": "El Chevrolet SAIL es conocido por su eficiencia, promediando 15 km/l en ciudad."
+      }
+    ],
+    "subtitulo": "Resolvemos todas tus dudas para que compres con total confianza"
+  },
+  "garantias": {
+    "titulo": "Compra con total confianza",
+    "garantias": [
+      {
+        "icono": "🛡️",
+        "titulo": "Calidad garantizada",
+        "descripcion": "Garantía de funcionamiento por 6 meses."
+      },
+      {
+        "icono": "⚙️",
+        "titulo": "Vehículo verificado",
+        "descripcion": "Vehículo revisado por nuestro equipo técnico."
+      }
+    ],
+    "subtitulo": "Tu satisfacción y seguridad son nuestra prioridad #1"
+  },
+  "cta_final": {
+    "titulo": "¡NO DEJES PASAR ESTA OPORTUNIDAD!",
+    "garantia": "🛡️ Garantía de funcionamiento del 100%",
+    "urgencia": "⚡ Oferta válida hasta agotar existencias",
+    "subtitulo": "Aprovecha esta oferta exclusiva antes de que se agote",
+    "botonTexto": "¡QUIERO MI CHEVROLET SAIL AHORA!",
+    "precioActual": "279000000",
+    "precioAnterior": "300000000"
+  },
+  "timestamp": "2025-11-04T17:10:01.035Z",
+  "modo": "editar",
+  "errores": {}
+}

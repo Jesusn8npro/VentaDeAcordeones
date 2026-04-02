@@ -1,0 +1,536 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "tableId": "productos",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "nombre",
+              "fieldValue": "={{ $json.producto_para_supabase.nombre }}"
+            },
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{ $json.producto_para_supabase.slug }}"
+            },
+            {
+              "fieldId": "descripcion",
+              "fieldValue": "={{ $json.producto_para_supabase.descripcion }}"
+            },
+            {
+              "fieldId": "ganchos",
+              "fieldValue": "={{ $json.producto_para_supabase.ganchos }}"
+            },
+            {
+              "fieldId": "precio",
+              "fieldValue": "={{ (function(){ const p = $json.producto_para_supabase.precio; if (typeof p === 'number' && p > 0) return p; if (typeof p === 'string' && !isNaN(parseFloat(p))) return parseFloat(p); return 0; })() }}"
+            },
+            {
+              "fieldId": "precio_original",
+              "fieldValue": "={{ (function(){ const p = $json.producto_para_supabase.precio_original; if (typeof p === 'number' && p > 0) return p; if (typeof p === 'string' && !isNaN(parseFloat(p))) return parseFloat(p); return 0; })() }}"
+            },
+            {
+              "fieldId": "descuento",
+              "fieldValue": "={{ (function(){ const d = $json.producto_para_supabase.descuento; if (typeof d === 'number' && d >= 0) return d; if (typeof d === 'string' && !isNaN(parseFloat(d))) return parseFloat(d); return 0; })() }}"
+            },
+            {
+              "fieldId": "estado",
+              "fieldValue": "={{ (function(){ const e = $json.producto_para_supabase.estado; const n = $json.producto_para_supabase.nombre || ''; const allowed = ['nuevo','usado','vendido','agotado','descontinuado']; const s = (typeof e==='string'? e.trim().toLowerCase(): ''); if (allowed.includes(s)) return s; if (typeof n==='string' && (n.toLowerCase().includes('usado') || n.toLowerCase().includes('usada'))) return 'usado'; return 'nuevo'; })() }}"
+            },
+            {
+              "fieldId": "categoria_id",
+              "fieldValue": "={{ $json.producto_para_supabase.categoria_id }}"
+            },
+            {
+              "fieldId": "stock",
+              "fieldValue": "={{ (function(){ const s = $json.producto_para_supabase.stock; if (typeof s === 'number' && s >= 0) return s; if (typeof s === 'string' && !isNaN(parseInt(s))) return parseInt(s); return 1; })() }}"
+            },
+            {
+              "fieldId": "stock_minimo",
+              "fieldValue": "={{ (function(){ const s = $json.producto_para_supabase.stock_minimo; if (typeof s === 'number' && s >= 0) return s; if (typeof s === 'string' && !isNaN(parseInt(s))) return parseInt(s); return 1; })() }}"
+            },
+            {
+              "fieldId": "peso",
+              "fieldValue": "={{ (function(){ const p = $json.producto_para_supabase.peso; if (typeof p === 'number' && p > 0) return p; if (typeof p === 'string' && !isNaN(parseFloat(p))) return parseFloat(p); return 1; })() }}"
+            },
+            {
+              "fieldId": "dimensiones",
+              "fieldValue": "={{ $json.producto_para_supabase.dimensiones }}"
+            },
+            {
+              "fieldId": "marca",
+              "fieldValue": "={{ $json.producto_para_supabase.marca }}"
+            },
+            {
+              "fieldId": "modelo",
+              "fieldValue": "={{ $json.producto_para_supabase.modelo }}"
+            },
+            {
+              "fieldId": "color",
+              "fieldValue": "={{ $json.producto_para_supabase.color }}"
+            },
+            {
+              "fieldId": "talla",
+              "fieldValue": "={{ $json.producto_para_supabase.talla }}"
+            },
+            {
+              "fieldId": "material",
+              "fieldValue": "={{ $json.producto_para_supabase.material }}"
+            },
+            {
+              "fieldId": "garantia_meses",
+              "fieldValue": "={{ (function(){ const g = $json.producto_para_supabase.garantia_meses; if (typeof g === 'number' && g > 0) return g; if (typeof g === 'string' && !isNaN(parseInt(g))) return parseInt(g); return null; })() }}"
+            },
+            {
+              "fieldId": "origen_pais",
+              "fieldValue": "={{ $json.producto_para_supabase.origen_pais }}"
+            },
+            {
+              "fieldId": "palabras_clave",
+              "fieldValue": "={{ $json.producto_para_supabase.palabras_clave }}"
+            },
+            {
+              "fieldId": "meta_title",
+              "fieldValue": "={{ $json.producto_para_supabase.meta_title }}"
+            },
+            {
+              "fieldId": "meta_description",
+              "fieldValue": "={{ $json.producto_para_supabase.meta_description }}"
+            },
+            {
+              "fieldId": "destacado",
+              "fieldValue": "={{ $json.producto_para_supabase.destacado }}"
+            },
+            {
+              "fieldId": "activo",
+              "fieldValue": "={{ $json.producto_para_supabase.activo }}"
+            },
+            {
+              "fieldId": "creado_el",
+              "fieldValue": "={{ $json.producto_para_supabase.creado_el }}"
+            },
+            {
+              "fieldId": "creado_por",
+              "fieldValue": "={{ $json.producto_para_supabase.creado_por }}"
+            },
+            {
+              "fieldId": "actualizado_el",
+              "fieldValue": "={{ $json.producto_para_supabase.actualizado_el }}"
+            },
+            {
+              "fieldId": "landing_tipo",
+              "fieldValue": "={{ $json.producto_para_supabase.landing_tipo }}"
+            },
+            {
+              "fieldId": "numero_de_ventas",
+              "fieldValue": "={{ (function(){ const n = $json.producto_para_supabase.numero_de_ventas; if (typeof n === 'number' && n >= 0) return n; if (typeof n === 'string' && !isNaN(parseInt(n))) return parseInt(n); return 0; })() }}"
+            },
+            {
+              "fieldId": "calificacion_promedio",
+              "fieldValue": "={{ (function(){ const c = $json.producto_para_supabase.calificacion_promedio; if (typeof c === 'number' && c >= 0) return c; if (typeof c === 'string' && !isNaN(parseFloat(c))) return parseFloat(c); return 0; })() }}"
+            },
+            {
+              "fieldId": "total_resenas",
+              "fieldValue": "={{ (function(){ const t = $json.producto_para_supabase.total_resenas; if (typeof t === 'number' && t >= 0) return t; if (typeof t === 'string' && !isNaN(parseInt(t))) return parseInt(t); return 0; })() }}"
+            },
+            {
+              "fieldId": "banner_animado",
+              "fieldValue": "={{ $json.producto_para_supabase.banner_animado }}"
+            },
+            {
+              "fieldId": "puntos_dolor",
+              "fieldValue": "={{ $json.producto_para_supabase.puntos_dolor }}"
+            },
+            {
+              "fieldId": "testimonios",
+              "fieldValue": "={{ $json.producto_para_supabase.testimonios }}"
+            },
+            {
+              "fieldId": "faq",
+              "fieldValue": "={{ $json.producto_para_supabase.faq }}"
+            },
+            {
+              "fieldId": "garantias",
+              "fieldValue": "={{ $json.producto_para_supabase.garantias }}"
+            },
+            {
+              "fieldId": "cta_final",
+              "fieldValue": "={{ $json.producto_para_supabase.cta_final }}"
+            },
+            {
+              "fieldId": "promociones",
+              "fieldValue": "={{ $json.producto_para_supabase.promociones }}"
+            },
+            {
+              "fieldId": "caracteristicas_jsonb",
+              "fieldValue": "={{ $json.producto_para_supabase.caracteristicas_jsonb }}"
+            },
+            {
+              "fieldId": "ventajas_jsonb",
+              "fieldValue": "={{ $json.producto_para_supabase.ventajas_jsonb }}"
+            },
+            {
+              "fieldId": "beneficios_jsonb",
+              "fieldValue": "={{ $json.producto_para_supabase.beneficios_jsonb }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        768,
+        32
+      ],
+      "id": "b3b0d7f1-3cfe-4d64-abf0-c45a494105c5",
+      "name": "Crear Producto en Supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "De_que_trata_el_producto"
+            },
+            {
+              "name": "precio"
+            },
+            {
+              "name": "nombre_producto"
+            },
+            {
+              "name": "caracteristicas"
+            }
+          ]
+        }
+      },
+      "id": "81555d37-2f86-441e-a253-4edcb88dab65",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -1264,
+        48
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "86526842-fa69-4e18-b0c7-a1553c630af1",
+              "name": "De_que_trata_el_producto",
+              "value": "={{ $json.De_que_trata_el_producto }}",
+              "type": "string"
+            },
+            {
+              "id": "9e4ac607-a591-470a-bd71-3bafa75a6903",
+              "name": "precio",
+              "value": "={{ $json.precio }}",
+              "type": "string"
+            },
+            {
+              "id": "550e0411-bfa1-4fea-bd7a-064a96a87ea8",
+              "name": "nombre_producto",
+              "value": "={{ $json.nombre_producto }}",
+              "type": "string"
+            },
+            {
+              "id": "a2e0e311-3a17-4630-a70f-948dfe8c360d",
+              "name": "caracteristicas",
+              "value": "={{ $json.caracteristicas }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1056,
+        48
+      ],
+      "id": "0044e648-eaae-4643-af1f-7806515356c3",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "096d96a0-e72e-4339-9068-c3cde014bf46",
+              "leftValue": "={{ $json.producto_detectado }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        48
+      ],
+      "id": "a161d5da-dbff-4e51-a277-7c283aa42103",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// DETECTOR CORREGIDO - BUSCA JSON DENTRO DE RESPUESTAS CONVERSACIONALES\nconsole.log('🔍 ANALIZANDO RESPUESTA DEL AI AGENT');\n\nconst respuestaAgent = $input.first();\nlet respuestaTexto = '';\n\n// Extraer la respuesta del AI Agent\nif (respuestaAgent.json && respuestaAgent.json.output) {\n  respuestaTexto = String(respuestaAgent.json.output).trim();\n} else if (respuestaAgent.json && respuestaAgent.json.text) {\n  respuestaTexto = String(respuestaAgent.json.text).trim();\n} else if (respuestaAgent.json) {\n  respuestaTexto = JSON.stringify(respuestaAgent.json);\n} else {\n  respuestaTexto = String(respuestaAgent).trim();\n}\n\nconsole.log('📝 Respuesta completa:', respuestaTexto.substring(0, 200) + '...');\nconsole.log('📏 Longitud:', respuestaTexto.length);\n\n// DETECCIÓN ROBUSTA DE JSON DE PRODUCTO\nlet esProductoJSON = false;\nlet objetoProducto = null;\nlet razonDeteccion = '';\n\n// Solo procesar si tiene contenido sustancial\nif (respuestaTexto.length > 50) {\n  \n  // NUEVA LÓGICA: Buscar JSON dentro del texto (incluso si hay texto conversacional)\n  let jsonExtraido = null;\n  \n  // Método 1: Buscar JSON entre ```json y ```\n  const matchCodeBlock = respuestaTexto.match(/```json\\s*([\\s\\S]*?)\\s*```/);\n  if (matchCodeBlock && matchCodeBlock[1]) {\n    console.log('🔍 JSON encontrado en bloque de código');\n    try {\n      jsonExtraido = JSON.parse(matchCodeBlock[1].trim());\n    } catch (error) {\n      console.log('❌ Error parseando JSON del bloque:', error.message);\n    }\n  }\n  \n  // Método 2: Buscar JSON que empiece con { y termine con } (más robusto)\n  if (!jsonExtraido) {\n    const inicioJSON = respuestaTexto.indexOf('{');\n    const finJSON = respuestaTexto.lastIndexOf('}');\n    \n    if (inicioJSON !== -1 && finJSON !== -1 && finJSON > inicioJSON) {\n      const posibleJSON = respuestaTexto.substring(inicioJSON, finJSON + 1);\n      console.log('🔍 Posible JSON encontrado en posición', inicioJSON, 'a', finJSON);\n      \n      try {\n        jsonExtraido = JSON.parse(posibleJSON);\n        console.log('✅ JSON parseado exitosamente');\n      } catch (error) {\n        console.log('❌ Error parseando JSON extraído:', error.message);\n      }\n    }\n  }\n  \n  // Método 3: Verificar si toda la respuesta es JSON\n  if (!jsonExtraido && respuestaTexto.startsWith('{') && respuestaTexto.endsWith('}')) {\n    try {\n      jsonExtraido = JSON.parse(respuestaTexto);\n      console.log('✅ Respuesta completa es JSON válido');\n    } catch (error) {\n      console.log('❌ Error parseando respuesta completa como JSON:', error.message);\n    }\n  }\n  \n  // VALIDAR SI EL JSON EXTRAÍDO ES UN PRODUCTO\n  if (jsonExtraido) {\n    console.log('🔍 Validando JSON extraído...');\n    console.log('   - Tiene nombre:', !!jsonExtraido.nombre);\n    console.log('   - Tiene precio:', jsonExtraido.precio !== undefined);\n    console.log('   - Tiene descripcion:', !!jsonExtraido.descripcion);\n    \n    // Verificar campos mínimos de producto\n    if (jsonExtraido.nombre && \n        (jsonExtraido.precio !== undefined) && \n        jsonExtraido.descripcion) {\n      \n      esProductoJSON = true;\n      objetoProducto = jsonExtraido;\n      razonDeteccion = 'JSON de producto válido extraído de respuesta';\n      \n      console.log('✅ PRODUCTO DETECTADO:', jsonExtraido.nombre);\n      console.log('💰 Precio:', jsonExtraido.precio);\n      console.log('📋 Campos:', Object.keys(jsonExtraido).length);\n    } else {\n      razonDeteccion = 'JSON encontrado pero faltan campos de producto';\n      console.log('❌ JSON encontrado pero no es producto válido');\n    }\n  } else {\n    razonDeteccion = 'No se encontró JSON válido en la respuesta';\n    console.log('❌ No se pudo extraer JSON válido');\n  }\n} else {\n  razonDeteccion = 'Respuesta muy corta - conversacional';\n  console.log('📏 Respuesta muy corta');\n}\n\nconsole.log('🎯 RESULTADO FINAL:');\nconsole.log('   - Es producto:', esProductoJSON);\nconsole.log('   - Razón:', razonDeteccion);\n\n// IMPORTANTE: El IF espera producto_detectado como STRING \"true\"\nreturn {\n  json: {\n    // Datos originales\n    output: respuestaAgent.json?.output || respuestaTexto,\n    \n    // CAMPO CLAVE PARA EL IF (como string \"true\" o \"false\")\n    producto_detectado: esProductoJSON ? \"true\" : \"false\",\n    \n    // Campos adicionales para información\n    es_producto_json: esProductoJSON,\n    es_conversacional: !esProductoJSON,\n    tipo_detectado: esProductoJSON ? 'producto_json' : 'conversacional',\n    razon_deteccion: razonDeteccion,\n    \n    // Producto parseado (si existe)\n    producto_objeto: objetoProducto,\n    \n    // Info de debugging\n    longitud_respuesta: respuestaTexto.length,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        48
+      ],
+      "id": "c30de053-01ab-453a-8313-935f5ac6f196",
+      "name": "Detector Tipo Respuesta1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=El usuario YA PIDIÓ CREAR el producto que se llama {{ $json.nombre_producto }}. Genera SOLO JSON siguiendo la estructura exacta de resultado_sql.json, sin texto adicional. El producto trata sobre {{ $json.De_que_trata_el_producto }}, el precio es {{ $json.precio }} y las caracteristicas son {{ $json.caracteristicas }}. Usa la herramienta consultar_categorias y coloca el id correcto en categoria_id.",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=Eres un asistente experto creando productos para e-commerce en MeLlevoEsto, que conversa primero y solo genera JSON cuando el usuario lo pide explícitamente.\n\n## MODO CONVERSACIONAL (predeterminado)\n- Habla en español, claro y profesional.\n- Pregunta lo necesario: nombre del producto, descripción básica, precio aproximado, público objetivo, uso principal, estado (nuevo/usado), garantías reales, y cualquier dato clave (marca, modelo, dimensiones, peso, material, etc.).\n- No muestres JSON hasta que el usuario diga “crear”, “generar”, “ya está listo” o similar.\n\n## REGLAS DE CONTENIDO (dinámico y no repetitivo)\n- Personaliza todo según el producto; evita plantillas repetidas o textos genéricos.\n- No prometas cosas irreales: adapta garantías y beneficios al tipo de producto y su valor.\n- Usa lenguaje persuasivo y coherente con el uso real del producto.\n- Mantén consistencia: si es usado/seminuevo, refleja estado, garantías y mensajes acordes.\n\n## PASO OBLIGATORIO ANTES DE GENERAR JSON\n1) Consulta categorías: usa la herramienta “consultar_categorias” y selecciona la categoría que mejor encaje.\n   - Usa el id exacto retornado en `categoria_id`.\n   - Si no hay coincidencia perfecta, usa la más genérica.\n2) No inventes datos: si falta información real (marca, modelo, dimensiones, garantías, testimonios, etc.), haz preguntas concretas antes de crear el producto.\n3) Entrega JSON limpio: NUNCA uses strings para campos JSON. Todos los campos JSONB deben ser objetos/arrays válidos (sin barras invertidas ni cadenas escapadas).\n   - Campos JSONB: `banner_animado`, `puntos_dolor`, `testimonios`, `faq`, `garantias`, `cta_final`, `promociones`, `caracteristicas_jsonb`, `ventajas_jsonb`, `beneficios_jsonb`.\n   - No usar columnas obsoletas: evita `caracteristicas`, `ventajas`, `beneficios` (usa sus versiones `_jsonb`).\n\n## CUANDO EL USUARIO PIDA CREAR EL PRODUCTO: RESPONDE SOLO CON ESTE JSON\nUsa exactamente esta estructura y SOLO los campos reales de la BD (resultado_sql.json). Los precios deben ser números enteros (sin decimales). No incluyas campos que no existan.\nResponde exclusivamente con el objeto JSON (sin texto adicional ni ```bloques de código```).\n\n```json\n{\n  \"nombre\": \"Nombre atractivo y comercial\",\n  \"slug\": \"url-amigable-del-producto\",\n  \"descripcion\": {\n    \"titulo\": \"Título comercial claro (≤80 caracteres)\",\n    \"contenido\": \"Resumen persuasivo (120–200 palabras) alineado con el producto, sin repetir ganchos ni FAQ.\"\n  },\n  \"ganchos\": [\n    \"Gancho 1 potente\",\n    \"Gancho 2 específico\",\n    \"Gancho 3 orientado a beneficio\",\n    \"Gancho 4 diferenciador\",\n    \"Gancho 5 exclusivo\"\n  ],\n  \"precio\": 1000000,\n  \"precio_original\": 1200000,\n  \"descuento\": 17,\n  \"estado\": \"nuevo\",\n  \"categoria_id\": \"UUID-de-la-categoria\",\n  \"stock\": 10,\n  \"stock_minimo\": 2,\n  \"landing_tipo\": \"temu\",\n  \"destacado\": false,\n  \"activo\": true,\n  \"peso\": 1500,\n  \"dimensiones\": \"Alto x Ancho x Profundidad en cm\",\n  \"marca\": \"Marca\",\n  \"modelo\": \"Modelo\",\n  \"color\": \"Color\",\n  \"talla\": \"Talla\",\n  \"material\": \"Material\",\n  \"garantia_meses\": 12,\n  \"origen_pais\": \"País\",\n  \"palabras_clave\": [\n    \"palabra1\",\n    \"palabra2\",\n    \"palabra3\",\n    \"palabra4\",\n    \"palabra5\",\n    \"palabra6\",\n    \"palabra7\",\n    \"palabra8\",\n    \"palabra9\",\n    \"palabra10\"\n  ],\n  \"meta_title\": \"Título SEO (≤60 caracteres)\",\n  \"meta_description\": \"Descripción SEO persuasiva (≤160 caracteres)\",\n\n  \"banner_animado\": {\n    \"mensajes\": [\n      \"Mensaje 1 relevante y específico\",\n      \"Mensaje 2 con beneficio real\",\n      \"Mensaje 3 alineado al producto\"\n    ]\n  },\n\n  \"puntos_dolor\": {\n    \"titulo\": \"¿Te sientes identificado con estos problemas?\",\n    \"subtitulo\": \"Problemas que resuelve tu producto\",\n    \"timeline\": [\n      {\n        \"id\": 1,\n        \"icono\": \"💔\",\n        \"nombre\": \"Problema 1 concreto\",\n        \"posicion\": \"izquierda\",\n        \"solucion\": \"Cómo impacta el producto\",\n        \"textoBoton\": \"¿Te pasa esto?\",\n        \"descripcion\": \"Descripción detallada del dolor\"\n      },\n      {\n        \"id\": 2,\n        \"icono\": \"😤\",\n        \"nombre\": \"Problema 2 concreto\",\n        \"posicion\": \"derecha\",\n        \"solucion\": \"Cómo impacta el producto\",\n        \"textoBoton\": \"Conoce más\",\n        \"descripcion\": \"Descripción detallada del dolor\"\n      },\n      {\n        \"id\": 3,\n        \"icono\": \"✅\",\n        \"nombre\": \"Título específico de la solución 1\",\n        \"posicion\": \"izquierda\",\n        \"solucion\": \"Explicación de la solución\",\n        \"textoBoton\": \"Descubre cómo\",\n        \"descripcion\": \"Detalle de cómo lo resuelve\"\n      },\n      {\n        \"id\": 4,\n        \"icono\": \"🎯\",\n        \"nombre\": \"Título específico de la solución 2\",\n        \"posicion\": \"derecha\",\n        \"solucion\": \"Explicación de la solución\",\n        \"textoBoton\": \"Conoce la solución\",\n        \"descripcion\": \"Detalle de cómo lo resuelve\"\n      }\n    ]\n  },\n\n  \"testimonios\": {\n    \"titulo\": \"Título acorde a testimonios\",\n    \"subtitulo\": \"Subtítulo realista\",\n    \"testimonios\": [\n      {\n        \"id\": 1,\n        \"fecha\": \"Hace X días\",\n        \"likes\": 120,\n        \"nombre\": \"Nombre Cliente\",\n        \"rating\": 5,\n        \"ubicacion\": \"Ciudad, País\",\n        \"comentario\": \"Comentario realista\",\n        \"verificado\": true,\n        \"compraVerificada\": true\n      },\n      {\n        \"id\": 2,\n        \"fecha\": \"Hace X semanas\",\n        \"likes\": 80,\n        \"nombre\": \"Nombre Cliente\",\n        \"rating\": 4,\n        \"ubicacion\": \"Ciudad, País\",\n        \"comentario\": \"Comentario realista\",\n        \"verificado\": true,\n        \"compraVerificada\": true\n      },\n      {\n        \"id\": 3,\n        \"fecha\": \"Hace X días\",\n        \"likes\": 60,\n        \"nombre\": \"Nombre Cliente\",\n        \"rating\": 5,\n        \"ubicacion\": \"Ciudad, País\",\n        \"comentario\": \"Comentario realista\",\n        \"verificado\": true,\n        \"compraVerificada\": true\n      }\n    ],\n    \"estadisticas\": {\n      \"recomiendan\": 97,\n      \"satisfaccion\": 4.8,\n      \"totalClientes\": 1000\n    }\n  },\n\n  \"faq\": {\n    \"titulo\": \"Preguntas Frecuentes\",\n    \"subtitulo\": \"Resolvemos tus dudas\",\n    \"preguntas\": [\n      { \"id\": 1, \"pregunta\": \"Pregunta 1\", \"respuesta\": \"Respuesta 1\" },\n      { \"id\": 2, \"pregunta\": \"Pregunta 2\", \"respuesta\": \"Respuesta 2\" },\n      { \"id\": 3, \"pregunta\": \"Pregunta 3\", \"respuesta\": \"Respuesta 3\" },\n      { \"id\": 4, \"pregunta\": \"Pregunta 4\", \"respuesta\": \"Respuesta 4\" },\n      { \"id\": 5, \"pregunta\": \"Pregunta 5\", \"respuesta\": \"Respuesta 5\" }\n    ]\n  },\n\n  \"garantias\": {\n    \"titulo\": \"Garantía y Soporte\",\n    \"items\": [\n      { \"id\": 1, \"icono\": \"🛡️\", \"titulo\": \"Garantía realista\", \"descripcion\": \"Cobertura concreta\" },\n      { \"id\": 2, \"icono\": \"📞\", \"titulo\": \"Soporte post-venta\", \"descripcion\": \"Acompañamiento y asesoría\" }\n    ]\n  },\n\n  \"cta_final\": {\n    \"titulo\": \"Título CTA\", \n    \"subtitulo\": \"Subtítulo CTA persuasivo y específico\",\n    \"beneficios\": [\"Beneficio 1\", \"Beneficio 2\", \"Beneficio 3\"],\n    \"texto_boton\": \"Comprar ahora\",\n    \"precio_actual\": 1000000,\n    \"precio_original\": 1200000,\n    \"url\": \"https://wa.link/tu-url-real\"\n  },\n\n  \"numero_de_ventas\": 0,\n  \"calificacion_promedio\": 0,\n  \"total_resenas\": 0,\n\n  \"promociones\": {\n    \"titulo\": \"Promociones Exclusivas por Cantidad\",\n    \"subtitulo\": \"Maximiza tu inversión con descuentos por volumen\",\n    \"promociones\": [\n      { \"id\": 1, \"activa\": true, \"descripcion\": \"Promo 2 unidades\", \"cantidadMinima\": 2, \"descuentoPorcentaje\": 10 },\n      { \"id\": 2, \"activa\": true, \"descripcion\": \"Promo 3 unidades\", \"cantidadMinima\": 3, \"descuentoPorcentaje\": 15 }\n    ]\n  },\n\n  \"ventajas_jsonb\": {\n    \"titulo\": \"¿Por qué elegir este producto?\",\n    \"subtitulo\": \"Ventajas competitivas\",\n    \"items\": [\n      { \"id\": 1, \"icono\": \"💡\", \"titulo\": \"Ventaja 1\", \"descripcion\": \"Detalle de ventaja\" },\n      { \"id\": 2, \"icono\": \"⚙️\", \"titulo\": \"Ventaja 2\", \"descripcion\": \"Detalle de ventaja\" },\n      { \"id\": 3, \"icono\": \"✅\", \"titulo\": \"Ventaja 3\", \"descripcion\": \"Detalle de ventaja\" }\n    ]\n  },\n\n  \"beneficios_jsonb\": {\n    \"titulo\": \"Beneficios\",\n    \"subtitulo\": \"Todo lo que obtienes\",\n    \"items\": [\n      { \"id\": 1, \"icono\": \"🛡️\", \"titulo\": \"Beneficio 1\", \"descripcion\": \"Detalle del beneficio\" },\n      { \"id\": 2, \"icono\": \"🔧\", \"titulo\": \"Beneficio 2\", \"descripcion\": \"Detalle del beneficio\" },\n      { \"id\": 3, \"icono\": \"💰\", \"titulo\": \"Beneficio 3\", \"descripcion\": \"Detalle del beneficio\" }\n    ]\n  },\n\n  \"caracteristicas_jsonb\": {\n    \"titulo\": \"Características Destacadas\",\n    \"subtitulo\": \"Por qué este producto es tu mejor elección\",\n    \"detalles\": [\n      { \"id\": 1, \"icono\": \"⚡\", \"titulo\": \"Característica 1\", \"descripcion\": \"Detalle concreto\" },\n      { \"id\": 2, \"icono\": \"🔋\", \"titulo\": \"Característica 2\", \"descripcion\": \"Detalle concreto\" },\n      { \"id\": 3, \"icono\": \"🛡️\", \"titulo\": \"Característica 3\", \"descripcion\": \"Detalle concreto\" },\n      { \"id\": 4, \"icono\": \"💡\", \"titulo\": \"Característica 4\", \"descripcion\": \"Detalle concreto\" }\n    ]\n  }\n}\n```\n\n## VALIDACIONES ANTES DE RESPONDER\n- `ganchos` tiene exactamente 5 ítems.\n- `palabras_clave` tiene exactamente 10 ítems.\n- `faq.preguntas` tiene al menos 5 ítems con `id` incremental.\n- `testimonios.testimonios` tiene mínimo 3 ítems completos.\n- `categoria_id` corresponde al id obtenido en la consulta de categorías.\n- `precio` y `precio_original` son enteros; `cta_final.precio_actual` = `precio`, `cta_final.precio_original` = `precio_original`.\n- `caracteristicas_jsonb.detalles` tiene mínimo 4 ítems completos.\n- NO uses columnas obsoletas: evita `caracteristicas`, `ventajas`, `beneficios` (usar sus versiones `_jsonb`).\n\n## ADAPTACIONES INTELIGENTES\n- Vehículos (motos/autos/camiones): evita prometer envío gratis o devoluciones; usa garantías mecánicas razonables (3–6 meses); testimonios enfocados en la experiencia de compra y servicio.\n- Alto valor (> 2 millones): descuentos realistas (≤30%), pocas unidades en stock, enfoque en calidad y soporte postventa.\n- Usados/Seminuevos: transparencia en estado, garantías limitadas, mensajes sobre inspección y certificación.\n\nSi falta información, haz preguntas concretas antes de crear el JSON."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -784,
+        48
+      ],
+      "id": "e334b08a-f71b-476a-9fb5-87f003034259",
+      "name": "AI Agent Creador Productos1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "categorias",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabaseTool",
+      "typeVersion": 1,
+      "position": [
+        -544,
+        416
+      ],
+      "id": "a076ef52-b77c-4d8d-84f6-2ee90ae1da5e",
+      "name": "consultar_categorias1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        368
+      ],
+      "id": "e4533945-1f86-4836-b49a-65468087170c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "afEdUlo465aPlyDq",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 🔄 PREPARAR JSON PARA SUPABASE - JSONB LIMPIO (SIN STRINGS)\nconsole.log('🔧 PREPARANDO JSON PARA SUPABASE');\n\nconst entrada = $input.first();\nconst producto = entrada.json.producto_procesado || entrada.json.producto || entrada.json;\n\nconsole.log('📥 Producto recibido:', producto?.nombre);\nconsole.log('📋 Campos disponibles:', producto ? Object.keys(producto) : []);\n\nfunction aObjeto(val, fallback) {\n  try {\n    if (!val) return fallback;\n    if (typeof val === 'string') {\n      const parsed = JSON.parse(val);\n      return parsed && typeof parsed === 'object' ? parsed : fallback;\n    }\n    if (typeof val === 'object') return val;\n    return fallback;\n  } catch (e) {\n    return fallback;\n  }\n}\n\nfunction estadoSeguro(e) {\n  const s = (typeof e === 'string' ? e.trim().toLowerCase() : '');\n  return s && ['nuevo','activo','inactivo','en_revision','borrador'].includes(s) ? s : 'nuevo';\n}\n\nconst defaultBannerAnimado = { mensajes: ['🚚 Envío disponible','💳 Compra segura','🛡️ Garantía real'], textColor: '#FFFFFF', velocidad: 'normal', backgroundColor: '#FF4444' };\nconst defaultPuntosDolor = { titulo: '¿Te identificas con estos problemas?', subtitulo: 'Cómo este producto ayuda en el día a día', timeline: [] };\nconst defaultTestimonios = { titulo: 'Lo que dicen nuestros clientes', subtitulo: 'Opiniones verificadas', testimonios: [], estadisticas: { recomiendan: 0, satisfaccion: 0, totalClientes: 0 } };\nconst defaultFaq = { titulo: 'Preguntas Frecuentes', subtitulo: 'Resolvemos tus dudas', preguntas: [] };\nconst defaultGarantias = { titulo: 'Compra Segura', subtitulo: 'Coberturas y soporte real', items: [] };\nconst defaultCtaFinal = { titulo: 'Listo para tenerlo', subtitulo: 'Aprovecha el precio actual', beneficios: ['Compra segura','Soporte real','Entrega confiable'], texto_boton: 'Comprar ahora', precio_actual: typeof producto?.precio === 'number' ? producto.precio : 0, precio_original: typeof producto?.precio_original === 'number' ? producto.precio_original : 0 };\nconst defaultPromociones = { titulo: 'Promociones Exclusivas por Cantidad', subtitulo: 'Maximiza tu inversión con descuentos por volumen', promociones: [ { id: 1, activa: true, descripcion: 'Descuento del 10% al comprar 2 unidades', cantidadMinima: 2, descuentoPorcentaje: 10 }, { id: 2, activa: true, descripcion: 'Descuento del 15% al comprar 3 unidades', cantidadMinima: 3, descuentoPorcentaje: 15 } ] };\n\nconst defaultCaracteristicas = { titulo: '¿Por qué miles de personas eligen nuestro producto?', subtitulo: 'Descubre las características que lo hacen único y especial', imagen: '', detalles: [ { id: 1, icono: '⚙️', titulo: 'Material premium', descripcion: 'Resistente y duradero' }, { id: 2, icono: '🧩', titulo: 'Diseño inteligente', descripcion: 'Ergonomía y facilidad de uso' }, { id: 3, icono: '🔋', titulo: 'Eficiencia energética', descripcion: 'Optimiza consumo sin perder rendimiento' }, { id: 4, icono: '💡', titulo: 'Fácil de usar', descripcion: 'Práctico y conveniente' } ], cta: { texto: '¡QUIERO APROVECHAR ESTA OFERTA!', subtexto: '🔥 Oferta por tiempo limitado' } };\nconst defaultVentajas = { titulo: '¿Por qué elegir este producto?', subtitulo: 'Ventajas clave', items: [ { id: 1, icono: '✅', titulo: 'Excelente relación calidad/precio', descripcion: 'Equilibrio ideal entre costo y prestaciones' }, { id: 2, icono: '⚡', titulo: 'Rendimiento confiable', descripcion: 'Funciona como se espera en uso diario' }, { id: 3, icono: '📈', titulo: 'Mejora inmediata', descripcion: 'Resultados visibles desde el primer uso' } ] };\nconst defaultBeneficios = { titulo: 'Beneficios clave', subtitulo: 'Lo que obtienes al comprar', items: [ { id: 1, icono: '🛡️', titulo: 'Garantía oficial', descripcion: 'Cobertura de satisfacción y calidad' }, { id: 2, icono: '🤝', titulo: 'Soporte dedicado', descripcion: 'Acompañamiento inicial y guía de uso' }, { id: 3, icono: '🚚', titulo: 'Envío seguro', descripcion: 'Seguimiento y entrega confiable' } ] };\n\nfunction asegurarTresItemsBeneficios(obj) { const base = aObjeto(obj, defaultBeneficios); if (!Array.isArray(base.items)) base.items = defaultBeneficios.items; if (base.items.length > 3) base.items = base.items.slice(0, 3); if (base.items.length < 3) { const faltantes = 3 - base.items.length; base.items = base.items.concat(defaultBeneficios.items.slice(0, faltantes)); } return base; }\nfunction asegurarCaracteristicasMinimas(obj) { const base = aObjeto(obj, defaultCaracteristicas); if (!Array.isArray(base.detalles)) base.detalles = defaultCaracteristicas.detalles; if (base.detalles.length < 4) { const faltantes = 4 - base.detalles.length; base.detalles = base.detalles.concat(defaultCaracteristicas.detalles.slice(0, faltantes)); } if (base.detalles.length > 4) base.detalles = base.detalles.slice(0, 4); return base; }\n\nconst productoParaSupabase = {\n  nombre: producto?.nombre, slug: producto?.slug, descripcion: producto?.descripcion, ganchos: producto?.ganchos, precio: producto?.precio, precio_original: producto?.precio_original, descuento: producto?.descuento, estado: estadoSeguro(producto?.estado), categoria_id: producto?.categoria_id, stock: producto?.stock, peso: producto?.peso, dimensiones: producto?.dimensiones, marca: producto?.marca, modelo: producto?.modelo, color: producto?.color, talla: producto?.talla, material: producto?.material, garantia_meses: producto?.garantia_meses, origen_pais: producto?.origen_pais, palabras_clave: producto?.palabras_clave, meta_title: producto?.meta_title, meta_description: producto?.meta_description, creado_el: producto?.creado_el, actualizado_el: producto?.actualizado_el, landing_tipo: producto?.landing_tipo || 'temu', numero_de_ventas: producto?.numero_de_ventas || 0, calificacion_promedio: producto?.calificacion_promedio || 0, total_resenas: producto?.total_resenas || 0,\n  banner_animado: aObjeto(producto?.banner_animado, defaultBannerAnimado), puntos_dolor: aObjeto(producto?.puntos_dolor, defaultPuntosDolor), testimonios: aObjeto(producto?.testimonios, defaultTestimonios), faq: aObjeto(producto?.faq, defaultFaq), garantias: aObjeto(producto?.garantias, defaultGarantias), cta_final: aObjeto(producto?.cta_final, defaultCtaFinal), promociones: aObjeto(producto?.promociones, defaultPromociones),\n  caracteristicas_jsonb: asegurarCaracteristicasMinimas(producto?.caracteristicas_jsonb || producto?.caracteristicas), ventajas_jsonb: aObjeto(producto?.ventajas_jsonb || producto?.ventajas, defaultVentajas), beneficios_jsonb: asegurarTresItemsBeneficios(producto?.beneficios_jsonb || producto?.beneficios)\n};\n\nconsole.log('✅ Producto preparado para Supabase');\nconsole.log('   - estado:', productoParaSupabase.estado);\nconsole.log('   - caracteristicas_jsonb es objeto:', typeof productoParaSupabase.caracteristicas_jsonb === 'object');\nconsole.log('   - ventajas_jsonb es objeto:', typeof productoParaSupabase.ventajas_jsonb === 'object');\nconsole.log('   - beneficios_jsonb items:', productoParaSupabase.beneficios_jsonb?.items?.length);\nconsole.log('   - promociones es objeto:', typeof productoParaSupabase.promociones === 'object');\n\nreturn { json: { producto_para_supabase: productoParaSupabase, conversion_exitosa: true } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        32
+      ],
+      "id": "a5b71bb2-8be5-49ce-8de1-47f723b8c31f",
+      "name": "Preparar JSON para Supabase"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 🔄 PROCESADOR DE JSON DE PRODUCTO (normaliza objetos y categoría)\nconsole.log('🔄 PROCESANDO PRODUCTO JSON');\n\nconst entrada = $input.first();\nconst producto = entrada.json.producto_objeto;\n\nconsole.log('📥 Producto recibido:', producto?.nombre);\nconsole.log('📊 Campos disponibles:', producto ? Object.keys(producto) : []);\n\nfunction parseObjeto(val) {\n  try {\n    if (!val) return null;\n    if (typeof val === 'string') {\n      const p = JSON.parse(val);\n      return (p && typeof p === 'object') ? p : null;\n    }\n    if (typeof val === 'object') return val;\n    return null;\n  } catch {\n    return null;\n  }\n}\n\n// 🔥 PROCESAR CATEGORÍA\nlet categoriaId = null;\nlet categoriaNombre = 'General';\n\nif (producto.categoria) {\n  if (typeof producto.categoria === 'object' && producto.categoria.id) {\n    categoriaId = producto.categoria.id;\n    categoriaNombre = producto.categoria.nombre;\n  } else if (typeof producto.categoria === 'string') {\n    // Buscar categoría por nombre\n    const categorias = entrada.json.categorias || [];\n    const catEncontrada = categorias.find(cat => \n      cat.nombre.toLowerCase().includes(producto.categoria.toLowerCase())\n    );\n    if (catEncontrada) {\n      categoriaId = catEncontrada.id;\n      categoriaNombre = catEncontrada.nombre;\n    }\n  }\n}\n\n// 🔥 PROCESAR IMÁGENES\nlet imagenesProcesadas = { principal: null, galeria: [], imagen_caracteristicas: null };\nif (producto.imagenes) {\n  if (typeof producto.imagenes === 'object') {\n    imagenesProcesadas.principal = producto.imagenes.principal || null;\n    imagenesProcesadas.galeria = Array.isArray(producto.imagenes.galeria) ? producto.imagenes.galeria.slice(0, 5) : [];\n    imagenesProcesadas.imagen_caracteristicas = producto.imagenes.imagen_caracteristicas || null;\n  } else if (typeof producto.imagenes === 'string') {\n    imagenesProcesadas.principal = producto.imagenes;\n  }\n}\n\n// 🔥 PROCESAR PRECIOS\nlet precio = 0; let precioOriginal = 0; let descuento = 0;\nif (producto.precio) {\n  if (typeof producto.precio === 'string') precio = parseInt(producto.precio.replace(/[^0-9]/g, '')) || 0;\n  else if (typeof producto.precio === 'number') precio = producto.precio;\n}\nif (producto.precio_original) {\n  if (typeof producto.precio_original === 'string') precioOriginal = parseInt(producto.precio_original.replace(/[^0-9]/g, '')) || 0;\n  else if (typeof producto.precio_original === 'number') precioOriginal = producto.precio_original;\n}\nif (precioOriginal > 0 && precio < precioOriginal) { descuento = Math.round(((precioOriginal - precio) / precioOriginal) * 100); }\n\n// 🔥 PROCESAR ESPECIFICACIONES\nlet especificacionesProcesadas = { marca: 'No especificada', modelo: 'No especificado', material: 'No especificado', color: 'No especificado', talla: 'No especificado', peso: 'No especificado', garantia_meses: 0, origen_pais: 'No especificado', dimensiones: 'No especificado' };\nif (producto.especificaciones) {\n  if (typeof producto.especificaciones === 'object') Object.assign(especificacionesProcesadas, producto.especificaciones);\n  else if (typeof producto.especificaciones === 'string') {\n    try { const especs = JSON.parse(producto.especificaciones); Object.assign(especificacionesProcesadas, especs); } catch { console.log('⚠️ No se pudo parsear especificaciones string'); }\n  }\n}\n\n// 🔥 CREAR PRODUCTO PROCESADO\nconst productoProcesado = {\n  nombre: producto.nombre || 'Producto sin nombre',\n  slug: producto.nombre ? producto.nombre.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') : 'producto-sin-nombre',\n  descripcion: producto.descripcion || 'Sin descripción',\n  ganchos: producto.ganchos || null,\n  precio, precio_original: precioOriginal, descuento,\n  estado: 'activo',\n  categoria_id: categoriaId,\n  stock: producto.stock || 10,\n  // Especificaciones\n  peso: especificacionesProcesadas.peso, dimensiones: especificacionesProcesadas.dimensiones, marca: especificacionesProcesadas.marca, modelo: especificacionesProcesadas.modelo, color: especificacionesProcesadas.color, talla: especificacionesProcesadas.talla, material: especificacionesProcesadas.material, garantia_meses: especificacionesProcesadas.garantia_meses, origen_pais: especificacionesProcesadas.origen_pais,\n  // SEO y metadatos\n  palabras_clave: producto.palabras_clave || null, meta_title: producto.meta_title || producto.nombre || 'Producto', meta_description: producto.meta_description || producto.descripcion || 'Producto disponible',\n  // Fechas\n  creado_el: new Date().toISOString(), actualizado_el: new Date().toISOString(),\n  // Landing\n  landing_tipo: 'temu', numero_de_ventas: 0, calificacion_promedio: 0, total_resenas: 0,\n  // 🔥 CAMPOS JSON COMPLETOS (normalizados a objeto si vienen como string)\n  banner_animado: parseObjeto(producto.banner_animado),\n  puntos_dolor: parseObjeto(producto.puntos_dolor),\n  caracteristicas: parseObjeto(producto.caracteristicas),\n  testimonios: parseObjeto(producto.testimonios),\n  faq: parseObjeto(producto.faq),\n  garantias: parseObjeto(producto.garantias),\n  cta_final: parseObjeto(producto.cta_final),\n  promociones: parseObjeto(producto.promociones),\n  // 🔥 NUEVOS CAMPOS JSONB (paso previo)\n  ventajas: parseObjeto(producto.ventajas),\n  beneficios: parseObjeto(producto.beneficios)\n};\n\nconsole.log('✅ PRODUCTO PROCESADO EXITOSAMENTE');\nconsole.log('📋 Nombre:', productoProcesado.nombre);\nconsole.log('💰 Precio:', productoProcesado.precio);\nconsole.log('🏷️ Categoría:', categoriaNombre);\nconsole.log('📊 Campos JSON normalizados:', {\n  puntos_dolor: !!productoProcesado.puntos_dolor,\n  testimonios: !!productoProcesado.testimonios,\n  faq: !!productoProcesado.faq,\n  garantias: !!productoProcesado.garantias,\n  cta_final: !!productoProcesado.cta_final,\n  promociones: !!productoProcesado.promociones\n});\n\nreturn { json: { producto_procesado: productoProcesado, categoria_nombre: categoriaNombre, imagenes_procesadas: imagenesProcesadas, procesamiento_exitoso: true } };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        80,
+        32
+      ],
+      "id": "90abe55e-097f-4216-9e91-b394be4a9090",
+      "name": "Procesador JSON"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -800,
+        368
+      ],
+      "id": "f37ebcb0-58d4-4cf2-b8d4-983a199bc850",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "7T43mFUrWSK1b37h",
+          "name": "Nueva OPENAI"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Creador Productos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Procesador JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detector Tipo Respuesta1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Creador Productos1": {
+      "main": [
+        [
+          {
+            "node": "Detector Tipo Respuesta1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_categorias1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent Creador Productos1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Creador Productos1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar JSON para Supabase": {
+      "main": [
+        [
+          {
+            "node": "Crear Producto en Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Procesador JSON": {
+      "main": [
+        [
+          {
+            "node": "Preparar JSON para Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent Creador Productos1",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

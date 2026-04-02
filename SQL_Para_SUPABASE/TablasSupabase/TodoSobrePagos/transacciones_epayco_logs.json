@@ -1,0 +1,104 @@
+[
+  {
+    "nombre_columna": "id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": "gen_random_uuid()"
+  },
+  {
+    "nombre_columna": "pedido_id",
+    "tipo_dato": "uuid",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "epayco_ref_payco",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "epayco_transaction_id",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "tipo_evento",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "estado_anterior",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "estado_nuevo",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "cod_response",
+    "tipo_dato": "character varying",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "mensaje_response",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "signature_valida",
+    "tipo_dato": "boolean",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "ip_origen",
+    "tipo_dato": "inet",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "user_agent",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "datos_completos",
+    "tipo_dato": "jsonb",
+    "acepta_nulos": "NO",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "creado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "now()"
+  },
+  {
+    "nombre_columna": "procesado_el",
+    "tipo_dato": "timestamp with time zone",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  },
+  {
+    "nombre_columna": "intentos_procesamiento",
+    "tipo_dato": "integer",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": "0"
+  },
+  {
+    "nombre_columna": "ultimo_error",
+    "tipo_dato": "text",
+    "acepta_nulos": "YES",
+    "valor_por_defecto": null
+  }
+]

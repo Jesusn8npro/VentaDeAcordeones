@@ -1,0 +1,109 @@
+{
+  "nombre": "DR 200 - Motocicleta de Alta Gama",
+  "descripcion": "Motocicleta potente y confiable para todas tus aventuras",
+  "precio": 8500000,
+  "precio_original": 9500000,
+  
+  // Características principales (máximo 4 para el Hero)
+  "caracteristicas": {
+    "titulo": "Características Destacadas",
+    "subtitulo": "Descubre por qué esta moto es tu mejor elección",
+    "detalles": [
+      {
+        "id": 1,
+        "icono": "🏍️",
+        "titulo": "Motor Potente 200cc",
+        "descripcion": "Motor de alta eficiencia para máximo rendimiento en carretera y ciudad"
+      },
+      {
+        "id": 2,
+        "icono": "⚡",
+        "titulo": "Tecnología EFI",
+        "descripcion": "Inyección electrónica para arranque fácil y consumo optimizado"
+      },
+      {
+        "id": 3,
+        "icono": "🛡️",
+        "titulo": "Diseño Robusto",
+        "descripcion": "Chasis reforzado y componentes de alta calidad para mayor durabilidad"
+      },
+      {
+        "id": 4,
+        "icono": "💺",
+        "titulo": "Comodidad Superior",
+        "descripcion": "Asiento ergonómico y suspensión de última generación"
+      }
+    ]
+  },
+  
+  // Ventajas (izquierda en CaracteristicasTemu)
+  "ventajas": {
+    "titulo": "¿Por qué elegir la DR 200?",
+    "subtitulo": "Descubre las ventajas que la hacen única",
+    "items": [
+      {
+        "id": 1,
+        "icono": "💔",
+        "titulo": "Problema: Rendimiento ineficiente",
+        "descripcion": "Motos débiles que no ofrecen la aceleración que necesitas"
+      },
+      {
+        "id": 2,
+        "icono": "😤",
+        "titulo": "Problema: Comodidad insuficiente",
+        "descripcion": "Montar largas distancias puede ser doloroso sin diseño ergonómico"
+      },
+      {
+        "id": 3,
+        "icono": "✅",
+        "titulo": "Solución: Rendimiento eficiente",
+        "descripcion": "Motor potente diseñado para cualquier terreno y situación"
+      }
+    ]
+  },
+  
+  // Beneficios (derecha en CaracteristicasTemu)
+  "beneficios": {
+    "titulo": "Beneficios Exclusivos",
+    "subtitulo": "Todo lo que obtienes al elegirnos",
+    "items": [
+      {
+        "id": 1,
+        "icono": "🛡️",
+        "titulo": "Garantía Extendida",
+        "descripcion": "12 meses de garantía en motor y transmisión con soporte técnico especializado"
+      },
+      {
+        "id": 2,
+        "icono": "🔧",
+        "titulo": "Mantenimiento Incluido",
+        "descripcion": "Primer servicio gratuito y asesoría permanente"
+      },
+      {
+        "id": 3,
+        "icono": "📋",
+        "titulo": "Documentación Completa",
+        "descripcion": "Trámite ágil de matrícula y toda la documentación al día"
+      }
+    ]
+  },
+  
+  // Resto de campos del producto
+  "imagenes": {
+    "principal": "https://ejemplo.com/moto-principal.jpg",
+    "galeria": [
+      "https://ejemplo.com/moto-lado.jpg",
+      "https://ejemplo.com/moto-detalle.jpg"
+    ],
+    "imagen_caracteristicas": "https://ejemplo.com/moto-caracteristicas.jpg"
+  },
+  
+  "especificaciones": {
+    "marca": "DR",
+    "modelo": "200",
+    "cilindraje": "200cc",
+    "potencia": "16 HP",
+    "peso": "120 kg",
+    "capacidad_tanque": "12L"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "toolDescription": "RENOMBRA las imagenes que tenemos en SUPABASE",
+        "method": "POST",
+        "url": "https://rrmafdbxvimmvcerwguy.supabase.co/storage/v1/object/move",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "bucketId",
+              "value": "imagenes"
+            },
+            {
+              "name": "sourceKey",
+              "value": "={{ $fromAI('oldPath', '', 'string').replace(/^imagenes\\//gi, '').replace(/\\s+/g, '-') }}"
+            },
+            {
+              "name": "destinationKey",
+              "value": "={{ $fromAI('newPath', '', 'string').replace(/^imagenes\\//gi, '').replace(/\\s+/g, '-') }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        112,
+        928
+      ],
+      "id": "764b6eb9-2d64-4afb-ab72-ecd11c2667eb",
+      "name": "renombrar_archivo_supabase",
+      "credentials": {
+        "supabaseApi": {
+          "id": "W8gqsCw5s1YHm5SZ",
+          "name": "Supabase Me LLEVO ESTO"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "renombrar_archivo_supabase": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8000b702e0a3d9ac6d70099a2751603316de4028cd14af0949776a26efecb219"
+  }
+}

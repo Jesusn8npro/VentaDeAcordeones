@@ -1,0 +1,261 @@
+/* ===== Overlay Mobile Rediseñado ===== */
+
+/* Panel base: reutiliza el contenedor existente y añade padding interno */
+.overlay-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-fondo, #fff);
+  overflow: hidden; /* Evita scroll en el contenedor principal */
+  margin: 0;
+  padding: 0;
+}
+
+/* Header con branding y botón de cierre */
+.overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  flex-shrink: 0; /* No se encoge */
+}
+
+.overlay-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay-logo {
+  display: flex;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+.overlay-logo-text { color: #fff; }
+.overlay-logo-accent { color: #ffe8cc; }
+
+.overlay-tagline {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.overlay-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.overlay-close:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Bloque usuario / login */
+.overlay-user {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f2f2f2;
+  flex-shrink: 0; /* No se encoge */
+}
+
+.overlay-user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.overlay-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #ffe8cc;
+  color: #b45309;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.overlay-user-info { display: flex; flex-direction: column; }
+.overlay-user-label { font-size: 12px; color: #999; }
+.overlay-user-name { font-size: 14px; font-weight: 600; color: #333; }
+
+.overlay-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fffbf5;
+  color: #b45309;
+  border: 1px solid #ffe8cc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.overlay-login-btn:hover {
+  background: #fff4e6;
+}
+
+/* Buscador */
+.overlay-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  flex-shrink: 0; /* No se encoge */
+  cursor: pointer;
+}
+
+.overlay-search-input {
+  flex: 1;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid #e9e9e9;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Cuerpo y secciones - AQUÍ ESTÁ LA SOLUCIÓN DEL SCROLL */
+.overlay-body { 
+  flex: 1; /* Toma todo el espacio disponible */
+  overflow-y: auto; /* Permite scroll vertical */
+  padding: 6px 8px 16px;
+  /* Scroll personalizado para WebKit */
+}
+
+.overlay-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overlay-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overlay-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.overlay-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.overlay-section { margin-top: 10px; }
+
+.overlay-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #9aa0a6;
+  padding: 8px 8px;
+}
+
+.overlay-section-title.with-icon { display: inline-flex; align-items: center; gap: 8px; }
+
+.overlay-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 8px;
+  cursor: pointer;
+}
+
+.overlay-section-chevron { 
+  transition: transform 0.2s ease; 
+  color: #9aa0a6;
+}
+.overlay-section-chevron.rotado { transform: rotate(180deg); }
+
+/* Ítems de menú */
+.overlay-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  margin: 6px 0;
+  color: #333;
+  background: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.overlay-item:hover { 
+  background: #fef7f0 !important; 
+  transform: translateX(4px);
+  color: #f97316;
+  border-color: #fed7aa;
+}
+
+.overlay-item-chevron { margin-left: auto; color: #c0c0c0; }
+
+.overlay-badge {
+  margin-left: auto;
+  margin-right: 6px;
+  background: #eeeefc;
+  color: #4641ff;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid #d9d8ff;
+}
+
+/* Categorías */
+.overlay-categories { 
+  padding: 2px 6px 8px; 
+  max-height: none; /* Permite que se expanda naturalmente */
+}
+
+.overlay-cat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 8px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.overlay-cat-item:hover {
+  background: #fef7f0;
+  border-color: #fed7aa;
+  transform: translateX(2px);
+}
+
+.overlay-cat-icon { 
+  color: #b45309; 
+  background: #fffbf5; 
+  border-radius: 8px; 
+  padding: 6px; 
+  flex-shrink: 0;
+}
+.overlay-cat-info { 
+  display: flex; 
+  flex-direction: column; 
+  flex: 1;
+}
+.overlay-cat-name { font-size: 14px; font-weight: 600; }
+.overlay-cat-count { font-size: 12px; color: #9aa0a6; }

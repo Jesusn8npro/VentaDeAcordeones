@@ -1,0 +1,73 @@
+/* =============================== */
+/* Estilos específicos: Sidebar    */
+/* =============================== */
+
+.sidebar-blog {
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.caja-sidebar {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+  padding: 16px;
+}
+
+.titulo-caja { margin: 0 0 8px; font-weight: 800; color: #111827; }
+.texto-caja { margin: 0 0 12px; color: #4b5563; }
+
+.form-suscripcion { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin: 8px 0 10px; }
+.form-suscripcion input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+.form-suscripcion button {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lista-beneficios { padding-left: 18px; color: #374151; }
+.lista-beneficios li { margin: 4px 0; }
+
+.lista-cursos { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.lista-cursos li { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: center; }
+.curso-nombre { margin: 0; font-weight: 700; color: #111827; }
+.mini-rating { color: #6b7280; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+.precio { margin: 2px 0 0; color: #111827; font-weight: 700; }
+
+.btn-cta-cursos {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  color: #111827;
+  font-weight: 600;
+}
+
+.testimonio { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: start; }
+.sidebar-blog .avatar.peque { width: 32px; height: 32px; border-radius: 50%; background: #111827; color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.texto-testimonio { margin: 0 0 4px; color: #374151; font-style: italic; }
+.autor-testimonio { margin: 0; color: #6b7280; font-size: 12px; }
+
+.redes { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.redes li { display: flex; justify-content: space-between; color: #374151; }
+.redes strong { color: #111827; }
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .sidebar-blog { position: static; }
+}
