@@ -13,7 +13,7 @@ import {
 } from './api/meta/actualizacion-automatica.js'
 
 const app = express()
-const PORT = process.env.PORT || 4173
+const PORT = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json({ limit: '5mb' }))
