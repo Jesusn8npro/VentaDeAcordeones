@@ -18,6 +18,24 @@ const PORT = process.env.PORT || 3000
 app.use(cors())
 app.use(express.json({ limit: '5mb' }))
 
+// Ruta de Salud (Health Check) - Vital para Easypanel / Nixpacks
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    env: process.env.NODE_ENV || 'development',
+    port: PORT
+  })
+})
+
+// Log de variables críticas (Ocultando secretos)
+console.log('--- DIAGNÓSTICO DE INICIO ---')
+console.log('NODE_ENV:', process.env.NODE_ENV)
+console.log('PORT:', PORT)
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL ? '✅ Configurada' : '❌ Faltante')
+console.log('SUPABASE_SERVICE_ROLE_KEY:', process.env.SUPABASE_SERVICE_ROLE_KEY ? '✅ Configurada' : '❌ Faltante')
+console.log('---------------------------')
+
 // Endpoint XML directo (compatibilidad con handler existente)
 app.get('/api/meta/feed-productos', async (req, res) => {
   try {
