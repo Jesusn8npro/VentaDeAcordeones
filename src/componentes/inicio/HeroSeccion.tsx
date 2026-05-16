@@ -5,25 +5,32 @@ import './HeroSeccion.css'
 
 const SLIDES = [
   {
-    titulo: 'Acordeones para Todo Género Musical',
-    descripcion: 'Diatónicos, cromáticos y de piano — Envío gratis a toda Colombia',
+    titulo: 'Tu Fuente Confiable para Todo en Acordeones',
+    descripcion: 'Rey Vallenato, Hohner Corona III, Bravo II y más — Envíos a toda Colombia con SERVIENTREGA',
     fondo: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
     cta: 'Ver Acordeones',
+    enlace: '/tienda/categoria/acordeones-rey-vallenato'
+  },
+  {
+    titulo: 'Acordeones Personalizados para Ti',
+    descripcion: 'Diseña el acordeón de tus sueños — Elige colores, fuelles y parrillas. Paga solo el 30% de anticipo',
+    fondo: 'linear-gradient(135deg, #7b2d8b 0%, #c62a47 50%, #e94560 100%)',
+    cta: 'Personalizar Acordeón',
+    enlace: '/tienda/categoria/acordeones-personalizados'
+  },
+  {
+    titulo: 'Instrumentos, Audio y Accesorios',
+    descripcion: 'Guitarras, bajos, pianos, micrófonos, amplificadores y todo lo que necesitas para tu música',
+    fondo: 'linear-gradient(135deg, #0f3460 0%, #1a6b3c 60%, #0f8a4a 100%)',
+    cta: 'Explorar Tienda',
     enlace: '/tienda'
   },
   {
-    titulo: 'Servicio de Reparación Profesional',
-    descripcion: 'Reparamos tu acordeón con garantía — Presupuesto sin costo',
-    fondo: 'linear-gradient(135deg, #c62a47 0%, #e94560 50%, #ff6b35 100%)',
-    cta: 'Solicitar Cotización',
-    enlace: '/tienda/categoria/servicio-reparacion'
-  },
-  {
-    titulo: 'Accesorios y Repuestos',
-    descripcion: 'Correas, fundas, micrófonos, cables y más — Calidad garantizada',
-    fondo: 'linear-gradient(135deg, #0f3460 0%, #533483 60%, #e94560 100%)',
-    cta: 'Ver Accesorios',
-    enlace: '/tienda/categoria/accesorios'
+    titulo: 'Armónicas Hohner — Sonido Auténtico',
+    descripcion: 'Marine Band, Blues Harp, Special 20 — Las armónicas favoritas de los músicos colombianos',
+    fondo: 'linear-gradient(135deg, #b8860b 0%, #d4a017 50%, #c62a47 100%)',
+    cta: 'Ver Armónicas',
+    enlace: '/tienda/categoria/armonicas'
   }
 ]
 

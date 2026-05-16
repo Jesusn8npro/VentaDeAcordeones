@@ -40,7 +40,7 @@ export default function SeccionCategorias() {
       <div className="sc-contenedor">
         <div className="sc-encabezado">
           <h2 className="sc-titulo">Explora por categoría</h2>
-          <p className="sc-subtitulo">Encuentra el acordeón perfecto para tu estilo</p>
+          <p className="sc-subtitulo">Acordeones, instrumentos, audio y accesorios para todo músico colombiano</p>
         </div>
 
         {cargando ? (

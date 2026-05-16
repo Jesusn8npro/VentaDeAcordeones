@@ -53,10 +53,10 @@
   margin: 16px 0 0;
 }
 
-/* ── GRID 4 cols → 2 → 1 ── */
+/* ── GRID 3 cols → 2 → 1 (6 cards) ── */
 .sb-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -106,6 +106,27 @@
   color: var(--sb-texto-sec);
   line-height: 1.55;
   margin: 0;
+}
+
+/* ── CTA BUTTON ── */
+.sb-cta {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 14px;
+  background: transparent;
+  border: 1.5px solid var(--sb-acento);
+  border-radius: 20px;
+  color: var(--sb-acento);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  align-self: center;
+}
+.sb-cta:hover {
+  background: var(--sb-acento);
+  color: #fff;
 }
 
 /* ── RESPONSIVE ── */
