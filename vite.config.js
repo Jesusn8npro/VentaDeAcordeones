@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: false,
       minify: 'terser',
-      chunkSizeWarningLimit: 600,
+      chunkSizeWarningLimit: 800,
       terserOptions: {
         compress: {
           drop_console: isProduction,
@@ -23,29 +23,14 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            // React core — siempre cacheado
-            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
-              return 'vendor-react'
-            }
-            // Router
-            if (id.includes('node_modules/react-router') || id.includes('node_modules/@remix-run')) {
-              return 'vendor-router'
-            }
-            // Supabase — cambia con auth/data, chunk separado
-            if (id.includes('node_modules/@supabase')) {
-              return 'vendor-supabase'
-            }
-            // Lucide icons — pesado, separado
-            if (id.includes('node_modules/lucide-react')) {
-              return 'vendor-lucide'
-            }
-            // FullCalendar — muy pesado (262KB), siempre separado
+            // FullCalendar — independiente y muy pesado, chunk propio
             if (id.includes('node_modules/@fullcalendar')) {
               return 'vendor-fullcalendar'
             }
-            // Resto de node_modules
+            // Todo lo demás de node_modules va junto — evita dependencias
+            // circulares entre React y librerías que usan forwardRef/createContext
             if (id.includes('node_modules/')) {
-              return 'vendor-misc'
+              return 'vendor'
             }
           }
         }
