@@ -1,0 +1,238 @@
+.politica-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.politica-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.header-navegacion {
+  margin-bottom: 1.5rem;
+}
+.boton-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f1f5f9;
+  color: #475569;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.boton-volver:hover {
+  background: #e2e8f0;
+  color: #334155;
+  transform: translateX(-2px);
+}
+.titulo-principal {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.titulo-principal h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+.subtitulo {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.fecha-actualizacion {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+}
+.politica-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.seccion {
+  margin-bottom: 2.5rem;
+}
+.seccion:last-child {
+  margin-bottom: 0;
+}
+.seccion-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+.seccion-icono {
+  width: 24px;
+  height: 24px;
+}
+.seccion-titulo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+.seccion-contenido {
+  color: #475569;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+.seccion-contenido p {
+  margin-bottom: 1rem;
+}
+.seccion-contenido ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+.seccion-contenido li {
+  margin-bottom: 0.5rem;
+}
+.destacado {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.destacado strong {
+  color: #92400e;
+}
+.importante {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border: 1px solid #ef4444;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.importante strong {
+  color: #dc2626;
+}
+.info-box {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border: 1px solid #3b82f6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.info-box h4 {
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+.info-box p {
+  margin: 0.25rem 0;
+  color: #1e40af;
+}
+.tiempo-box {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #22c55e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.tiempo-box h4 {
+  color: #15803d;
+  margin-bottom: 1rem;
+}
+.tiempo-box ul {
+  color: #15803d;
+}
+.ciudades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.ciudad-item {
+  background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);
+  border: 1px solid #a855f7;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+.ciudad-item h5 {
+  color: #7c3aed;
+  margin-bottom: 0.5rem;
+}
+.ciudad-item p {
+  color: #7c3aed;
+  margin: 0;
+  font-size: 0.875rem;
+}
+.contacto-info {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border: 1px solid #3b82f6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.contacto-info h4 {
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+.contacto-info p {
+  margin: 0.25rem 0;
+  color: #1e40af;
+}
+.formato-solicitud {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #22c55e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.formato-solicitud h4 {
+  color: #15803d;
+  margin-bottom: 1rem;
+}
+.formato-solicitud ul {
+  color: #15803d;
+}
+.horario-atencion {
+  background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%);
+  border: 1px solid #a855f7;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.horario-atencion strong {
+  color: #7c3aed;
+}
+@media (max-width: 768px) {
+  .politica-container {
+    padding: 1rem;
+  }
+  .titulo-principal h1 {
+    font-size: 2rem;
+  }
+  .politica-header,
+  .politica-content {
+    padding: 1.5rem;
+  }
+  .ciudades-grid {
+    grid-template-columns: 1fr;
+  }
+}

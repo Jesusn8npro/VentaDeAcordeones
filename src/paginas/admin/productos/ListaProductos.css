@@ -92,6 +92,53 @@
 .error-icono { width: 24px; height: 24px; color: var(--color-peligro); }
 .boton-reintentar { border: 1px solid var(--color-borde); background: var(--color-fondo); border-radius: 8px; padding: 0.4rem 0.7rem; cursor: pointer; }
 
+/* === Checkbox y selección bulk === */
+.th-checkbox, .td-checkbox { width: 40px; padding: 0.5rem; text-align: center; }
+.checkbox-tabla { width: 16px; height: 16px; cursor: pointer; accent-color: var(--color-primario); }
+.fila-seleccionada { background: var(--color-primario-50) !important; }
+
+/* === Barra bulk flotante === */
+.barra-bulk {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde-grande);
+  box-shadow: var(--sombra-grande);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 100;
+  animation: slideUp 200ms ease-out;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(1rem); opacity: 0; }
+  to   { transform: translateX(-50%) translateY(0);    opacity: 1; }
+}
+.barra-bulk span { color: var(--color-texto-secundario); font-size: 0.875rem; }
+
+.bulk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radio-borde-mediano);
+  border: 1px solid var(--color-borde);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.bulk-btn-activar   { background: var(--color-exito-50); color: var(--color-exito); border-color: var(--color-exito); }
+.bulk-btn-desactivar{ background: var(--color-advertencia-50); color: var(--color-advertencia-600); border-color: var(--color-advertencia); }
+.bulk-btn-eliminar  { background: var(--color-error-50); color: var(--color-error); border-color: var(--color-error); }
+.bulk-btn-cancelar  { background: var(--color-fondo-secundario); color: var(--color-texto); }
+.bulk-btn:disabled  { opacity: 0.6; cursor: not-allowed; }
+
 /* === Responsive === */
 @media (max-width: 1024px) {
   .estadisticas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -100,4 +147,5 @@
   .lista-productos { padding: 1rem; }
   .estadisticas-grid { grid-template-columns: 1fr; }
   .filtros-productos { grid-template-columns: 1fr; }
+  .barra-bulk { left: 1rem; right: 1rem; transform: none; bottom: 1rem; }
 }

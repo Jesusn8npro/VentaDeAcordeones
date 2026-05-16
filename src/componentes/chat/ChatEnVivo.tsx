@@ -1,558 +1,100 @@
-import React, { useState, useEffect, useRef, useCallback, useContext } from 'react'
+import React from 'react'
 import { X, Send, MessageCircle, Bot } from 'lucide-react'
-import { useAuth } from '../../contextos/ContextoAutenticacion'
+import { useChatEnVivo } from './useChatEnVivo'
+import MensajeChat from './MensajeChat'
 import './ChatEnVivo.css'
-import { clienteSupabase, obtenerSessionId } from '../../configuracion/supabase'
-import { useCarrito } from '../../contextos/CarritoContext';
-
-const WEBHOOK_URL = 'https://velostrategix-n8n.lnrubg.easypanel.host/webhook/chat_en_vivo'
 
 const tiposConsulta = [
-  { valor: 'general', texto: 'Consulta general' },
-  { valor: 'productos', texto: 'Información sobre productos' },
-  { valor: 'precios', texto: 'Precios y ofertas' },
-  { valor: 'envios', texto: 'Envíos y entregas' },
-  { valor: 'devolucion', texto: 'Devoluciones' },
-  { valor: 'tecnico', texto: 'Soporte técnico' },
-  { valor: 'otro', texto: 'Otro tema' }
+  { valor: 'compra', texto: 'Quiero comprar un acordeón' },
+  { valor: 'informacion', texto: 'Información sobre productos' },
+  { valor: 'precio', texto: 'Precios y financiación' },
+  { valor: 'envio', texto: 'Envíos y entregas' },
+  { valor: 'soporte', texto: 'Soporte técnico' },
+  { valor: 'otro', texto: 'Otro tema' },
 ]
 
 export default function ChatEnVivo() {
-  const { usuario } = useAuth()
-  const { modalAbierto } = useCarrito();
-  
-  // Estados principales
-  const [chatAbierto, setChatAbierto] = useState(false)
-  const [mensajes, setMensajes] = useState([])
-  const [nuevoMensaje, setNuevoMensaje] = useState('')
-  const [escribiendo, setEscribiendo] = useState(false)
-  const [chatId, setChatId] = useState('')
-  const [contadorNoLeidos, setContadorNoLeidos] = useState(0)
-  const [imagenPopup, setImagenPopup] = useState(null)
-  
-  // Datos usuario
-  const [datosUsuario, setDatosUsuario] = useState({
-    nombre: '',
-    email: '',
-    whatsapp: '',
-    tipoConsulta: 'general'
-  })
-  const [mostrarModalDatos, setMostrarModalDatos] = useState(false)
-  const [perfilCompleto, setPerfilCompleto] = useState(false)
-  
-  const contenedorMensajesRef = useRef(null)
-  const inputMensajeRef = useRef(null)
-
-  // Utilidades
-  const esUrlImagen = (url) => {
-    if (!url || typeof url !== 'string') return false
-    const patronesImagen = [
-      /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico)(\?.*)?$/i,
-      /\/image\//i,
-      /cloudinary\.com/i,
-      /imgur\.com/i,
-      /unsplash\.com/i,
-      /supabase\.co.*storage/i
-    ]
-    return patronesImagen.some(patron => patron.test(url))
-  }
-
-  const extraerUrls = (texto) => {
-    if (!texto) return []
-    const urls = texto.match(/(https?:\/\/[^\s]+)/g) || []
-    return urls.map(url => ({
-      url: url.replace(/[.,;!?)\]}]+$/, ''),
-      esImagen: esUrlImagen(url)
-    }))
-  }
-
-  const limpiarTextoDescriptivo = (texto) => {
-    if (!texto) return texto
-    const patronesDescriptivos = [
-      /\*\*Imagen Principal\*\*:?\s*/gi,
-      /\*\*Imagen Secundaria \d+\*\*:?\s*/gi,
-      /\d+\.\s*\*\*Imagen Secundaria \d+\*\*:?\s*/gi,
-      /¡Detalle\s*/gi,
-      /Te muestro las fotos:?\s*/gi,
-      /Aquí tienes las imágenes:?\s*/gi,
-      /\)\s*$/g
-    ]
-    
-    let textoLimpio = texto
-    patronesDescriptivos.forEach(patron => {
-      textoLimpio = textoLimpio.replace(patron, '')
-    })
-    return textoLimpio.trim()
-  }
-
-  // Renderizado de contenido con imágenes
-  const renderizarContenidoMensaje = (texto) => {
-    if (!texto) return null
-    
-    const textoLimpio = limpiarTextoDescriptivo(texto)
-    const urls = extraerUrls(textoLimpio)
-    const urlsImagen = urls.filter(u => u.esImagen)
-    
-    if (urlsImagen.length === 0) {
-      return <span>{textoLimpio}</span>
-    }
-    
-    const soloImagenes = urlsImagen.length > 0 && 
-                        textoLimpio.split(/\s+/).every(palabra => 
-                          urlsImagen.some(u => palabra.includes(u.url)) || palabra.trim() === ''
-                        )
-
-    if (soloImagenes) {
-      return (
-        <div>
-          {urlsImagen.map((urlInfo, index) => (
-            <div key={index} className="contenedor-imagen-chat">
-              <img 
-                src={urlInfo.url}
-                alt=""
-                className="imagen-chat"
-                onClick={() => setImagenPopup(urlInfo.url)}
-                onError={(e) => e.target.style.display = 'none'}
-                onLoad={() => {
-                  setTimeout(() => {
-                    if (contenedorMensajesRef.current) {
-                      contenedorMensajesRef.current.scrollTop = contenedorMensajesRef.current.scrollHeight
-                    }
-                  }, 100)
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      )
-    }
-    
-    let contenido = textoLimpio
-    const elementos = []
-    
-    urlsImagen.forEach((urlInfo, index) => {
-      const placeholder = `__IMAGEN_${index}__`
-      contenido = contenido.replace(urlInfo.url, placeholder)
-    })
-    
-    const partes = contenido.split(/(__IMAGEN_\d+__)/g)
-    
-    partes.forEach((parte, index) => {
-      const matchImagen = parte.match(/^__IMAGEN_(\d+)__$/)
-      
-      if (matchImagen) {
-        const indiceImagen = parseInt(matchImagen[1])
-        const urlImagen = urlsImagen[indiceImagen]?.url
-        
-        if (urlImagen) {
-          elementos.push(
-            <div key={index} className="contenedor-imagen-chat">
-              <img 
-                src={urlImagen}
-                alt=""
-                className="imagen-chat"
-                onClick={() => setImagenPopup(urlImagen)}
-                onError={(e) => e.target.style.display = 'none'}
-                onLoad={() => {
-                  setTimeout(() => {
-                    if (contenedorMensajesRef.current) {
-                      contenedorMensajesRef.current.scrollTop = contenedorMensajesRef.current.scrollHeight
-                    }
-                  }, 100)
-                }}
-              />
-            </div>
-          )
-        }
-      } else if (parte.trim() && !urlsImagen.some(u => parte.includes(u.url))) {
-        elementos.push(<span key={index}>{parte}</span>)
-      }
-    })
-    
-    return elementos.length > 0 ? elementos : <span>{textoLimpio}</span>
-  }
-
-  // Persistencia local
-  const guardarDatosLocal = useCallback((datos) => {
-    try {
-      localStorage.setItem('mellevesto_chat_datos', JSON.stringify(datos))
-    } catch (error) {
-      console.warn('Error guardando datos:', error)
-    }
-  }, [])
-
-  const cargarDatosLocal = useCallback(() => {
-    try {
-      const datos = localStorage.getItem('mellevesto_chat_datos')
-      return datos ? JSON.parse(datos) : null
-    } catch (error) {
-      return null
-    }
-  }, [])
-
-  // Mapeo de datos
-  const mapRegistroAMensaje = (registro) => {
-    try {
-      const raw = registro?.message ?? registro?.message_json
-      const msg = typeof raw === 'string' ? JSON.parse(raw) : raw
-      if (!msg) return null
-      
-      const esUsuario = msg.type === 'human' || msg.type === 'user'
-      const texto = msg.content ?? msg.text ?? ''
-      const ts = msg.timestamp ?? registro.created_at ?? new Date().toISOString()
-      
-      return {
-        id: `sb_${registro.id}`,
-        texto,
-        esUsuario,
-        timestamp: new Date(ts),
-        tipo: msg.tipo || 'texto'
-      }
-    } catch {
-      return null
-    }
-  }
-
-  // Carga de datos
-  const cargarHistorial = async (sessionId) => {
-    try {
-      if (!sessionId) return []
-      
-      const { data, error } = await clienteSupabase
-        .from('chats_de_la_web')
-        .select('id, session_id, message, message_json, created_at')
-        .eq('session_id', sessionId)
-        .order('id', { ascending: true })
-        .limit(100)
-        
-      if (error || !data) return []
-      
-      return data.map(mapRegistroAMensaje).filter(Boolean)
-    } catch {
-      return []
-    }
-  }
-
-  const registrarLead = async (datos, sessionId) => {
-    try {
-      await clienteSupabase
-        .from('leadschat')
-        .upsert({
-          chat_id: sessionId,
-          nombre: datos.nombre,
-          email: datos.email,
-          whatsapp: datos.whatsapp,
-          tipo_consulta: datos.tipoConsulta,
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'email' })
-    } catch (error) {
-      console.warn('Error registrando lead:', error)
-    }
-  }
-
-  // Webhook
-  const enviarMensajeWebhook = async (mensaje, sessionId, datos) => {
-    try {
-      const datosCompletos = datos || datosUsuario
-      
-      const payload = {
-        chat_id: sessionId,
-        mensaje_del_usuario: mensaje,
-        email_usuario: datosCompletos.email || usuario?.email || '',
-        nombre: datosCompletos.nombre || usuario?.user_metadata?.full_name || '',
-        apellido: '',
-        whatsapp: datosCompletos.whatsapp || '',
-        ciudad: '',
-        direccion: '',
-        pagina_origen: window.location.href,
-        timestamp: new Date().toISOString(),
-        autenticado: !!usuario
-      }
-
-      const response = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-      }
-
-      return await response.json()
-    } catch (error) {
-      console.error('Error enviando mensaje al webhook:', error)
-      throw error
-    }
-  }
-
-  // Manejo de mensajes
-  const agregarMensaje = useCallback((mensaje) => {
-    setMensajes(prev => {
-      const existe = prev.some(m => m.id === mensaje.id)
-      if (existe) return prev
-      return [...prev, mensaje]
-    })
-  }, [])
-
-  const manejarEnvio = async (e) => {
-    e.preventDefault()
-    
-    if (!nuevoMensaje.trim()) return
-
-    const mensaje = {
-      id: `user_${Date.now()}`,
-      texto: nuevoMensaje.trim(),
-      esUsuario: true,
-      timestamp: new Date(),
-      tipo: 'texto'
-    }
-
-    agregarMensaje(mensaje)
-    setNuevoMensaje('')
-    setEscribiendo(true)
-
-    try {
-      const respuestaWebhook = await enviarMensajeWebhook(mensaje.texto, chatId, datosUsuario)
-      
-      // Extraer respuesta del bot
-      let textoRespuesta = null
-      
-      if (respuestaWebhook) {
-        if (respuestaWebhook.respuesta_final) {
-          textoRespuesta = respuestaWebhook.respuesta_final
-        } else if (respuestaWebhook.response) {
-          textoRespuesta = respuestaWebhook.response
-        } else if (respuestaWebhook.message) {
-          textoRespuesta = respuestaWebhook.message
-        } else if (respuestaWebhook.texto) {
-          textoRespuesta = respuestaWebhook.texto
-        } else if (typeof respuestaWebhook === 'string') {
-          textoRespuesta = respuestaWebhook
-        } else if (respuestaWebhook.data) {
-          textoRespuesta = respuestaWebhook.data.respuesta_final || 
-                          respuestaWebhook.data.response || 
-                          respuestaWebhook.data.message
-        } else {
-          // Buscar en todas las propiedades
-          const keys = Object.keys(respuestaWebhook)
-          for (const key of keys) {
-            const value = respuestaWebhook[key]
-            if (typeof value === 'string' && value.trim().length > 0) {
-              textoRespuesta = value
-              break
-            }
-          }
-        }
-      }
-      
-      if (textoRespuesta && textoRespuesta.trim()) {
-        const mensajeBot = {
-          id: `bot_${Date.now()}`,
-          texto: textoRespuesta.trim(),
-          esUsuario: false,
-          timestamp: new Date(),
-          tipo: 'texto'
-        }
-        agregarMensaje(mensajeBot)
-      } else {
-        const mensajeFallback = {
-          id: `bot_${Date.now()}`,
-          texto: 'Disculpa, hubo un problema procesando tu mensaje. ¿Podrías intentar de nuevo?',
-          esUsuario: false,
-          timestamp: new Date(),
-          tipo: 'texto'
-        }
-        agregarMensaje(mensajeFallback)
-      }
-    } catch (error) {
-      console.error('Error procesando respuesta del webhook:', error)
-      
-      const mensajeError = {
-        id: `bot_${Date.now()}`,
-        texto: 'Lo siento, no pude procesar tu mensaje en este momento. Por favor, inténtalo de nuevo.',
-        esUsuario: false,
-        timestamp: new Date(),
-        tipo: 'texto'
-      }
-      agregarMensaje(mensajeError)
-    } finally {
-      setEscribiendo(false)
-    }
-  }
-
-  // Inicialización
-  const inicializarChat = useCallback(async () => {
-    try {
-      const sessionId = await obtenerSessionId()
-      setChatId(sessionId)
-
-      const datosGuardados = cargarDatosLocal()
-      if (datosGuardados) {
-        setDatosUsuario(datosGuardados)
-        setPerfilCompleto(true)
-      } else if (usuario?.email) {
-        setDatosUsuario(prev => ({
-          ...prev,
-          email: usuario.email || '',
-          nombre: usuario.user_metadata?.full_name || ''
-        }))
-      }
-
-      const historial = await cargarHistorial(sessionId)
-      if (historial.length > 0) {
-        setMensajes(historial)
-      } else {
-        const bienvenida = {
-          id: 'bienvenida',
-          texto: '¡Hola! 👋 Soy tu asistente virtual de ME LLEVO ESTO. ¿En qué puedo ayudarte hoy?',
-          esUsuario: false,
-          timestamp: new Date(),
-          tipo: 'sistema'
-        }
-        setMensajes([bienvenida])
-      }
-    } catch (error) {
-      console.warn('Error inicializando chat:', error)
-    }
-  }, [usuario, cargarDatosLocal])
-
-  // Scroll automático
-  const scrollAlFinal = useCallback(() => {
-    if (contenedorMensajesRef.current) {
-      contenedorMensajesRef.current.scrollTop = contenedorMensajesRef.current.scrollHeight
-    }
-  }, [])
-
-  // Efectos
-  useEffect(() => {
-    if (chatAbierto) {
-      inicializarChat()
-    }
-  }, [chatAbierto, inicializarChat])
-
-  useEffect(() => {
-    scrollAlFinal()
-  }, [mensajes, scrollAlFinal])
-
-  useEffect(() => {
-    if (chatAbierto && inputMensajeRef.current) {
-      inputMensajeRef.current.focus()
-    }
-  }, [chatAbierto])
-
-  // Manejo de modal
-  const manejarDatosModal = async (datos) => {
-    setDatosUsuario(datos)
-    setPerfilCompleto(true)
-    guardarDatosLocal(datos)
-    setMostrarModalDatos(false)
-    
-    await registrarLead(datos, chatId)
-    
-    const confirmacion = {
-      id: `confirmacion_${Date.now()}`,
-      texto: `¡Perfecto, ${datos.nombre}! 🎉 Ya tengo tus datos. ¿En qué más puedo ayudarte?`,
-      esUsuario: false,
-      timestamp: new Date(),
-      tipo: 'sistema'
-    }
-    agregarMensaje(confirmacion)
-  }
-
-  const toggleChat = () => {
-    setChatAbierto(!chatAbierto)
-    if (!chatAbierto) {
-      setContadorNoLeidos(0)
-    }
-  }
-
-  if (modalAbierto) {
-    return null;
-  }
+  const {
+    chatAbierto, mensajes, nuevoMensaje, setNuevoMensaje,
+    escribiendo, contadorNoLeidos, imagenPopup, setImagenPopup,
+    datosUsuario, setDatosUsuario, mostrarModalDatos, setMostrarModalDatos,
+    ringActivo,
+    contenedorMensajesRef, inputMensajeRef,
+    manejarEnvio, manejarDatosModal, toggleChat
+  } = useChatEnVivo()
 
   return (
     <>
-      <div className={`contenedor-widget-chat ${chatAbierto ? 'chat-abierto' : ''}`}>
+      <div className={`academia-widget-chat ${chatAbierto ? 'academia-open' : ''}`}>
         {!chatAbierto && (
           <button
             onClick={toggleChat}
-            className="boton-toggle-chat"
+            className={`academia-chat-toggle${ringActivo ? ' academia-chat-toggle--ring' : ''}`}
             aria-label="Abrir chat"
           >
-            <MessageCircle size={28} />
+            <MessageCircle size={30} />
             {contadorNoLeidos > 0 && (
-              <span className="badge-notificacion-chat">
-                {contadorNoLeidos > 9 ? '9+' : contadorNoLeidos}
-              </span>
+              <span className="academia-chat-badge">{contadorNoLeidos > 9 ? '9+' : contadorNoLeidos}</span>
             )}
           </button>
         )}
 
         {chatAbierto && (
-          <div className="ventana-chat">
-            <div className="header-chat">
-              <div className="avatar-chat">
-                <Bot size={24} />
+          <div className="academia-chat-window">
+            <div className="academia-chat-header">
+              <div className="academia-chat-info">
+                <div className="academia-chat-avatar"><Bot size={24} /></div>
+                <div className="academia-chat-title">
+                  <h3>VentaDeAcordeones.com</h3>
+                  <p>Asistente Virtual</p>
+                </div>
               </div>
-              <div className="info-chat">
-                <h3>ME LLEVO ESTO</h3>
-                <p>Asistente Virtual</p>
-              </div>
-              <button
-                onClick={toggleChat}
-                className="boton-cerrar-chat"
-                aria-label="Cerrar chat"
-              >
+              <button onClick={toggleChat} className="academia-chat-close" aria-label="Cerrar chat">
                 <X size={20} />
               </button>
             </div>
 
-            <div className="mensajes-chat" ref={contenedorMensajesRef}>
+            <div className="academia-chat-messages" ref={contenedorMensajesRef}>
               {mensajes.length === 0 ? (
-                <div className="pantalla-bienvenida">
+                <div className="academia-msg-content" style={{ textAlign: 'center', background: 'transparent', boxShadow: 'none' }}>
                   <h3>¡Hola! 👋</h3>
-                  <p>Soy tu asistente virtual. ¿En qué puedo ayudarte?</p>
+                  <p>Asistente virtual listo para ayudarte.</p>
                 </div>
               ) : (
                 mensajes.map((mensaje) => (
-                  <div 
-                    key={mensaje.id} 
-                    className={`mensaje ${mensaje.esUsuario ? 'usuario' : 'bot'}`}
-                  >
-                    <div className="contenido-mensaje">
-                      {renderizarContenidoMensaje(mensaje.texto)}
+                  <div key={mensaje.id} className={`academia-chat-msg ${mensaje.esUsuario ? 'msg-user' : 'msg-bot'}`}>
+                    <div className="academia-msg-content">
+                      <MensajeChat
+                        texto={mensaje.texto}
+                        onImageClick={(url) => setImagenPopup(url)}
+                        onImageLoad={() => {}}
+                      />
                     </div>
                   </div>
                 ))
               )}
-
               {escribiendo && (
-                <div className="mensaje bot">
-                  <div className="escribiendo">
-                    <div className="puntos-escribiendo">
-                      <div className="punto"></div>
-                      <div className="punto"></div>
-                      <div className="punto"></div>
-                    </div>
-                  </div>
+                <div className="academia-chat-typing">
+                  <div className="academia-typing-dot"></div>
+                  <div className="academia-typing-dot"></div>
+                  <div className="academia-typing-dot"></div>
                 </div>
               )}
             </div>
 
-            <form onSubmit={manejarEnvio} className="formulario-entrada-chat">
+            <form onSubmit={manejarEnvio} className="academia-chat-form">
               <input
                 ref={inputMensajeRef}
                 type="text"
                 value={nuevoMensaje}
                 onChange={(e) => setNuevoMensaje(e.target.value)}
                 placeholder="Escribe tu mensaje..."
-                className="entrada-chat"
+                className="academia-chat-input"
                 disabled={escribiendo}
               />
               <button
                 type="submit"
-                className="boton-enviar-chat"
+                className="academia-chat-send"
                 disabled={!nuevoMensaje.trim() || escribiendo}
                 aria-label="Enviar mensaje"
               >
@@ -563,36 +105,23 @@ export default function ChatEnVivo() {
         )}
       </div>
 
-      {/* Popup de imagen */}
       {imagenPopup && (
-        <div className="popup-imagen-overlay" onClick={() => setImagenPopup(null)}>
-          <div className="popup-imagen-contenido" onClick={(e) => e.stopPropagation()}>
-            <button 
-              className="boton-cerrar-popup"
-              onClick={() => setImagenPopup(null)}
-              aria-label="Cerrar imagen"
-            >
+        <div className="academia-popup-overlay" onClick={() => setImagenPopup(null)}>
+          <div className="academia-popup-content" onClick={(e) => e.stopPropagation()}>
+            <button className="academia-popup-close" onClick={() => setImagenPopup(null)} aria-label="Cerrar imagen">
               <X size={24} />
             </button>
-            <img 
-              src={imagenPopup} 
-              alt="Imagen ampliada" 
-              className="imagen-popup"
-            />
+            <img src={imagenPopup} alt="Imagen ampliada" className="academia-popup-img" />
           </div>
         </div>
       )}
 
-      {/* Modal de datos de usuario */}
       {mostrarModalDatos && (
-        <div className="modal-overlay">
-          <div className="modal-contenido">
+        <div className="academia-modal-overlay">
+          <div className="academia-modal-content">
             <h3>Cuéntanos sobre ti</h3>
-            <form onSubmit={(e) => {
-              e.preventDefault()
-              manejarDatosModal(datosUsuario)
-            }}>
-              <div className="grupo-input">
+            <form onSubmit={(e) => { e.preventDefault(); manejarDatosModal(datosUsuario) }}>
+              <div className="academia-input-group">
                 <label>Nombre completo</label>
                 <input
                   type="text"
@@ -601,8 +130,7 @@ export default function ChatEnVivo() {
                   required
                 />
               </div>
-              
-              <div className="grupo-input">
+              <div className="academia-input-group">
                 <label>Email</label>
                 <input
                   type="email"
@@ -611,8 +139,7 @@ export default function ChatEnVivo() {
                   required
                 />
               </div>
-              
-              <div className="grupo-input">
+              <div className="academia-input-group">
                 <label>WhatsApp</label>
                 <input
                   type="tel"
@@ -622,8 +149,7 @@ export default function ChatEnVivo() {
                   required
                 />
               </div>
-              
-              <div className="grupo-input">
+              <div className="academia-input-group">
                 <label>Tipo de consulta</label>
                 <select
                   value={datosUsuario.tipoConsulta}
@@ -631,25 +157,15 @@ export default function ChatEnVivo() {
                   required
                 >
                   {tiposConsulta.map(tipo => (
-                    <option key={tipo.valor} value={tipo.valor}>
-                      {tipo.texto}
-                    </option>
+                    <option key={tipo.valor} value={tipo.valor}>{tipo.texto}</option>
                   ))}
                 </select>
               </div>
-              
-              <div className="botones-modal">
-                <button
-                  type="button"
-                  onClick={() => setMostrarModalDatos(false)}
-                  className="boton-modal boton-secundario"
-                >
+              <div className="academia-modal-actions">
+                <button type="button" onClick={() => setMostrarModalDatos(false)} className="academia-btn academia-btn-secondary">
                   Cancelar
                 </button>
-                <button
-                  type="submit"
-                  className="boton-modal boton-primario"
-                >
+                <button type="submit" className="academia-btn academia-btn-primary">
                   Continuar
                 </button>
               </div>

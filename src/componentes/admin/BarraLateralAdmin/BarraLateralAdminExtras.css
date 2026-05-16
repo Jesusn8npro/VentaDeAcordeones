@@ -1,0 +1,157 @@
+/* ===== BarraLateralAdmin — submenú y widget ===== */
+
+/* Submenú */
+.admin-theme .barra-lateral-submenu-contenedor {
+  overflow: hidden;
+  transition: height var(--transicion-mediana);
+}
+
+.admin-theme .barra-lateral-submenu-lista {
+  list-style: none;
+  margin: 0.25rem 0;
+  padding: 0 var(--espaciado-sm);
+  padding-left: calc(var(--espaciado-sm) + 1.25rem + 0.75rem);
+}
+
+.admin-theme .barra-lateral-submenu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin: 0.1rem 0;
+  border-radius: var(--radio-borde);
+  text-decoration: none;
+  color: var(--color-texto-secundario);
+  font-weight: 400;
+  font-size: var(--font-size-md);
+  transition: background var(--transicion-rapida), color var(--transicion-rapida);
+  position: relative;
+}
+
+.admin-theme .barra-lateral-submenu-item::before {
+  content: '';
+  position: absolute;
+  left: -0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
+  background-color: var(--color-borde);
+  border-radius: 1px;
+}
+
+.admin-theme .barra-lateral-submenu-item:hover {
+  background-color: var(--color-fondo-terciario);
+  color: var(--color-texto);
+}
+
+.admin-theme .barra-lateral-submenu-item-activo {
+  background-color: var(--color-primario);
+  color: #fff;
+  font-weight: 500;
+}
+
+.admin-theme .barra-lateral-submenu-item-activo::before {
+  background-color: var(--color-primario-300);
+}
+
+.admin-theme .barra-lateral-submenu-item-activo:hover {
+  background-color: var(--color-primario-hover);
+  color: #fff;
+}
+
+/* Badges */
+.admin-theme .barra-lateral-submenu-insignias { display: flex; gap: 0.25rem; }
+
+.admin-theme .barra-lateral-submenu-insignia {
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-font-weight);
+  padding: var(--badge-padding);
+  border-radius: var(--badge-radius);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-theme .barra-lateral-submenu-insignia-inactiva {
+  background-color: var(--color-fondo-terciario);
+  color: var(--color-texto-terciario);
+}
+
+.admin-theme .barra-lateral-submenu-insignia-activa {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Modo oscuro — submenú */
+.dark .admin-theme .barra-lateral-submenu-item:hover,
+.admin-theme.dark .barra-lateral-submenu-item:hover {
+  background-color: var(--color-fondo-terciario);
+  color: var(--color-texto);
+}
+
+/* Widget */
+.admin-theme .barra-lateral-widget-contenedor {
+  padding: 0 var(--espaciado-md) var(--espaciado-xl);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.admin-theme .widget-barra-lateral {
+  width: 100%;
+  padding: var(--espaciado-md);
+  background: linear-gradient(135deg, var(--color-primario-50), var(--color-fondo-terciario));
+  border: 1px solid var(--color-primario-100);
+  border-radius: var(--radio-borde-xl);
+  text-align: center;
+  animation: aparecer-widget var(--transicion-mediana) ease-out;
+}
+
+.dark .admin-theme .widget-barra-lateral,
+.admin-theme.dark .widget-barra-lateral {
+  background: rgba(70, 95, 255, 0.06);
+  border-color: rgba(70, 95, 255, 0.15);
+}
+
+.admin-theme .widget-titulo {
+  margin: 0 0 0.375rem 0;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-texto);
+  line-height: 1.25;
+}
+
+.admin-theme .widget-descripcion {
+  margin: 0 0 var(--espaciado-md) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-texto-secundario);
+  line-height: 1.5;
+}
+
+.admin-theme .widget-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.625rem;
+  background-color: var(--color-primario);
+  color: #fff;
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radio-borde-mediano);
+  transition: all var(--transicion-rapida);
+  border: none;
+  cursor: pointer;
+}
+
+.admin-theme .widget-boton:hover {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--sombra-mediana);
+}
+
+@keyframes aparecer-widget {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}

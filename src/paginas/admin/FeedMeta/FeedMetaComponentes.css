@@ -1,0 +1,76 @@
+/* ===== Pasos y Logs — Feed Meta ===== */
+
+/* Pasos configuración */
+.fm-pasos-container { display: grid; gap: 16px; }
+.fm-pasos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fm-pasos-col { display: grid; gap: 12px; }
+
+.fm-paso {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.fm-paso-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primario);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.fm-paso-titulo {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-texto);
+}
+
+.fm-paso-desc {
+  font-size: 13px;
+  color: var(--color-texto-secundario);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+/* Logs actividad */
+.fm-logs {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.fm-log {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radio-borde-mediano, 8px);
+  font-size: 13px;
+  align-items: flex-start;
+}
+
+.fm-log-info {
+  background: var(--color-primario-50, #ecf3ff);
+  color: var(--color-primario);
+}
+
+.fm-log-exito {
+  background: var(--color-exito-50, #ecfdf3);
+  color: var(--color-exito-600, #059669);
+}
+
+.fm-log-error {
+  background: var(--color-error-50, #fef2f2);
+  color: var(--color-error-600, #dc2626);
+}
+
+.fm-log-texto { flex: 1; line-height: 1.4; }
+.fm-log-time { font-size: 11px; opacity: 0.7; white-space: nowrap; flex-shrink: 0; }

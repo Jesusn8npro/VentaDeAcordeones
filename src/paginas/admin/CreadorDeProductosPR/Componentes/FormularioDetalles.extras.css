@@ -1,0 +1,116 @@
+/* ===== FORMULARIO DETALLES — RESPONSIVE Y EXTRAS ===== */
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .formulario-detalles {
+    padding: 0 1rem;
+  }
+  
+  .campos-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .seccion-card {
+    padding: 1rem;
+  }
+  
+  .formulario-detalles-header .seccion-titulo {
+    font-size: 1.5rem;
+  }
+  
+  .nota-contenido {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .agregar-elemento {
+    flex-direction: column;
+  }
+  
+  .boton-guardar {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-detalles-header .seccion-titulo {
+    font-size: 1.25rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .seccion-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .elemento-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .boton-eliminar {
+    align-self: flex-end;
+  }
+}
+
+/* ===== ESTILOS ADICIONALES PARA NUEVOS CAMPOS ===== */
+.preview-landing {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 15px;
+  border-radius: 8px;
+  color: white;
+  margin-top: 10px;
+}
+
+.preview-texto {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.preview-url {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.preview-url code {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+.contador-caracteres {
+  color: #666;
+  font-size: 11px;
+  margin-top: 4px;
+  display: block;
+}
+
+.campo-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Courier New', monospace;
+  resize: vertical;
+  min-height: 80px;
+  transition: all 0.3s ease;
+}
+
+.campo-textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.campo-textarea::placeholder {
+  color: #9ca3af;
+  font-size: 12px;
+}

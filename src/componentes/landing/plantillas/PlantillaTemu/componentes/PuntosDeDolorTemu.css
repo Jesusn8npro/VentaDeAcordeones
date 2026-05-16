@@ -19,7 +19,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     radial-gradient(circle at 15% 25%, rgba(255, 68, 68, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 85% 75%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
     radial-gradient(circle at 50% 10%, rgba(255, 215, 0, 0.04) 0%, transparent 30%),
@@ -29,19 +29,19 @@
 }
 
 @keyframes puntos-dolor-temu-fondo-float {
-  0%, 100% { 
+  0%, 100% {
     transform: translateY(0) rotate(0deg);
     opacity: 0.6;
   }
-  25% { 
+  25% {
     transform: translateY(-10px) rotate(1deg);
     opacity: 0.8;
   }
-  50% { 
+  50% {
     transform: translateY(-5px) rotate(-0.5deg);
     opacity: 1;
   }
-  75% { 
+  75% {
     transform: translateY(-15px) rotate(0.8deg);
     opacity: 0.7;
   }
@@ -123,20 +123,20 @@
 }
 
 @keyframes puntos-dolor-temu-linea-pulse {
-  0%, 100% { 
+  0%, 100% {
     box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
   }
-  50% { 
+  50% {
     box-shadow: 0 0 25px rgba(255, 68, 68, 0.6);
   }
 }
 
 @keyframes puntos-dolor-temu-linea-shine {
-  0%, 100% { 
+  0%, 100% {
     opacity: 0;
     transform: translateY(-100%);
   }
-  50% { 
+  50% {
     opacity: 1;
     transform: translateY(100%);
   }
@@ -200,7 +200,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 6px 25px rgba(255, 68, 68, 0.5),
     0 0 0 6px #fff,
     0 0 0 12px rgba(255, 68, 68, 0.3);
@@ -214,16 +214,16 @@
 }
 
 @keyframes puntos-dolor-temu-punto-pulse {
-  0%, 100% { 
+  0%, 100% {
     transform: translateX(-50%) scale(1);
-    box-shadow: 
+    box-shadow:
       0 4px 20px rgba(255, 68, 68, 0.4),
       0 0 0 4px #fff,
       0 0 0 8px rgba(255, 68, 68, 0.2);
   }
-  50% { 
+  50% {
     transform: translateX(-50%) scale(1.1);
-    box-shadow: 
+    box-shadow:
       0 6px 25px rgba(255, 68, 68, 0.6),
       0 0 0 4px #fff,
       0 0 0 12px rgba(255, 68, 68, 0.3);
@@ -237,7 +237,7 @@
   background: #fff;
   border-radius: 20px;
   padding: 35px;
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.12),
     0 4px 12px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(255, 68, 68, 0.08);
@@ -270,10 +270,10 @@
 }
 
 @keyframes puntos-dolor-temu-contenido-float {
-  0%, 100% { 
+  0%, 100% {
     transform: translateY(0);
   }
-  50% { 
+  50% {
     transform: translateY(-3px);
   }
 }
@@ -291,7 +291,7 @@
 
 .puntos-dolor-temu-contenido:hover {
   transform: translateY(-10px) scale(1.03);
-  box-shadow: 
+  box-shadow:
     0 25px 60px rgba(0, 0, 0, 0.18),
     0 12px 25px rgba(255, 68, 68, 0.25),
     0 0 0 2px rgba(255, 68, 68, 0.15);
@@ -300,6 +300,8 @@
 .puntos-dolor-temu-contenido:hover::before {
   left: 100%;
 }
+
+/* === IMAGEN === */
 
 /* ============================================
    IMAGEN/GIF DEL PUNTO DE DOLOR
@@ -342,10 +344,10 @@
 }
 
 @keyframes puntos-dolor-temu-gif-glow {
-  0%, 100% { 
+  0%, 100% {
     box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
   }
-  50% { 
+  50% {
     box-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
   }
 }
@@ -483,6 +485,8 @@
   color: #0d4419;
   font-weight: 700;
 }
+
+/* === CTA === */
 
 /* ============================================
    CALL TO ACTION FINAL
@@ -633,20 +637,20 @@
 }
 
 @keyframes puntos-dolor-modal-fade-in {
-  from { 
-    opacity: 0; 
+  from {
+    opacity: 0;
   }
-  to { 
-    opacity: 1; 
+  to {
+    opacity: 1;
   }
 }
 
 @keyframes puntos-dolor-modal-scale-in {
-  from { 
+  from {
     transform: scale(0.9);
     opacity: 0;
   }
-  to { 
+  to {
     transform: scale(1);
     opacity: 1;
   }
@@ -657,14 +661,14 @@
   .puntos-dolor-modal-overlay {
     padding: 10px;
   }
-  
+
   .puntos-dolor-modal-contenido {
     max-width: 95%;
     max-height: 80vh;
     width: 95%;
     border-radius: 12px;
   }
-  
+
   .puntos-dolor-modal-cerrar {
     top: 12px;
     right: 12px;
@@ -672,7 +676,7 @@
     height: 36px;
     font-size: 16px;
   }
-  
+
   .puntos-dolor-modal-imagen {
     max-height: 70vh;
     border-radius: 12px;
@@ -684,14 +688,14 @@
   .puntos-dolor-modal-overlay {
     padding: 5px;
   }
-  
+
   .puntos-dolor-modal-contenido {
     max-width: 98%;
     max-height: 85vh;
     width: 98%;
     border-radius: 8px;
   }
-  
+
   .puntos-dolor-modal-imagen {
     max-height: 75vh;
     border-radius: 8px;
@@ -713,48 +717,48 @@
 .puntos-dolor-temu-item {
   margin-bottom: 100px;
 }
-  
+
   .puntos-dolor-temu-titulo {
     font-size: 32px;
   }
-  
+
   .puntos-dolor-temu-subtitulo {
     font-size: 18px;
   }
-  
+
   /* Timeline centrado en tablet */
   .puntos-dolor-temu-linea-central {
     left: 40px;
   }
-  
+
   .puntos-dolor-temu-izquierda,
   .puntos-dolor-temu-derecha {
     padding-left: 100px;
     padding-right: 0;
     transform: none !important;
   }
-  
+
   .puntos-dolor-temu-izquierda .puntos-dolor-temu-contenido,
   .puntos-dolor-temu-derecha .puntos-dolor-temu-contenido {
     margin-left: 0;
     margin-right: 0;
     text-align: left;
   }
-  
+
   .puntos-dolor-temu-punto {
     left: 40px;
     width: 70px;
     height: 70px;
   }
-  
+
   .puntos-dolor-temu-icono {
     font-size: 28px;
   }
-  
+
   .puntos-dolor-temu-imagen-container {
     height: 220px;
   }
-  
+
   .puntos-dolor-temu-flecha {
     justify-content: flex-start !important;
   }
@@ -765,46 +769,46 @@
   .puntos-dolor-temu-contenedor {
     padding: 0 15px;
   }
-  
+
   .puntos-dolor-temu-titulo {
     font-size: 28px;
     animation: puntos-dolor-temu-titulo-mobile 1s ease-out;
   }
-  
+
   .puntos-dolor-temu-subtitulo {
     font-size: 16px;
   }
-  
+
   .puntos-dolor-temu-contenido {
     padding: 20px;
   }
-  
+
   .puntos-dolor-temu-imagen-container {
     height: 180px;
   }
-  
+
   .puntos-dolor-temu-nombre {
     font-size: 20px;
   }
-  
+
   .puntos-dolor-temu-descripcion,
   .puntos-dolor-temu-solucion-texto {
     font-size: 14px;
   }
-  
+
   .puntos-dolor-temu-cta {
     padding: 30px 20px;
     animation: puntos-dolor-temu-cta-mobile 0.8s ease-out;
   }
-  
+
   .puntos-dolor-temu-cta-titulo {
     font-size: 24px;
   }
-  
+
   .puntos-dolor-temu-cta-texto {
     font-size: 16px;
   }
-  
+
   .puntos-dolor-temu-cta-boton {
     padding: 16px 30px;
     font-size: 18px;
@@ -814,33 +818,33 @@
 
 /* ANIMACIONES MÓVILES */
 @keyframes puntos-dolor-temu-titulo-mobile {
-  0% { 
+  0% {
     transform: translateY(-20px);
     opacity: 0;
   }
-  100% { 
+  100% {
     transform: translateY(0);
     opacity: 1;
   }
 }
 
 @keyframes puntos-dolor-temu-cta-mobile {
-  0% { 
+  0% {
     transform: scale(0.9);
     opacity: 0;
   }
-  100% { 
+  100% {
     transform: scale(1);
     opacity: 1;
   }
 }
 
 @keyframes puntos-dolor-temu-boton-pulse {
-  0%, 100% { 
+  0%, 100% {
     transform: scale(1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
-  50% { 
+  50% {
     transform: scale(1.05);
     box-shadow: 0 8px 30px rgba(255, 68, 68, 0.4);
   }
@@ -851,15 +855,15 @@
   .puntos-dolor-temu-item {
     transition: opacity 0.3s ease;
   }
-  
+
   .puntos-dolor-temu-punto {
     animation: none;
   }
-  
+
   .puntos-dolor-temu-flecha-icono {
     animation: none;
   }
-  
+
   .puntos-dolor-temu-cta::before {
     animation: none;
   }

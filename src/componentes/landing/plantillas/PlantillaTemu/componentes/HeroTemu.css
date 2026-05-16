@@ -1,8 +1,4 @@
-/* ============================================
-   HERO TEMU - ESTILOS OPTIMIZADOS
-   Componente principal de la plantilla TEMU
-   Todo en español y súper vendedor
-   ============================================ */
+/* ===== HERO TEMU — CONTENEDOR Y GALERÍA ===== */
 
 /* Ocultar imagen de pagos en escritorio */
 .hero-temu-imagen-pagos-movil {
@@ -31,16 +27,16 @@
 /* ============================================
    GALERÍA STICKY - COLUMNA IZQUIERDA
    ============================================ */
-.hero-temu-columna-izquierda { 
-  position: relative; 
+.hero-temu-columna-izquierda {
+  position: relative;
   align-self: start;
   flex: 0 0 48%;
   max-width: 48%;
 }
 
 .hero-temu-galeria-sticky {
-  background: #fff; 
-  border-radius: 12px; 
+  background: #fff;
+  border-radius: 12px;
   padding: 2px;
 }
 
@@ -88,11 +84,11 @@
 }
 
 /* IMAGEN PRINCIPAL */
-.hero-temu-imagen-principal { 
+.hero-temu-imagen-principal {
   flex: 1;
-  aspect-ratio: 1/1; 
+  aspect-ratio: 1/1;
   border-radius: 0; /* Eliminado border-radius */
-  background: transparent; 
+  background: transparent;
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -100,9 +96,9 @@
 }
 
 .hero-temu-imagen-principal-img {
-  width: 100%; 
-  height: 100%; 
-  object-fit: cover; 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 0; /* Eliminado border-radius */
   /* Transición eliminada para cambio instantáneo de imágenes */
 }
@@ -173,12 +169,12 @@
 }
 
 @keyframes vendidoPulse {
-  0%, 100% { 
-    transform: translate(-50%, -50%) scale(1); 
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
     box-shadow: 0 8px 24px rgba(231, 76, 60, 0.6);
   }
-  50% { 
-    transform: translate(-50%, -50%) scale(1.05); 
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
     box-shadow: 0 12px 32px rgba(231, 76, 60, 0.8);
   }
 }
@@ -214,12 +210,12 @@
   z-index: 10;
 }
 
-.hero-temu-boton-favoritos:hover { 
-  transform: scale(1.1); 
+.hero-temu-boton-favoritos:hover {
+  transform: scale(1.1);
 }
 
-.hero-temu-boton-favoritos.activo { 
-  background: #ffe6e6; 
+.hero-temu-boton-favoritos.activo {
+  background: #ffe6e6;
 }
 
 .hero-temu-boton-favoritos:active,
@@ -270,158 +266,668 @@
   to { opacity: 1; transform: translateY(-50%) scale(1); }
 }
 
-/* ============================================
-   CONTENIDO - COLUMNA DERECHA
-   ============================================ */
-.hero-temu-columna-derecha { 
-  flex: 1;
-  min-width: 0;
-  min-height: 120vh;
-}
+/* === BOTONES === */
 
 /* ============================================
-   BANNER MEGA OFERTA
+   PRECIOS Y OFERTAS
    ============================================ */
-.hero-temu-banner-mega-oferta {
+.hero-temu-seccion-precios-vendedora {
+  margin: 12px 0;
+  padding: 0 10px;
+  position: relative;
+}
+
+/* ETIQUETA VENDIDO */
+.hero-temu-etiqueta-vendido {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 10;
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 50%, #8B0000 100%);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow:
+    0 8px 25px rgba(255, 68, 68, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: rotate(12deg);
+  animation: hero-temu-vendido-pulse 2s ease-in-out infinite;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.hero-temu-vendido-contenido {
   display: flex;
-  background: linear-gradient(135deg, #E53E3E 0%, #C53030 50%, #E53E3E 100%);
-  border-radius: 8px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  box-shadow: 
-    0 4px 15px rgba(229, 62, 62, 0.4),
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: white;
+  text-align: center;
+}
+
+.hero-temu-vendido-icono {
+  font-size: 16px;
+  animation: hero-temu-vendido-fire 1.5s ease-in-out infinite;
+}
+
+.hero-temu-vendido-texto {
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-temu-vendido-subtext {
+  font-size: 9px;
+  font-weight: 600;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hero-temu-vendido-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+  animation: hero-temu-vendido-shine 3s ease-in-out infinite;
+  border-radius: 12px;
+}
+
+@keyframes hero-temu-vendido-pulse {
+  0%, 100% {
+    transform: rotate(12deg) scale(1);
+    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: rotate(12deg) scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 68, 68, 0.8), 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes hero-temu-vendido-fire {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-5deg); }
+  75% { transform: scale(1.1) rotate(5deg); }
+}
+
+@keyframes hero-temu-vendido-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.hero-temu-precio-principal-container {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.hero-temu-precio-principal-container.vendido {
+  opacity: 0.6;
+  filter: grayscale(50%);
+}
+
+.hero-temu-precio-actual-grande {
+  font-size: 32px;
+  font-weight: 900;
+  color: #FF4444;
+  text-shadow: 0 1px 2px rgba(255, 68, 68, 0.3);
+}
+
+.hero-temu-precio-original-tachado {
+  font-size: 18px;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+/* Ahorro (alineado a la derecha en el contenedor) */
+.hero-temu-ahorro-label {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f5132; /* texto verde oscuro para contraste */
+  background: rgba(16, 185, 129, 0.18); /* verde clarito */
+  padding: 6px 10px;
+  border-radius: 9999px; /* pill */
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 1px 2px rgba(16, 185, 129, 0.15);
+}
+
+.hero-temu-badge-descuento-grande {
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(255, 68, 68, 0.4);
+  animation: hero-temu-badge-pulse 2s ease-in-out infinite;
+}
+
+
+
+@keyframes hero-temu-badge-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* OFERTA RELÁMPAGO */
+.hero-temu-oferta-relampago {
+  background: linear-gradient(135deg, #FF4444 0%, #CC0000 50%, #FF8C00 100%);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  color: white;
+  box-shadow:
+    0 6px 20px rgba(255, 68, 68, 0.5),
     0 2px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   position: relative;
   overflow: hidden;
-  animation: hero-temu-banner-pulse 3s ease-in-out infinite;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  animation: hero-temu-oferta-pulse 2s ease-in-out infinite;
 }
 
-.hero-temu-banner-mega-oferta::before {
+.hero-temu-oferta-relampago::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: hero-temu-banner-shine 4s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: hero-temu-oferta-shine 2.5s ease-in-out infinite;
 }
 
-.hero-temu-etiqueta-mega {
-  background: linear-gradient(135deg, #FFD700 0%, #FFB800 50%, #FF8C00 100%);
-  color: #8B0000;
-  font-weight: 900;
-  font-size: 17px;
-  line-height: 15px;
-  padding: 15px;
-  text-align: center;
-  width: 100px;
+.hero-temu-oferta-header {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 0;
   position: relative;
-  text-shadow: 
-    0 1px 0 #FFF,
-    0 2px 0 #FFB800,
-    0 3px 5px rgba(0, 0, 0, 0.3);
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-  animation: hero-temu-etiqueta-glow 2s ease-in-out infinite;
+  z-index: 2;
 }
 
-.hero-temu-beneficios-container {
-  flex: 1;
-  display: flex;
-  gap: 18px;
-  padding: 0 12px;
-  background: #E53E3E;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-temu-beneficio-texto {
-  color: white;
-  font-size: 20px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  padding: 15px;
-  gap: 8px;
-  text-shadow: 
-    0 1px 2px rgba(0, 0, 0, 0.5),
-    0 0 10px rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.hero-temu-beneficio-texto:hover {
-  transform: translateY(-2px);
-  text-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.7),
-    0 0 15px rgba(255, 255, 255, 0.5);
-}
-
-.hero-temu-check-verde {
-  color: #00FF88;
-  font-weight: 900;
+.hero-temu-oferta-titulo {
   font-size: 18px;
-  text-shadow: 
-    0 0 10px rgba(0, 255, 136, 0.8),
-    0 0 20px rgba(0, 255, 136, 0.4);
-  animation: hero-temu-check-pulse 2s ease-in-out infinite;
+  font-weight: 900;
+  font-style: italic;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-/* ANIMACIONES DEL BANNER */
-@keyframes hero-temu-banner-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+.hero-temu-contador-tiempo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-@keyframes hero-temu-banner-shine {
+.hero-temu-tiempo-numero {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  color: #FFD700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  animation: hero-temu-tiempo-blink 1s ease-in-out infinite;
+}
+
+.hero-temu-icono-reloj {
+  font-size: 18px;
+  animation: hero-temu-reloj-spin 3s linear infinite;
+}
+
+/* ANIMACIONES DE OFERTA */
+@keyframes hero-temu-oferta-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 6px 20px rgba(255, 68, 68, 0.5),
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow:
+      0 8px 25px rgba(255, 68, 68, 0.7),
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+}
+
+@keyframes hero-temu-oferta-shine {
   0% { left: -100%; }
   50% { left: 100%; }
   100% { left: 100%; }
 }
 
-@keyframes hero-temu-etiqueta-glow {
-  0% { 
-    box-shadow: 
-      inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-      0 0 10px rgba(255, 215, 0, 0.5);
+@keyframes hero-temu-tiempo-blink {
+  0%, 100% {
+    color: #FFD700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
   }
-  100% { 
-    box-shadow: 
-      inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-      0 0 20px rgba(255, 215, 0, 0.8);
+  50% {
+    color: #FFF;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1);
   }
 }
 
-@keyframes hero-temu-check-pulse {
-  0%, 100% { 
-    transform: scale(1);
-    text-shadow: 
-      0 0 10px rgba(0, 255, 136, 0.8),
-      0 0 20px rgba(0, 255, 136, 0.4);
-  }
-  50% { 
-    transform: scale(1.1);
-    text-shadow: 
-      0 0 15px rgba(0, 255, 136, 1),
-      0 0 30px rgba(0, 255, 136, 0.6);
-  }
+@keyframes hero-temu-reloj-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
+
+/* === POPUP === */
+
+/* ============================================
+   BOTONES DE ACCIÓN
+   ============================================ */
+.hero-temu-botones-accion {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.hero-temu-boton-carrito,
+.hero-temu-boton-contra-entrega,
+.hero-temu-boton-pagar-plataforma {
+  border: none;
+  border-radius: 10px;
+  padding: 14px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  text-align: center;
+}
+
+.hero-temu-boton-carrito { background: #111; color: #fff; }
+.hero-temu-boton-contra-entrega { background: #27AE60; color: #fff; }
+.hero-temu-boton-pagar-plataforma { background: #0ea5e9; color: #fff; }
+
+.hero-temu-boton-carrito:hover,
+.hero-temu-boton-contra-entrega:hover,
+.hero-temu-boton-pagar-plataforma:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estados :active y :focus para mantener fondos */
+.hero-temu-boton-carrito:active,
+.hero-temu-boton-carrito:focus {
+  background: #111 !important;
+  color: #fff !important;
+  outline: none;
+  transform: translateY(0px);
+}
+
+.hero-temu-boton-contra-entrega:active,
+.hero-temu-boton-contra-entrega:focus {
+  background: #27AE60 !important;
+  color: #fff !important;
+  outline: none;
+  transform: translateY(0px);
+}
+
+.hero-temu-boton-pagar-plataforma:active,
+.hero-temu-boton-pagar-plataforma:focus {
+  background: #0ea5e9 !important;
+  color: #fff !important;
+  outline: none;
+  transform: translateY(0px);
+}
+
+/* BOTONES VENDIDO */
+.hero-temu-botones-vendido {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  grid-column: 1 / -1; /* Ocupa toda la fila */
+}
+
+.hero-temu-boton-vendido {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.hero-temu-boton-producto-vendido {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border: none;
+  padding: 18px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.hero-temu-boton-producto-vendido:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
+}
+
+.hero-temu-boton-notificar {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.hero-temu-boton-notificar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(23, 162, 184, 0.4);
+  background: linear-gradient(135deg, #1c7ed6 0%, #1971c2 100%);
+}
+
+/* IMAGEN DE MÉTODOS DE PAGO */
+.hero-temu-metodos-pago {
+  margin: 20px 0;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.hero-temu-imagen-pagos {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    0 3px 10px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(255, 68, 68, 0.05);
+}
+
+.hero-temu-imagen-pagos:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.12),
+    0 5px 15px rgba(255, 68, 68, 0.1);
+  border-color: rgba(255, 68, 68, 0.1);
+}
+
+/* ============================================
+   SECCIONES DE CONTENIDO
+   ============================================ */
+
+/* DESCRIPCIÓN EXPANDIBLE */
+.hero-temu-seccion-descripcion {
+  margin: 16px 0;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.hero-temu-titulo-descripcion {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-temu-texto-descripcion {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+  word-spacing: 1px;
+  text-align: left;
+}
+
+.hero-temu-boton-expandir {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(14, 165, 233, 0.3);
+}
+
+.hero-temu-boton-expandir:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(14, 165, 233, 0.4);
+}
+
+.hero-temu-icono-expandir {
+  transition: transform 0.3s ease;
+}
+
+.hero-temu-icono-expandir.expandido {
+  transform: rotate(180deg);
+}
+
+/* ESPECIFICACIONES TÉCNICAS */
+.hero-temu-especificaciones-tecnicas {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+
+.hero-temu-titulo-especificaciones {
+  margin: 0 0 8px;
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.hero-temu-grid-especificaciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.hero-temu-grid-especificaciones div {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.hero-temu-grid-especificaciones strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* POR QUÉ ELEGIR ESTE PRODUCTO */
+.hero-temu-seccion-porque-elegir {
+  margin: 20px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hero-temu-titulo-porque-elegir {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left; /* Alineado a la izquierda */
+  justify-content: flex-start; /* Alineado a la izquierda */
+}
+
+.hero-temu-subtitulo-porque-elegir {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0 0 16px 0;
+  text-align: left; /* Alineado a la izquierda */
+  line-height: 1.5;
+}
+
+.hero-temu-beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.hero-temu-beneficio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.hero-temu-beneficio-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.hero-temu-icono-beneficio {
+  font-size: 32px; /* Más grande para que se vea de lujo */
+  flex-shrink: 0;
+  margin-top: 0; /* Centrado verticalmente */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Contenedor fijo para centrado perfecto */
+  height: 50px;
+  text-align: center;
+}
+
+.hero-temu-contenido-beneficio h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 6px 0;
+  text-align: left; /* Alineado a la izquierda */
+}
+
+.hero-temu-contenido-beneficio p {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.5;
+  text-align: left; /* Alineado a la izquierda */
+}
+
+/* ============================================
+   ELEMENTOS AUXILIARES
+   ============================================ */
+
+/* INDICADOR MODO STICKY */
+.hero-temu-indicador-modo {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 50;
+  background: #111;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: .85;
+}
+
+/* PRODUCTO NO ENCONTRADO */
+.hero-temu-producto-no-encontrado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+  text-align: center;
+  color: #6c757d;
+}
+
+.hero-temu-producto-no-encontrado h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.hero-temu-producto-no-encontrado p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* === PRECIOS === */
 
 /* ============================================
    INFORMACIÓN DEL PRODUCTO
    ============================================ */
-.hero-temu-titulo-producto { 
-  font-size: 28px; 
-  margin: 15px 0 12px; 
-  color: #1a1a1a; 
+.hero-temu-titulo-producto {
+  font-size: 28px;
+  margin: 15px 0 12px;
+  color: #1a1a1a;
   font-weight: 800;
   line-height: 1.3;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -603,654 +1109,154 @@
   font-weight: 600;
 }
 
+/* === PRODUCTO === */
+
 /* ============================================
-   PRECIOS Y OFERTAS
+   CONTENIDO - COLUMNA DERECHA
    ============================================ */
-.hero-temu-seccion-precios-vendedora {
-  margin: 12px 0;
-  padding: 0 10px;
-  position: relative;
+.hero-temu-columna-derecha {
+  flex: 1;
+  min-width: 0;
+  min-height: 120vh;
 }
 
-/* ETIQUETA VENDIDO */
-.hero-temu-etiqueta-vendido {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  z-index: 10;
-  background: linear-gradient(135deg, #FF4444 0%, #CC0000 50%, #8B0000 100%);
-  border-radius: 12px;
-  padding: 12px 16px;
-  box-shadow: 
-    0 8px 25px rgba(255, 68, 68, 0.6),
-    0 4px 12px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transform: rotate(12deg);
-  animation: hero-temu-vendido-pulse 2s ease-in-out infinite;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-.hero-temu-vendido-contenido {
+/* ============================================
+   BANNER MEGA OFERTA
+   ============================================ */
+.hero-temu-banner-mega-oferta {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  color: white;
-  text-align: center;
-}
-
-.hero-temu-vendido-icono {
-  font-size: 16px;
-  animation: hero-temu-vendido-fire 1.5s ease-in-out infinite;
-}
-
-.hero-temu-vendido-texto {
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.hero-temu-vendido-subtext {
-  font-size: 9px;
-  font-weight: 600;
-  opacity: 0.9;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.hero-temu-vendido-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
-  animation: hero-temu-vendido-shine 3s ease-in-out infinite;
-  border-radius: 12px;
-}
-
-@keyframes hero-temu-vendido-pulse {
-  0%, 100% { 
-    transform: rotate(12deg) scale(1); 
-    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
-  50% { 
-    transform: rotate(12deg) scale(1.05); 
-    box-shadow: 0 12px 35px rgba(255, 68, 68, 0.8), 0 6px 16px rgba(0, 0, 0, 0.4);
-  }
-}
-
-@keyframes hero-temu-vendido-fire {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  25% { transform: scale(1.1) rotate(-5deg); }
-  75% { transform: scale(1.1) rotate(5deg); }
-}
-
-@keyframes hero-temu-vendido-shine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.hero-temu-precio-principal-container {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  margin-bottom: 8px;
-  transition: all 0.3s ease;
-}
-
-.hero-temu-precio-principal-container.vendido {
-  opacity: 0.6;
-  filter: grayscale(50%);
-}
-
-.hero-temu-precio-actual-grande {
-  font-size: 32px;
-  font-weight: 900;
-  color: #FF4444;
-  text-shadow: 0 1px 2px rgba(255, 68, 68, 0.3);
-}
-
-.hero-temu-precio-original-tachado {
-  font-size: 18px;
-  color: #999;
-  text-decoration: line-through;
-  font-weight: 500;
-}
-
-/* Ahorro (alineado a la derecha en el contenedor) */
-.hero-temu-ahorro-label {
-  margin-left: auto;
-  font-size: 12px;
-  font-weight: 700;
-  color: #0f5132; /* texto verde oscuro para contraste */
-  background: rgba(16, 185, 129, 0.18); /* verde clarito */
-  padding: 6px 10px;
-  border-radius: 9999px; /* pill */
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  box-shadow: 0 1px 2px rgba(16, 185, 129, 0.15);
-}
-
-.hero-temu-badge-descuento-grande {
-  background: linear-gradient(135deg, #FF4444 0%, #CC0000 100%);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(255, 68, 68, 0.4);
-  animation: hero-temu-badge-pulse 2s ease-in-out infinite;
-}
-
-
-
-@keyframes hero-temu-badge-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* OFERTA RELÁMPAGO */
-.hero-temu-oferta-relampago {
-  background: linear-gradient(135deg, #FF4444 0%, #CC0000 50%, #FF8C00 100%);
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin: 12px 0;
-  color: white;
-  box-shadow: 
-    0 6px 20px rgba(255, 68, 68, 0.5),
+  background: linear-gradient(135deg, #E53E3E 0%, #C53030 50%, #E53E3E 100%);
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  box-shadow:
+    0 4px 15px rgba(229, 62, 62, 0.4),
     0 2px 8px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  animation: hero-temu-oferta-pulse 2s ease-in-out infinite;
+  animation: hero-temu-banner-pulse 3s ease-in-out infinite;
 }
 
-.hero-temu-oferta-relampago::before {
+.hero-temu-banner-mega-oferta::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  animation: hero-temu-oferta-shine 2.5s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: hero-temu-banner-shine 4s ease-in-out infinite;
 }
 
-.hero-temu-oferta-header {
+.hero-temu-etiqueta-mega {
+  background: linear-gradient(135deg, #FFD700 0%, #FFB800 50%, #FF8C00 100%);
+  color: #8B0000;
+  font-weight: 900;
+  font-size: 17px;
+  line-height: 15px;
+  padding: 15px;
+  text-align: center;
+  width: 100px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0;
+  justify-content: center;
   position: relative;
-  z-index: 2;
+  text-shadow:
+    0 1px 0 #FFF,
+    0 2px 0 #FFB800,
+    0 3px 5px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  animation: hero-temu-etiqueta-glow 2s ease-in-out infinite;
 }
 
-.hero-temu-oferta-titulo {
-  font-size: 18px;
-  font-weight: 900;
-  font-style: italic;
-  text-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.5),
-    0 0 10px rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+.hero-temu-beneficios-container {
+  flex: 1;
+  display: flex;
+  gap: 18px;
+  padding: 0 12px;
+  background: #E53E3E;
+  align-items: center;
+  justify-content: center;
 }
 
-.hero-temu-contador-tiempo {
+.hero-temu-beneficio-texto {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  padding: 15px;
   gap: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.hero-temu-tiempo-numero {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-family: 'Courier New', monospace;
-  font-size: 16px;
+.hero-temu-beneficio-texto:hover {
+  transform: translateY(-2px);
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.hero-temu-check-verde {
+  color: #00FF88;
   font-weight: 900;
-  color: #FFD700;
-  text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  animation: hero-temu-tiempo-blink 1s ease-in-out infinite;
-}
-
-.hero-temu-icono-reloj {
   font-size: 18px;
-  animation: hero-temu-reloj-spin 3s linear infinite;
+  text-shadow:
+    0 0 10px rgba(0, 255, 136, 0.8),
+    0 0 20px rgba(0, 255, 136, 0.4);
+  animation: hero-temu-check-pulse 2s ease-in-out infinite;
 }
 
-/* ANIMACIONES DE OFERTA */
-@keyframes hero-temu-oferta-pulse {
-  0%, 100% { 
-    transform: scale(1);
-    box-shadow: 
-      0 6px 20px rgba(255, 68, 68, 0.5),
-      0 2px 8px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-  50% { 
-    transform: scale(1.02);
-    box-shadow: 
-      0 8px 25px rgba(255, 68, 68, 0.7),
-      0 4px 12px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  }
+/* ANIMACIONES DEL BANNER */
+@keyframes hero-temu-banner-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 }
 
-@keyframes hero-temu-oferta-shine {
+@keyframes hero-temu-banner-shine {
   0% { left: -100%; }
   50% { left: 100%; }
   100% { left: 100%; }
 }
 
-@keyframes hero-temu-tiempo-blink {
-  0%, 100% { 
-    color: #FFD700;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.8);
+@keyframes hero-temu-etiqueta-glow {
+  0% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 0 10px rgba(255, 215, 0, 0.5);
   }
-  50% { 
-    color: #FFF;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(255, 215, 0, 0.8);
   }
 }
 
-@keyframes hero-temu-reloj-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes hero-temu-check-pulse {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow:
+      0 0 10px rgba(0, 255, 136, 0.8),
+      0 0 20px rgba(0, 255, 136, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    text-shadow:
+      0 0 15px rgba(0, 255, 136, 1),
+      0 0 30px rgba(0, 255, 136, 0.6);
+  }
 }
 
-/* ============================================
-   BOTONES DE ACCIÓN
-   ============================================ */
-.hero-temu-botones-accion {
-  display: grid; 
-  grid-template-columns: 1fr 1fr 1fr; 
-  gap: 12px; 
-  margin: 16px 0 24px;
-}
-
-.hero-temu-boton-carrito,
-.hero-temu-boton-contra-entrega,
-.hero-temu-boton-pagar-plataforma {
-  border: none;
-  border-radius: 10px;
-  padding: 14px 12px;
-  font-weight: 800;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-  font-size: 13px;
-  text-align: center;
-}
-
-.hero-temu-boton-carrito { background: #111; color: #fff; }
-.hero-temu-boton-contra-entrega { background: #27AE60; color: #fff; }
-.hero-temu-boton-pagar-plataforma { background: #0ea5e9; color: #fff; }
-
-.hero-temu-boton-carrito:hover,
-.hero-temu-boton-contra-entrega:hover,
-.hero-temu-boton-pagar-plataforma:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Estados :active y :focus para mantener fondos */
-.hero-temu-boton-carrito:active,
-.hero-temu-boton-carrito:focus {
-  background: #111 !important;
-  color: #fff !important;
-  outline: none;
-  transform: translateY(0px);
-}
-
-.hero-temu-boton-contra-entrega:active,
-.hero-temu-boton-contra-entrega:focus {
-  background: #27AE60 !important;
-  color: #fff !important;
-  outline: none;
-  transform: translateY(0px);
-}
-
-.hero-temu-boton-pagar-plataforma:active,
-.hero-temu-boton-pagar-plataforma:focus {
-  background: #0ea5e9 !important;
-  color: #fff !important;
-  outline: none;
-  transform: translateY(0px);
-}
-
-/* BOTONES VENDIDO */
-.hero-temu-botones-vendido {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  grid-column: 1 / -1; /* Ocupa toda la fila */
-}
-
-.hero-temu-boton-vendido {
-  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 16px 20px;
-  font-weight: 800;
-  font-size: 14px;
-  cursor: not-allowed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  opacity: 0.8;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
-}
-
-.hero-temu-boton-producto-vendido {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
-  border: none;
-  padding: 18px 24px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  justify-content: center;
-  margin-bottom: 12px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-}
-
-.hero-temu-boton-producto-vendido:hover {
-  background: linear-gradient(135deg, #c0392b, #a93226);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.4);
-}
-
-.hero-temu-boton-notificar {
-  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 14px 20px;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
-}
-
-.hero-temu-boton-notificar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(23, 162, 184, 0.4);
-  background: linear-gradient(135deg, #1c7ed6 0%, #1971c2 100%);
-}
-
-/* IMAGEN DE MÉTODOS DE PAGO */
-.hero-temu-metodos-pago {
-  margin: 20px 0;
-  text-align: center;
-  padding: 0 10px;
-}
-
-.hero-temu-imagen-pagos {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 
-    0 8px 20px rgba(0, 0, 0, 0.08),
-    0 3px 10px rgba(0, 0, 0, 0.04);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid rgba(255, 68, 68, 0.05);
-}
-
-.hero-temu-imagen-pagos:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 
-    0 12px 30px rgba(0, 0, 0, 0.12),
-    0 5px 15px rgba(255, 68, 68, 0.1);
-  border-color: rgba(255, 68, 68, 0.1);
-}
-
-/* ============================================
-   SECCIONES DE CONTENIDO
-   ============================================ */
-
-/* DESCRIPCIÓN EXPANDIBLE */
-.hero-temu-seccion-descripcion {
-  margin: 16px 0;
-  padding: 16px;
-  background: #fff;
-  border-radius: 8px;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.hero-temu-titulo-descripcion {
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hero-temu-texto-descripcion {
-  font-size: 16px;
-  line-height: 1.8;
-  color: #555;
-  margin-bottom: 16px;
-  letter-spacing: 0.3px;
-  word-spacing: 1px;
-  text-align: left;
-}
-
-.hero-temu-boton-expandir {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(14, 165, 233, 0.3);
-}
-
-.hero-temu-boton-expandir:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(14, 165, 233, 0.4);
-}
-
-.hero-temu-icono-expandir {
-  transition: transform 0.3s ease;
-}
-
-.hero-temu-icono-expandir.expandido {
-  transform: rotate(180deg);
-}
-
-/* ESPECIFICACIONES TÉCNICAS */
-.hero-temu-especificaciones-tecnicas {
-  background: #fff; 
-  border-radius: 12px; 
-  padding: 16px; 
-  margin-bottom: 16px; 
-  box-shadow: 0 4px 16px rgba(0,0,0,.06);
-}
-
-.hero-temu-titulo-especificaciones {
-  margin: 0 0 8px; 
-  color: #2c3e50;
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.hero-temu-grid-especificaciones {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-  gap: 12px;
-}
-
-.hero-temu-grid-especificaciones div {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.5;
-}
-
-.hero-temu-grid-especificaciones strong {
-  color: #333;
-  font-weight: 600;
-}
-
-/* POR QUÉ ELEGIR ESTE PRODUCTO */
-.hero-temu-seccion-porque-elegir {
-  margin: 20px 0;
-  padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-radius: 12px;
-  border: 1px solid #dee2e6;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.hero-temu-titulo-porque-elegir {
-  font-size: 20px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-align: left; /* Alineado a la izquierda */
-  justify-content: flex-start; /* Alineado a la izquierda */
-}
-
-.hero-temu-subtitulo-porque-elegir {
-  font-size: 14px;
-  color: #6c757d;
-  margin: 0 0 16px 0;
-  text-align: left; /* Alineado a la izquierda */
-  line-height: 1.5;
-}
-
-.hero-temu-beneficios-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.hero-temu-beneficio-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-}
-
-.hero-temu-beneficio-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.hero-temu-icono-beneficio {
-  font-size: 32px; /* Más grande para que se vea de lujo */
-  flex-shrink: 0;
-  margin-top: 0; /* Centrado verticalmente */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px; /* Contenedor fijo para centrado perfecto */
-  height: 50px;
-  text-align: center;
-}
-
-.hero-temu-contenido-beneficio h4 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 0 0 6px 0;
-  text-align: left; /* Alineado a la izquierda */
-}
-
-.hero-temu-contenido-beneficio p {
-  font-size: 14px;
-  color: #6c757d;
-  margin: 0;
-  line-height: 1.5;
-  text-align: left; /* Alineado a la izquierda */
-}
-
-/* ============================================
-   ELEMENTOS AUXILIARES
-   ============================================ */
-
-/* INDICADOR MODO STICKY */
-.hero-temu-indicador-modo {
-  position: fixed; 
-  top: 12px; 
-  right: 12px; 
-  z-index: 50;
-  background: #111; 
-  color: #fff; 
-  padding: 6px 10px; 
-  border-radius: 999px; 
-  font-size: 12px; 
-  font-weight: 800; 
-  opacity: .85;
-}
-
-/* PRODUCTO NO ENCONTRADO */
-.hero-temu-producto-no-encontrado {
-  display: flex; 
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
-  min-height: 50vh;
-  gap: 1rem;
-  text-align: center;
-  color: #6c757d;
-}
-
-.hero-temu-producto-no-encontrado h2 {
-  margin: 0;
-  font-size: 24px;
-  color: #333;
-}
-
-.hero-temu-producto-no-encontrado p {
-  margin: 0;
-  font-size: 16px;
-}
+/* === MOVIL === */
 
 /* ============================================
    POPUP DE GALERÍA - ARREGLADO SIN SCROLL
@@ -1584,17 +1590,17 @@
 
 
 /* TABLETS (hasta 1200px) */
-@media (max-width: 1200px) { 
-  .hero-temu-contenido-principal { 
-    grid-template-columns: 46% 1fr !important; 
+@media (max-width: 1200px) {
+  .hero-temu-contenido-principal {
+    grid-template-columns: 46% 1fr !important;
     gap: 1% !important;
     padding: 0 !important;
     margin: 0 !important;
   }
-    .hero-temu-columna-izquierda { 
+    .hero-temu-columna-izquierda {
   max-width: 100%;
 }
-  
+
   .hero-temu-contenedor {
     padding: 1px 0 !important;
   }
@@ -1634,12 +1640,14 @@
     font-weight: 900;
     font-size: 13px;
   }
-  
+
   .hero-temu-oferta-relampago {
     border-radius: 0;
     padding: 10px 12px;
   }
 }
+
+/* === MOVIL2 === */
 
 /* ============================================
    RESPONSIVE MÓVIL - SISTEMA LIMPIO CON CLASES ESPECÍFICAS
@@ -1681,14 +1689,14 @@
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
-  
+
   .hero-temu-contenido-principal {
     flex-direction: column;
     gap: 0;
     padding: 0;
     margin: 0;
   }
-  
+
   .hero-temu-columna-izquierda {
     flex: 1;
     width: 100%;
@@ -1717,7 +1725,7 @@
   }
 
   .hero-temu-seccion-descripcion {
-    margin-left: 0px !important;   
+    margin-left: 0px !important;
     margin-bottom: -10px !important;
     padding: 8px !important;
   }
@@ -1772,24 +1780,24 @@
     margin-bottom: -10px !important;
   }
 
-  .hero-temu-precio-actual-grande { 
-    font-size: 26px !important; 
-    font-weight: 800 !important; 
-    text-shadow: none !important; 
+  .hero-temu-precio-actual-grande {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
   }
-  
-  .hero-temu-precio-original-tachado { 
-    font-size: 16px !important; 
-    color: #9aa0a6 !important; 
+
+  .hero-temu-precio-original-tachado {
+    font-size: 16px !important;
+    color: #9aa0a6 !important;
   }
-  
-  .hero-temu-ahorro-label { 
-    font-size: 12px !important; 
+
+  .hero-temu-ahorro-label {
+    font-size: 12px !important;
     background: rgba(16, 185, 129, 0.18) !important;
   }
-  
-  .hero-temu-badge-descuento-grande { 
-    display: none !important; 
+
+  .hero-temu-badge-descuento-grande {
+    display: none !important;
   }
 
   .hero-temu-boton-carrito,
@@ -1819,13 +1827,13 @@
     border-radius: 0;
     box-shadow: none;
   }
-  
+
   .hero-temu-contenedor-galeria {
     flex-direction: column;
     width: 100%;
     gap: 0;
   }
-  
+
   .hero-temu-imagen-principal {
     width: 100%;
     aspect-ratio: 1/1;
@@ -1852,7 +1860,7 @@
     border-radius: 8px !important;
     transform: scale(1) !important;
   }
-  
+
   .hero-temu-miniaturas-verticales {
     flex-direction: row;
     gap: 6px !important;
@@ -1869,7 +1877,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  
+
   .hero-temu-miniaturas-verticales::-webkit-scrollbar {
     display: none;
   }
@@ -1881,11 +1889,11 @@
     border-radius: 8px !important;
     position: relative;
   }
-  
+
   .hero-temu-miniatura-vertical:hover {
     transform: scale(1.05);
   }
-  
+
   .hero-temu-miniatura-vertical.activa {
     border-color: #ff4444;
     box-shadow: 0 0 0 2px #ff4444;
