@@ -79,6 +79,15 @@ app.post('/api/meta/actualizar-feed', async (req, res) => {
 // Servir archivos estáticos de dist si existen
 app.use(express.static('dist'))
 
+// Catch-all: todas las rutas no-API sirven el index.html (React Router SPA)
+import { createRequire } from 'module'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+const __dirname = dirname(fileURLToPath(import.meta.url))
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'dist', 'index.html'))
+})
+
 app.listen(PORT, async () => {
   console.log(`🚀 Servidor iniciado en http://localhost:${PORT}`)
   const bucket = await asegurarBucketFeedsMeta()
