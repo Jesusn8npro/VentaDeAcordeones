@@ -36,8 +36,8 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
               : '📝 Descripción'}
           </h3>
           <div style={{ lineHeight: '1.6', color: '#495057', whiteSpace: 'pre-wrap' }}>
-            {typeof producto.descripcion === 'object' && producto.descripcion?.contenido
-              ? producto.descripcion.contenido
+            {typeof producto.descripcion === 'object'
+              ? (producto.descripcion.contenido || producto.descripcion.texto || producto.descripcion.titulo || '')
               : producto.descripcion}
           </div>
         </div>
