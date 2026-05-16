@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import React from 'react'
 import {
-  Smartphone,
-  Laptop,
-  Headphones,
-  Camera,
-  Watch,
-  Gamepad2,
-  Shirt,
-  Home,
+  Music,
+  Music2,
+  Mic,
+  Speaker,
+  Radio,
+  Guitar,
   Tag
 } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
@@ -77,14 +75,13 @@ export const useCategoriasMenu = () => {
 
 export const obtenerIconoCategoria = (categoria: CategoriaMenu): React.ReactNode => {
   const nombre = categoria.nombre?.toLowerCase() || ''
-  const icono = categoria.icono?.toLowerCase() || ''
-  if (nombre.includes('electrón') || nombre.includes('tecnolog') || icono.includes('smartphone')) return React.createElement(Smartphone, { size: 20 })
-  if (nombre.includes('computador') || nombre.includes('laptop') || icono.includes('laptop')) return React.createElement(Laptop, { size: 20 })
-  if (nombre.includes('audio') || nombre.includes('audífono') || icono.includes('headphones')) return React.createElement(Headphones, { size: 20 })
-  if (nombre.includes('cámara') || nombre.includes('foto') || icono.includes('camera')) return React.createElement(Camera, { size: 20 })
-  if (nombre.includes('reloj') || nombre.includes('watch') || icono.includes('watch')) return React.createElement(Watch, { size: 20 })
-  if (nombre.includes('juego') || nombre.includes('gaming') || icono.includes('gamepad')) return React.createElement(Gamepad2, { size: 20 })
-  if (nombre.includes('ropa') || nombre.includes('moda') || icono.includes('shirt')) return React.createElement(Shirt, { size: 20 })
-  if (nombre.includes('hogar') || nombre.includes('casa') || icono.includes('home')) return React.createElement(Home, { size: 20 })
+  if (nombre.includes('acordeon') || nombre.includes('acordeón')) return React.createElement(Music2, { size: 20 })
+  if (nombre.includes('guitarra')) return React.createElement(Guitar, { size: 20 })
+  if (nombre.includes('bajo')) return React.createElement(Guitar, { size: 20 })
+  if (nombre.includes('armónica') || nombre.includes('armonica')) return React.createElement(Music, { size: 20 })
+  if (nombre.includes('micro')) return React.createElement(Mic, { size: 20 })
+  if (nombre.includes('amplif')) return React.createElement(Speaker, { size: 20 })
+  if (nombre.includes('audio')) return React.createElement(Speaker, { size: 20 })
+  if (nombre.includes('piano') || nombre.includes('teclado')) return React.createElement(Radio, { size: 20 })
   return React.createElement(Tag, { size: 20 })
 }
