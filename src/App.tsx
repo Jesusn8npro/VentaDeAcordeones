@@ -5,6 +5,7 @@ import ChatEnVivo from './componentes/chat/ChatEnVivo'
 import BotonWhatsapp from './componentes/BotonWhatsapp/BotonWhatsapp'
 import NotificacionCarritoWrapper from './componentes/ui/NotificacionCarritoWrapper'
 import HeaderPrincipal from './componentes/layout/HeaderPrincipal'
+import FooterPrincipal from './componentes/layout/FooterPrincipal'
 import FavoritosProvider from './contextos/FavoritosContext'
 import { CarritoProvider } from './contextos/CarritoContext'
 import { ChatProvider } from './contextos/ChatContext'
@@ -49,6 +50,7 @@ const ConHeader = ({ children }: { children: React.ReactNode }) => (
   <>
     <HeaderPrincipal />
     <main className="contenido-principal">{children}</main>
+    <FooterPrincipal />
   </>
 )
 
