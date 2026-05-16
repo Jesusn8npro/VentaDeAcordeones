@@ -9,7 +9,7 @@ export default function Ayuda() {
     { nombre: 'Guitarras', ruta: '/tienda/categoria/guitarras' },
     { nombre: 'Armónicas', ruta: '/tienda/categoria/armonicas' },
     { nombre: 'Pianos y Teclados', ruta: '/tienda/categoria/pianos-teclados' },
-    { nombre: 'Micrófonos', ruta: '/tienda/categoria/microfonos' }
+    { nombre: 'Micrófonos y Audio', ruta: '/tienda/categoria/microfonos-y-audio' }
   ]
 
   const enlacesRapidos = [

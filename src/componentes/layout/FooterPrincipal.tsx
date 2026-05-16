@@ -38,7 +38,7 @@ export default function FooterPrincipal() {
           <h3 className="footer-titulo">Tienda</h3>
           <ul className="footer-lista">
             <li><Link to="/tienda/categoria/acordeones-rey-vallenato">Acordeones Rey Vallenato</Link></li>
-            <li><Link to="/tienda/categoria/acordeones-hohner-premium">Accordeones Hohner Premium</Link></li>
+            <li><Link to="/tienda/categoria/acordeones-hohner-premium">Acordeones Hohner Premium</Link></li>
             <li><Link to="/tienda/categoria/acordeones-para-ninos">Acordeones para Niños</Link></li>
             <li><Link to="/tienda/categoria/acordeones-personalizados">Personalizados</Link></li>
             <li><Link to="/tienda/categoria/armonicas">Armónicas</Link></li>
