@@ -37,9 +37,9 @@ const TerminosCondiciones = () => {
           </div>
           <div className="terms-section-body">
             <p>
-              Para todos los efectos transaccionales y legales, será el vendedor <strong>VentaDeAcordeones.com</strong>, 
-              sociedad distribuidora de artículos para el hogar y vehículos, sujeta a las leyes colombianas, 
-              con existencia legal y domicilio principal en la ciudad de Cali, Colombia.
+              Para todos los efectos transaccionales y legales, será el vendedor <strong>VentaDeAcordeones.com</strong>,
+              tienda especializada en acordeones, instrumentos musicales y accesorios para músicos colombianos, sujeta a las leyes colombianas,
+              con operaciones en Colombia.
             </p>
             <p>
               Las transacciones que se efectúen a través del sitio VentaDeAcordeones.com (el "Sitio") se sujetan 
@@ -62,9 +62,9 @@ const TerminosCondiciones = () => {
           </div>
           <div className="terms-section-body">
             <p>
-              VentaDeAcordeones.com opera el Sitio, mediante el cual los clientes podrán comprar los productos que 
-              se ofrecen a través del mismo, entre los cuales se encuentran a manera enunciativa: artículos 
-              de hogar, cuidado personal, deporte, tecnología, mascotas y vehículos.
+              VentaDeAcordeones.com opera el Sitio, mediante el cual los clientes podrán comprar los productos que
+              se ofrecen a través del mismo, entre los cuales se encuentran: acordeones diatónicos y cromáticos,
+              armónicas, guitarras, bajos, pianos, amplificadores, micrófonos y accesorios musicales.
             </p>
             <div className="terms-alert">
               <strong>Requisito:</strong> El registro del cliente en este Sitio es indispensable para comprar productos.
@@ -321,7 +321,7 @@ const TerminosCondiciones = () => {
             <div className="terms-info">
               <h4>📞 Contacto</h4>
               <p><strong>📧 Email:</strong> info@VentaDeAcordeones.com</p>
-              <p><strong>📱 Teléfono:</strong> +57 300 000 0000</p>
+              <p><strong>📱 Teléfono:</strong> +57 320 849 2093</p>
               <p><strong>🏢 Dirección:</strong> Cali, Colombia</p>
               <p><strong>🕒 Horario:</strong> Lunes a Viernes 8:00 AM - 12:30 PM y 2:00 PM - 5:30 PM</p>
             </div>

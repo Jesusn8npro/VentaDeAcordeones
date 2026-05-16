@@ -49,23 +49,24 @@ export default function PreguntasFrecuentes() {
 
   // Preguntas y respuestas (ejemplo local)
   const preguntas = [
-    { categoria: 'Compras', pregunta: '¿Cómo comprar en VentaDeAcordeones.com?', respuesta: 'Busca el producto, pulsa “Comprar ahora”, completa tus datos y elige tu método de pago. Te confirmamos por WhatsApp y correo.', icono: ShoppingCart },
-    { categoria: 'Compras', pregunta: '¿Qué productos venden?', respuesta: 'Electrónicos, moda, hogar, repuestos, deportes, belleza y más. Si no lo ves, lo conseguimos.', icono: ShoppingCart },
-    { categoria: 'Compras', pregunta: '¿Los precios incluyen impuestos?', respuesta: 'Sí. Los precios incluyen IVA y costos aplicables. Sin sorpresas al pagar.', icono: ShoppingCart },
-    { categoria: 'Pagos', pregunta: '¿Qué métodos de pago aceptan?', respuesta: 'Tarjetas (Visa, Mastercard, Amex), transferencias, PSE, PayPal y en Bogotá pago contra entrega. Todo seguro.', icono: CreditCard },
-    { categoria: 'Pagos', pregunta: '¿Es seguro pagar con tarjeta?', respuesta: 'Usamos encriptación de nivel bancario y proveedores certificados. Nunca almacenamos datos sensibles.', icono: CreditCard },
-    { categoria: 'Pagos', pregunta: '¿Puedo pagar contra entrega?', respuesta: 'Sí, disponible en Bogotá. Pagas cuando recibes y verificas tu pedido.', icono: CreditCard },
-    { categoria: 'Envíos', pregunta: '¿Cuánto tarda el envío?', respuesta: 'Bogotá: 1–2 días hábiles. Otras ciudades: 2–5 días. Te enviamos guía para rastreo.', icono: Truck },
-    { categoria: 'Envíos', pregunta: '¿Cuánto cuesta el envío?', respuesta: 'Gratis en compras superiores a $150.000. Bajo ese valor, de $8.000 a $15.000 según ciudad.', icono: Truck },
-    { categoria: 'Envíos', pregunta: '¿Puedo cambiar la dirección de entrega?', respuesta: 'Sí, dentro de las 2 horas siguientes al pedido. Luego, contáctanos por WhatsApp para ayudarte.', icono: Truck },
-    { categoria: 'Devoluciones', pregunta: '¿Cómo pedir una devolución?', respuesta: 'Escríbenos por WhatsApp, te damos autorización, coordinamos recogida y reembolsamos en 5–10 días hábiles.', icono: RotateCcw },
-    { categoria: 'Devoluciones', pregunta: '¿Cuándo puedo devolver un producto?', respuesta: 'Defectuoso: hasta 30 días. Cambio de opinión: 7 días si está sin uso y con empaque.', icono: RotateCcw },
-    { categoria: 'Devoluciones', pregunta: '¿Cuánto tarda el reembolso?', respuesta: 'Tras recibir el producto, procesamos en 5–10 días hábiles. En banco se refleja 1–2 días después.', icono: RotateCcw },
-    { categoria: 'Seguridad', pregunta: '¿Es seguro comprar aquí?', respuesta: 'Sí. Empresa constituida, tecnología segura, cumplimiento de privacidad y miles de clientes satisfechos.', icono: Shield },
-    { categoria: 'Seguridad', pregunta: '¿Qué garantía tienen los productos?', respuesta: 'Garantía de fabricante y garantía de satisfacción propia. Te ayudamos hasta resolverlo.', icono: Shield },
-    { categoria: 'Cuenta', pregunta: '¿Cómo creo una cuenta?', respuesta: 'Pulsa “Registrarse”, completa nombre, correo y teléfono, crea contraseña segura. También puedes comprar como invitado.', icono: User },
-    { categoria: 'Cuenta', pregunta: '¿Puedo cambiar mis datos?', respuesta: 'Sí, desde tu perfil o por WhatsApp. Mantenerlos actualizados mejora tu experiencia.', icono: User },
-    { categoria: 'Cuenta', pregunta: '¿Cómo borro mi cuenta?', respuesta: 'Solicítalo por WhatsApp o correo. Eliminamos tus datos en máximo 30 días, según ley.', icono: Trash2 }
+    { categoria: 'Compras', pregunta: '¿Cómo comprar en VentaDeAcordeones.com?', respuesta: 'Busca el instrumento, pulsa “Comprar ahora”, completa tus datos y elige tu método de pago. Te confirmamos por WhatsApp y correo con todos los detalles del pedido.', icono: ShoppingCart },
+    { categoria: 'Compras', pregunta: '¿Qué productos venden?', respuesta: 'Acordeones diatónicos y cromáticos (Hohner, Rey Vallenato, Bravo, Corona), armónicas, guitarras, bajos, pianos, amplificadores, micrófonos y accesorios para músicos colombianos.', icono: ShoppingCart },
+    { categoria: 'Compras', pregunta: '¿Los precios incluyen impuestos?', respuesta: 'Sí. Todos los precios incluyen IVA. Sin costos ocultos al pagar.', icono: ShoppingCart },
+    { categoria: 'Compras', pregunta: '¿Puedo personalizar un acordeón?', respuesta: 'Sí. Diseñamos acordeones a tu gusto: elige colores de tapas, fuelles y parrillas. Paga solo el 30% de anticipo y el resto al recibir. Escríbenos por WhatsApp para más detalles.', icono: ShoppingCart },
+    { categoria: 'Pagos', pregunta: '¿Qué métodos de pago aceptan?', respuesta: 'Tarjetas débito/crédito (Visa, Mastercard), transferencias bancarias, PSE y consignaciones. Procesamos los pagos de forma segura con ePayco.', icono: CreditCard },
+    { categoria: 'Pagos', pregunta: '¿Es seguro pagar con tarjeta?', respuesta: 'Sí. Usamos ePayco con encriptación de nivel bancario. Nunca almacenamos datos de tarjetas en nuestros servidores.', icono: CreditCard },
+    { categoria: 'Pagos', pregunta: '¿Puedo pagar en cuotas?', respuesta: 'Sí, con tarjetas de crédito puedes diferir el pago según las opciones de tu banco. Consúltanos también por convenios de financiación.', icono: CreditCard },
+    { categoria: 'Envíos', pregunta: '¿Cuánto tarda el envío?', respuesta: 'Despachamos con SERVIENTREGA. Bogotá y ciudades principales: 1–2 días hábiles. Otras ciudades y municipios: 2–5 días hábiles. Recibes número de guía para rastrear.', icono: Truck },
+    { categoria: 'Envíos', pregunta: '¿Cuánto cuesta el envío?', respuesta: 'El costo depende del destino y el peso del instrumento. Los acordeones tienen empaque especial reforzado. Consúltanos por WhatsApp para cotizar tu envío específico.', icono: Truck },
+    { categoria: 'Envíos', pregunta: '¿Cómo empacan los acordeones?', respuesta: 'Con protección especial: espuma de alta densidad, plástico burbuja y caja reforzada. Garantizamos que tu instrumento llegue en perfectas condiciones.', icono: Truck },
+    { categoria: 'Devoluciones', pregunta: '¿Cómo pedir una devolución?', respuesta: 'Escríbenos por WhatsApp al +57 320 849 2093 dentro de los 15 días de recibido. Verificamos el estado, coordinamos la devolución y procesamos el reembolso en 5–10 días hábiles.', icono: RotateCcw },
+    { categoria: 'Devoluciones', pregunta: '¿Qué garantía tienen los acordeones?', respuesta: '6 meses de garantía en acordeones nuevos contra defectos de fábrica. No aplica para daños por mal uso, caídas o humedad. Respaldamos cada instrumento que vendemos.', icono: RotateCcw },
+    { categoria: 'Devoluciones', pregunta: '¿Cuánto tarda el reembolso?', respuesta: 'Tras recibir y verificar el producto, procesamos en 5–10 días hábiles. El abono en tu cuenta puede tomar 1–2 días adicionales del banco.', icono: RotateCcw },
+    { categoria: 'Seguridad', pregunta: '¿Es seguro comprar aquí?', respuesta: 'Sí. Llevamos más de 10 años vendiendo acordeones en Colombia. Cientos de clientes satisfechos, pagos seguros con ePayco y respaldo post-venta real por WhatsApp.', icono: Shield },
+    { categoria: 'Seguridad', pregunta: '¿Los instrumentos son originales?', respuesta: 'Sí. Todos nuestros acordeones Hohner son originales con número de serie verificable. Trabajamos directamente con distribuidores autorizados.', icono: Shield },
+    { categoria: 'Cuenta', pregunta: '¿Cómo creo una cuenta?', respuesta: 'Pulsa “Registrarse”, completa tu nombre, correo y contraseña. También puedes comprar sin cuenta como invitado.', icono: User },
+    { categoria: 'Cuenta', pregunta: '¿Puedo ver el historial de mis pedidos?', respuesta: 'Sí, desde tu perfil en la sección “Mis Pedidos” puedes ver el estado de todos tus pedidos y el tracking del envío.', icono: User },
+    { categoria: 'Cuenta', pregunta: '¿Cómo borro mi cuenta?', respuesta: 'Solicítalo por WhatsApp o correo a acordeon91@gmail.com. Eliminamos tus datos en máximo 30 días según la ley 1581 de 2012.', icono: Trash2 }
   ]
 
   // Filtrado por término de búsqueda
@@ -205,13 +206,13 @@ export default function PreguntasFrecuentes() {
           <h2 className="faq__seccion-titulo">¿No encuentras tu respuesta?</h2>
           <p className="faq__seccion-subtitulo">Estamos listos para ayudarte al instante.</p>
           <div className="faq__contacto-grid">
-            <a href="https://wa.me/573012345678" className="faq__contacto-card whatsapp">
+            <a href="https://wa.me/573208492093" className="faq__contacto-card whatsapp">
               <MessageSquare className="faq__contacto-icono" />
               <h3>WhatsApp</h3>
               <p>Respuesta inmediata 24/7</p>
               <span className="faq__badge">Recomendado</span>
             </a>
-            <a href="mailto:hola@VentaDeAcordeones.com" className="faq__contacto-card email">
+            <a href="mailto:acordeon91@gmail.com" className="faq__contacto-card email">
               <Mail className="faq__contacto-icono" />
               <h3>Email</h3>
               <p>Respondemos en menos de 2 horas</p>
@@ -231,7 +232,7 @@ export default function PreguntasFrecuentes() {
           <h2 className="faq__cta-titulo">¿Listo para comprar con confianza?</h2>
           <p className="faq__cta-subtitulo">Todas tus dudas resueltas, ahora puedes comprar tranquilo.</p>
           <div className="faq__cta-botones">
-            <Link to="/productos" className="faq__btn-primario">
+            <Link to="/tienda" className="faq__btn-primario">
               <Heart className="faq__btn-icono" />
               Explorar productos
             </Link>

@@ -39,7 +39,7 @@ const CambiosDevoluciones = () => {
             <div className="destacado">
               <strong>Tiempo límite:</strong> En un plazo de cinco (5) días calendario desde la fecha de recepción del paquete puedes solicitar el cambio.
             </div>
-            <p>Para solicitar un cambio, debes escribir al correo <strong>info@VentaDeAcordeones.com</strong> o por WhatsApp al número <strong>+57 300 000 0000</strong> especificando la siguiente información:</p>
+            <p>Para solicitar un cambio, debes escribir al correo <strong>acordeon91@gmail.com</strong> o por WhatsApp al número <strong>+57 320 849 2093</strong> especificando la siguiente información:</p>
             <div className="formato-solicitud">
               <h4>Información Requerida para el Cambio:</h4>
               <ul>
@@ -79,7 +79,7 @@ const CambiosDevoluciones = () => {
           </div>
           <div className="seccion-contenido">
             <p>Si el producto entregado no es el correcto, tendrás <strong>5 días calendario</strong> a partir del momento de la entrega para informar acerca del error y solicitar el cambio.</p>
-            <p>Debes enviar un correo electrónico a <strong>info@VentaDeAcordeones.com</strong>, de lunes a viernes de 8:00am a 12:30 pm y de 2:00pm a 5:30 pm.</p>
+            <p>Debes enviar un correo electrónico a <strong>acordeon91@gmail.com</strong>, de lunes a viernes de 8:00am a 12:30 pm y de 2:00pm a 5:30 pm.</p>
             <p>Recibido el correo se procederá al análisis del caso, se confirmará si fue o no un error de VentaDeAcordeones.com quien, de ser así, asumirá el valor de recogida del producto y el envío del nuevo producto.</p>
           </div>
         </div>
@@ -107,7 +107,7 @@ const CambiosDevoluciones = () => {
             <div className="formato-solicitud">
               <h4>Para ejercer el derecho de retracto:</h4>
               <ul>
-                <li>Enviar correo electrónico a <strong>info@VentaDeAcordeones.com</strong> con el asunto: "RETRACTO"</li>
+                <li>Enviar correo electrónico a <strong>acordeon91@gmail.com</strong> con el asunto: "RETRACTO"</li>
                 <li>Incluir los datos de compra y de contacto</li>
                 <li>Hacer la solicitud formal de la devolución</li>
                 <li>Dar fe de que el producto está en las mismas condiciones en las que fue recibido</li>
@@ -149,7 +149,7 @@ const CambiosDevoluciones = () => {
             </div>
             <div className="formato-solicitud">
               <h4>Para ejercer tu derecho de reversión:</h4>
-              <p>Envía un correo electrónico a <strong>info@VentaDeAcordeones.com</strong> con: nombre completo, cédula y razón por la que se requiere la reversión del pago.</p>
+              <p>Envía un correo electrónico a <strong>acordeon91@gmail.com</strong> con: nombre completo, cédula y razón por la que se requiere la reversión del pago.</p>
             </div>
             <div className="importante">
               <strong>No aplica para:</strong> Efecty, Baloto, Pago referenciado en bancos, Pago contra entrega en efectivo, ni compras realizadas en el exterior.
@@ -168,8 +168,8 @@ const CambiosDevoluciones = () => {
           <div className="seccion-contenido">
             <div className="contacto-info">
               <h4>Contacto para Cambios y Devoluciones</h4>
-              <p><strong>Email:</strong> info@VentaDeAcordeones.com</p>
-              <p><strong>WhatsApp:</strong> +57 300 000 0000</p>
+              <p><strong>Email:</strong> acordeon91@gmail.com</p>
+              <p><strong>WhatsApp:</strong> +57 320 849 2093</p>
               <p><strong>Dirección:</strong> Cali, Colombia</p>
               <p><strong>Horario:</strong> Lunes a Viernes 8:00 AM - 12:30 PM y 2:00 PM - 5:30 PM</p>
             </div>

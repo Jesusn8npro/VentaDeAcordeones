@@ -18,7 +18,7 @@ const ContraEntregaModal = ({
   onConfirmar,
 }) => {
   const precioUnitario = producto?.precio || 0
-  const WHATSAPP_NUMERO_RAW = import.meta.env?.VITE_WHATSAPP_NUMERO ?? '3214892176'
+  const WHATSAPP_NUMERO_RAW = import.meta.env?.VITE_WHATSAPP_NUMERO ?? '3208492093'
   const WHATSAPP_NUMERO = WHATSAPP_NUMERO_RAW.startsWith('57') ? WHATSAPP_NUMERO_RAW : `57${WHATSAPP_NUMERO_RAW}`
 
   const OFERTAS = useMemo(() => {

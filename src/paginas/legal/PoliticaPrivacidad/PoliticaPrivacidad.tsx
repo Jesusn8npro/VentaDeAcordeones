@@ -289,7 +289,7 @@ const PoliticaPrivacidad = () => {
             <div className="contacto-info">
               <h4>Contacto para Consultas sobre Privacidad</h4>
               <p><strong>Email:</strong> privacidad@VentaDeAcordeones.com</p>
-              <p><strong>Teléfono:</strong> +57 300 000 0000</p>
+              <p><strong>Teléfono:</strong> +57 320 849 2093</p>
               <p><strong>Dirección:</strong> Cali, Colombia</p>
             </div>
           </div>

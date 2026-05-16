@@ -87,7 +87,7 @@ export function usePaginaPerfil() {
   }
 
   const construirUrlWhatsapp = () => {
-    const numeroWA = '573214892176'
+    const numeroWA = '573208492093'
     const ultimo: any = pedidosUsuario?.[0] || null
     const nombreProducto = ultimo?.productos?.[0]?.nombre
     const totalPedido = ultimo?.total || 0

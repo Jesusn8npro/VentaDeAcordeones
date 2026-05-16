@@ -49,8 +49,8 @@ const Contacto = () => {
                 </div>
                 <div className="info-content">
                   <h3>WhatsApp</h3>
-                  <a href="https://wa.me/573214892176" className="info-link">
-                    +57 321 489 2176
+                  <a href="https://wa.me/573208492093" className="info-link">
+                    +57 320 849 2093
                   </a>
                   <p className="info-detail">Respuesta inmediata</p>
                 </div>
@@ -62,8 +62,8 @@ const Contacto = () => {
                 </div>
                 <div className="info-content">
                   <h3>Correo electrónico</h3>
-                  <a href="mailto:hola@VentaDeAcordeones.com" className="info-link">
-                    hola@VentaDeAcordeones.com
+                  <a href="mailto:acordeon91@gmail.com" className="info-link">
+                    acordeon91@gmail.com
                   </a>
                   <p className="info-detail">Respondemos en 24h</p>
                 </div>
@@ -75,8 +75,8 @@ const Contacto = () => {
                 </div>
                 <div className="info-content">
                   <h3>Teléfono</h3>
-                  <a href="tel:+573214892176" className="info-link">
-                    +57 321 489 2176
+                  <a href="tel:+573208492093" className="info-link">
+                    +57 320 849 2093
                   </a>
                   <p className="info-detail">Lunes a viernes</p>
                 </div>
@@ -173,7 +173,7 @@ const Contacto = () => {
               <p>Escríbenos por WhatsApp para una respuesta instantánea</p>
             </div>
             <a 
-              href="https://wa.me/573214892176" 
+              href="https://wa.me/573208492093" 
               target="_blank" 
               rel="noopener noreferrer"
               className="whatsapp-button"

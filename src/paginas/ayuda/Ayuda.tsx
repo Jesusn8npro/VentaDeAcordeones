@@ -5,11 +5,11 @@ import './Ayuda.css'
 
 export default function Ayuda() {
   const categorias = [
-    { nombre: 'Electrónica', ruta: '/tienda/categoria/electronica' },
-    { nombre: 'Ropa', ruta: '/tienda/categoria/ropa' },
-    { nombre: 'Hogar', ruta: '/tienda/categoria/hogar' },
-    { nombre: 'Deportes', ruta: '/tienda/categoria/deportes' },
-    { nombre: 'Ofertas', ruta: '/ofertas' }
+    { nombre: 'Acordeones', ruta: '/tienda/categoria/acordeones-rey-vallenato' },
+    { nombre: 'Guitarras', ruta: '/tienda/categoria/guitarras' },
+    { nombre: 'Armónicas', ruta: '/tienda/categoria/armonicas' },
+    { nombre: 'Pianos y Teclados', ruta: '/tienda/categoria/pianos-teclados' },
+    { nombre: 'Micrófonos', ruta: '/tienda/categoria/microfonos' }
   ]
 
   const enlacesRapidos = [
@@ -72,7 +72,7 @@ export default function Ayuda() {
           <p className="helpLux-guide-text">
             ¿Necesitas ayuda? Escríbenos por WhatsApp o revisa nuestras preguntas frecuentes.
           </p>
-          <a href="https://wa.me/573214892176" target="_blank" rel="noopener noreferrer" className="helpLux-link">WhatsApp</a>
+          <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="helpLux-link">WhatsApp</a>
         </div>
       </section>
 
@@ -97,7 +97,7 @@ export default function Ayuda() {
             <h3 className="helpLux-contact-title">¿Necesitas ayuda inmediata?</h3>
             <p className="helpLux-contact-text">Escríbenos por WhatsApp y te ayudamos al instante.</p>
           </div>
-          <a href="https://wa.me/573214892176" target="_blank" rel="noopener noreferrer" className="helpLux-btn-primary">Contactar ahora</a>
+          <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="helpLux-btn-primary">Contactar ahora</a>
         </div>
       </section>
     </div>

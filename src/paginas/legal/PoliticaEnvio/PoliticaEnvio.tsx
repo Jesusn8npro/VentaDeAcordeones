@@ -177,8 +177,8 @@ const PoliticaEnvio = () => {
             <div className="tiempo-box">
               <h4>Soporte de Envío</h4>
               <ul>
-                <li><strong>WhatsApp:</strong> +57 300 000 0000</li>
-                <li><strong>Email:</strong> envios@VentaDeAcordeones.com</li>
+                <li><strong>WhatsApp:</strong> +57 320 849 2093</li>
+                <li><strong>Email:</strong> acordeon91@gmail.com</li>
                 <li><strong>Horario:</strong> Lunes a Viernes 8:00 AM - 6:00 PM</li>
                 <li><strong>Sábados:</strong> 8:00 AM - 12:00 PM</li>
               </ul>

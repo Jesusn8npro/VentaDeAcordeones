@@ -7,7 +7,7 @@ const BotonWhatsapp = () => {
   const { modalAbierto } = useCarrito();
 
   // Número de WhatsApp con indicativo de Colombia
-  const numeroWhatsapp = '573214892176';
+  const numeroWhatsapp = '573208492093';
   
   // Mensaje predeterminado súper vendedor
   const mensajePredeterminado = encodeURIComponent(

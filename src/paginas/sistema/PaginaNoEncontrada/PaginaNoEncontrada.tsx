@@ -81,7 +81,7 @@ export default function PaginaNoEncontrada() {
               <p>Escríbenos por WhatsApp y te orientamos.</p>
             </div>
             <a
-              href="https://wa.me/573214892176"
+              href="https://wa.me/573208492093"
               target="_blank"
               rel="noopener noreferrer"
               className="lux404-card-link"
@@ -96,12 +96,12 @@ export default function PaginaNoEncontrada() {
           <MessageCircle size={18} />
           <span>¿Dudas? Escríbenos al </span>
           <a
-            href="https://wa.me/573214892176"
+            href="https://wa.me/573208492093"
             target="_blank"
             rel="noopener noreferrer"
             className="lux404-contact-link"
           >
-            +57 321 489 2176
+            +57 320 849 2093
           </a>
         </div>
       </div>
