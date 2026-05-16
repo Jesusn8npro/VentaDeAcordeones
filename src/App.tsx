@@ -36,9 +36,11 @@ const Contacto            = lazy(() => import('./paginas/empresa/Contacto/Contac
 const QuienesSomos        = lazy(() => import('./paginas/empresa/QuienesSomos/QuienesSomos'))
 const TrabajaConNosotros  = lazy(() => import('./paginas/empresa/TrabajaConNosotros/TrabajaConNosotros'))
 const SobreLaTienda       = lazy(() => import('./paginas/empresa/SobreLaTienda/SobreLaTienda'))
-const TerminosCondiciones = lazy(() => import('./paginas/legal/TerminosCondiciones/TerminosCondiciones'))
-const PoliticaPrivacidad  = lazy(() => import('./paginas/legal/PoliticaPrivacidad/PoliticaPrivacidad'))
-const PreguntasFrecuentes = lazy(() => import('./paginas/legal/PreguntasFrecuentes/PreguntasFrecuentes'))
+const TerminosCondiciones  = lazy(() => import('./paginas/legal/TerminosCondiciones/TerminosCondiciones'))
+const PoliticaPrivacidad   = lazy(() => import('./paginas/legal/PoliticaPrivacidad/PoliticaPrivacidad'))
+const PreguntasFrecuentes  = lazy(() => import('./paginas/legal/PreguntasFrecuentes/PreguntasFrecuentes'))
+const PoliticaEnvio        = lazy(() => import('./paginas/legal/PoliticaEnvio/PoliticaEnvio'))
+const CambiosDevoluciones  = lazy(() => import('./paginas/legal/CambiosDevoluciones/CambiosDevoluciones'))
 
 // Blog y sistema
 const PaginaBlog         = lazy(() => import('./paginas/blog/PaginaBlog'))
@@ -104,6 +106,8 @@ function App() {
                   <Route path="/terminos-condiciones" element={<ConHeader><TerminosCondiciones /></ConHeader>} />
                   <Route path="/politica-privacidad" element={<ConHeader><PoliticaPrivacidad /></ConHeader>} />
                   <Route path="/preguntas-frecuentes" element={<ConHeader><PreguntasFrecuentes /></ConHeader>} />
+                  <Route path="/politica-envio" element={<ConHeader><PoliticaEnvio /></ConHeader>} />
+                  <Route path="/cambios-devoluciones" element={<ConHeader><CambiosDevoluciones /></ConHeader>} />
 
                   {/* Blog */}
                   <Route path="/blog" element={<ConHeader><PaginaBlog /></ConHeader>} />
