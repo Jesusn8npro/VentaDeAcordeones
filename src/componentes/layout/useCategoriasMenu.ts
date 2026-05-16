@@ -3,10 +3,10 @@ import React from 'react'
 import {
   Music,
   Music2,
+  Music3,
   Mic,
   Speaker,
   Radio,
-  Guitar,
   Tag
 } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
@@ -76,8 +76,8 @@ export const useCategoriasMenu = () => {
 export const obtenerIconoCategoria = (categoria: CategoriaMenu): React.ReactNode => {
   const nombre = categoria.nombre?.toLowerCase() || ''
   if (nombre.includes('acordeon') || nombre.includes('acordeón')) return React.createElement(Music2, { size: 20 })
-  if (nombre.includes('guitarra')) return React.createElement(Guitar, { size: 20 })
-  if (nombre.includes('bajo')) return React.createElement(Guitar, { size: 20 })
+  if (nombre.includes('guitarra')) return React.createElement(Music3, { size: 20 })
+  if (nombre.includes('bajo')) return React.createElement(Music3, { size: 20 })
   if (nombre.includes('armónica') || nombre.includes('armonica')) return React.createElement(Music, { size: 20 })
   if (nombre.includes('micro')) return React.createElement(Mic, { size: 20 })
   if (nombre.includes('amplif')) return React.createElement(Speaker, { size: 20 })

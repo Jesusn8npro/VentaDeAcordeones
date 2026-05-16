@@ -93,15 +93,23 @@ export function usarProducto(slug) {
         data.faq = parseMaybeJson(data.faq, data.faq)
         data.garantias = parseMaybeJson(data.garantias, data.garantias)
         
-        // ⚡ Procesar imágenes de forma más eficiente
+        // Procesar imágenes desde producto_imagenes → campos que usan los componentes
         if (data.producto_imagenes && data.producto_imagenes.length > 0) {
-          const imagenesRaw = data.producto_imagenes[0] // Tomar el primer registro de imágenes
-          
-          // Asignar las imágenes directamente sin procesamiento de Google Drive
-          data.imagenes = imagenesRaw
+          const img = data.producto_imagenes[0]
+          data.imagenes = img
+
+          // fotos_principales y fotos_secundarias son los campos que leen las plantillas
+          data.fotos_principales = [img.imagen_principal].filter(Boolean)
+          data.fotos_secundarias = [
+            img.imagen_secundaria_1,
+            img.imagen_secundaria_2,
+            img.imagen_secundaria_3,
+            img.imagen_secundaria_4,
+          ].filter(Boolean)
         } else {
-          // Si no hay imágenes en la tabla producto_imagenes, crear objeto vacío
           data.imagenes = {}
+          data.fotos_principales = []
+          data.fotos_secundarias = []
         }
       }
 
