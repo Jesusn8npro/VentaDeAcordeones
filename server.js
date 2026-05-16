@@ -84,7 +84,7 @@ import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 const __dirname = dirname(fileURLToPath(import.meta.url))
-app.get('*', (req, res) => {
+app.get(/(.*)/, (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'))
 })
 
