@@ -5,15 +5,23 @@ interface Props {
   producto: any
 }
 
+const extraerTexto = (item: any): string => {
+  if (typeof item === 'string') return item
+  if (typeof item === 'object' && item !== null) {
+    return item.texto || item.titulo || item.descripcion || item.nombre || JSON.stringify(item)
+  }
+  return String(item ?? '')
+}
+
 const PlantillaCatalogoDetalle = ({ producto }: Props) => {
   const beneficiosList = Array.isArray(producto.beneficios)
-    ? producto.beneficios
+    ? producto.beneficios.map(extraerTexto)
     : Array.isArray(producto.beneficios?.items)
       ? producto.beneficios.items.map((b) => b.titulo || b.descripcion || '')
       : []
 
   const ventajasList = Array.isArray(producto.ventajas)
-    ? producto.ventajas
+    ? producto.ventajas.map(extraerTexto)
     : Array.isArray(producto.ventajas?.items)
       ? producto.ventajas.items.map((v) => v.titulo || v.descripcion || '')
       : []
@@ -40,7 +48,7 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
           <div style={{ backgroundColor: '#fff0f5', padding: '1.5rem', borderRadius: '8px', border: '1px solid #ffc0cb' }}>
             <h4 style={{ color: '#8b008b', marginBottom: '1rem' }}>🎯 Ganchos</h4>
             <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
-              {producto.ganchos.map((gancho, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{gancho}</li>)}
+              {producto.ganchos.map((gancho, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{extraerTexto(gancho)}</li>)}
             </ul>
           </div>
         )}
@@ -100,7 +108,7 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
               <div style={{ marginTop: '0.5rem' }}>
                 {producto.palabras_clave.map((palabra, index) => (
                   <span key={index} style={{ display: 'inline-block', margin: '0.25rem 0.5rem 0.25rem 0', padding: '0.25rem 0.75rem', backgroundColor: '#cce7ff', borderRadius: '20px', fontSize: '0.875rem' }}>
-                    {palabra}
+                    {extraerTexto(palabra)}
                   </span>
                 ))}
               </div>
