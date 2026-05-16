@@ -205,12 +205,12 @@ const HeaderPrincipal = () => {
     <header className={`header-principal ${headerSticky ? 'sticky' : ''} ${chatAbierto ? 'chat-abierto' : ''}`} ref={headerRef}>
       <SliderInformacion
         items={[
-          '✅ Contra entrega disponible',
-          '🛍️ Plataforma Multiproductos',
-          '🚚 Envío rápido a todo el país',
-          '💳 Pagos seguros 100%',
-          '📞 Atención al cliente 24/7',
-          '🔥 Ofertas nuevas cada día',
+          '🪗 Especialistas en Acordeones desde 2014',
+          '🚚 Envíos con SERVIENTREGA a toda Colombia',
+          '💳 Paga con tarjeta, PSE o transferencia',
+          '🛡️ 6 meses de garantía en acordeones nuevos',
+          '💬 Asesoría gratis por WhatsApp +57 320 849 2093',
+          '🎨 Acordeones personalizados — solo 30% de anticipo',
         ]}
         speed={35}
       />
@@ -242,7 +242,7 @@ const HeaderPrincipal = () => {
             <div className="buscador-form">
               <input
                 type="text"
-                placeholder="Busca lo que necesitas..."
+                placeholder="Busca acordeones, guitarras, armónicas..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
                 className="buscador-input"
