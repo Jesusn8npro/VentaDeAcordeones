@@ -9,8 +9,9 @@ export const configuracionEpayco = {
   clavePublica: import.meta.env.VITE_EPAYCO_PUBLIC_KEY,
   clavePrivada: undefined,
   
-  // Configuración del entorno
-  esProduccion: import.meta.env.VITE_EPAYCO_ENVIRONMENT === 'production',
+  // Configuración del entorno — lee VITE_EPAYCO_ENVIRONMENT, con fallback a !TEST_MODE
+  esProduccion: import.meta.env.VITE_EPAYCO_ENVIRONMENT === 'production'
+    || import.meta.env.VITE_EPAYCO_TEST_MODE === 'false',
   idioma: 'ES', // Español por defecto
   
   // URLs de respuesta

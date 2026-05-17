@@ -37,7 +37,7 @@ export const ProveedorAutenticacion = ({ children }) => {
         nombre: user.user_metadata?.nombre ||
           user.user_metadata?.full_name ||
           user.email.split('@')[0],
-        rol: (user.email === 'acordeon91@gmail.com' || user.email === 'shalom@gmail.com') ? 'admin' : 'cliente',
+        rol: 'cliente',
         telefono: user.user_metadata?.telefono || null,
         creado_el: new Date().toISOString(),
         actualizado_el: new Date().toISOString()
@@ -81,7 +81,7 @@ export const ProveedorAutenticacion = ({ children }) => {
           }
         }
 
-        // Crear usuario básico inmediatamente para evitar parpadeos
+        // Usuario básico temporal mientras se carga el rol real desde la DB
         const usuarioBasico = {
           id: session.user.id,
           email: session.user.email,
@@ -89,7 +89,7 @@ export const ProveedorAutenticacion = ({ children }) => {
             session.user.user_metadata?.nombre ||
             session.user.user_metadata?.full_name ||
             (session.user.email ? session.user.email.split('@')[0] : 'Usuario'),
-          rol: (session.user.email === 'acordeon91@gmail.com' || session.user.email === 'shalom@gmail.com') ? 'admin' : 'cliente' // Rol por defecto (Boostraps con email del dueño)
+          rol: 'cliente'
         }
 
         // NAVEGACIÓN FLUIDA: Actualizar estado inmediatamente

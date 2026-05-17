@@ -79,18 +79,42 @@ const ConfirmacionEpayco = () => {
         test_request: searchParams.get('test_request') || searchParams.get('x_test_request')
       };
 
-      // Registrar en logs de transacciones con TODOS los datos
+      // Validar firma HMAC-SHA256 en el servidor antes de registrar
+      let signature_valida = false;
+      try {
+        const validacionRes = await fetch('/api/epayco/validar-firma', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            x_ref_payco: parametros.x_ref_payco,
+            x_transaction_id: parametros.x_transaction_id,
+            x_amount: parametros.x_amount,
+            x_currency_code: parametros.x_currency_code,
+            x_signature: parametros.x_signature,
+            x_cust_id_cliente: parametros.x_cust_id_cliente,
+          }),
+        });
+        const validacionData = await validacionRes.json();
+        if (validacionData.valida === false) {
+          setEstado('error');
+          setMensaje('Firma de pago inválida. Posible manipulación detectada.');
+          return;
+        }
+        signature_valida = validacionData.valida === true;
+      } catch {
+        // Si el servidor no responde, continuar pero marcar como no validada
+        signature_valida = false;
+      }
+
       const logData = {
         epayco_ref_payco: parametros.x_ref_payco || parametros.ref_payco,
         epayco_transaction_id: parametros.x_transaction_id || parametros.transaction_id,
         tipo_evento: 'confirmation',
         cod_response: parametros.x_cod_response || parametros.cod_response,
         mensaje_response: parametros.x_response || parametros.response,
-        signature_valida: true, // TODO: Implementar validación de firma
+        signature_valida,
         datos_completos: parametros,
         creado_el: new Date().toISOString(),
-        
-        // Campos adicionales para mejor tracking
         x_amount: parametros.x_amount,
         x_currency_code: parametros.x_currency_code,
         x_franchise: parametros.x_franchise,
@@ -100,7 +124,6 @@ const ConfirmacionEpayco = () => {
         x_test_request: parametros.x_test_request
       };
 
-      // Enviar la confirmación al backend seguro si está configurado
       await servicioEpayco.registrarTransaccion({
         referenciaPago: logData.epayco_ref_payco,
         estado: parametros.x_response,

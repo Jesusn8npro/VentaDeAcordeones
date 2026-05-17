@@ -1,1 +1,1 @@
-web: serve -s dist -l 4173
+web: node server.js

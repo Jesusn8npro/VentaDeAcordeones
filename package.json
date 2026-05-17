@@ -40,7 +40,7 @@
     "react-epayco": "^0.1.5",
     "react-helmet-async": "^2.0.5",
     "react-lazy-load-image-component": "^1.6.3",
-    "react-router-dom": "^6.8.1",
+    "react-router-dom": "^7.15.1",
     "react-slick": "^0.31.0",
     "serve": "^14.2.1",
     "slick-carousel": "^1.8.1",

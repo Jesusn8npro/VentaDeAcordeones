@@ -1,15 +1,31 @@
 import { useEffect } from 'react';
 import { verificarRateLimit, manejarError } from '../../configuracion/seguridad/index';
 
-/**
- * Componente de seguridad que envuelve la aplicación
- * Proporciona protección contra ataques comunes
- */
+function obtenerIdentificadorUsuario() {
+  let identificador = sessionStorage.getItem('identificador-seguridad');
+  if (!identificador) {
+    const caracteristicas = [
+      navigator.userAgent,
+      navigator.language,
+      screen.width,
+      screen.height,
+      new Date().getTimezoneOffset()
+    ].join('|');
+    identificador = btoa(caracteristicas).slice(0, 32);
+    sessionStorage.setItem('identificador-seguridad', identificador);
+  }
+  return identificador;
+}
+
 export const ComponenteSeguridad = ({ children }) => {
   useEffect(() => {
     // Protección contra clickjacking
     if (window.top !== window.self) {
-      window.top.location = window.self.location;
+      try {
+        window.top.location = window.self.location;
+      } catch {
+        // En algunos contextos (iframes sandboxed) esto lanza SecurityError — ignorar
+      }
     }
 
     // Prevenir inyección de scripts desde la URL
@@ -86,30 +102,6 @@ export const useProteccionFormulario = (formularioId) => {
     };
   }, [formularioId]);
 };
-
-/**
- * Función para obtener identificador único del usuario
- */
-function obtenerIdentificadorUsuario() {
-  // Intentar obtener de sessionStorage primero
-  let identificador = sessionStorage.getItem('identificador-seguridad');
-  
-  if (!identificador) {
-    // Crear uno nuevo basado en características del navegador
-    const caracteristicas = [
-      navigator.userAgent,
-      navigator.language,
-      screen.width,
-      screen.height,
-      new Date().getTimezoneOffset()
-    ].join('|');
-    
-    identificador = btoa(caracteristicas).slice(0, 32);
-    sessionStorage.setItem('identificador-seguridad', identificador);
-  }
-  
-  return identificador;
-}
 
 /**
  * Componente para mostrar errores de seguridad de forma segura

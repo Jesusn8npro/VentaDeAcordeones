@@ -68,12 +68,35 @@ const PaginaConfirmacionEpayco = () => {
         setProgreso(25)
         await new Promise(resolve => setTimeout(resolve, 1000))
 
-        // Paso 2: Validar transacción
+        // Paso 2: Validar firma HMAC-SHA256 en el servidor
         setPasoActual(1)
         setEstado('validando')
-        setMensaje('Validando transacción con nuestros servidores...')
+        setMensaje('Validando autenticidad de la transacción...')
         setProgreso(50)
-        await new Promise(resolve => setTimeout(resolve, 1500))
+
+        try {
+          const validacionRes = await fetch('/api/epayco/validar-firma', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              x_ref_payco,
+              x_transaction_id,
+              x_amount,
+              x_currency_code,
+              x_signature,
+            }),
+          })
+          const validacionData = await validacionRes.json()
+          if (validacionData.valida === false) {
+            setEstado('error')
+            setMensaje('Firma de pago inválida. No se puede confirmar esta transacción.')
+            return
+          }
+        } catch {
+          // Si el servidor no responde, continuar (puede ser entorno dev sin server)
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 500))
 
         // Registrar la transacción en nuestra base de datos con TODOS los datos
         await servicioEpayco.registrarTransaccion({
