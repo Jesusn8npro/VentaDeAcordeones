@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ventadeacordeones.com — Acordeones personalizados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="image-slot.js"></script>
+<style>
+  :root {
+    --bg: #000000;
+    --bg-2: #0a0a0a;
+    --ink: #f5f5f3;
+    --ink-dim: #8a8a86;
+    --line: rgba(255,255,255,0.08);
+    --gold: #FFC300;
+    --gold-soft: #d9a300;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --display: "Bebas Neue", "Arial Narrow", sans-serif;
+    --body: "Manrope", system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  ::selection { background: var(--gold); color: #000; }
+
+  /* ------------- NAV ------------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.18));
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s ease;
+  }
+  .nav.scrolled { border-bottom-color: var(--line); }
+  .brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--display); letter-spacing: .14em; font-size: 18px; line-height: 1;
+  }
+  .brand-mark {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--gold), var(--gold-soft) 55%, #6e5400);
+    box-shadow: 0 0 28px rgba(255,195,0,.35), inset 0 0 8px rgba(0,0,0,.3);
+  }
+  .brand-name { color: var(--ink); }
+  .brand-name b { color: var(--gold); font-weight: inherit; }
+  .nav-links { display: flex; gap: 36px; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-dim); }
+  .nav-links a { transition: color .25s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-family: var(--body); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    padding: 11px 18px; border: 1px solid var(--gold); color: var(--gold);
+    border-radius: 999px; transition: all .25s; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .nav-cta:hover { background: var(--gold); color: #000; box-shadow: 0 0 32px rgba(255,195,0,.4); }
+  @media (max-width: 880px){
+    .nav { padding: 16px 22px; }
+    .nav-links { display: none; }
+  }
+
+  /* ------------- HERO + SCROLLYTELLING ------------- */
+  .stage {
+    position: relative;
+    /* 6 viewport heights: 1 intro + 5 stages */
+    height: 600vh;
+  }
+  .sticky {
+    position: sticky; top: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, #131008 0%, #000 70%);
+  }
+
+  /* The cinematic spotlight under the accordion */
+  .spotlight {
+    position: absolute; left: 50%; bottom: -10%;
+    width: 1100px; height: 1100px; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(255,195,0,0.14) 0%, rgba(255,195,0,0.04) 30%, transparent 60%);
+    pointer-events: none;
+    filter: blur(8px);
+    z-index: 0;
+  }
+  .floor-line {
+    position: absolute; left: 0; right: 0; bottom: 18%;
+    height: 1px; background: linear-gradient(to right, transparent, rgba(255,195,0,0.18), transparent);
+    z-index: 0;
+  }
+
+  /* Accordion product, centered, fixed by sticky stage */
+  .product {
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .product-frame {
+    position: relative;
+    width: min(62vh, 580px);
+    aspect-ratio: 1 / 1.05;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .accordion-svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 80px rgba(255,195,0,0.08));
+    transition: filter .8s ease;
+  }
+  .accordion-svg[data-stage="4"] {
+    filter: drop-shadow(0 40px 80px rgba(0,0,0,0.7)) drop-shadow(0 0 110px rgba(255,195,0,0.28));
+  }
+  /* Progressive reveal layers */
+  .accordion-svg .l1,
+  .accordion-svg .l2,
+  .accordion-svg .l3,
+  .accordion-svg .l4 { opacity: 0; transition: opacity 1s cubic-bezier(.2,.7,.2,1); }
+  .accordion-svg[data-stage="1"] .l1,
+  .accordion-svg[data-stage="2"] .l1,
+  .accordion-svg[data-stage="3"] .l1,
+  .accordion-svg[data-stage="4"] .l1 { opacity: 1; }
+  .accordion-svg[data-stage="2"] .l2,
+  .accordion-svg[data-stage="3"] .l2,
+  .accordion-svg[data-stage="4"] .l2 { opacity: 1; }
+  .accordion-svg[data-stage="3"] .l3,
+  .accordion-svg[data-stage="4"] .l3 { opacity: 1; }
+  .accordion-svg[data-stage="4"] .l4 { opacity: 1; }
+  /* Engraved name draws in */
+  .accordion-svg .engraved-name {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    transition: stroke-dashoffset 1.4s cubic-bezier(.2,.7,.2,1) .15s;
+  }
+  .accordion-svg[data-stage="3"] .engraved-name,
+  .accordion-svg[data-stage="4"] .engraved-name { stroke-dashoffset: 0; }
+  /* Subtle idle breath */
+  @keyframes breath { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-8px) } }
+  .accordion-svg .body-group { animation: breath 6s ease-in-out infinite; transform-origin: center; }
+
+  /* Stage labels (top-left meta) */
+  .meta {
+    position: absolute; top: calc(50% - 44vh); left: 56px;
+    z-index: 5;
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--ink-dim);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .meta .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 12px var(--gold); }
+  .meta .stage-num { color: var(--gold); }
+
+  /* Stage caption right side */
+  .caption {
+    position: absolute;
+    right: 56px; top: 50%; transform: translateY(-50%);
+    z-index: 5;
+    width: min(360px, 32vw);
+    pointer-events: none;
+  }
+  .caption-stack { position: relative; min-height: 280px; }
+  .caption-card {
+    position: absolute; inset: 0;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity .55s ease, transform .65s cubic-bezier(.2,.7,.2,1);
+  }
+  .caption-card.is-active { opacity: 1; transform: translateY(0); }
+  .cap-kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cap-kicker::before {
+    content: ""; width: 28px; height: 1px; background: var(--gold);
+  }
+  .cap-title {
+    font-family: var(--display); font-size: 56px; line-height: 0.95; letter-spacing: .01em;
+    margin: 0 0 16px; color: var(--ink);
+  }
+  .cap-title em { font-style: normal; color: var(--gold); }
+  .cap-body { font-size: 14px; line-height: 1.65; color: var(--ink-dim); font-weight: 300; }
+
+  /* Hero left content (only visible on stage 0) */
+  .hero-left {
+    position: absolute;
+    left: 56px; top: 50%; transform: translateY(-50%);
+    z-index: 5;
+    width: min(420px, 36vw);
+    transition: opacity .5s ease, transform .6s ease;
+  }
+  .hero-left.is-hidden { opacity: 0; transform: translateY(-50%) translateX(-20px); pointer-events: none; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content:""; width: 28px; height: 1px; background: var(--gold); }
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(56px, 7.5vw, 112px);
+    line-height: 0.88; letter-spacing: .005em;
+    margin: 0 0 26px;
+  }
+  .hero-title em { font-style: normal; color: var(--gold); display: block; }
+  .hero-body { font-size: 15px; line-height: 1.7; color: var(--ink-dim); font-weight: 300; max-width: 360px; margin-bottom: 36px; }
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+
+  .btn-gold {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: #000;
+    font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 16px 26px; border-radius: 999px;
+    transition: all .3s cubic-bezier(.2,.7,.2,1);
+    position: relative; overflow: hidden;
+  }
+  .btn-gold::after {
+    content:""; position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.4), transparent 40%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .btn-gold:hover { box-shadow: 0 0 0 6px rgba(255,195,0,0.12), 0 18px 60px rgba(255,195,0,0.25); transform: translateY(-1px); }
+  .btn-gold:hover::after { opacity: 1; }
+  .btn-gold svg { width: 16px; height: 16px; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--ink); font-weight: 500; font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    padding: 14px 4px; opacity: .8; transition: opacity .25s, color .25s;
+  }
+  .btn-ghost:hover { opacity: 1; color: var(--gold); }
+  .btn-ghost svg { width: 14px; height: 14px; transition: transform .25s; }
+  .btn-ghost:hover svg { transform: translateX(4px); }
+
+  /* Bottom stage indicator */
+  .progress {
+    position: absolute; left: 50%; bottom: 38px; transform: translateX(-50%);
+    z-index: 5; display: flex; gap: 8px; align-items: center;
+  }
+  .progress-rail { display: flex; gap: 6px; }
+  .progress-rail span {
+    width: 28px; height: 2px; background: rgba(255,255,255,0.12);
+    transition: background .3s;
+  }
+  .progress-rail span.is-on { background: var(--gold); }
+  .progress-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-dim);
+    margin-left: 14px;
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute; right: 56px; bottom: 38px; z-index: 5;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .28em; text-transform: uppercase; color: var(--ink-dim);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .scroll-hint .line { width: 1px; height: 28px; background: var(--ink-dim); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{ opacity:.3 } 50%{ opacity:1 } }
+
+  @media (max-width: 880px){
+    .hero-left, .caption { left: 22px; right: 22px; width: auto; }
+    .caption { top: auto; bottom: 80px; transform: none; }
+    .meta { left: 22px; top: 96px; }
+    .product-frame { width: min(70vw, 360px); }
+    .scroll-hint { display: none; }
+    .cap-title { font-size: 42px; }
+  }
+
+  /* ------------- SECTION SHELL ------------- */
+  section.block { padding: 140px 56px; position: relative; }
+  @media (max-width: 880px){ section.block { padding: 96px 22px; } }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: 80px; }
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--gold); display: inline-flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before { content:""; width: 28px; height: 1px; background: var(--gold); }
+  .section-title {
+    font-family: var(--display); font-size: clamp(48px, 6vw, 92px);
+    line-height: 0.95; margin: 14px 0 0; max-width: 12ch;
+  }
+  .section-title em { font-style: normal; color: var(--gold); }
+  .section-sub { color: var(--ink-dim); font-weight: 300; max-width: 380px; font-size: 15px; line-height: 1.7; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ------------- BENEFICIOS ------------- */
+  .benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .benefit { background: var(--bg); padding: 56px 36px; position: relative; transition: background .4s; }
+  .benefit:hover { background: var(--bg-2); }
+  .benefit:hover .b-icon { color: var(--gold); }
+  .b-num { font-family: var(--mono); font-size: 11px; letter-spacing: .24em; color: var(--ink-dim); margin-bottom: 36px; }
+  .b-icon { width: 44px; height: 44px; margin-bottom: 28px; color: var(--ink); transition: color .35s; }
+  .b-title { font-family: var(--display); font-size: 26px; letter-spacing: .04em; margin: 0 0 12px; }
+  .b-body { font-size: 13px; line-height: 1.65; color: var(--ink-dim); font-weight: 300; }
+  @media (max-width: 880px){ .benefits { grid-template-columns: 1fr 1fr; } .benefit { padding: 36px 22px; } }
+  @media (max-width: 520px){ .benefits { grid-template-columns: 1fr; } }
+
+  /* ------------- DISEÑOS ------------- */
+  .gallery { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 380px 380px; gap: 18px; }
+  .gallery-item { position: relative; overflow: hidden; background: #0c0c0c; border: 1px solid var(--line); }
+  .gallery-item image-slot { width: 100%; height: 100%; transition: transform 1.1s cubic-bezier(.2,.7,.2,1); }
+  .gallery-item:hover image-slot { transform: scale(1.04); }
+  .gallery-item .g-meta {
+    position: absolute; left: 22px; right: 22px; bottom: 22px; z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+    color: var(--ink);
+  }
+  .gallery-item .g-meta::before {
+    content:""; position: absolute; inset: -22px -22px -22px -22px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent 80%);
+    z-index: -1;
+  }
+  .g-name { font-family: var(--display); font-size: 24px; letter-spacing: .04em; line-height: 1; }
+  .g-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  .gallery-item.feat { grid-row: span 2; }
+  .gallery-item.feat .g-name { font-size: 36px; }
+  @media (max-width: 880px){
+    .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 260px 260px; }
+    .gallery-item.feat { grid-row: span 1; grid-column: span 2; }
+  }
+
+  /* ------------- HISTORIA ------------- */
+  .story { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
+  .story-img { aspect-ratio: 4/5; position: relative; border: 1px solid var(--line); background: #0c0c0c; overflow: hidden; }
+  .story-img image-slot { width: 100%; height: 100%; }
+  .story-img::after {
+    content:""; position: absolute; inset: 0;
+    box-shadow: inset 0 -100px 120px rgba(0,0,0,.5);
+    pointer-events: none;
+  }
+  .story-img .stamp {
+    position: absolute; top: 22px; left: 22px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: .26em; text-transform: uppercase; color: var(--gold);
+    padding: 8px 12px; border: 1px solid var(--gold);
+    background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+  }
+  .story-content h2 { font-family: var(--display); font-size: clamp(48px, 5.5vw, 84px); line-height: 0.95; margin: 16px 0 32px; }
+  .story-content h2 em { font-style: normal; color: var(--gold); }
+  .story-content p { color: var(--ink-dim); font-size: 15px; line-height: 1.8; font-weight: 300; margin: 0 0 18px; max-width: 56ch; }
+  .story-stats { display: flex; gap: 56px; margin-top: 48px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .stat-num { font-family: var(--display); font-size: 56px; line-height: 1; color: var(--gold); letter-spacing: .02em; }
+  .stat-label { font-family: var(--mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-dim); margin-top: 8px; }
+  @media (max-width: 880px){ .story { grid-template-columns: 1fr; gap: 48px; } .story-stats { gap: 32px; flex-wrap: wrap; } }
+
+  /* ------------- FINAL CTA ------------- */
+  .cta {
+    text-align: center; padding: 180px 56px;
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,195,0,0.08), transparent 60%),
+      var(--bg);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .cta-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
+  .cta h2 { font-family: var(--display); font-size: clamp(64px, 9vw, 168px); line-height: 0.88; margin: 0 0 36px; letter-spacing: .005em; }
+  .cta h2 em { font-style: normal; color: var(--gold); }
+  .cta p { color: var(--ink-dim); font-size: 16px; line-height: 1.7; max-width: 520px; margin: 0 auto 48px; font-weight: 300; }
+  .cta .btn-gold { font-size: 14px; padding: 20px 34px; }
+  .cta-meta { margin-top: 44px; font-family: var(--mono); font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-dim); display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
+  .cta-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .cta-meta span::before { content:""; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+
+  /* ------------- FOOTER ------------- */
+  footer { padding: 64px 56px 40px; border-top: 1px solid var(--line); }
+  .foot-row { display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
+  .foot-nav { display: flex; gap: 28px; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-dim); }
+  .foot-nav a:hover { color: var(--gold); }
+  .foot-bottom { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-dim); flex-wrap: wrap; gap: 16px; }
+
+  @media (max-width: 880px){
+    footer { padding: 48px 22px 28px; }
+    .foot-nav { gap: 18px; }
+  }
+
+  /* Floating WhatsApp button */
+  .wa-float {
+    position: fixed; right: 28px; bottom: 28px; z-index: 60;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--gold); color: #000;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 14px 40px rgba(255,195,0,.35), 0 0 0 0 rgba(255,195,0,.6);
+    animation: pulseRing 2.4s infinite;
+    transition: transform .25s;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+  @keyframes pulseRing {
+    0% { box-shadow: 0 14px 40px rgba(255,195,0,.35), 0 0 0 0 rgba(255,195,0,.5); }
+    70% { box-shadow: 0 14px 40px rgba(255,195,0,.35), 0 0 0 22px rgba(255,195,0,0); }
+    100% { box-shadow: 0 14px 40px rgba(255,195,0,.35), 0 0 0 0 rgba(255,195,0,0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    <span class="brand-name">VENTADE<b>ACORDEONES</b>.COM</span>
+  </div>
+  <div class="nav-links">
+    <a href="#proceso">Proceso</a>
+    <a href="#beneficios">Beneficios</a>
+    <a href="#disenos">Diseños</a>
+    <a href="#historia">Historia</a>
+  </div>
+  <a class="nav-cta" href="https://wa.me/573208492093?text=Hola%2C%20quiero%20un%20acorde%C3%B3n%20personalizado" target="_blank" rel="noopener">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4l-2.4-1.2c-.3-.1-.7-.1-.9.2l-.9 1.1c-.2.2-.5.3-.7.2-1-.4-2.4-1.6-3.2-2.4-.8-.8-2-2.2-2.4-3.2-.1-.3 0-.5.2-.7l1.1-.9c.3-.2.4-.6.2-.9L7.6 4.5c-.2-.4-.7-.5-1-.3l-1.4 1c-.5.3-.7.9-.7 1.4.2 1.7 1 4 3.3 6.3 2.3 2.3 4.6 3.1 6.3 3.3.5.1 1.1-.2 1.4-.7l1-1.4c.2-.3.1-.8-.3-1z"/></svg>
+    Comprar por WhatsApp
+  </a>
+</nav>
+
+<!-- ============ HERO + SCROLLYTELLING ============ -->
+<div class="stage" id="proceso">
+  <div class="sticky">
+    <div class="spotlight"></div>
+    <div class="floor-line"></div>
+
+    <!-- Top-left meta -->
+    <div class="meta">
+      <span class="dot"></span>
+      <span>Fabricación Artesanal</span>
+      <span>·</span>
+      <span class="stage-num" id="stageNum">00 / 05</span>
+    </div>
+
+    <!-- Hero copy (stage 0 only) -->
+    <div class="hero-left" id="heroLeft">
+      <div class="hero-eyebrow">Edición a la medida</div>
+      <h1 class="hero-title">Tu acordeón<em>único.</em></h1>
+      <p class="hero-body">Acordeones Rey Vallenato personalizados pieza por pieza. Acabados nacarados, grillas doradas y grabados a mano. Cada uno es irrepetible.</p>
+      <div class="hero-actions">
+        <a class="btn-gold" href="https://wa.me/573208492093?text=Hola%2C%20quiero%20un%20acorde%C3%B3n%20personalizado" target="_blank" rel="noopener" id="heroCta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.7 11.7 0 003.2 19.3L2 22l2.8-1.1A11.7 11.7 0 1020.5 3.5zM12 20.2c-1.7 0-3.4-.5-4.8-1.3l-.3-.2-2.9.8.8-2.8-.2-.3A9.7 9.7 0 1112 20.2zm5.6-7.3c-.3-.2-1.8-.9-2.1-1s-.5-.1-.7.2-.8 1-1 1.2-.4.2-.7 0c-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.3-.4.4-.6s.1-.4 0-.6c0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.4c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.5-.3z"/></svg>
+          Comprar por WhatsApp
+        </a>
+        <a class="btn-ghost" href="#disenos">
+          Ver diseños
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- The product (sticky accordion, SVG placeholder) -->
+    <div class="product">
+      <div class="product-frame" id="productFrame">
+        <svg class="accordion-svg" id="accordionSvg" viewBox="0 0 600 630" xmlns="http://www.w3.org/2000/svg" data-stage="0" aria-hidden="true">
+          <defs>
+            <linearGradient id="bodyRed" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8a2424"/>
+              <stop offset="50%" stop-color="#3d0c0c"/>
+              <stop offset="100%" stop-color="#1a0404"/>
+            </linearGradient>
+            <linearGradient id="bodyPearl" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fffaf0"/>
+              <stop offset="35%" stop-color="#f0e6d0"/>
+              <stop offset="70%" stop-color="#c8b894"/>
+              <stop offset="100%" stop-color="#8a7448"/>
+            </linearGradient>
+            <linearGradient id="goldMat" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffe28a"/>
+              <stop offset="45%" stop-color="#FFC300"/>
+              <stop offset="100%" stop-color="#8c6500"/>
+            </linearGradient>
+            <linearGradient id="grilleBase" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1c1c1c"/>
+              <stop offset="100%" stop-color="#050505"/>
+            </linearGradient>
+            <linearGradient id="foldGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#050505"/>
+              <stop offset="50%" stop-color="#2c2c2c"/>
+              <stop offset="100%" stop-color="#050505"/>
+            </linearGradient>
+            <radialGradient id="goldGlow" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0%" stop-color="#FFC300" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#FFC300" stop-opacity="0"/>
+            </radialGradient>
+            <pattern id="bellowsP" width="18" height="40" patternUnits="userSpaceOnUse">
+              <rect width="18" height="40" fill="url(#foldGrad)"/>
+            </pattern>
+            <pattern id="lozenges" x="0" y="0" width="18" height="18" patternUnits="userSpaceOnUse">
+              <path d="M9 2 L16 9 L9 16 L2 9 Z" fill="#000" opacity="0.85"/>
+            </pattern>
+            <pattern id="dots" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+              <circle cx="7" cy="7" r="2.4" fill="#000" opacity="0.9"/>
+            </pattern>
+          </defs>
+
+          <!-- Ambient gold glow (intensifies on stage 4) -->
+          <ellipse class="l4" cx="300" cy="315" rx="300" ry="300" fill="url(#goldGlow)"/>
+
+          <!-- Floor shadow -->
+          <ellipse cx="300" cy="560" rx="230" ry="16" fill="#000" opacity="0.55"/>
+
+          <g class="body-group">
+            <!-- Straps -->
+            <path d="M 130,165 C 100,90 130,55 165,48" stroke="#0a0606" stroke-width="6" fill="none"/>
+            <path d="M 470,165 C 500,90 470,55 435,48" stroke="#0a0606" stroke-width="6" fill="none"/>
+
+            <!-- ============ BELLOWS ============ -->
+            <g class="bellows">
+              <rect x="200" y="188" width="200" height="264" fill="url(#bellowsP)"/>
+              <!-- horizontal stitching -->
+              <g stroke="#000" stroke-width="0.6" opacity="0.5">
+                <line x1="200" y1="232" x2="400" y2="232"/>
+                <line x1="200" y1="288" x2="400" y2="288"/>
+                <line x1="200" y1="344" x2="400" y2="344"/>
+                <line x1="200" y1="400" x2="400" y2="400"/>
+              </g>
+              <!-- Black metal trim -->
+              <rect x="196" y="178" width="208" height="12" fill="#161616"/>
+              <rect x="196" y="450" width="208" height="12" fill="#161616"/>
+              <!-- Red leather corner caps -->
+              <rect x="196" y="178" width="16" height="16" fill="#5a1010"/>
+              <rect x="388" y="178" width="16" height="16" fill="#5a1010"/>
+              <rect x="196" y="446" width="16" height="16" fill="#5a1010"/>
+              <rect x="388" y="446" width="16" height="16" fill="#5a1010"/>
+              <!-- Gold trim (l2) -->
+              <rect class="l2" x="196" y="178" width="208" height="3" fill="url(#goldMat)"/>
+              <rect class="l2" x="196" y="459" width="208" height="3" fill="url(#goldMat)"/>
+              <!-- corner studs -->
+              <circle cx="204" cy="186" r="2" fill="#3a3a3a"/>
+              <circle cx="396" cy="186" r="2" fill="#3a3a3a"/>
+              <circle cx="204" cy="454" r="2" fill="#3a3a3a"/>
+              <circle cx="396" cy="454" r="2" fill="#3a3a3a"/>
+            </g>
+
+            <!-- ============ LEFT BOX ============ -->
+            <g class="box-left">
+              <rect x="60" y="160" width="140" height="310" rx="14" fill="url(#bodyRed)"/>
+              <rect class="l1" x="60" y="160" width="140" height="310" rx="14" fill="url(#bodyPearl)"/>
+              <!-- Inset panel shadow -->
+              <rect x="74" y="174" width="112" height="282" rx="8" fill="#000" opacity="0.18"/>
+              <rect x="74" y="174" width="112" height="282" rx="8" fill="none" stroke="#000" stroke-width="1" opacity="0.55"/>
+              <!-- Gold framing (l2) -->
+              <rect class="l2" x="76" y="176" width="108" height="278" rx="6" fill="none" stroke="url(#goldMat)" stroke-width="1.5"/>
+
+              <!-- Small grille top -->
+              <g transform="translate(90 196)">
+                <rect width="80" height="88" rx="3" fill="url(#grilleBase)"/>
+                <rect class="l2" width="80" height="88" rx="3" fill="url(#goldMat)" opacity="0.92"/>
+                <rect width="80" height="88" fill="url(#dots)"/>
+              </g>
+
+              <!-- Cartouche for engraving -->
+              <g transform="translate(130 378)">
+                <ellipse cx="0" cy="0" rx="46" ry="26" fill="#000" opacity="0.35"/>
+                <ellipse class="l2" cx="0" cy="0" rx="46" ry="26" fill="none" stroke="url(#goldMat)" stroke-width="1.2"/>
+                <!-- Engraved name path stroke (l3, animated dash) -->
+                <text class="l3 engraved-name" x="0" y="8" text-anchor="middle"
+                      font-family="'Brush Script MT','Lucida Handwriting',cursive"
+                      font-size="26" font-style="italic"
+                      fill="none" stroke="url(#goldMat)" stroke-width="1.2">Juan</text>
+                <!-- Engraved name fill (l3) -->
+                <text class="l3" x="0" y="8" text-anchor="middle"
+                      font-family="'Brush Script MT','Lucida Handwriting',cursive"
+                      font-size="26" font-style="italic"
+                      fill="url(#goldMat)" opacity="0.85">Juan</text>
+              </g>
+
+              <!-- Edge highlights -->
+              <rect x="62" y="162" width="3" height="306" rx="1.5" fill="#fff" opacity="0.10"/>
+              <rect class="l1" x="62" y="162" width="5" height="306" rx="2.5" fill="#fff" opacity="0.45"/>
+              <rect x="195" y="162" width="3" height="306" fill="#000" opacity="0.45"/>
+            </g>
+
+            <!-- ============ RIGHT BOX ============ -->
+            <g class="box-right">
+              <rect x="400" y="160" width="140" height="310" rx="14" fill="url(#bodyRed)"/>
+              <rect class="l1" x="400" y="160" width="140" height="310" rx="14" fill="url(#bodyPearl)"/>
+              <rect x="414" y="174" width="112" height="282" rx="8" fill="#000" opacity="0.18"/>
+              <rect x="414" y="174" width="112" height="282" rx="8" fill="none" stroke="#000" stroke-width="1" opacity="0.55"/>
+              <rect class="l2" x="416" y="176" width="108" height="278" rx="6" fill="none" stroke="url(#goldMat)" stroke-width="1.5"/>
+
+              <!-- Main grille -->
+              <g transform="translate(424 188)">
+                <rect width="92" height="254" rx="3" fill="url(#grilleBase)"/>
+                <rect class="l2" width="92" height="254" rx="3" fill="url(#goldMat)" opacity="0.95"/>
+                <rect width="92" height="254" fill="url(#lozenges)"/>
+                <!-- Center medallion (l2) -->
+                <circle class="l2" cx="46" cy="127" r="22" fill="none" stroke="#000" stroke-width="1.5" opacity="0.6"/>
+                <circle class="l2" cx="46" cy="127" r="22" fill="none" stroke="url(#goldMat)" stroke-width="1.2"/>
+              </g>
+
+              <!-- Edge highlights -->
+              <rect x="402" y="162" width="3" height="306" rx="1.5" fill="#fff" opacity="0.10"/>
+              <rect class="l1" x="402" y="162" width="5" height="306" rx="2.5" fill="#fff" opacity="0.45"/>
+              <rect x="535" y="162" width="3" height="306" fill="#000" opacity="0.45"/>
+            </g>
+
+            <!-- Final shine highlights (l4) -->
+            <g class="l4">
+              <ellipse cx="100" cy="230" rx="12" ry="55" fill="#fff" opacity="0.4" transform="rotate(-10 100 230)"/>
+              <ellipse cx="440" cy="230" rx="12" ry="55" fill="#fff" opacity="0.4" transform="rotate(-10 440 230)"/>
+              <!-- gold sparkle dots -->
+              <circle cx="155" cy="190" r="1.8" fill="#fff"/>
+              <circle cx="445" cy="190" r="1.8" fill="#fff"/>
+              <circle cx="515" cy="430" r="1.8" fill="#fff"/>
+              <circle cx="88" cy="430" r="1.8" fill="#fff"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Right-side captions (stage 1..4) -->
+    <div class="caption">
+      <div class="caption-stack" id="captionStack">
+        <article class="caption-card" data-stage="1">
+          <div class="cap-kicker">Etapa 01 · Base</div>
+          <h2 class="cap-title">Rey<br/>Vallenato.</h2>
+          <p class="cap-body">Partimos de un acordeón de competencia, calibrado nota por nota. La materia prima de una pieza que será irrepetible.</p>
+        </article>
+        <article class="caption-card" data-stage="2">
+          <div class="cap-kicker">Etapa 02 · Cuerpo</div>
+          <h2 class="cap-title">Acabado<br/><em>nacarado.</em></h2>
+          <p class="cap-body">El cuerpo se recubre con un acabado nacarado de aplicación manual. Brillo profundo, textura de joya, color a elección.</p>
+        </article>
+        <article class="caption-card" data-stage="3">
+          <div class="cap-kicker">Etapa 03 · Grilla</div>
+          <h2 class="cap-title">Grilla<br/><em>dorada.</em></h2>
+          <p class="cap-body">Se monta una grilla dorada calada a mano. Cada perforación dibuja la firma visual que diferencia tu instrumento.</p>
+        </article>
+        <article class="caption-card" data-stage="4">
+          <div class="cap-kicker">Etapa 04 · Grabado</div>
+          <h2 class="cap-title">Tu<br/><em>nombre.</em></h2>
+          <p class="cap-body">Grabamos a buril tu nombre, una fecha o una dedicatoria sobre el cuerpo. Es la huella permanente del dueño.</p>
+        </article>
+        <article class="caption-card" data-stage="5">
+          <div class="cap-kicker">Etapa 05 · Entrega</div>
+          <h2 class="cap-title">Pieza<br/><em>única.</em></h2>
+          <p class="cap-body">El acordeón se entrega en estuche de presentación con certificado de autenticidad. Un objeto que ya solo le pertenece a ti.</p>
+        </article>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress" id="progress">
+      <div class="progress-rail">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <span class="progress-label" id="progressLabel">Base</span>
+    </div>
+
+    <div class="scroll-hint">
+      Desliza para personalizar
+      <span class="line"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BENEFICIOS ============ -->
+<section class="block" id="beneficios">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Por qué elegirnos</div>
+      <h2 class="section-title">Hecho para <em>durar.</em></h2>
+    </div>
+    <p class="section-sub">Cuatro principios que rigen cada acordeón que sale de nuestro taller. Sin atajos, sin compromisos.</p>
+  </div>
+
+  <div class="benefits reveal">
+    <div class="benefit">
+      <div class="b-num">01</div>
+      <svg class="b-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+        <circle cx="24" cy="24" r="20"/>
+        <circle cx="24" cy="24" r="12"/>
+        <circle cx="24" cy="24" r="4" fill="currentColor"/>
+      </svg>
+      <h3 class="b-title">100% Personalizado</h3>
+      <p class="b-body">Cada pieza se diseña contigo: color, grilla, grabado y detalles. Ningún acordeón sale igual a otro.</p>
+    </div>
+    <div class="benefit">
+      <div class="b-num">02</div>
+      <svg class="b-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+        <path d="M24 4v40M4 24h40"/>
+        <rect x="14" y="14" width="20" height="20" transform="rotate(45 24 24)"/>
+      </svg>
+      <h3 class="b-title">Sonido Rey Vallenato</h3>
+      <p class="b-body">Calibrado por afinadores con experiencia en festivales. La precisión sonora nunca se sacrifica por la estética.</p>
+    </div>
+    <div class="benefit">
+      <div class="b-num">03</div>
+      <svg class="b-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+        <path d="M24 4l5 14h15l-12 9 5 16-13-9-13 9 5-16-12-9h15z"/>
+      </svg>
+      <h3 class="b-title">Acabados de Lujo</h3>
+      <p class="b-body">Lacados nacarados, grillas en latón dorado, herrajes pulidos. Calidad de joyería aplicada al instrumento.</p>
+    </div>
+    <div class="benefit">
+      <div class="b-num">04</div>
+      <svg class="b-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+        <rect x="8" y="8" width="32" height="32"/>
+        <path d="M16 24l6 6 12-12"/>
+      </svg>
+      <h3 class="b-title">Garantía de por Vida</h3>
+      <p class="b-body">Soporte técnico, mantenimiento y afinación garantizados mientras el instrumento esté en tus manos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DISEÑOS ============ -->
+<section class="block" id="disenos">
+  <div class="section-head reveal">
+    <div>
+      <div class="section-eyebrow">Diseños realizados</div>
+      <h2 class="section-title">El archivo del <em>taller.</em></h2>
+    </div>
+    <p class="section-sub">Una selección de acordeones únicos entregados a artistas, coleccionistas y reyes vallenatos.</p>
+  </div>
+
+  <div class="gallery reveal">
+    <div class="gallery-item feat">
+      <image-slot id="gal-1" placeholder="DISEÑO FEATURED · ACORDEÓN NEGRO Y ORO" shape="rect"></image-slot>
+      <div class="g-meta">
+        <div>
+          <div class="g-tag">Edición #018</div>
+          <div class="g-name">El Cacique</div>
+        </div>
+        <div class="g-tag">2025</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <image-slot id="gal-2" placeholder="ACORDEÓN BLANCO NACARADO" shape="rect"></image-slot>
+      <div class="g-meta">
+        <div>
+          <div class="g-tag">Edición #015</div>
+          <div class="g-name">Marfil</div>
+        </div>
+        <div class="g-tag">2025</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <image-slot id="gal-3" placeholder="ACORDEÓN ROJO BURDEOS" shape="rect"></image-slot>
+      <div class="g-meta">
+        <div>
+          <div class="g-tag">Edición #012</div>
+          <div class="g-name">Burdeos</div>
+        </div>
+        <div class="g-tag">2024</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <image-slot id="gal-4" placeholder="ACORDEÓN AZUL CON GRILLA DORADA" shape="rect"></image-slot>
+      <div class="g-meta">
+        <div>
+          <div class="g-tag">Edición #009</div>
+          <div class="g-name">Cobalto</div>
+        </div>
+        <div class="g-tag">2024</div>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <image-slot id="gal-5" placeholder="ACORDEÓN VERDE ESMERALDA" shape="rect"></image-slot>
+      <div class="g-meta">
+        <div>
+          <div class="g-tag">Edición #007</div>
+          <div class="g-name">Esmeralda</div>
+        </div>
+        <div class="g-tag">2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HISTORIA ============ -->
+<section class="block" id="historia" style="border-top:1px solid var(--line); padding-top: 160px;">
+  <div class="story">
+    <div class="story-img reveal">
+      <image-slot id="story-img" placeholder="MAESTRO LUTHIER EN TALLER · BLANCO Y NEGRO" shape="rect"></image-slot>
+      <div class="stamp">Taller · Valledupar</div>
+    </div>
+    <div class="story-content reveal">
+      <div class="section-eyebrow">Nuestra historia</div>
+      <h2>Tres generaciones<br/>tras una <em>misma nota.</em></h2>
+      <p>Comenzamos como un pequeño taller en Valledupar en 1987, atendiendo a los músicos que llegaban antes del Festival a pedir afinaciones. Lo que empezó siendo servicio técnico se convirtió, con los años, en una obsesión por construir el acordeón perfecto.</p>
+      <p>Hoy fabricamos por encargo. Cada cliente nos visita o nos escribe, conversamos sobre el sonido, el color, el grabado, el momento de su vida que el instrumento debe acompañar. Después, lo construimos como si fuera para nosotros mismos.</p>
+      <div class="story-stats">
+        <div>
+          <div class="stat-num">38</div>
+          <div class="stat-label">Años de oficio</div>
+        </div>
+        <div>
+          <div class="stat-num">+420</div>
+          <div class="stat-label">Acordeones únicos</div>
+        </div>
+        <div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">Reyes Vallenatos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="cta reveal">
+  <div class="cta-eyebrow">Hagamos el tuyo</div>
+  <h2>Empieza tu<br/><em>acordeón hoy.</em></h2>
+  <p>Cuéntanos por WhatsApp cómo lo imaginas. En menos de 24 horas te enviamos un boceto, presupuesto y tiempos de entrega. Sin compromiso.</p>
+  <a class="btn-gold" href="https://wa.me/573208492093?text=Hola%2C%20quiero%20cotizar%20un%20acorde%C3%B3n%20personalizado" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.7 11.7 0 003.2 19.3L2 22l2.8-1.1A11.7 11.7 0 1020.5 3.5zM12 20.2c-1.7 0-3.4-.5-4.8-1.3l-.3-.2-2.9.8.8-2.8-.2-.3A9.7 9.7 0 1112 20.2zm5.6-7.3c-.3-.2-1.8-.9-2.1-1s-.5-.1-.7.2-.8 1-1 1.2-.4.2-.7 0c-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.3-.4.4-.6s.1-.4 0-.6c0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.4c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.5-.3z"/></svg>
+    Hablar por WhatsApp
+  </a>
+  <div class="cta-meta">
+    <span>Envíos a toda Colombia</span>
+    <span>Pagos en cuotas</span>
+    <span>Certificado de autenticidad</span>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot-row">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">VENTADE<b>ACORDEONES</b>.COM</span>
+    </div>
+    <div class="foot-nav">
+      <a href="#proceso">Proceso</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#disenos">Diseños</a>
+      <a href="#historia">Historia</a>
+      <a href="https://wa.me/573208492093" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 ventadeacordeones.com</span>
+    <span>Valledupar · Colombia</span>
+    <span>Fabricación artesanal · Edición limitada</span>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a class="wa-float" href="https://wa.me/573208492093?text=Hola%2C%20quiero%20un%20acorde%C3%B3n%20personalizado" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.7 11.7 0 003.2 19.3L2 22l2.8-1.1A11.7 11.7 0 1020.5 3.5zM12 20.2c-1.7 0-3.4-.5-4.8-1.3l-.3-.2-2.9.8.8-2.8-.2-.3A9.7 9.7 0 1112 20.2zm5.6-7.3c-.3-.2-1.8-.9-2.1-1s-.5-.1-.7.2-.8 1-1 1.2-.4.2-.7 0c-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.3-.4.4-.6s.1-.4 0-.6c0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.4c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .8.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.5-.3z"/></svg>
+</a>
+
+<script>
+  // --------- Nav scrolled state ---------
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  }, { passive: true });
+
+  // --------- Scrollytelling stage logic ---------
+  const stage = document.querySelector('.stage');
+  const accordionSvg = document.getElementById('accordionSvg');
+  const captionCards = Array.from(document.querySelectorAll('.caption-card'));
+  const heroLeft = document.getElementById('heroLeft');
+  const stageNum = document.getElementById('stageNum');
+  const progressRail = document.querySelectorAll('#progress .progress-rail span');
+  const progressLabel = document.getElementById('progressLabel');
+  const stageLabels = ['Base', 'Cuerpo', 'Grilla', 'Grabado', 'Entrega'];
+  const productFrame = document.getElementById('productFrame');
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  function updateScroll() {
+    const rect = stage.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // total scroll length of the section
+    const totalScroll = rect.height - vh;
+    // how far we are through it (0..1)
+    const scrolled = clamp(-rect.top, 0, totalScroll);
+    const progress = totalScroll > 0 ? scrolled / totalScroll : 0;
+
+    // 5 stages mapped across the scroll (0..1)
+    // stage index 0..4
+    const idx = clamp(Math.floor(progress * 5), 0, 4);
+
+    // Drive the SVG accordion stage
+    if (accordionSvg.dataset.stage !== String(idx)) {
+      accordionSvg.dataset.stage = String(idx);
+    }
+
+    // Hero copy: visible only during the first quarter of stage 0
+    const heroVisibility = clamp(1 - progress * 5, 0, 1);
+    heroLeft.style.opacity = heroVisibility;
+    heroLeft.style.pointerEvents = heroVisibility < 0.1 ? 'none' : 'auto';
+    heroLeft.style.transform = `translateY(-50%) translateX(${(1 - heroVisibility) * -20}px)`;
+
+    // Caption cards: stage 1..5 (data-stage)
+    // Show caption matching current stage when hero is fading or gone (progress > 0.05)
+    captionCards.forEach(c => {
+      const cs = parseInt(c.dataset.stage, 10) - 1; // 0..4
+      const active = cs === idx && progress > 0.05;
+      c.classList.toggle('is-active', active);
+    });
+
+    // Stage number meta
+    stageNum.textContent = String(idx + 1).padStart(2, '0') + ' / 05';
+    progressLabel.textContent = stageLabels[idx];
+    progressRail.forEach((b, i) => b.classList.toggle('is-on', i <= idx));
+
+    // Subtle scale parallax on product
+    const scaleAmt = 1 + (progress * 0.04);
+    productFrame.style.transform = `scale(${scaleAmt})`;
+  }
+
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  window.addEventListener('resize', updateScroll);
+  updateScroll();
+
+  // --------- Reveal on scroll ---------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // --------- Gold button shine follows cursor ---------
+  document.querySelectorAll('.btn-gold').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      btn.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+</script>
+</body>
+</html>

@@ -42,6 +42,9 @@ const PreguntasFrecuentes  = lazy(() => import('./paginas/legal/PreguntasFrecuen
 const PoliticaEnvio        = lazy(() => import('./paginas/legal/PoliticaEnvio/PoliticaEnvio'))
 const CambiosDevoluciones  = lazy(() => import('./paginas/legal/CambiosDevoluciones/CambiosDevoluciones'))
 
+// Acordeones personalizados
+const AcordeonesPersonalizados = lazy(() => import('./paginas/AcordeonesPersonalizados/AcordeonesPersonalizados'))
+
 // Blog y sistema
 const PaginaBlog         = lazy(() => import('./paginas/blog/PaginaBlog'))
 const ArticuloBlog       = lazy(() => import('./paginas/blog/ArticuloBlog'))
@@ -56,7 +59,7 @@ const ConHeader = ({ children }: { children: React.ReactNode }) => (
   </>
 )
 
-const RUTAS_SIN_FLOTANTES = ['/landing/', '/producto/', '/admin']
+const RUTAS_SIN_FLOTANTES = ['/landing/', '/producto/', '/admin', '/acordeones-personalizados']
 
 function App() {
   const { pathname } = useLocation()
@@ -76,6 +79,7 @@ function App() {
                   {RutasAdmin()}
 
                   <Route path="/landing/:slug" element={<LandingProducto />} />
+                  <Route path="/acordeones-personalizados" element={<AcordeonesPersonalizados />} />
 
                   {/* Tienda */}
                   <Route path="/" element={<ConHeader><PaginaInicio /></ConHeader>} />
