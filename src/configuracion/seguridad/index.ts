@@ -1,3 +1,3 @@
-export * from './validaciones.js';
-export * from './auditoria.js';
-export * from './utilidades.js';
+export * from './validaciones';
+export * from './auditoria';
+export * from './utilidades';

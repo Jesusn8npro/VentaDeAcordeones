@@ -22,8 +22,8 @@ export default function VideosIA() {
   const [actualizarVideo, setActualizarVideo] = useState(false)
   const [tamOriginalModalKB, setTamOriginalModalKB] = useState(null)
   const [seleccionados, setSeleccionados] = useState(new Set())
-  const urlOpt = import.meta.env.VITE_N8N_VIDEO_OPTIMIZE_URL || ''
-  const apiKey = import.meta.env.VITE_N8N_API_KEY || ''
+  const urlOpt = process.env.NEXT_PUBLIC_N8N_VIDEO_OPTIMIZE_URL || ''
+  const apiKey = process.env.NEXT_PUBLIC_N8N_API_KEY || ''
 
   const listar = useCallback(async () => {
     setCargando(true)

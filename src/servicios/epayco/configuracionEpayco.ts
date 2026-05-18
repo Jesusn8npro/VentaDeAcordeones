@@ -6,17 +6,17 @@
 // Configuración de ePayco desde variables de entorno
 export const configuracionEpayco = {
   // Credenciales principales
-  clavePublica: import.meta.env.VITE_EPAYCO_PUBLIC_KEY,
+  clavePublica: process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY,
   clavePrivada: undefined,
   
   // Configuración del entorno — lee VITE_EPAYCO_ENVIRONMENT, con fallback a !TEST_MODE
-  esProduccion: import.meta.env.VITE_EPAYCO_ENVIRONMENT === 'production'
-    || import.meta.env.VITE_EPAYCO_TEST_MODE === 'false',
+  esProduccion: process.env.NEXT_PUBLIC_EPAYCO_ENVIRONMENT === 'production'
+    || process.env.NEXT_PUBLIC_EPAYCO_TEST_MODE === 'false',
   idioma: 'ES', // Español por defecto
   
   // URLs de respuesta
-  urlConfirmacion: import.meta.env.VITE_EPAYCO_URL_CONFIRMATION,
-  urlRespuesta: import.meta.env.VITE_EPAYCO_URL_RESPONSE,
+  urlConfirmacion: process.env.NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION,
+  urlRespuesta: process.env.NEXT_PUBLIC_EPAYCO_URL_RESPONSE,
   
   // Configuración de la pasarela
   configuracionPasarela: {

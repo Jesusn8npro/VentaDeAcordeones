@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { sanitizarEntrada, validarEmail, validarContrasena, manejarError } from '../configuracion/seguridad/index.js';
+import { sanitizarEntrada, validarEmail, validarContrasena, manejarError } from '../configuracion/seguridad/index';
 
 /**
  * Hook personalizado para manejo seguro de formularios

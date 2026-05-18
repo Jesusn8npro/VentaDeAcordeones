@@ -4,7 +4,7 @@ class AuditoriaSeguridad {
   constructor() {
     this.eventos = [];
     this.maxEventos = 1000;
-    this.nivelLog = import.meta.env.DEV ? 'debug' : 'info';
+    this.nivelLog = process.env.NODE_ENV !== 'production' ? 'debug' : 'info';
   }
 
   registrar(evento) {

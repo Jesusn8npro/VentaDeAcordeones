@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { formatearPrecioCOP } from '../../../../utilidades/formatoPrecio'
 import { ArrowLeft, Package, AlertCircle, Eye, Tag } from 'lucide-react'
 import PlantillaCatalogoDetalle from './PlantillaCatalogoDetalle'

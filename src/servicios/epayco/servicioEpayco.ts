@@ -4,8 +4,8 @@
  */
 
 // import epayco from 'epayco-sdk-node'; // Comentado para evitar errores en el frontend
-import { configuracionEpayco, obtenerConfiguracionSDK, validarConfiguracion } from './configuracionEpayco.js';
-import { clienteSupabase } from '../../configuracion/supabase.js';
+import { configuracionEpayco, obtenerConfiguracionSDK, validarConfiguracion } from './configuracionEpayco';
+import { clienteSupabase } from '../../configuracion/supabase';
 
 class ServicioEpayco {
   constructor() {
@@ -85,9 +85,9 @@ class ServicioEpayco {
    */
   async registrarTransaccion(datosTransaccion) {
     try {
-      const endpoint = import.meta.env.VITE_BACKEND_CONFIRM_URL;
+      const endpoint = process.env.NEXT_PUBLIC_BACKEND_CONFIRM_URL;
       if (!endpoint) {
-        if (import.meta.env.DEV) {
+        if (process.env.NODE_ENV !== 'production') {
         }
         return;
       }

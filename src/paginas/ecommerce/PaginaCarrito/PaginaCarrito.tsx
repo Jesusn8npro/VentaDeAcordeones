@@ -100,7 +100,7 @@ export default function PaginaCarrito() {
         estado:           'pendiente',
         metodo_pago:      'epayco',
         referencia_pago:  numeroPedido,
-        epayco_test_request: import.meta.env.VITE_EPAYCO_TEST_MODE === 'true'
+        epayco_test_request: process.env.NEXT_PUBLIC_EPAYCO_TEST_MODE === 'true'
       })
       await procesarPagoOnPage({
         cliente: datosEnvio,

@@ -41,7 +41,7 @@ export const manejarError = (error, mostrarEnConsola = false, contexto = '') => 
   const errorId = crypto.randomUUID();
   const timestamp = new Date().toISOString();
 
-  if (import.meta.env.DEV && mostrarEnConsola) {
+  if ((process.env.NODE_ENV !== 'production') && mostrarEnConsola) {
   }
 
   let mensajeUsuario = 'Ha ocurrido un error. Por favor, intenta nuevamente.';
@@ -62,7 +62,7 @@ export const manejarError = (error, mostrarEnConsola = false, contexto = '') => 
     codigo: codigoError,
     errorId,
     timestamp,
-    ...(import.meta.env.DEV && { detalles: { mensajeOriginal: error.message, stack: error.stack, contexto } })
+    ...((process.env.NODE_ENV !== 'production') && { detalles: { mensajeOriginal: error.message, stack: error.stack, contexto } })
   };
 };
 

@@ -4,12 +4,12 @@
  */
 
 // Servicios principales
-export { default as servicioEpayco } from './servicioEpayco.js';
+export { default as servicioEpayco } from './servicioEpayco';
 export { 
   configuracionEpayco, 
   validarConfiguracion, 
   obtenerConfiguracionSDK 
-} from './configuracionEpayco.js';
+} from './configuracionEpayco';
 
 // Validaciones y utilidades
 export {
@@ -23,7 +23,7 @@ export {
   validarValorMinimo,
   generarNumeroFactura,
   validarReferenciaEpayco
-} from './validacionesEpayco.js';
+} from './validacionesEpayco';
 
 // Exportación por defecto del servicio principal
-export { default } from './servicioEpayco.js';
+export { default } from './servicioEpayco';

@@ -8,9 +8,10 @@ class SincronizacionEpayco {
   
   constructor() {
     // Configuración de ePayco (debes configurar estas variables en tu .env)
-    this.EPAYCO_PUBLIC_KEY = import.meta.env.VITE_EPAYCO_PUBLIC_KEY
-    this.EPAYCO_PRIVATE_KEY = import.meta.env.VITE_EPAYCO_PRIVATE_KEY
-    this.EPAYCO_TEST = import.meta.env.VITE_EPAYCO_TEST === 'true'
+    this.EPAYCO_PUBLIC_KEY = process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY
+    // Llave privada: server-only, NUNCA NEXT_PUBLIC_ (en cliente = undefined, igual que antes)
+    this.EPAYCO_PRIVATE_KEY = process.env.EPAYCO_PRIVATE_KEY
+    this.EPAYCO_TEST = process.env.NEXT_PUBLIC_EPAYCO_TEST === 'true'
     this.EPAYCO_API_URL = this.EPAYCO_TEST 
       ? 'https://secure.epayco.co/validation/v1/reference'
       : 'https://secure.epayco.co/validation/v1/reference'

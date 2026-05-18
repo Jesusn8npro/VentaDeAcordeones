@@ -33,8 +33,8 @@ export default function VideosProducto({ productoId, manejarExito, manejarError 
   const [subiendo, setSubiendo] = useState(false)
   const [modalEditar, setModalEditar] = useState(null)
   const [tamanosPorRuta, setTamanosPorRuta] = useState({})
-  const urlOpt = import.meta.env.VITE_N8N_VIDEO_OPTIMIZE_URL || ''
-  const apiKey = import.meta.env.VITE_N8N_API_KEY || ''
+  const urlOpt = process.env.NEXT_PUBLIC_N8N_VIDEO_OPTIMIZE_URL || ''
+  const apiKey = process.env.NEXT_PUBLIC_N8N_API_KEY || ''
   const [modalOptimizar, setModalOptimizar] = useState(null)
   const [presetOpt, setPresetOpt] = useState('web')
   const [calidadOpt, setCalidadOpt] = useState(0.8)

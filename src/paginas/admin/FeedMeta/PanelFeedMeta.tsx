@@ -23,7 +23,7 @@ import {
  */
 export default function PanelFeedMeta() {
   const devHost = (typeof window !== 'undefined' && window.location.hostname === 'localhost')
-  const API_BASE = (import.meta.env && import.meta.env.VITE_META_API_URL)
+  const API_BASE = process.env.NEXT_PUBLIC_META_API_URL
     || (devHost ? 'http://localhost:4173' : window.location.origin)
   const uniqueId = () => (typeof crypto !== 'undefined' && crypto.randomUUID)
     ? crypto.randomUUID()

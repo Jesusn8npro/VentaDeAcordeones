@@ -3,7 +3,7 @@ import { Edit3, CheckCircle, X } from 'lucide-react'
 import './CreadorProductoIA.css'
 import CrearProductoIAUI from './CrearProductoIAUI'
 
-const EDGE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/crear-producto-ia`
+const EDGE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/crear-producto-ia`
 
 const MENSAJE_INICIAL = '¡Hola! Soy tu asistente IA para crear productos. Cuéntame qué producto quieres crear y te ayudo a generar toda la información necesaria.'
 const MENSAJE_EDICION = '¡Hola! Soy tu asistente IA para este producto. Cuéntame qué deseas ajustar y te ayudo a generar o mejorar la información necesaria.'

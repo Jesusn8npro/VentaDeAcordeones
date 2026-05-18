@@ -1,14 +1,16 @@
-﻿
+
 import { createClient } from '@supabase/supabase-js'
-import { manejarError, getSecurityHeaders } from './seguridad/utilidades.js'
+import { manejarError, getSecurityHeaders } from './seguridad/utilidades'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key'
 
-// Validación de variables de entorno críticas
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Faltan variables de entorno críticas de Supabase')
+// Diagnóstico (no romper el build/SSR si faltan envs: fallback inerte)
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  console.warn('[supabase] Faltan NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY — usando cliente inerte (placeholder)')
 }
+
+const esDev = process.env.NODE_ENV !== 'production'
 
 // Configuración mejorada con seguridad
 export const clienteSupabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -17,15 +19,15 @@ export const clienteSupabase = createClient(supabaseUrl, supabaseAnonKey, {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
-    
-    // Usar localStorage estándar con validación
-    storage: window.localStorage,
-    
+
+    // Usar localStorage estándar con validación (guard SSR)
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+
     // Flujo PKCE más seguro para producción
     flowType: 'pkce',
-    
+
     // Deshabilitar debug en producción
-    debug: import.meta.env.DEV && import.meta.env.VITE_DEBUG === 'true'
+    debug: esDev && process.env.NEXT_PUBLIC_DEBUG === 'true'
   },
   global: {
     headers: {
@@ -49,7 +51,7 @@ export const obtenerSessionId = () => {
     return sessionId
   } catch (error) {
     // En producción no mostrar errores en consola
-    if (import.meta.env.DEV) {
+    if (esDev) {
     }
     return crypto.randomUUID()
   }
@@ -58,13 +60,13 @@ export const obtenerSessionId = () => {
 // Cliente con session ID para operaciones específicas (carrito, etc.)
 export const obtenerClienteConSesion = () => {
   const sessionId = obtenerSessionId()
-  
+
   return createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true,
-      storage: window.sessionStorage, // Cambiado a sessionStorage
+      storage: typeof window !== 'undefined' ? window.sessionStorage : undefined, // Cambiado a sessionStorage
       flowType: 'pkce' // Más seguro que implicit
     },
     global: {
@@ -77,5 +79,5 @@ export const obtenerClienteConSesion = () => {
 }
 
 // Log de inicialización (solo en desarrollo)
-if (import.meta.env.DEV) {
+if (esDev) {
 }

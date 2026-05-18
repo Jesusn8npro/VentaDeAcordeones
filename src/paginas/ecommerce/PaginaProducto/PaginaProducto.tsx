@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from '@/compat/router'
 import { AlertCircle, ArrowLeft } from 'lucide-react'
 import { usarProducto } from '../../../hooks/usarProducto'
 import { usarLandingData } from '../../../hooks/usarLandingData'
