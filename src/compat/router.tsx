@@ -15,7 +15,7 @@
  * al migrar a App Router (cada Route pasa a ser app/<ruta>/page.tsx).
  */
 
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import NextLink from 'next/link'
 import {
   useRouter,
@@ -51,13 +51,26 @@ export function useNavigate() {
 }
 
 // ── useLocation ──────────────────────────────────────────────────────────────
+// Memoizado: referencia ESTABLE mientras pathname/search no cambien (como
+// react-router). Sin esto, devolver un objeto nuevo por render hacía que
+// cualquier useEffect([location]) entrara en bucle infinito.
 export function useLocation() {
   const pathname = usePathname() || '/'
   const sp = useNextSearchParams()
-  const search = sp && sp.toString() ? `?${sp.toString()}` : ''
-  const hash = typeof window !== 'undefined' ? window.location.hash : ''
-  const state = typeof window !== 'undefined' ? window.history.state?.usr ?? null : null
-  return { pathname, search, hash, state, key: 'default' }
+  const qs = sp ? sp.toString() : ''
+  return useMemo(
+    () => ({
+      pathname,
+      search: qs ? `?${qs}` : '',
+      hash: typeof window !== 'undefined' ? window.location.hash : '',
+      state:
+        typeof window !== 'undefined'
+          ? (window.history.state?.usr ?? null)
+          : null,
+      key: 'default',
+    }),
+    [pathname, qs]
+  )
 }
 
 // ── useParams ────────────────────────────────────────────────────────────────
@@ -81,27 +94,38 @@ export function useSearchParams(): [
   const sp = useNextSearchParams()
   const router = useRouter()
   const pathname = usePathname() || '/'
-  const current = new URLSearchParams(sp ? sp.toString() : '')
+  const qs = sp ? sp.toString() : ''
+
+  // Referencia ESTABLE de URLSearchParams mientras la query no cambie.
+  // Antes se creaba un objeto nuevo por render → useEffect([searchParams])
+  // en bucle infinito → inundación de fetches a Supabase.
+  const current = useMemo(() => new URLSearchParams(qs), [qs])
 
   const setSearchParams = useCallback(
     (next: SearchParamsInit, opts?: { replace?: boolean }) => {
       const resolved =
         typeof next === 'function'
-          ? next(new URLSearchParams(current.toString()))
+          ? next(new URLSearchParams(qs))
           : next
       const usp =
         resolved instanceof URLSearchParams
           ? resolved
           : new URLSearchParams(resolved as Record<string, string>)
-      const qs = usp.toString()
-      const url = qs ? `${pathname}?${qs}` : pathname
+      const q = usp.toString()
+      const url = q ? `${pathname}?${q}` : pathname
       if (opts?.replace) router.replace(url)
       else router.push(url)
     },
-    [router, pathname, current]
+    [router, pathname, qs]
   )
 
-  return [current, setSearchParams]
+  return useMemo(
+    () => [current, setSearchParams] as [
+      URLSearchParams,
+      (next: SearchParamsInit, opts?: { replace?: boolean }) => void
+    ],
+    [current, setSearchParams]
+  )
 }
 
 // ── Link ─────────────────────────────────────────────────────────────────────
