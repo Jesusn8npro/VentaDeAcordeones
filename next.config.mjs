@@ -13,9 +13,18 @@ const nextConfig = {
   // Next 16 usa Turbopack por defecto; resuelve tsconfig paths (@/*) y .ts/.tsx
   // sin config. Los specifiers '.js'→'.ts' se corrigieron en el código.
 
-  // Headers de seguridad + CSP — IDÉNTICOS a los que server.js ponía en TODAS
-  // las respuestas (Fase 1.5: el middleware Express se reemplaza por esto).
+  // Headers de seguridad + CSP. En PRODUCCIÓN es byte-idéntica a la que server.js
+  // ponía en todas las respuestas. En DESARROLLO se añade 'unsafe-eval' a
+  // script-src porque React/Turbopack en `next dev` requiere eval() (en prod
+  // React nunca usa eval, así que la CSP de producción NO se relaja).
   async headers() {
+    const esDev = process.env.NODE_ENV !== 'production'
+    const scriptSrc = esDev
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.epayco.co"
+      : "script-src 'self' 'unsafe-inline' https://checkout.epayco.co"
+    const csp =
+      `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline'; ` +
+      "img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.openai.com https://checkout.epayco.co; frame-src https://checkout.epayco.co;"
     return [
       {
         source: '/:path*',
@@ -25,11 +34,7 @@ const nextConfig = {
           { key: 'X-XSS-Protection', value: '1; mode=block' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-          {
-            key: 'Content-Security-Policy',
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.epayco.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.openai.com https://checkout.epayco.co; frame-src https://checkout.epayco.co;",
-          },
+          { key: 'Content-Security-Policy', value: csp },
         ],
       },
     ]
