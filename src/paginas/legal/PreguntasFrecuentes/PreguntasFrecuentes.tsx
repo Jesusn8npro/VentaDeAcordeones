@@ -18,7 +18,7 @@ import {
   Mail,
   Search
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from '@/compat/router'
 import './PreguntasFrecuentes.css'
 
 export default function PreguntasFrecuentes() {

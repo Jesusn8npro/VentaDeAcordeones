@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from '@/compat/router'
 import { usarProducto } from '../hooks/usarProducto'
 import { usarLandingData } from '../hooks/usarLandingData'
 import LandingPage from '../componentes/landing/LandingPage'

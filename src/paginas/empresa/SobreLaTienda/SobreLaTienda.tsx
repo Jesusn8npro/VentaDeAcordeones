@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from '@/compat/router'
 import { Phone, Mail, Clock, Truck, MessageCircle, ShieldCheck, CreditCard, Music, Package, Wrench } from 'lucide-react'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './SobreLaTienda.css'

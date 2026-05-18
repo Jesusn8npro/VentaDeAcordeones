@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { ShoppingCartIcon, BoxCubeIcon, PackageIcon } from '../../iconos/IconosAdmin'
 
 const accesos = [

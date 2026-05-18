@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+﻿import { Link } from '@/compat/router'
 import { Phone, Mail, MapPin, Users, Award, Heart, Star, ShieldCheck, ShoppingBag } from 'lucide-react'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './QuienesSomos.css'

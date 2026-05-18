@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { X, Search, Package, ExternalLink, Clock, TrendingUp } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 

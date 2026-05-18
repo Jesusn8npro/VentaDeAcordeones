@@ -7,7 +7,7 @@ import { formatearPrecioCOP } from '../../utilidades/formatoPrecio'
 import { validarNombre, validarTelefono, validarDireccion, validarEmail } from '../../utilidades/validaciones'
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../configuracion/supabase'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import Portal from '../ui/Portal'
 import './ContraEntregaModal.css'
 

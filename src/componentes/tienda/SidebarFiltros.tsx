@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { Search, Star, X, Filter } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 import './SidebarFiltros.css'

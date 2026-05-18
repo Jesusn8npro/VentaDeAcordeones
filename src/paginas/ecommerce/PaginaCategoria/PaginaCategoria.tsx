@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link } from '@/compat/router'
 import { ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { usarProductos } from '../../../hooks/usarProductos'

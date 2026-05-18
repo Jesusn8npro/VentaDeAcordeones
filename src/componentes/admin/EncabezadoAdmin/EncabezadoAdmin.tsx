@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react'
 import './EncabezadoAdmin.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from '@/compat/router'
 import { useBarraLateral } from '../../../contextos/ContextoBarraLateral'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { BotonAlternarTema } from '../BotonAlternarTema/BotonAlternarTema'

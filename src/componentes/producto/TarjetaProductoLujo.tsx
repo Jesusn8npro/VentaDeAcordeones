@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from '@/compat/router'
 import { Heart, Eye, ShoppingCart, Star, BadgePercent, Flame, Clock, CircleDollarSign, AlertCircle, Zap, TrendingUp, Info } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 import { useFavoritos } from '../../contextos/FavoritosContext'

@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, Truck, Clock, MapPin, Package, CreditCard, AlertCircle, CheckCircle } from 'lucide-react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from '@/compat/router'
 import '../politica-layout.css'
 
 const PoliticaEnvio = () => {

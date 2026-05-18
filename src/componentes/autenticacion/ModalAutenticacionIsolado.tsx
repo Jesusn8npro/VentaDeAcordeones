@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { X, Eye, EyeOff, Mail, User } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../configuracion/supabase'
 

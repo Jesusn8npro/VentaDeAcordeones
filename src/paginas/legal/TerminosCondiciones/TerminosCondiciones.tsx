@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, FileText, ShoppingCart, CreditCard, Truck, Package, Users, Shield } from 'lucide-react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from '@/compat/router'
 import './TerminosCondiciones.css'
 
 const TerminosCondiciones = () => {

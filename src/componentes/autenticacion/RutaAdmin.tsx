@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from '@/compat/router'
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 
 // Guard de ruta para área Admin: requiere sesión y rol admin

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '@/compat/router'
 import { HelpCircle, PhoneCall, ShoppingCart, Package, Truck, ShieldCheck, Info } from 'lucide-react'
 import './Ayuda.css'
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSearchParams, useParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useParams, useNavigate } from '@/compat/router'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import LayoutTienda from '../../../componentes/tienda/LayoutTienda'
 import SidebarFiltros from '../../../componentes/tienda/SidebarFiltros'

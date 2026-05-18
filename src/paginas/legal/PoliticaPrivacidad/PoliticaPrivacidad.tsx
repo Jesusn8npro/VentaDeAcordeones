@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, Shield } from 'lucide-react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from '@/compat/router'
 
 const PoliticaPrivacidad = () => {
   return (
