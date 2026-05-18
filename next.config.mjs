@@ -12,6 +12,28 @@ const nextConfig = {
   },
   // Next 16 usa Turbopack por defecto; resuelve tsconfig paths (@/*) y .ts/.tsx
   // sin config. Los specifiers '.js'→'.ts' se corrigieron en el código.
+
+  // Headers de seguridad + CSP — IDÉNTICOS a los que server.js ponía en TODAS
+  // las respuestas (Fase 1.5: el middleware Express se reemplaza por esto).
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' https://checkout.epayco.co; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://api.openai.com https://checkout.epayco.co; frame-src https://checkout.epayco.co;",
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default nextConfig
