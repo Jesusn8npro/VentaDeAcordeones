@@ -35,9 +35,20 @@ function imagenAbsoluta(img?: string | null): string {
   return img.startsWith('http') ? img : `${SITIO}/${img.replace(/^\/+/, '')}`
 }
 
-function recortar(texto?: string | null, max = 160): string {
+function recortar(texto?: unknown, max = 160): string {
   if (!texto) return ''
-  const t = texto.replace(/\s+/g, ' ').trim()
+  // descripcion/meta_description pueden venir como JSONB objeto ({contenido})
+  let s: string
+  if (typeof texto === 'string') s = texto
+  else if (
+    typeof texto === 'object' &&
+    texto !== null &&
+    typeof (texto as any).contenido === 'string'
+  )
+    s = (texto as any).contenido
+  else if (typeof texto === 'object') return ''
+  else s = String(texto)
+  const t = s.replace(/\s+/g, ' ').trim()
   return t.length > max ? `${t.slice(0, max - 1)}…` : t
 }
 
