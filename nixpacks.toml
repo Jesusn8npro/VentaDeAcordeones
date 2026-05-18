@@ -1,10 +1,21 @@
-# Configuración optimizada para EasyPanel - Forzar redeploy
+# EasyPanel / Nixpacks — Next.js 16 (requiere Node >=20.9)
 [variables]
 NODE_ENV = "production"
 PORT = "3000"
 
+# nixpkgsArchive fija una revisión con nodejs_22 (evita "undefined variable 'nodejs_22'").
+# vips/pkg-config: necesarios si se reactiva la optimización de imágenes de Next.
+[phases.setup]
+nixpkgsArchive = "51ad838b03a05b1de6f9f2a0fffecee64a9788ee"
+nixPkgs = ["nodejs_22", "python3", "pkg-config", "vips"]
+
+# NODE_ENV=production hace que npm omita devDependencies; --include=dev las fuerza
+# (Next se necesita para build).
+[phases.install]
+cmds = ["npm install --include=dev --no-audit --no-fund"]
+
 [phases.build]
 cmd = "npm run build"
 
-[phases.start]
-cmd = "node server.js"
+[start]
+cmd = "npm run start"

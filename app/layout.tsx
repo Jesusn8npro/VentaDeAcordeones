@@ -1,6 +1,31 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
+import { Suspense } from 'react'
+import Providers from './providers'
+import CargandoPagina from '@/componentes/sistema/CargandoPagina'
 import '@/estilos/index.css'
+
+// JSON-LD site-wide (Organization + WebSite) — recomendado en el layout.
+const jsonLdSitio = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://ventadeacordeones.com/#organization',
+      name: 'VentaDeAcordeones.com',
+      url: 'https://ventadeacordeones.com/',
+      logo: 'https://ventadeacordeones.com/logo.svg',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://ventadeacordeones.com/#website',
+      url: 'https://ventadeacordeones.com/',
+      name: 'VentaDeAcordeones.com',
+      publisher: { '@id': 'https://ventadeacordeones.com/#organization' },
+      inLanguage: 'es-CO',
+    },
+  ],
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ventadeacordeones.com'),
@@ -65,7 +90,13 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSitio) }}
+        />
+        <Suspense fallback={<CargandoPagina />}>
+          <Providers>{children}</Providers>
+        </Suspense>
 
         {/* Protección básica: deshabilitar arrastre de imágenes */}
         <Script id="anti-dragstart" strategy="afterInteractive">
