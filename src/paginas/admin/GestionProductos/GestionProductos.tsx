@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '@/compat/router'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import './GestionProductos.css'

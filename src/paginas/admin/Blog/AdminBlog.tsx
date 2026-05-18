@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/compat/router';
 import { clienteSupabase as supabase } from '../../../configuracion/supabase';
 import './AdminBlog.css';
 

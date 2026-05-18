@@ -30,3 +30,30 @@ Pendientes / dudas transversales de Fase 1. Append-only. No borrar lo de otros.
   al cargar la categoría. Para coherencia SEO de páginas públicas, ambos fetch
   server usan `.eq('activo', true)` → categoría inactiva/inexistente devuelve
   `robots noindex`. El body cliente conserva su lógica original intacta.
+
+---
+
+## A3 — Carrito / Checkout / ePayco
+
+- **Archivos ePayco legacy NO ruteados por App.tsx (candidatos a muerto):**
+  `src/paginas/ecommerce/RespuestaEpayco.tsx` y
+  `src/paginas/ecommerce/PaginaConfirmacionEpayco/PaginaConfirmacionEpayco.tsx`
+  (con su `.css`) NO aparecen en `App.tsx` (las rutas activas usan
+  `PaginaRespuestaEpayco/PaginaRespuestaEpayco.tsx` y
+  `ecommerce/ConfirmacionEpayco.tsx`). Migré su import rrd→compat solo por
+  consistencia. Verificar si tienen otros consumidores; si no, son borrables en
+  Fase 2 (limpieza). No los borro yo por contrato (quirúrgico).
+
+- **Dependencia de runtime con A10 (esperada, no bloqueante para mi entrega):**
+  `PaginaCarrito` importa componentes compartidos (`ItemCarrito`,
+  `FormularioEnvio`, `PasoPago` de `src/componentes/**`) y `PaginaFavoritos`
+  importa `TarjetaProductoLujo`; estos siguen con `react-router-dom` hasta que
+  A10 los migre. Fuera del catch-all (sin BrowserRouter) las rutas `/carrito` y
+  `/favoritos` fallarán en runtime hasta entonces. Nota de coordinación.
+
+- **Suspense alrededor de useSearchParams:** `RespuestaEpaycoCliente.tsx` y
+  `ConfirmacionEpaycoCliente.tsx` envuelven el componente dinámico en
+  `<Suspense>` porque los componentes ePayco usan `useSearchParams` (leen
+  `x_ref_payco`, etc.); Next lo exige en prerender. El componente real solo
+  cambió el import rrd→compat (la API `useSearchParams` del compat es la tupla
+  rrd v6, sin cambios de lógica).

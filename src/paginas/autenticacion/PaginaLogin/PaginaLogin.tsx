@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../contextos/ContextoAutenticacion';
 import ModalAutenticacionIsolado from '../../../componentes/autenticacion/ModalAutenticacionIsolado';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@/compat/router';
 
 const PaginaLogin = () => {
     const [modalAbierto, setModalAbierto] = useState(true);

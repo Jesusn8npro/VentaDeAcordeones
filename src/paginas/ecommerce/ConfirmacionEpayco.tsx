@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from '@/compat/router';
 import servicioEpayco from '../../servicios/epayco/servicioEpayco';
 
 const ConfirmacionEpayco = () => {

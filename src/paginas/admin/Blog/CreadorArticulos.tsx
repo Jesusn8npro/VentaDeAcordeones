@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from '@/compat/router';
 import { clienteSupabase as supabase } from '../../../configuracion/supabase';
 import { comprimirImagen, CONFIGURACIONES_PREDEFINIDAS } from '../../../utilidades/compresionImagenes';
 import './CreadorArticulos.css';

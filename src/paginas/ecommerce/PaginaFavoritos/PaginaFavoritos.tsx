@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '@/compat/router'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { Heart, Search, Grid, List, ShoppingCart, Eye, Trash2, Star } from 'lucide-react'
 import { useFavoritos } from '../../../contextos/FavoritosContext'

@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from '@/compat/router'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import {
   User, MapPin, CreditCard, Lock, Bell, ListOrdered, Home, ShieldCheck, Settings, Heart, ChevronLeft, ChevronRight

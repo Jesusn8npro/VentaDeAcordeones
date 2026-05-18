@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import {

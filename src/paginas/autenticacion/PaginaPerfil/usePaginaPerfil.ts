@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from '@/compat/router'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { validarPassword } from '../../../utilidades/validaciones'

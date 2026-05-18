@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@/compat/router'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import DisposicionAdmin from '../../../componentes/admin/DisposicionAdmin/DisposicionAdmin'
 import MetricasEcommerce from '../../../componentes/admin/ecommerce/Pagina_AdminPrincipal/MetricasEcommerce'

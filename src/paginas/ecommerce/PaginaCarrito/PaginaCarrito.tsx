@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from '@/compat/router'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { ShoppingCart, ArrowLeft, ArrowRight, Trash2, CheckCircle, Tag, Shield, Truck, Star, AlertCircle } from 'lucide-react'
 import { useCarrito } from '../../../contextos/CarritoContext'
