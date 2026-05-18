@@ -2,12 +2,19 @@
 import { createClient } from '@supabase/supabase-js'
 import { manejarError, getSecurityHeaders } from './seguridad/utilidades'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key'
+// Fallback = valores PÚBLICOS reales (no un placeholder inerte). La anon key es
+// pública por diseño (protegida por RLS; viaja al navegador igual). Esto hace
+// que la tienda funcione aunque el host (EasyPanel/Nixpacks) no inyecte las
+// NEXT_PUBLIC_* en el build. Si SÍ hay env, esa tiene precedencia.
+const SUPABASE_URL_PUBLICO = 'https://dxcpzivxzxvhabdimemb.supabase.co'
+const SUPABASE_ANON_PUBLICO =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4Y3B6aXZ4enh2aGFiZGltZW1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY4NDgyMDcsImV4cCI6MjA4MjQyNDIwN30.tevoIAGE363woAt_DnK7R9hhZ-yrn-d8UTFzJfrP0Hc'
 
-// Diagnóstico (no romper el build/SSR si faltan envs: fallback inerte)
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || SUPABASE_URL_PUBLICO
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || SUPABASE_ANON_PUBLICO
+
 if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  console.warn('[supabase] Faltan NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY — usando cliente inerte (placeholder)')
+  console.warn('[supabase] NEXT_PUBLIC_SUPABASE_* no inyectadas en build — usando valores públicos por defecto')
 }
 
 const esDev = process.env.NODE_ENV !== 'production'
