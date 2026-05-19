@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { clienteSupabase } from '../../../../configuracion/supabase'
 
 interface Pedido {
@@ -67,7 +69,7 @@ const PedidosRecientes = () => {
     <div className="pedidos-recientes-card">
       <div className="pedidos-recientes-header">
         <h3 className="pedidos-recientes-titulo">Pedidos recientes</h3>
-        <Link to="/admin/pedidos" className="pedidos-recientes-ver-todos">
+        <Link href="/admin/pedidos" className="pedidos-recientes-ver-todos">
           Ver todos →
         </Link>
       </div>

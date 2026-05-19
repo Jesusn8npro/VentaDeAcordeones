@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { ShoppingCart, ArrowLeft, ArrowRight, Trash2, CheckCircle, Tag, Shield, Truck, Star, AlertCircle } from 'lucide-react'
 import { useCarrito } from '../../../contextos/CarritoContext'
@@ -132,7 +134,7 @@ export default function PaginaCarrito() {
             <ShoppingCart size={80} className="icono-carrito-vacio" />
             <h2>Tu carrito está vacío</h2>
             <p>¡Descubre nuestra colección de acordeones!</p>
-            <Link to="/tienda" className="boton-explorar">Explorar productos <ArrowRight size={18} /></Link>
+            <Link href="/tienda" className="boton-explorar">Explorar productos <ArrowRight size={18} /></Link>
           </div>
         </div>
       </div>
@@ -144,7 +146,7 @@ export default function PaginaCarrito() {
       <div className="contenedor-carrito">
         <div className="carrito-header">
           <div className="breadcrumb">
-            <Link to="/" className="breadcrumb-link">Inicio</Link>
+            <Link href="/" className="breadcrumb-link">Inicio</Link>
             <span className="breadcrumb-separador">/</span>
             <span className="breadcrumb-actual">Carrito</span>
           </div>
@@ -199,8 +201,8 @@ export default function PaginaCarrito() {
                 <h2>¡Pedido enviado!</h2>
                 <p>Recibirás confirmación en tu email.</p>
                 <div className="acciones-confirmacion">
-                  <Link to="/perfil/pedidos" className="boton-ver-pedidos">Ver mis pedidos</Link>
-                  <Link to="/tienda" className="boton-seguir-comprando">Seguir comprando</Link>
+                  <Link href="/perfil/pedidos" className="boton-ver-pedidos">Ver mis pedidos</Link>
+                  <Link href="/tienda" className="boton-seguir-comprando">Seguir comprando</Link>
                 </div>
               </div>
             )}

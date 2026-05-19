@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from '@/compat/router'
+import { useParams, useRouter } from 'next/navigation'
 import { AlertCircle, ArrowLeft } from 'lucide-react'
 import { usarProducto } from '../../../hooks/usarProducto'
 import { usarLandingData } from '../../../hooks/usarLandingData'
@@ -16,8 +18,9 @@ import LandingPage from '../../../componentes/landing/LandingPage'
  * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automáticamente
  */
 export default function PaginaProducto() {
-  const { slug } = useParams()
-  const navigate = useNavigate()
+  const params = useParams()
+  const slug = params.slug as string
+  const router = useRouter()
   
   // ⚡ Estado de carga paralela optimizada
   const [cargaCompleta, setCargaCompleta] = useState(false)
@@ -90,7 +93,7 @@ export default function PaginaProducto() {
         <h2>Producto no encontrado</h2>
         <p>{error || 'El producto que buscas no existe o no está disponible'}</p>
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           style={{
             padding: '0.75rem 1.5rem',
             backgroundColor: '#3498db',

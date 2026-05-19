@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { Search, Star, X, Filter } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 import './SidebarFiltros.css'
@@ -9,7 +11,7 @@ const SidebarFiltros = ({
   onFiltrosChange,
   cargando = false 
 }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const [categoriasConProductos, setCategoriasConProductos] = useState([])
   const [mostrarTodasCategorias, setMostrarTodasCategorias] = useState(false)
   const [busqueda, setBusqueda] = useState('')
@@ -242,11 +244,11 @@ const SidebarFiltros = ({
           {(mostrarTodasCategorias ? categoriasConProductos : categoriasConProductos.slice(0, 5)).map(categoria => (
             <div
               key={categoria.id} 
-              onClick={() => navigate(`/tienda/categoria/${categoria.slug}`)}
+              onClick={() => router.push(`/tienda/categoria/${categoria.slug}`)}
               className="categoria-item categoria-link"
               role="button"
               tabIndex={0}
-              onKeyPress={(e) => e.key === 'Enter' && navigate(`/tienda/categoria/${categoria.slug}`)}
+              onKeyPress={(e) => e.key === 'Enter' && router.push(`/tienda/categoria/${categoria.slug}`)}
             >
               <span className="categoria-nombre">
                 {categoria.nombre} ({categoria.cantidad})

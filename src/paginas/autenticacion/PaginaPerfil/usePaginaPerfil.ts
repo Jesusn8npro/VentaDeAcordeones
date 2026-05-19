@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useEffect } from 'react'
-import { useLocation } from '@/compat/router'
+import { useSearchParams } from 'next/navigation'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { validarPassword } from '../../../utilidades/validaciones'
@@ -26,7 +28,7 @@ export { extraerNombreReal }
 
 export function usePaginaPerfil() {
   const { usuario } = useAuth()
-  const location = useLocation()
+  const searchParams = useSearchParams()
 
   // Perfil
   const [formUsuario, setFormUsuario] = useState({
@@ -122,12 +124,11 @@ export function usePaginaPerfil() {
 
   // Modal COD
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    if (params.get('after') === 'cod' && usuario?.id) {
+    if (searchParams?.get('after') === 'cod' && usuario?.id) {
       const t = setTimeout(() => setWaModalOpen(true), 5000)
       return () => clearTimeout(t)
     }
-  }, [location.search, usuario?.id])
+  }, [searchParams, usuario?.id])
 
   useEffect(() => {
     if (!waModalOpen) return

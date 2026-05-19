@@ -1,5 +1,8 @@
-﻿import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
-import { Link, useLocation } from '@/compat/router'
+﻿'use client'
+
+import React, { useCallback, useEffect, useRef, useState, useMemo } from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useBarraLateral } from '../../../contextos/ContextoBarraLateral'
 import {
   GridIcon,
@@ -95,15 +98,15 @@ const otrosElementos = [
 
 const BarraLateralAdmin = () => {
   const { estaExpandida, movilAbierto, estaEnHover, setEstaEnHover, alternarSubmenu, submenuAbierto, setSubmenuAbierto } = useBarraLateral()
-  const ubicacion = useLocation()
+  const pathname = usePathname()
 
   const [alturaSubmenu, setAlturaSubmenu] = useState({})
   const refsSubmenu = useRef({})
 
   // Memoizar la función estaActivo para evitar re-renders innecesarios
   const estaActivo = useCallback(
-    (ruta) => ubicacion.pathname === ruta,
-    [ubicacion.pathname]
+    (ruta) => pathname === ruta,
+    [pathname]
   )
 
   // Optimizar la detección de submenu activo con useMemo
@@ -125,7 +128,7 @@ const BarraLateralAdmin = () => {
       }
     }
     return null
-  }, [ubicacion.pathname, estaActivo, submenuAbierto])
+  }, [pathname, estaActivo, submenuAbierto])
 
   // Efecto optimizado para abrir submenu solo cuando sea necesario
   useEffect(() => {
@@ -201,7 +204,7 @@ const BarraLateralAdmin = () => {
           ) : (
             nav.ruta && (
               <Link
-                to={nav.ruta}
+                href={nav.ruta}
                 className={`barra-lateral-menu-item ${
                   estaActivo(nav.ruta) ? 'barra-lateral-menu-item-activo' : 'barra-lateral-menu-item-inactivo'
                 }`}
@@ -239,7 +242,7 @@ const BarraLateralAdmin = () => {
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.nombre}>
                     <Link
-                      to={subItem.ruta}
+                      href={subItem.ruta}
                       className={`barra-lateral-submenu-item ${
                         estaActivo(subItem.ruta)
                           ? 'barra-lateral-submenu-item-activo'
@@ -300,7 +303,7 @@ const BarraLateralAdmin = () => {
           !estaExpandida && !estaEnHover ? 'barra-lateral-logo-colapsado' : 'barra-lateral-logo-expandido'
         }`}
       >
-        <Link to="/admin">
+        <Link href="/admin">
           {estaExpandida || estaEnHover || movilAbierto ? (
             <img src="/logo.svg" alt="VentaDeAcordeones.com" className="barra-lateral-logo-img" />
           ) : (

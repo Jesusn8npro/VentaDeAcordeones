@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { usarCategorias } from '../../hooks/usarCategorias'
 import './HeroSeccion.css'
 
@@ -35,7 +37,7 @@ const SLIDES = [
 ]
 
 export default function HeroSeccion() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const [indice, setIndice] = useState(0)
   const [arrastrando, setArrastrando] = useState(false)
   const [inicioToque, setInicioToque] = useState(null)
@@ -100,7 +102,7 @@ export default function HeroSeccion() {
               <div className="slide-contenido">
                 <h2 className="slide-titulo">{slide.titulo}</h2>
                 <p className="slide-descripcion">{slide.descripcion}</p>
-                <button className="slide-cta" onClick={() => navigate(slide.enlace)}>
+                <button className="slide-cta" onClick={() => router.push(slide.enlace)}>
                   {slide.cta}
                 </button>
               </div>
@@ -128,7 +130,7 @@ export default function HeroSeccion() {
                 <div
                   key={cat.id}
                   className="tarjeta-categoria"
-                  onClick={() => navigate(`/tienda/categoria/${cat.slug}`)}
+                  onClick={() => router.push(`/tienda/categoria/${cat.slug}`)}
                 >
                   {cat.imagen_url
                     ? <img src={cat.imagen_url} alt={cat.nombre} className="imagen-categoria" loading="lazy" decoding="async" />
@@ -148,7 +150,7 @@ export default function HeroSeccion() {
       <div className="seccion-categorias-scroll">
         <div className="encabezado-categorias">
           <h2 className="titulo-categorias">Explora por Categorías</h2>
-          <button className="boton-ver-mas" onClick={() => navigate('/tienda')}>Ver Más</button>
+          <button className="boton-ver-mas" onClick={() => router.push('/tienda')}>Ver Más</button>
         </div>
         <div className="contenedor-scroll-categorias">
           <div
@@ -170,7 +172,7 @@ export default function HeroSeccion() {
                   <div
                     key={cat.id}
                     className="categoria-circular"
-                    onClick={() => !arrastrando && navigate(`/tienda/categoria/${cat.slug}`)}
+                    onClick={() => !arrastrando && router.push(`/tienda/categoria/${cat.slug}`)}
                     style={{ cursor: arrastrando ? 'grabbing' : 'pointer' }}
                   >
                     <div className="contenedor-imagen-circular">

@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { useParams, useNavigate } from '@/compat/router'
+import { useParams, useRouter } from 'next/navigation'
 import { usarProducto } from '../hooks/usarProducto'
 import { usarLandingData } from '../hooks/usarLandingData'
 import LandingPage from '../componentes/landing/LandingPage'
@@ -15,8 +17,9 @@ import { AlertCircle, ArrowLeft } from 'lucide-react'
  */
 
 const LandingProducto = () => {
-  const { slug } = useParams()
-  const navigate = useNavigate()
+  const params = useParams()
+  const slug = params.slug as string
+  const router = useRouter()
   const { producto, cargando, error } = usarProducto(slug)
   const { 
     landingConfig, 
@@ -65,7 +68,7 @@ const LandingProducto = () => {
         <h2>Landing page no encontrada</h2>
         <p>{error || 'El producto que buscas no existe o no está disponible'}</p>
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           style={{
             padding: '0.75rem 1.5rem',
             backgroundColor: '#3498db',

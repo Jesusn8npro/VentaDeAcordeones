@@ -1,5 +1,7 @@
+'use client'
+
 import React, { memo, useState } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { 
   Plus, 
   Minus, 
@@ -125,7 +127,7 @@ const ItemCarrito = ({
     <div className={`item-carrito ${compacto ? 'compacto' : ''}`}>
       {/* Imagen del producto */}
       <div className="item-imagen-container">
-        <Link to={`/producto/${item.productos?.id}`}>
+        <Link href={`/producto/${item.productos?.id}`}>
           <img 
             src={imagenPrincipal}
             alt={item.productos?.nombre}
@@ -151,7 +153,7 @@ const ItemCarrito = ({
       <div className="item-info">
         <div className="item-header">
           <Link 
-            to={`/producto/${item.productos?.id}`}
+            href={`/producto/${item.productos?.id}`}
             className="item-nombre"
           >
             {item.productos?.nombre}

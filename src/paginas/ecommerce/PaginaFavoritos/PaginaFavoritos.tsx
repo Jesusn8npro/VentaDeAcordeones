@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useMemo } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { Heart, Search, Grid, List, ShoppingCart, Eye, Trash2, Star } from 'lucide-react'
 import { useFavoritos } from '../../../contextos/FavoritosContext'
@@ -210,7 +212,7 @@ const PaginaFavoritos = () => {
             <Heart className="favoritos-vacio-icono" />
             <h2>No tienes favoritos aún</h2>
             <p>Explora nuestros productos y guarda tus favoritos aquí</p>
-            <Link to="/tienda" className="boton-explorar">
+            <Link href="/tienda" className="boton-explorar">
               Explorar productos
             </Link>
           </div>

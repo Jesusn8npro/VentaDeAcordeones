@@ -1,4 +1,4 @@
-﻿import { Link } from '@/compat/router'
+﻿import Link from 'next/link'
 import { Phone, Mail, MapPin, Users, Award, Heart, Star, ShieldCheck, ShoppingBag } from 'lucide-react'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './QuienesSomos.css'
@@ -42,7 +42,7 @@ export default function QuienesSomos() {
           </p>
 
           <div className="luxAbout-cta">
-            <Link to="/tienda" className="luxAbout-btn luxAbout-btn-primary">
+            <Link href="/tienda" className="luxAbout-btn luxAbout-btn-primary">
               <ShoppingBag size={18} /> Ver Tienda
             </Link>
             <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="luxAbout-btn luxAbout-btn-secondary">
@@ -137,7 +137,7 @@ export default function QuienesSomos() {
               <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="luxAbout-btn luxAbout-btn-primary">
                 <Phone size={18} /> WhatsApp
               </a>
-              <Link to="/tienda" className="luxAbout-btn luxAbout-btn-secondary">
+              <Link href="/tienda" className="luxAbout-btn luxAbout-btn-secondary">
                 <ShoppingBag size={18} /> Ver Tienda
               </Link>
             </div>

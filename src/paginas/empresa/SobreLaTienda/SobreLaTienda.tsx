@@ -1,4 +1,4 @@
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { Phone, Mail, Clock, Truck, MessageCircle, ShieldCheck, CreditCard, Music, Package, Wrench } from 'lucide-react'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './SobreLaTienda.css'
@@ -16,7 +16,7 @@ export default function SobreLaTienda() {
           <h1 className="slt-hero-title">Más de 10 años llevando la música<br />vallenata a tu hogar</h1>
           <p className="slt-hero-sub">Somos la tienda online líder en acordeones de Colombia.<br />Desde principiantes hasta profesionales, tenemos el instrumento ideal para ti.</p>
           <div className="slt-hero-actions">
-            <Link to="/tienda" className="slt-btn slt-btn-primary">Ver catálogo</Link>
+            <Link href="/tienda" className="slt-btn slt-btn-primary">Ver catálogo</Link>
             <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="slt-btn slt-btn-ghost">
               <MessageCircle size={18} /> WhatsApp
             </a>
@@ -157,7 +157,7 @@ export default function SobreLaTienda() {
               <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="slt-btn slt-btn-primary">
                 <Phone size={18} /> Contactar por WhatsApp
               </a>
-              <Link to="/tienda" className="slt-btn slt-btn-outline">Ver tienda</Link>
+              <Link href="/tienda" className="slt-btn slt-btn-outline">Ver tienda</Link>
             </div>
           </div>
         </section>

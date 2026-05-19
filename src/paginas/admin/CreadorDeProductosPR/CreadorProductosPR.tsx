@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import './CreadorProductosPR.css'
 
 import ContenidoPestana from './Componentes/ContenidoPestana'
@@ -19,7 +21,7 @@ const PESTANAS = [
 ]
 
 const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const pestanasBarRef = useRef(null)
   const touchStartX = useRef(0)
@@ -274,7 +276,7 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
   const manejarExito = (mensaje) => {
     if (modo === 'crear') limpiarEstadoGuardado()
     if (onSuccess) onSuccess(mensaje)
-    if (modo === 'crear') navigate('/admin/productos')
+    if (modo === 'crear') router.push('/admin/productos')
   }
 
   const manejarError = (_mensaje) => {}

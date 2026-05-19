@@ -1,4 +1,4 @@
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import {
   Home,
   ArrowLeft,
@@ -29,12 +29,12 @@ export default function PaginaNoEncontrada() {
 
         {/* CTA principal hacia Tienda */}
         <div className="lux404-actions">
-          <Link to="/tienda" className="lux404-btn lux404-btn-primary">
+          <Link href="/tienda" className="lux404-btn lux404-btn-primary">
             <ShoppingBag size={18} />
             <span>Ir a la tienda</span>
             <ArrowRight size={18} className="lux404-btn-icon" />
           </Link>
-          <Link to="/" className="lux404-btn lux404-btn-secondary">
+          <Link href="/" className="lux404-btn lux404-btn-secondary">
             <Home size={18} />
             <span>Volver al inicio</span>
           </Link>
@@ -54,7 +54,7 @@ export default function PaginaNoEncontrada() {
               <h3>Explorar categorías</h3>
               <p>Descubre nuestros productos organizados por categorías.</p>
             </div>
-            <Link to="/tienda" className="lux404-card-link">
+            <Link href="/tienda" className="lux404-card-link">
               Ver catálogo <ArrowRight size={16} />
             </Link>
           </div>
@@ -67,7 +67,7 @@ export default function PaginaNoEncontrada() {
               <h3>Ofertas y destacados</h3>
               <p>Aprovecha descuentos y productos recomendados.</p>
             </div>
-            <Link to="/ofertas" className="lux404-card-link">
+            <Link href="/ofertas" className="lux404-card-link">
               Ver ofertas <ArrowRight size={16} />
             </Link>
           </div>

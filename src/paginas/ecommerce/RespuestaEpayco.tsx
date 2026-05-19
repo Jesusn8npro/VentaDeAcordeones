@@ -1,10 +1,13 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from '@/compat/router';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
 
 const RespuestaEpayco = () => {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [estadoPago, setEstadoPago] = useState('cargando');
   const [datosPago, setDatosPago] = useState({});
 
@@ -101,9 +104,9 @@ const RespuestaEpayco = () => {
 
   const manejarContinuar = () => {
     if (estadoPago === 'exitoso') {
-      navigate('/perfil/pedidos'); // Ir a ver pedidos
+      router.push('/perfil/pedidos'); // Ir a ver pedidos
     } else {
-      navigate('/carrito'); // Volver al carrito para intentar de nuevo
+      router.push('/carrito'); // Volver al carrito para intentar de nuevo
     }
   };
 
@@ -161,7 +164,7 @@ const RespuestaEpayco = () => {
           </button>
           
           <button
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             className="w-full py-3 px-4 rounded-lg font-medium bg-gray-200 hover:bg-gray-300 text-gray-700 transition-colors"
           >
             Ir al Inicio

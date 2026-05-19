@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, Link } from '@/compat/router';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Clock, Star, ChevronDown, AlertTriangle, Loader, Play, Pause } from 'lucide-react';
 import './ArticuloBlog.css';
 import SidebarBlog from './SidebarBlog';
@@ -163,7 +166,8 @@ const ReproductorAudio = ({ texto }) => {
 
 // Página de detalle de artículo con contenido completo y tabla de contenidos
 export default function ArticuloBlog() {
-  const { slug } = useParams();
+  const params = useParams();
+  const slug = params.slug as string;
   const [resumenExpandido, setResumenExpandido] = useState(false);
   const [articuloData, setArticuloData] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -244,7 +248,7 @@ export default function ArticuloBlog() {
         <AlertTriangle size={48} />
         <h2>Error al Cargar</h2>
         <p>{error}</p>
-        <Link to="/blog" className="btn-cta">Volver al Blog</Link>
+        <Link href="/blog" className="btn-cta">Volver al Blog</Link>
       </div>
     );
   }
@@ -255,7 +259,7 @@ export default function ArticuloBlog() {
         <AlertTriangle size={48} />
         <h2>Artículo no encontrado</h2>
         <p>El artículo que buscas no existe o no está disponible.</p>
-        <Link to="/blog" className="btn-cta">Volver al Blog</Link>
+        <Link href="/blog" className="btn-cta">Volver al Blog</Link>
       </div>
     );
   }

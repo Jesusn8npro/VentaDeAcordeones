@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { useParams } from '@/compat/router'
+import { useParams } from 'next/navigation'
 import CreadorProductosPR from '../CreadorDeProductosPR/CreadorProductosPR'
 
 /**
@@ -8,7 +10,8 @@ import CreadorProductosPR from '../CreadorDeProductosPR/CreadorProductosPR'
  */
 
 const EditarProducto = () => {
-  const { slug } = useParams()
+  const params = useParams()
+  const slug = params.slug as string
 
   const manejarExito = (_producto) => {
     // Aquí puedes agregar lógica adicional si es necesaria

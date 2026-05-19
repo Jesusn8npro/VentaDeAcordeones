@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from '@/compat/router';
+import { useParams, useRouter } from 'next/navigation';
 import { clienteSupabase as supabase } from '../../../configuracion/supabase';
 import { comprimirImagen, CONFIGURACIONES_PREDEFINIDAS } from '../../../utilidades/compresionImagenes';
 import './CreadorArticulos.css';
@@ -29,8 +31,9 @@ const estadoInicialArticulo = {
 };
 
 const CreadorArticulos = () => {
-  const { slug } = useParams();
-  const navigate = useNavigate();
+  const params = useParams();
+  const slug = params.slug as string;
+  const router = useRouter();
   const modo = slug ? 'editar' : 'crear';
 
   const [articulo, setArticulo] = useState(estadoInicialArticulo);
@@ -50,7 +53,7 @@ const CreadorArticulos = () => {
 
         if (error) {
           alert('No se pudo cargar el artículo. Serás redirigido.');
-          navigate('/admin/blog');
+          router.push('/admin/blog');
         } else {
           const articuloConImagenes = { ...data, imagenes: data.articulo_imagenes || [] };
           setArticulo(articuloConImagenes);
@@ -109,7 +112,7 @@ const CreadorArticulos = () => {
         const { data, error } = await supabase.from('articulos_web').insert([{ ...articulo, imagenes: undefined }]).select().single();
         if (error) throw error;
         articuloId = data.id;
-        navigate(`/admin/blog/editar/${data.slug}`, { replace: true });
+        router.replace(`/admin/blog/editar/${data.slug}`);
       } else {
         const { error } = await supabase.from('articulos_web').update({ ...articulo, imagenes: undefined }).eq('id', articuloId);
         if (error) throw error;

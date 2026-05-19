@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { Phone, Mail, MapPin, MessageCircle, Instagram, Facebook, Youtube } from 'lucide-react'
 import './FooterPrincipal.css'
 
@@ -37,14 +39,14 @@ export default function FooterPrincipal() {
         <div className="footer-columna">
           <h3 className="footer-titulo">Tienda</h3>
           <ul className="footer-lista">
-            <li><Link to="/tienda/categoria/acordeones-rey-vallenato">Acordeones Rey Vallenato</Link></li>
-            <li><Link to="/tienda/categoria/acordeones-hohner-premium">Acordeones Hohner Premium</Link></li>
-            <li><Link to="/tienda/categoria/acordeones-para-ninos">Acordeones para Niños</Link></li>
-            <li><Link to="/tienda/categoria/acordeones-personalizados">Personalizados</Link></li>
-            <li><Link to="/tienda/categoria/armonicas">Armónicas</Link></li>
-            <li><Link to="/tienda/categoria/guitarras">Guitarras</Link></li>
-            <li><Link to="/tienda/categoria/amplificadores">Amplificadores</Link></li>
-            <li><Link to="/tienda">Ver todo el catálogo</Link></li>
+            <li><Link href="/tienda/categoria/acordeones-rey-vallenato">Acordeones Rey Vallenato</Link></li>
+            <li><Link href="/tienda/categoria/acordeones-hohner-premium">Acordeones Hohner Premium</Link></li>
+            <li><Link href="/tienda/categoria/acordeones-para-ninos">Acordeones para Niños</Link></li>
+            <li><Link href="/tienda/categoria/acordeones-personalizados">Personalizados</Link></li>
+            <li><Link href="/tienda/categoria/armonicas">Armónicas</Link></li>
+            <li><Link href="/tienda/categoria/guitarras">Guitarras</Link></li>
+            <li><Link href="/tienda/categoria/amplificadores">Amplificadores</Link></li>
+            <li><Link href="/tienda">Ver todo el catálogo</Link></li>
           </ul>
         </div>
 
@@ -52,12 +54,12 @@ export default function FooterPrincipal() {
         <div className="footer-columna">
           <h3 className="footer-titulo">Información</h3>
           <ul className="footer-lista">
-            <li><Link to="/quienes-somos">Quiénes somos</Link></li>
-            <li><Link to="/sobre-la-tienda">Sobre la tienda</Link></li>
-            <li><Link to="/blog">Blog musical</Link></li>
-            <li><Link to="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
-            <li><Link to="/ayuda">Centro de ayuda</Link></li>
-            <li><Link to="/trabaja-con-nosotros">Trabaja con nosotros</Link></li>
+            <li><Link href="/quienes-somos">Quiénes somos</Link></li>
+            <li><Link href="/sobre-la-tienda">Sobre la tienda</Link></li>
+            <li><Link href="/blog">Blog musical</Link></li>
+            <li><Link href="/preguntas-frecuentes">Preguntas frecuentes</Link></li>
+            <li><Link href="/ayuda">Centro de ayuda</Link></li>
+            <li><Link href="/trabaja-con-nosotros">Trabaja con nosotros</Link></li>
           </ul>
         </div>
 
@@ -65,10 +67,10 @@ export default function FooterPrincipal() {
         <div className="footer-columna">
           <h3 className="footer-titulo">Legal</h3>
           <ul className="footer-lista">
-            <li><Link to="/terminos-condiciones">Términos y condiciones</Link></li>
-            <li><Link to="/politica-privacidad">Política de privacidad</Link></li>
-            <li><Link to="/politica-envio">Política de envío</Link></li>
-            <li><Link to="/cambios-devoluciones">Cambios y devoluciones</Link></li>
+            <li><Link href="/terminos-condiciones">Términos y condiciones</Link></li>
+            <li><Link href="/politica-privacidad">Política de privacidad</Link></li>
+            <li><Link href="/politica-envio">Política de envío</Link></li>
+            <li><Link href="/cambios-devoluciones">Cambios y devoluciones</Link></li>
           </ul>
         </div>
 

@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import './EstilosCategoriasElegantes.css'
@@ -251,7 +253,7 @@ const ListaProductos = () => {
           <p className="subtitulo-pagina">Gestiona tu inventario y controla tus productos</p>
         </div>
         <div className="header-acciones">
-          <Link to="/admin/productos/agregar" className="boton-primario">
+          <Link href="/admin/productos/agregar" className="boton-primario">
             <Plus className="boton-icono" />
             Agregar Producto
           </Link>
@@ -301,7 +303,7 @@ const ListaProductos = () => {
             <Package className="vacio-icono" />
             <h3>No hay productos</h3>
             <p>Comienza agregando tu primer producto</p>
-            <Link to="/admin/productos/agregar" className="boton-primario">
+            <Link href="/admin/productos/agregar" className="boton-primario">
               <Plus className="boton-icono" />
               Agregar Producto
             </Link>
@@ -400,7 +402,7 @@ const ListaProductos = () => {
                       <td>
                         <div className="acciones-producto">
                           <Link
-                            to={`/producto/${producto.slug}`}
+                            href={`/producto/${producto.slug}`}
                             className="accion-boton ver"
                             title="Ver producto"
                             target="_blank"
@@ -409,7 +411,7 @@ const ListaProductos = () => {
                             <Eye />
                           </Link>
                           <Link
-                            to={`/admin/productos/editar/${encodeURIComponent(producto.slug || producto.nombre)}`}
+                            href={`/admin/productos/editar/${encodeURIComponent(producto.slug || producto.nombre)}`}
                             className="accion-boton editar"
                             title="Editar producto"
                           >

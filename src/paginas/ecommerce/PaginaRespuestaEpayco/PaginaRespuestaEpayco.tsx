@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
-import { useSearchParams, Link } from '@/compat/router'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import {
   CheckCircle,
   AlertCircle,
@@ -20,7 +23,7 @@ import servicioEpayco from '../../../servicios/epayco/servicioEpayco'
 import './PaginaRespuestaEpayco.css'
 
 const PaginaRespuestaEpayco = () => {
-  const [searchParams] = useSearchParams()
+  const searchParams = useSearchParams()
   const { limpiarCarrito } = useCarrito()
   const [datosTransaccion, setDatosTransaccion] = useState(null)
   const [cargando, setCargando] = useState(true)
@@ -173,7 +176,7 @@ const PaginaRespuestaEpayco = () => {
             <p className="mensaje-estado">No se encontraron datos de la transacción</p>
           </div>
           <div className="acciones-respuesta">
-            <Link to="/" className="boton-accion boton-primario">
+            <Link href="/" className="boton-accion boton-primario">
               <Home size={20} />
               Volver al Inicio
             </Link>
@@ -330,11 +333,11 @@ const PaginaRespuestaEpayco = () => {
         <div className="acciones-respuesta">
           {estadoTransaccion === 'exitoso' && (
             <>
-              <Link to="/mis-pedidos" className="boton-accion boton-exito">
+              <Link href="/mis-pedidos" className="boton-accion boton-exito">
                 <Package size={20} />
                 Ver Mis Pedidos
               </Link>
-              <Link to="/tienda" className="boton-accion boton-secundario">
+              <Link href="/tienda" className="boton-accion boton-secundario">
                 <ShoppingBag size={20} />
                 Seguir Comprando
               </Link>
@@ -343,11 +346,11 @@ const PaginaRespuestaEpayco = () => {
           
           {estadoTransaccion === 'rechazado' && (
             <>
-              <Link to="/carrito" className="boton-accion boton-primario">
+              <Link href="/carrito" className="boton-accion boton-primario">
                 <ArrowLeft size={20} />
                 Intentar Nuevamente
               </Link>
-              <Link to="/tienda" className="boton-accion boton-secundario">
+              <Link href="/tienda" className="boton-accion boton-secundario">
                 <ShoppingBag size={20} />
                 Seguir Comprando
               </Link>
@@ -363,14 +366,14 @@ const PaginaRespuestaEpayco = () => {
                 <Clock size={20} />
                 Actualizar Estado
               </button>
-              <Link to="/" className="boton-accion boton-secundario">
+              <Link href="/" className="boton-accion boton-secundario">
                 <Home size={20} />
                 Volver al Inicio
               </Link>
             </>
           )}
           
-          <Link to="/" className="boton-accion boton-secundario">
+          <Link href="/" className="boton-accion boton-secundario">
             <Home size={20} />
             Inicio
           </Link>

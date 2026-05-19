@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useEffect } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import DisposicionAdmin from '../../../componentes/admin/DisposicionAdmin/DisposicionAdmin'
 import MetricasEcommerce from '../../../componentes/admin/ecommerce/Pagina_AdminPrincipal/MetricasEcommerce'
@@ -48,17 +50,17 @@ const ContenidoDashboardAdmin = () => {
 }
 
 export default function DashboardAdmin() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const { usuario, cargando, sesionInicializada, esAdmin } = useAuth()
 
   useEffect(() => {
     if (!cargando) {
       if (!sesionInicializada || !usuario) {
-        navigate('/login')
+        router.push('/login')
         return
       }
       if (!esAdmin()) {
-        navigate('/')
+        router.push('/')
         return
       }
     }

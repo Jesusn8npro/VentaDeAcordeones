@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 import './SeccionCategorias.css'
@@ -15,7 +17,7 @@ interface Categoria {
 export default function SeccionCategorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([])
   const [cargando, setCargando] = useState(true)
-  const navigate = useNavigate()
+  const router = useRouter()
 
   useEffect(() => {
     async function cargarCategorias() {
@@ -55,7 +57,7 @@ export default function SeccionCategorias() {
               <button
                 key={cat.id}
                 className="sc-card"
-                onClick={() => navigate(`/tienda/categoria/${cat.slug}`)}
+                onClick={() => router.push(`/tienda/categoria/${cat.slug}`)}
               >
                 <span className="sc-icono">{cat.icono}</span>
                 <span className="sc-nombre">{cat.nombre}</span>

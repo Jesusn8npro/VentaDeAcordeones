@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useRef } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import {
   ChevronDown,
   ChevronLeft,
@@ -119,7 +121,7 @@ const NavDesktop = ({
                 categorias.map(categoria => (
                   <Link
                     key={categoria.id}
-                    to={`/tienda/categoria/${categoria.slug}`}
+                    href={`/tienda/categoria/${categoria.slug}`}
                     className="dropdown-item"
                     onClick={() => setDepartamentosAbierto(false)}
                   >
@@ -130,7 +132,7 @@ const NavDesktop = ({
                 ))
               )}
               <Link
-                to="/tienda"
+                href="/tienda"
                 className="dropdown-item ver-todas"
                 onClick={() => setDepartamentosAbierto(false)}
               >
@@ -169,7 +171,7 @@ const NavDesktop = ({
                 {nosotrosLinks.map(({ ruta, titulo, Icono }) => (
                   <Link
                     key={ruta}
-                    to={ruta}
+                    href={ruta}
                     className="dropdown-item"
                     onClick={() => manejarNavegacion(ruta)}
                   >
@@ -228,15 +230,15 @@ const NavDesktop = ({
                   <div className="dropdown-item">Cargando productos...</div>
                 )}
                 <div className="dropdown-divider"></div>
-                <Link to="/tienda" className="dropdown-item ver-todos-productos" onClick={() => setProductAbierto(false)}>
+                <Link href="/tienda" className="dropdown-item ver-todos-productos" onClick={() => setProductAbierto(false)}>
                   Ver todos los productos
                 </Link>
               </div>
             )}
           </div>
 
-          <Link to="/blog" className="menu-enlace">Blog</Link>
-          <Link to="/contacto" className="menu-enlace">Contacto</Link>
+          <Link href="/blog" className="menu-enlace">Blog</Link>
+          <Link href="/contacto" className="menu-enlace">Contacto</Link>
         </div>
 
         <div className="info-contacto">

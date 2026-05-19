@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import './SeccionBeneficios.css'
 
 const BENEFICIOS = [
@@ -41,7 +43,7 @@ const BENEFICIOS = [
 ]
 
 function SeccionBeneficios() {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   return (
     <section className="sb-seccion">
@@ -61,7 +63,7 @@ function SeccionBeneficios() {
                 {b.cta && (
                   b.externo
                     ? <a href={b.enlace} target="_blank" rel="noopener noreferrer" className="sb-cta">{b.cta} →</a>
-                    : <button className="sb-cta" onClick={() => navigate(b.enlace!)}>{b.cta} →</button>
+                    : <button className="sb-cta" onClick={() => router.push(b.enlace!)}>{b.cta} →</button>
                 )}
               </div>
             </div>

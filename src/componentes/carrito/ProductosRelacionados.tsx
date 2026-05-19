@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useMemo } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { 
   Plus, 
   Star, 
@@ -163,7 +165,7 @@ const ProductosRelacionados = ({ categoriaId, onCerrarModal }) => {
               return (
                 <div key={producto.id} className="producto-relacionado">
                   <div className="producto-imagen-container">
-                    <Link to={`/producto/${producto.id}`} onClick={onCerrarModal}>
+                    <Link href={`/producto/${producto.id}`} onClick={onCerrarModal}>
                       <img
                         src={obtenerImagenPrincipal(producto)}
                         alt={producto.nombre}
@@ -196,7 +198,7 @@ const ProductosRelacionados = ({ categoriaId, onCerrarModal }) => {
 
                   <div className="producto-info">
                     <Link 
-                      to={`/producto/${producto.id}`}
+                      href={`/producto/${producto.id}`}
                       className="producto-nombre"
                       onClick={onCerrarModal}
                     >
@@ -269,7 +271,7 @@ const ProductosRelacionados = ({ categoriaId, onCerrarModal }) => {
 
       <div className="productos-relacionados-footer">
         <Link 
-          to="/tienda" 
+          href="/tienda" 
           className="ver-mas-productos"
           onClick={onCerrarModal}
         >

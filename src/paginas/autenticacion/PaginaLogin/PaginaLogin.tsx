@@ -1,20 +1,22 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../contextos/ContextoAutenticacion';
 import ModalAutenticacionIsolado from '../../../componentes/autenticacion/ModalAutenticacionIsolado';
-import { useNavigate } from '@/compat/router';
+import { useRouter } from 'next/navigation';
 
 const PaginaLogin = () => {
     const [modalAbierto, setModalAbierto] = useState(true);
     const { usuario, sesionInicializada } = useAuth();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     // Si ya hay usuario, redirigir
     useEffect(() => {
         if (sesionInicializada && usuario) {
             if (usuario.rol === 'admin') {
-                navigate('/admin');
+                router.push('/admin');
             } else {
-                navigate('/perfil');
+                router.push('/perfil');
             }
         }
     }, [usuario, sesionInicializada, navigate]);

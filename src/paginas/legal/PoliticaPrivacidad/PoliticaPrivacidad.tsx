@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, Shield } from 'lucide-react'
-import { Link as RouterLink } from '@/compat/router'
+import Link from 'next/link'
 
 const PoliticaPrivacidad = () => {
   return (
@@ -162,10 +162,10 @@ const PoliticaPrivacidad = () => {
 
       <div className="politica-header">
         <div className="header-navegacion">
-          <RouterLink to="/" className="boton-volver">
+          <Link href="/" className="boton-volver">
             <ArrowLeft className="icono" />
             Volver al Inicio
-          </RouterLink>
+          </Link>
         </div>
         
         <div className="titulo-principal">

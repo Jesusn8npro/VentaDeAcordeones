@@ -1,5 +1,8 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { Link, useNavigate, useLocation } from '@/compat/router'
+﻿'use client'
+
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
 import {
   Search,
   ShoppingCart,
@@ -52,8 +55,8 @@ const PAGINAS_MENU = [
 ]
 
 const HeaderPrincipal = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const router = useRouter()
+  const pathname = usePathname()
   const { favoritos } = useFavoritos()
   const { usuario, sesionInicializada, cerrarSesion, esAdmin } = useAuth()
   const { totalItems, modalAbierto, alternarModal } = useCarrito()
@@ -113,11 +116,11 @@ const HeaderPrincipal = () => {
 
   const manejarNavegacionCategoria = (categoria) => {
     setMenuMovilAbierto(false)
-    navigate(`/tienda/categoria/${categoria.slug}`)
+    router.push(`/tienda/categoria/${categoria.slug}`)
   }
 
-  const esPaginaProducto = location.pathname.startsWith('/producto/')
-  const esPaginaTienda = location.pathname.startsWith('/tienda')
+  const esPaginaProducto = pathname.startsWith('/producto/')
+  const esPaginaTienda = pathname.startsWith('/tienda')
 
   useEffect(() => {
     const verificarContenidoSuficiente = () =>
@@ -165,24 +168,24 @@ const HeaderPrincipal = () => {
   const manejarCerrarSesion = useCallback(async () => {
     try {
       await cerrarSesion()
-      navigate('/sesion-cerrada')
+      router.push('/sesion-cerrada')
       setMenuUsuarioAbierto(false)
     } catch (error) {
       // silencioso
     }
   }, [cerrarSesion, navigate])
 
-  const navegarAAdmin = () => { setMenuUsuarioAbierto(false); navigate('/admin') }
-  const navegarAProductosAdmin = () => { setMenuUsuarioAbierto(false); navigate('/admin/productos') }
-  const navegarAAgregarProducto = () => { setMenuUsuarioAbierto(false); navigate('/admin/productos/creador-pr') }
-  const navegarAPerfil = () => { setMenuUsuarioAbierto(false); navigate('/perfil') }
-  const navegarAFavoritos = () => { setMenuUsuarioAbierto(false); navigate('/favoritos') }
+  const navegarAAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin') }
+  const navegarAProductosAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin/productos') }
+  const navegarAAgregarProducto = () => { setMenuUsuarioAbierto(false); router.push('/admin/productos/creador-pr') }
+  const navegarAPerfil = () => { setMenuUsuarioAbierto(false); router.push('/perfil') }
+  const navegarAFavoritos = () => { setMenuUsuarioAbierto(false); router.push('/favoritos') }
 
   const manejarNavegacion = useCallback((ruta) => {
     setHomeLayoutAbierto(false)
     setProductAbierto(false)
     setDepartamentosAbierto(false)
-    navigate(ruta)
+    router.push(ruta)
   }, [navigate])
 
   const obtenerNombreUsuario = () => {
@@ -221,7 +224,7 @@ const HeaderPrincipal = () => {
             <button className="menu-movil-boton" onClick={alternarMenuMovil}>
               <Menu size={24} />
             </button>
-            <Link to="/" className="logo-contenedor">
+            <Link href="/" className="logo-contenedor">
               <img
                 src="/logo.svg"
                 alt="VentaDeAcordeones.com"
@@ -230,7 +233,7 @@ const HeaderPrincipal = () => {
             </Link>
           </div>
 
-          <Link to="/" className="logo-contenedor logo-escritorio">
+          <Link href="/" className="logo-contenedor logo-escritorio">
             <img
               src="/logo.svg"
               alt="VentaDeAcordeones.com"
@@ -256,7 +259,7 @@ const HeaderPrincipal = () => {
           </div>
 
           <div className="acciones-header">
-            <Link to="/favoritos" className="accion-item favoritos-enlace">
+            <Link href="/favoritos" className="accion-item favoritos-enlace">
               <div className="favoritos-contenedor">
                 <Heart size={24} />
                 {favoritos.length > 0 && (
@@ -350,7 +353,7 @@ const HeaderPrincipal = () => {
             <div className="nav-icono-contenedor"><Search size={22} /></div>
             <span>Buscar</span>
           </button>
-          <Link to="/tienda" className="nav-movil-item nav-movil-destacado">
+          <Link href="/tienda" className="nav-movil-item nav-movil-destacado">
             <div className="nav-icono-contenedor-destacado"><Store size={24} /></div>
             <span>Tienda</span>
           </Link>
@@ -361,7 +364,7 @@ const HeaderPrincipal = () => {
             </div>
             <span>Carrito</span>
           </button>
-          <Link to="/favoritos" className="nav-movil-item">
+          <Link href="/favoritos" className="nav-movil-item">
             <div className="nav-icono-contenedor"><Heart size={22} /></div>
             <span>Favoritos</span>
           </Link>

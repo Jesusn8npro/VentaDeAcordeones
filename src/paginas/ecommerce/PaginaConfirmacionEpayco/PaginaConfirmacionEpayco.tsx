@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
-import { useSearchParams, Link } from '@/compat/router'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { 
   CheckCircle, 
   AlertCircle, 
@@ -18,7 +21,7 @@ import servicioEpayco from '../../../servicios/epayco/servicioEpayco'
 import './PaginaConfirmacionEpayco.css'
 
 const PaginaConfirmacionEpayco = () => {
-  const [searchParams] = useSearchParams()
+  const searchParams = useSearchParams()
   const [estado, setEstado] = useState('procesando') // procesando, validando, exitoso, error
   const [mensaje, setMensaje] = useState('Validando transacción con ePayco...')
   const [datosTransaccion, setDatosTransaccion] = useState(null)
@@ -381,7 +384,7 @@ const PaginaConfirmacionEpayco = () => {
 
         {/* Botón de emergencia */}
         {estado === 'error' && (
-          <Link to="/" className="boton-emergencia">
+          <Link href="/" className="boton-emergencia">
             <Home size={16} />
             Volver al Inicio
           </Link>

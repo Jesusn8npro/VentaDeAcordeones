@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import {
@@ -47,7 +49,7 @@ const FILTROS_RAPIDOS = [
 const ESTADOS_OPCIONES = ['pendiente', 'en_proceso', 'enviado', 'entregado', 'cancelado']
 
 export default function Pedidos() {
-  const navigate = useNavigate()
+  const router = useRouter()
   const { sesionInicializada, usuario, esAdmin } = useAuth()
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
@@ -264,7 +266,7 @@ export default function Pedidos() {
       {!sesionInicializada && (
         <div className="ped-aviso">
           <AlertCircle size={16} />
-          <span>No has iniciado sesión. <button className="ped-link" onClick={() => navigate('/login')}>Ir a Login</button></span>
+          <span>No has iniciado sesión. <button className="ped-link" onClick={() => router.push('/login')}>Ir a Login</button></span>
         </div>
       )}
 

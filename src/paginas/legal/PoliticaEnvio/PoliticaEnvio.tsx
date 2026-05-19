@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, Truck, Clock, MapPin, Package, CreditCard, AlertCircle, CheckCircle } from 'lucide-react'
-import { Link as RouterLink } from '@/compat/router'
+import Link from 'next/link'
 import '../politica-layout.css'
 
 const PoliticaEnvio = () => {
@@ -8,10 +8,10 @@ const PoliticaEnvio = () => {
     <div className="politica-container">
       <div className="politica-header">
         <div className="header-navegacion">
-          <RouterLink to="/" className="boton-volver">
+          <Link href="/" className="boton-volver">
             <ArrowLeft className="icono" />
             Volver al Inicio
-          </RouterLink>
+          </Link>
         </div>
         <div className="titulo-principal">
           <Truck className="icono" />

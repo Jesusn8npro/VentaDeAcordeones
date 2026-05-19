@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useEffect, useMemo, useState } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import './GestionProductos.css'
@@ -232,7 +234,7 @@ const GestionProductos = () => {
             <p className="gestion-subtitulo">Administra tu inventario y catálogo fácilmente</p>
           </div>
           <div className="gestion-acciones-encabezado">
-            <Link to="/admin/productos/agregar" className="gestion-boton gestion-boton-primario">
+            <Link href="/admin/productos/agregar" className="gestion-boton gestion-boton-primario">
               <Plus />
               Agregar Producto
             </Link>
@@ -312,7 +314,7 @@ const GestionProductos = () => {
               <Package />
               <h3>No hay productos</h3>
               <p>Agrega tu primer producto para comenzar</p>
-              <Link to="/admin/productos/agregar" className="gestion-boton gestion-boton-primario">
+              <Link href="/admin/productos/agregar" className="gestion-boton gestion-boton-primario">
                 <Plus /> Agregar Producto
               </Link>
             </div>
@@ -398,8 +400,8 @@ const GestionProductos = () => {
                       <td>{new Date(producto.creado_el).toLocaleDateString('es-CO')}</td>
                       <td>
                         <div className="gestion-acciones">
-                          <Link to={`/admin/productos/editar/${encodeURIComponent(producto.slug || producto.nombre || producto.id)}`} className="gestion-accion" title="Editar"><Edit /></Link>
-                          <Link to={`/producto/${producto.slug || producto.id}`} className="gestion-accion" title="Ver"><Eye /></Link>
+                          <Link href={`/admin/productos/editar/${encodeURIComponent(producto.slug || producto.nombre || producto.id)}`} className="gestion-accion" title="Editar"><Edit /></Link>
+                          <Link href={`/producto/${producto.slug || producto.id}`} className="gestion-accion" title="Ver"><Eye /></Link>
                           <button onClick={() => eliminarProducto(producto.id)} className="gestion-accion eliminar" title="Eliminar"><Trash2 /></button>
                         </div>
                       </td>

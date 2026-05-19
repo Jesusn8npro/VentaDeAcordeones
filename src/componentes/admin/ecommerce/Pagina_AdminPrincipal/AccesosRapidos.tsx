@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { ShoppingCartIcon, BoxCubeIcon, PackageIcon } from '../../iconos/IconosAdmin'
 
 const accesos = [
@@ -24,7 +26,7 @@ const accesos = [
 ]
 
 const AccesosRapidos = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   return (
     <div className="accesos-rapidos-seccion">
@@ -34,7 +36,7 @@ const AccesosRapidos = () => {
           <button
             key={a.ruta}
             className={`acceso-btn ${a.variante}`}
-            onClick={() => navigate(a.ruta)}
+            onClick={() => router.push(a.ruta)}
             type="button"
           >
             <span className="acceso-icono">{a.icono}</span>

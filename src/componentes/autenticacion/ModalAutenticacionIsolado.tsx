@@ -1,14 +1,16 @@
+'use client'
+
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { X, Eye, EyeOff, Mail, User } from 'lucide-react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../configuracion/supabase'
 
 const ADMIN_EMAILS = ['acordeon91@gmail.com', 'shalom@gmail.com']
 
 export default function ModalAutenticacionIsolado({ abierto, onCerrar }) {
-  const navigate = useNavigate()
+  const router = useRouter()
   const { iniciarSesion, registrarse, usuario } = useAuth()
   const [mountNode, setMountNode] = useState(null)
 
@@ -60,7 +62,7 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }) {
     if (!email || !contrasena) { setError('Completa todos los campos'); setCargando(false); return }
     try {
       const r = await iniciarSesion(email, contrasena)
-      if (r.error) { setError(r.error); setCargando(false) } else { onCerrar(); setTimeout(() => navigate(ADMIN_EMAILS.includes(r.data.user.email) ? '/admin' : '/perfil'), 300) }
+      if (r.error) { setError(r.error); setCargando(false) } else { onCerrar(); setTimeout(() => router.push(ADMIN_EMAILS.includes(r.data.user.email) ? '/admin' : '/perfil'), 300) }
     } catch { setError('Error de conexión'); setCargando(false) }
   }
 
@@ -70,7 +72,7 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }) {
     if (passReg.length < 6) { setError('La contraseña debe tener al menos 6 caracteres'); setCargando(false); return }
     try {
       const r = await registrarse(emailReg, passReg, `${nombre} ${apellido}`)
-      if (r.error) { setError(r.error); setCargando(false) } else { onCerrar(); setTimeout(() => navigate('/perfil'), 300) }
+      if (r.error) { setError(r.error); setCargando(false) } else { onCerrar(); setTimeout(() => router.push('/perfil'), 300) }
     } catch { setError('Error de conexión'); setCargando(false) }
   }
 

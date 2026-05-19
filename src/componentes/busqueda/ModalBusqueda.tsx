@@ -1,6 +1,8 @@
+'use client'
+
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { X, Search, Package, ExternalLink, Clock, TrendingUp } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 
@@ -11,7 +13,7 @@ export default function ModalBusqueda({ abierto, onCerrar }) {
   const [cargando, setCargando] = useState(false)
   const [busquedaReciente, setBusquedaReciente] = useState([])
   const [mostrarSugerencias, setMostrarSugerencias] = useState(false)
-  const navigate = useNavigate()
+  const router = useRouter()
   const inputRef = useRef(null)
   const shadowRef = useRef(null)
   const hostElRef = useRef(null)
@@ -194,19 +196,19 @@ export default function ModalBusqueda({ abierto, onCerrar }) {
     e.preventDefault()
     if (terminoBusqueda.trim()) {
       guardarBusquedaReciente(terminoBusqueda.trim())
-      navigate(`/tienda/buscar?q=${encodeURIComponent(terminoBusqueda.trim())}`)
+      router.push(`/tienda/buscar?q=${encodeURIComponent(terminoBusqueda.trim())}`)
       onCerrar()
     }
   }
 
   const navegarAProducto = (producto) => {
     guardarBusquedaReciente(producto.nombre)
-    navigate(`/producto/${producto.slug || producto.id}`)
+    router.push(`/producto/${producto.slug || producto.id}`)
     onCerrar()
   }
 
   const navegarAPagina = (ruta) => {
-    navigate(ruta)
+    router.push(ruta)
     onCerrar()
   }
 

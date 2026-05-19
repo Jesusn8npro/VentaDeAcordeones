@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { 
   X, 
   ShoppingCart, 
@@ -132,7 +134,7 @@ const ModalCarrito = ({ abierto, onCerrar }) => {
               </div>
 
               <Link 
-                to="/tienda" 
+                href="/tienda" 
                 className="boton-explorar"
                 onClick={manejarCierre}
               >
@@ -216,7 +218,7 @@ const ModalCarrito = ({ abierto, onCerrar }) => {
 
             <div className="footer-botones-principales">
               <Link
-                to="/checkout"
+                href="/checkout"
                 className="boton-checkout"
                 onClick={manejarCierre}
               >

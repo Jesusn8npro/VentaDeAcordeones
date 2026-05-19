@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
-import { Link } from '@/compat/router';
+import Link from 'next/link';
 import { clienteSupabase as supabase } from '../../../configuracion/supabase';
 import './AdminBlog.css';
 
@@ -121,7 +123,7 @@ const AdminBlog = () => {
           <h1>Blog ({articulos.length})</h1>
           <p>Gestiona los artículos del blog</p>
         </div>
-        <Link to="/admin/crear-articulo" className="btn-nuevo-articulo">
+        <Link href="/admin/crear-articulo" className="btn-nuevo-articulo">
           + Nuevo Artículo
         </Link>
       </div>
@@ -188,7 +190,7 @@ const AdminBlog = () => {
           <div className="blog-vacio-icono">📝</div>
           <h3>No hay artículos aún</h3>
           <p>¡Crea el primero y empieza a publicar contenido!</p>
-          <Link to="/admin/crear-articulo" className="btn-nuevo-articulo">
+          <Link href="/admin/crear-articulo" className="btn-nuevo-articulo">
             + Crear primer artículo
           </Link>
         </div>
@@ -251,7 +253,7 @@ const AdminBlog = () => {
                   </td>
                   <td>
                     <div className="articulo-acciones">
-                      <Link to={`/admin/blog/editar/${articulo.slug}`} className="btn-articulo editar">
+                      <Link href={`/admin/blog/editar/${articulo.slug}`} className="btn-articulo editar">
                         Editar
                       </Link>
                       {articulo.slug && (

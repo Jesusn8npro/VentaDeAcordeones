@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, RefreshCw, CreditCard, AlertCircle, Mail } from 'lucide-react'
-import { Link as RouterLink } from '@/compat/router'
+import Link from 'next/link'
 import '../politica-layout.css'
 
 const CambiosDevoluciones = () => {
@@ -8,10 +8,10 @@ const CambiosDevoluciones = () => {
     <div className="politica-container">
       <div className="politica-header">
         <div className="header-navegacion">
-          <RouterLink to="/" className="boton-volver">
+          <Link href="/" className="boton-volver">
             <ArrowLeft className="icono" />
             Volver al Inicio
-          </RouterLink>
+          </Link>
         </div>
         <div className="titulo-principal">
           <RefreshCw className="icono" />

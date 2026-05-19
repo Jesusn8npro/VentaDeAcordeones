@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import { ArrowLeft, FileText, ShoppingCart, CreditCard, Truck, Package, Users, Shield } from 'lucide-react'
-import { Link as RouterLink } from '@/compat/router'
+import Link from 'next/link'
 import './TerminosCondiciones.css'
 
 const TerminosCondiciones = () => {
@@ -9,10 +9,10 @@ const TerminosCondiciones = () => {
       {/* Header minimalista y sobrio */}
       <div className="terms-header">
         <div className="terms-nav">
-          <RouterLink to="/" className="terms-back">
+          <Link href="/" className="terms-back">
             <ArrowLeft className="terms-icon" />
             Volver al inicio
-          </RouterLink>
+          </Link>
         </div>
 
         <div className="terms-title-row">

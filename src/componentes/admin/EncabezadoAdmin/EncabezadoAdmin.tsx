@@ -1,6 +1,9 @@
-﻿import { useEffect, useRef, useState } from 'react'
+﻿'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import './EncabezadoAdmin.css'
-import { Link, useNavigate } from '@/compat/router'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useBarraLateral } from '../../../contextos/ContextoBarraLateral'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { BotonAlternarTema } from '../BotonAlternarTema/BotonAlternarTema'
@@ -12,7 +15,7 @@ const EncabezadoAdmin = () => {
 
   const { movilAbierto, alternarBarraLateral, alternarBarraLateralMovil } = useBarraLateral()
   const { usuario, cerrarSesion } = useAuth()
-  const navigate = useNavigate()
+  const router = useRouter()
 
   const manejarAlternar = () => {
     if (window.innerWidth >= 1024) {
@@ -30,7 +33,7 @@ const EncabezadoAdmin = () => {
     try {
       const resultado = await cerrarSesion()
       if (resultado.success) {
-        navigate('/sesion-cerrada')
+        router.push('/sesion-cerrada')
       }
     } catch {
       // fallo silencioso — el usuario permanece en la sesión
@@ -85,7 +88,7 @@ const EncabezadoAdmin = () => {
             )}
           </button>
 
-          <Link to="/admin" className="encabezado-logo-movil">
+          <Link href="/admin" className="encabezado-logo-movil">
             <span className="encabezado-logo-texto">VentaDeAcordeones.com</span>
           </Link>
 

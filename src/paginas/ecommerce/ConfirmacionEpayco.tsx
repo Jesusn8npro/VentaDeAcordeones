@@ -1,9 +1,11 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from '@/compat/router';
+import { useSearchParams } from 'next/navigation';
 import servicioEpayco from '../../servicios/epayco/servicioEpayco';
 
 const ConfirmacionEpayco = () => {
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const [estado, setEstado] = useState('procesando');
   const [mensaje, setMensaje] = useState('Procesando confirmación...');
 

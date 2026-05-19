@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { useSearchParams, useParams, useNavigate } from '@/compat/router'
+import { useSearchParams, useParams, useRouter, usePathname } from 'next/navigation'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import LayoutTienda from '../../../componentes/tienda/LayoutTienda'
 import SidebarFiltros from '../../../componentes/tienda/SidebarFiltros'
@@ -11,9 +13,11 @@ import './PaginaTienda.css'
 
 const PaginaTienda = () => {
   useTituloPagina('Tienda de Acordeones')
-  const { slug } = useParams() // Detectar slug de categoría
-  const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const params = useParams() // Detectar slug de categoría
+  const slug = params.slug as string | undefined
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   const [categoriaActual, setCategoriaActual] = useState(null)
   const [cargandoCategoria, setCargandoCategoria] = useState(!!slug)
   const [filtros, setFiltros] = useState({
@@ -139,7 +143,7 @@ const PaginaTienda = () => {
     if (nuevosFiltros.enStock) params.set('enStock', 'true')
     if (vista !== 'grid') params.set('vista', vista)
     if (ordenar !== 'relevancia') params.set('ordenar', ordenar)
-    setSearchParams(params)
+    router.push(pathname + '?' + params.toString())
   }
 
   const handleVistaChange = (nuevaVista) => {
@@ -150,7 +154,7 @@ const PaginaTienda = () => {
     } else {
       params.delete('vista')
     }
-    setSearchParams(params)
+    router.push(pathname + '?' + params.toString())
   }
 
   const handleOrdenarChange = (nuevoOrdenar) => {
@@ -162,7 +166,7 @@ const PaginaTienda = () => {
     } else {
       params.delete('ordenar')
     }
-    setSearchParams(params)
+    router.push(pathname + '?' + params.toString())
   }
 
   const contarFiltrosActivos = () => {
@@ -194,7 +198,7 @@ const PaginaTienda = () => {
     if (vista !== 'grid') {
       params.set('vista', vista)
     }
-    setSearchParams(params)
+    router.push(pathname + '?' + params.toString())
   }
 
   const opcionesOrdenar = [
@@ -377,7 +381,7 @@ const PaginaTienda = () => {
             <h3 className="tienda-empty-titulo">No encontramos productos</h3>
             <p className="tienda-empty-desc">Ajusta los filtros o explora otras categorías</p>
             <div className="tienda-empty-acciones">
-              <button className="btn-primario" onClick={() => navigate('/tienda')}>Ver todos los productos</button>
+              <button className="btn-primario" onClick={() => router.push('/tienda')}>Ver todos los productos</button>
               <button className="btn-secundario" onClick={() => setModalFiltrosAbierto(true)}>Abrir filtros</button>
             </div>
           </div>

@@ -1,4 +1,6 @@
-﻿// Página de Preguntas Frecuentes — diseño minimalista (sidebar + contenido)
+﻿'use client'
+
+// Página de Preguntas Frecuentes — diseño minimalista (sidebar + contenido)
 // Todo el contenido y textos en español, sin gradientes y con tipografía sobria.
 import { useState } from 'react'
 import {
@@ -18,7 +20,7 @@ import {
   Mail,
   Search
 } from 'lucide-react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import './PreguntasFrecuentes.css'
 
 export default function PreguntasFrecuentes() {
@@ -189,7 +191,7 @@ export default function PreguntasFrecuentes() {
                   <HelpCircle className="faq__sin-resultados-icono" />
                   <h3>No encontramos resultados</h3>
                   <p>Intenta con otras palabras o contáctanos directamente.</p>
-                  <Link to="/contacto" className="faq__btn-accento">
+                  <Link href="/contacto" className="faq__btn-accento">
                     <MessageSquare className="faq__btn-icono" />
                     Contactar soporte
                   </Link>
@@ -232,11 +234,11 @@ export default function PreguntasFrecuentes() {
           <h2 className="faq__cta-titulo">¿Listo para comprar con confianza?</h2>
           <p className="faq__cta-subtitulo">Todas tus dudas resueltas, ahora puedes comprar tranquilo.</p>
           <div className="faq__cta-botones">
-            <Link to="/tienda" className="faq__btn-primario">
+            <Link href="/tienda" className="faq__btn-primario">
               <Heart className="faq__btn-icono" />
               Explorar productos
             </Link>
-            <Link to="/contacto" className="faq__btn-secundario">
+            <Link href="/contacto" className="faq__btn-secundario">
               <MessageSquare className="faq__btn-icono" />
               Hacer pregunta
             </Link>

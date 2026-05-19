@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from '@/compat/router'
+import { useParams } from 'next/navigation'
+import Link from 'next/link'
 import { ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { usarProductos } from '../../../hooks/usarProductos'
@@ -15,7 +18,8 @@ const OPCIONES_ORDEN = [
 ]
 
 export default function PaginaCategoria() {
-  const { slug } = useParams()
+  const params = useParams()
+  const slug = params.slug as string
   const [categoria, setCategoria] = useState(null)
   const [cargandoCat, setCargandoCat] = useState(true)
   const [filtros, setFiltros] = useState({ precioMin: '', precioMax: '', ordenar: null })
@@ -63,7 +67,7 @@ export default function PaginaCategoria() {
       <div className="pagina-categoria pagina-categoria--error">
         <h2>Categoría no encontrada</h2>
         <p>La categoría que buscas no existe o fue removida.</p>
-        <Link to="/tienda" className="enlace-tienda">Ver toda la tienda</Link>
+        <Link href="/tienda" className="enlace-tienda">Ver toda la tienda</Link>
       </div>
     )
   }
@@ -73,9 +77,9 @@ export default function PaginaCategoria() {
 
       {/* Breadcrumb */}
       <nav className="breadcrumb-categoria" aria-label="breadcrumb">
-        <Link to="/">Inicio</Link>
+        <Link href="/">Inicio</Link>
         <ChevronRight size={14} />
-        <Link to="/tienda">Tienda</Link>
+        <Link href="/tienda">Tienda</Link>
         <ChevronRight size={14} />
         <span>{categoria.nombre}</span>
       </nav>
@@ -150,7 +154,7 @@ export default function PaginaCategoria() {
       ) : productos.length === 0 ? (
         <div className="sin-productos-cat">
           <p>No hay productos disponibles en esta categoría aún.</p>
-          <Link to="/tienda" className="enlace-tienda">Ver toda la tienda</Link>
+          <Link href="/tienda" className="enlace-tienda">Ver toda la tienda</Link>
         </div>
       ) : (
         <div className="grid-productos-categoria">

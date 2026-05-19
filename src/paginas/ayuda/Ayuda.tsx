@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import { HelpCircle, PhoneCall, ShoppingCart, Package, Truck, ShieldCheck, Info } from 'lucide-react'
 import './Ayuda.css'
 
@@ -30,8 +32,8 @@ export default function Ayuda() {
             Encuentra respuestas rápidas, guía de compras y soporte. Estamos aquí para ayudarte.
           </p>
           <div className="helpLux-cta">
-            <Link to="/tienda" className="helpLux-btn-primary">Ver productos</Link>
-            <Link to="/preguntas-frecuentes" className="helpLux-btn-secondary">Preguntas frecuentes</Link>
+            <Link href="/tienda" className="helpLux-btn-primary">Ver productos</Link>
+            <Link href="/preguntas-frecuentes" className="helpLux-btn-secondary">Preguntas frecuentes</Link>
           </div>
         </div>
       </section>
@@ -41,7 +43,7 @@ export default function Ayuda() {
         <h2 className="helpLux-section-title">Explora por categorías</h2>
         <div className="helpLux-category-grid">
           {categorias.map((cat) => (
-            <Link key={cat.nombre} to={cat.ruta} className="helpLux-category-card">
+            <Link key={cat.nombre} href={cat.ruta} className="helpLux-category-card">
               <span className="helpLux-category-name">{cat.nombre}</span>
             </Link>
           ))}
@@ -56,7 +58,7 @@ export default function Ayuda() {
           <p className="helpLux-guide-text">
             Información sobre tiempos de entrega, costos de envío y seguimiento de pedidos.
           </p>
-          <Link to="/preguntas-frecuentes" className="helpLux-link">Ver detalles</Link>
+          <Link href="/preguntas-frecuentes" className="helpLux-link">Ver detalles</Link>
         </div>
         <div className="helpLux-guide-card">
           <ShieldCheck className="helpLux-guide-icon" />
@@ -64,7 +66,7 @@ export default function Ayuda() {
           <p className="helpLux-guide-text">
             Métodos de pago disponibles, seguridad de tus datos y políticas de reembolso.
           </p>
-          <Link to="/terminos-condiciones" className="helpLux-link">Políticas</Link>
+          <Link href="/terminos-condiciones" className="helpLux-link">Políticas</Link>
         </div>
         <div className="helpLux-guide-card">
           <Info className="helpLux-guide-icon" />
@@ -81,7 +83,7 @@ export default function Ayuda() {
         <h2 className="helpLux-section-title">Acceso rápido</h2>
         <div className="helpLux-quick-grid">
           {enlacesRapidos.map((link) => (
-            <Link key={link.nombre} to={link.ruta} className="helpLux-quick-card">
+            <Link key={link.nombre} href={link.ruta} className="helpLux-quick-card">
               <span className="helpLux-quick-icon">{link.icono}</span>
               <span className="helpLux-quick-text">{link.nombre}</span>
             </Link>

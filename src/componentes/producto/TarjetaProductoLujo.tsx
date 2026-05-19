@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react'
-import { Link, useNavigate } from '@/compat/router'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Heart, Eye, ShoppingCart, Star, BadgePercent, Flame, Clock, CircleDollarSign, AlertCircle, Zap, TrendingUp, Info } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
 import { useFavoritos } from '../../contextos/FavoritosContext'
@@ -13,7 +16,7 @@ const PLACEHOLDER_SVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000
 function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   if (!producto) return null
 
-  const navigate = useNavigate()
+  const router = useRouter()
   const { esFavorito, alternarFavorito } = useFavoritos()
   const { agregarAlCarrito } = useCarrito()
   const [tiempoRestante, setTiempoRestante] = React.useState(null)
@@ -153,7 +156,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
     e.preventDefault()
     e.stopPropagation()
     if (slug) {
-      navigate(`/producto/${slug}`)
+      router.push(`/producto/${slug}`)
     }
   }
 
@@ -187,7 +190,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
       </div>
 
       {/* Imagen con cambio al hover */}
-      <Link to={slug ? `/producto/${slug}` : '#'} className="zona-imagen-lujo" aria-label={`Ver ${nombre}`}>
+      <Link href={slug ? `/producto/${slug}` : '#'} className="zona-imagen-lujo" aria-label={`Ver ${nombre}`}>
         {/* Etiqueta VENDIDO */}
         {estado === 'vendido' && (
           <EtiquetaVendido 
@@ -298,7 +301,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             </button>
           ) : (
             <Link
-              to={slug ? `/producto/${slug}` : '#'}
+              href={slug ? `/producto/${slug}` : '#'}
               className="btn-precio-accion ver"
               aria-label="Ver producto"
             >

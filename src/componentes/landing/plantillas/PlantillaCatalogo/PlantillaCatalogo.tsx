@@ -1,11 +1,13 @@
+'use client'
+
 import React from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 import { formatearPrecioCOP } from '../../../../utilidades/formatoPrecio'
 import { ArrowLeft, Package, AlertCircle, Eye, Tag } from 'lucide-react'
 import PlantillaCatalogoDetalle from './PlantillaCatalogoDetalle'
 
 const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   if (!producto) {
     return (
@@ -21,7 +23,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
         <h2>Producto no encontrado</h2>
         <p>El producto que buscas no existe o no está disponible</p>
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => router.push('/')}
           style={{
             padding: '0.75rem 1.5rem',
             backgroundColor: '#3498db',
@@ -58,7 +60,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
         borderBottom: '1px solid #eee'
       }}>
         <button 
-          onClick={() => navigate(-1)}
+          onClick={() => router.back()}
           style={{
             display: 'flex',
             alignItems: 'center',

@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState, useEffect } from 'react'
-import { Link } from '@/compat/router'
+import Link from 'next/link'
 import {
   X,
   Home,
@@ -103,24 +105,24 @@ const MenuMovilOverlay = ({
           {/* Sección Menú */}
           <div className="overlay-section">
             <div className="overlay-section-title">Menú</div>
-            <Link to="/" className="overlay-item" onClick={onCerrar}>
+            <Link href="/" className="overlay-item" onClick={onCerrar}>
               <Home size={20} />
               <span>Inicio</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/tienda" className="overlay-item" onClick={onCerrar}>
+            <Link href="/tienda" className="overlay-item" onClick={onCerrar}>
               <Store size={20} />
               <span>Tienda</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
             {sesionInicializada && usuario && (
-              <Link to="/perfil" className="overlay-item" onClick={onCerrar}>
+              <Link href="/perfil" className="overlay-item" onClick={onCerrar}>
                 <UserCircle size={20} />
                 <span>Mi Cuenta</span>
                 <ChevronRight className="overlay-item-chevron" size={16} />
               </Link>
             )}
-            <Link to="/favoritos" className="overlay-item" onClick={onCerrar}>
+            <Link href="/favoritos" className="overlay-item" onClick={onCerrar}>
               <Heart size={20} />
               <span>Favoritos</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
@@ -188,37 +190,37 @@ const MenuMovilOverlay = ({
           {/* Sección Información (solo páginas existentes para usuarios) */}
           <div className="overlay-section">
             <div className="overlay-section-title">Información</div>
-            <Link to="/quienes-somos" className="overlay-item" onClick={onCerrar}>
+            <Link href="/quienes-somos" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Quiénes Somos</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/sobre-la-tienda" className="overlay-item" onClick={onCerrar}>
+            <Link href="/sobre-la-tienda" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Sobre la Tienda</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/contacto" className="overlay-item" onClick={onCerrar}>
+            <Link href="/contacto" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Contacto</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/preguntas-frecuentes" className="overlay-item" onClick={onCerrar}>
+            <Link href="/preguntas-frecuentes" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Preguntas Frecuentes</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/terminos-condiciones" className="overlay-item" onClick={onCerrar}>
+            <Link href="/terminos-condiciones" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Términos y Condiciones</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/politica-privacidad" className="overlay-item" onClick={onCerrar}>
+            <Link href="/politica-privacidad" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Política de Privacidad</span>
               <ChevronRight className="overlay-item-chevron" size={16} />
             </Link>
-            <Link to="/trabaja-con-nosotros" className="overlay-item" onClick={onCerrar}>
+            <Link href="/trabaja-con-nosotros" className="overlay-item" onClick={onCerrar}>
               <Package size={20} />
               <span>Trabaja con Nosotros</span>
               <ChevronRight className="overlay-item-chevron" size={16} />

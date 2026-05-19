@@ -1,12 +1,14 @@
+'use client'
+
 import React, { useEffect } from 'react'
-import { useNavigate } from '@/compat/router'
+import { useRouter } from 'next/navigation'
 
 export default function PaginaSesionCerrada() {
-  const navigate = useNavigate()
+  const router = useRouter()
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/')
+      router.push('/')
     }, 4000)
     return () => clearTimeout(timer)
   }, [navigate])
@@ -26,7 +28,7 @@ export default function PaginaSesionCerrada() {
 
         <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => router.push('/login')}
             style={{
               background: '#ff6a00',
               color: '#fff',
@@ -39,7 +41,7 @@ export default function PaginaSesionCerrada() {
             Iniciar sesión
           </button>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => router.push('/')}
             style={{
               background: '#f2f2f2',
               color: '#333',

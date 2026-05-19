@@ -7,7 +7,6 @@ import { formatearPrecioCOP } from '../../utilidades/formatoPrecio'
 import { validarNombre, validarTelefono, validarDireccion, validarEmail } from '../../utilidades/validaciones'
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../configuracion/supabase'
-import { useNavigate } from '@/compat/router'
 import Portal from '../ui/Portal'
 import './ContraEntregaModal.css'
 
@@ -68,7 +67,6 @@ const ContraEntregaModal = ({
   const [contador, setContador] = useState(8)
   const [redireccionEnCurso, setRedireccionEnCurso] = useState(false)
   const [cerrandoAuto, setCerrandoAuto] = useState(false)
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (OFERTAS.length > 0) {

@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useMemo, useState, useEffect, useRef } from 'react'
-import { useNavigate, useLocation } from '@/compat/router'
+import { useRouter, usePathname } from 'next/navigation'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import {
   User, MapPin, CreditCard, Lock, Bell, ListOrdered, Home, ShieldCheck, Settings, Heart, ChevronLeft, ChevronRight
@@ -38,8 +40,8 @@ const MENU_ITEMS = [
 
 export default function PaginaPerfil() {
   const { usuario } = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const alias = useMemo(() => {
     if (!usuario) return 'Invitado'
@@ -53,9 +55,9 @@ export default function PaginaPerfil() {
   const [tab, setTab] = useState('resumen')
 
   useEffect(() => {
-    const segmento = location.pathname.split('/')[2] || ''
+    const segmento = pathname.split('/')[2] || ''
     setTab(RUTA_A_TAB[segmento] || 'resumen')
-  }, [location.pathname])
+  }, [pathname])
 
   const perfil = usePaginaPerfil()
 
@@ -70,8 +72,8 @@ export default function PaginaPerfil() {
   const navegarPorIndice = (idx: number) => {
     const item = MENU_ITEMS[idx]
     if (!item) return
-    if (item.externo) navigate(item.path)
-    else navigate(`/perfil/${TAB_A_RUTA[item.id]}`)
+    if (item.externo) router.push(item.path)
+    else router.push(`/perfil/${TAB_A_RUTA[item.id]}`)
   }
 
   const onMobileNavTouchStart = (e: React.TouchEvent) => {
@@ -125,8 +127,8 @@ export default function PaginaPerfil() {
   }
 
   const irATab = (item: typeof MENU_ITEMS[0]) => {
-    if (item.externo) navigate(item.path)
-    else navigate(`/perfil/${TAB_A_RUTA[item.id]}`)
+    if (item.externo) router.push(item.path)
+    else router.push(`/perfil/${TAB_A_RUTA[item.id]}`)
   }
 
   return (
