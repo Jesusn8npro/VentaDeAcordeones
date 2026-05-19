@@ -36,9 +36,6 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
     "react-epayco": "^0.1.5",
-    "react-lazy-load-image-component": "^1.6.3",
-    "react-slick": "^0.31.0",
-    "slick-carousel": "^1.8.1",
     "swiper": "^12.0.3",
     "tailwind-merge": "^3.3.1"
   },

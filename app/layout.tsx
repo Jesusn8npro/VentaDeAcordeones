@@ -1,9 +1,23 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Suspense } from 'react'
+import { Inter, Poppins } from 'next/font/google'
 import Providers from './providers'
 import CargandoPagina from '@/componentes/sistema/CargandoPagina'
 import '@/estilos/index.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-poppins',
+})
 
 // JSON-LD site-wide (Organization + WebSite) — recomendado en el layout.
 const jsonLdSitio = {
@@ -71,11 +85,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         {/* Performance: preconnect a recursos externos críticos */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="preconnect"
           href="https://dxcpzivxzxvhabdimemb.supabase.co"
