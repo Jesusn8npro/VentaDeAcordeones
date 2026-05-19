@@ -1,13 +1,6 @@
 'use client'
-
-import dynamic from 'next/dynamic'
 import RutaAdmin from '@/componentes/autenticacion/RutaAdmin'
-import CargandoPagina from '@/componentes/sistema/CargandoPagina'
-
-const DashboardAdmin = dynamic(
-  () => import('@/paginas/admin/DashboardAdmin/DashboardAdmin'),
-  { ssr: false, loading: () => <CargandoPagina /> }
-)
+import DashboardAdmin from '@/paginas/admin/DashboardAdmin/DashboardAdmin'
 
 export default function DashboardCliente() {
   return (

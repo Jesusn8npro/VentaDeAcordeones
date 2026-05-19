@@ -1,13 +1,7 @@
 'use client'
-
 import { Suspense } from 'react'
-import dynamic from 'next/dynamic'
 import CargandoPagina from '@/componentes/sistema/CargandoPagina'
-
-const PaginaRespuestaEpayco = dynamic(
-  () => import('@/paginas/ecommerce/PaginaRespuestaEpayco/PaginaRespuestaEpayco'),
-  { ssr: false, loading: () => <CargandoPagina /> }
-)
+import PaginaRespuestaEpayco from '@/paginas/ecommerce/PaginaRespuestaEpayco/PaginaRespuestaEpayco'
 
 export default function RespuestaEpaycoCliente() {
   return (

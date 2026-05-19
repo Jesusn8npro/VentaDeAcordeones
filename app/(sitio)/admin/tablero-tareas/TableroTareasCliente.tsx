@@ -1,14 +1,7 @@
 'use client'
-
-import dynamic from 'next/dynamic'
 import RutaAdmin from '@/componentes/autenticacion/RutaAdmin'
 import DisposicionAdmin from '@/componentes/admin/DisposicionAdmin/DisposicionAdmin'
-import CargandoPagina from '@/componentes/sistema/CargandoPagina'
-
-const TableroTareas = dynamic(
-  () => import('@/paginas/admin/calendario_tareas/TableroTareas'),
-  { ssr: false, loading: () => <CargandoPagina /> }
-)
+import TableroTareas from '@/paginas/admin/calendario_tareas/TableroTareas'
 
 export default function TableroTareasCliente() {
   return (
