@@ -1,8 +1,24 @@
-import React from 'react'
-import { Star } from 'lucide-react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { clienteSupabase } from '../../configuracion/supabase'
 import './SidebarBlog.css'
 
 export default function SidebarBlog() {
+  const [productosDestacados, setProductosDestacados] = useState<any[]>([])
+
+  useEffect(() => {
+    clienteSupabase
+      .from('productos')
+      .select(`id, nombre, slug, precio, producto_imagenes(imagen_principal)`)
+      .eq('activo', true)
+      .eq('destacado', true)
+      .gt('stock', 0)
+      .order('creado_el', { ascending: false })
+      .limit(3)
+      .then(({ data }) => setProductosDestacados(data || []))
+  }, [])
   return (
     <aside className="sidebar-blog" aria-label="Sidebar del blog">
       {/* Suscripción */}
@@ -20,28 +36,29 @@ export default function SidebarBlog() {
         </ul>
       </div>
 
-      {/* Cursos populares */}
+      {/* Acordeones destacados */}
       <div className="caja-sidebar">
-        <h3 className="titulo-caja">Cursos Más Populares</h3>
+        <h3 className="titulo-caja">Acordeones Destacados</h3>
         <ul className="lista-cursos">
-          <li>
-            <img src="https://picsum.photos/seed/curso-basico/96/64" alt="Curso Acordeón Básico" loading="lazy" decoding="async" width="96" height="64" />
-            <div>
-              <p className="curso-nombre">Acordeón Básico</p>
-              <div className="mini-rating"><Star size={14} /> 4.9</div>
-              <p className="precio">$79.900</p>
-            </div>
-          </li>
-          <li>
-            <img src="https://picsum.photos/seed/curso-avanzado/96/64" alt="Técnicas Avanzadas" loading="lazy" decoding="async" width="96" height="64" />
-            <div>
-              <p className="curso-nombre">Técnicas Avanzadas</p>
-              <div className="mini-rating"><Star size={14} /> 4.8</div>
-              <p className="precio">$99.900</p>
-            </div>
-          </li>
+          {productosDestacados.map(producto => {
+            const imagen = producto.producto_imagenes?.[0]?.imagen_principal || '/logo.svg'
+            const precio = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(producto.precio)
+            return (
+              <li key={producto.id}>
+                <Link href={`/producto/${producto.slug}`}>
+                  <img src={imagen} alt={producto.nombre} loading="lazy" decoding="async" width="96" height="64" style={{ objectFit: 'cover', borderRadius: '6px' }} />
+                </Link>
+                <div>
+                  <Link href={`/producto/${producto.slug}`}>
+                    <p className="curso-nombre">{producto.nombre}</p>
+                  </Link>
+                  <p className="precio">{precio}</p>
+                </div>
+              </li>
+            )
+          })}
         </ul>
-        <a className="btn-cta-cursos" href="/tienda">Ver Todos los Cursos</a>
+        <Link className="btn-cta-cursos" href="/tienda">Ver toda la tienda</Link>
       </div>
 
       {/* Testimonios */}

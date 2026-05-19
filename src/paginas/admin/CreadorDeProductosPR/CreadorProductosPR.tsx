@@ -276,7 +276,7 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
   const manejarExito = (mensaje) => {
     if (modo === 'crear') limpiarEstadoGuardado()
     if (onSuccess) onSuccess(mensaje)
-    if (modo === 'crear') router.push('/admin/productos')
+    if (modo === 'crear') router.push('/admin/gestion-productos')
   }
 
   const manejarError = (_mensaje) => {}

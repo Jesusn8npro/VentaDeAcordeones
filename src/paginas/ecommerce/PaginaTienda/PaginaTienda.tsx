@@ -11,6 +11,28 @@ import { Grid, List, SlidersHorizontal, X, Flame, TrendingUp, Package, Zap } fro
 import { clienteSupabase } from '../../../configuracion/supabase'
 import './PaginaTienda.css'
 
+const SkeletonCards = () => (
+  <div className="tienda-productos">
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.25rem' }}>
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div key={i} style={{
+          background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+          backgroundSize: '200% 100%',
+          animation: 'skeleton-shimmer 1.5s infinite',
+          borderRadius: '12px',
+          height: '320px'
+        }} />
+      ))}
+      <style>{`
+        @keyframes skeleton-shimmer {
+          0% { background-position: 200% 0 }
+          100% { background-position: -200% 0 }
+        }
+      `}</style>
+    </div>
+  </div>
+)
+
 const PaginaTienda = () => {
   useTituloPagina('Tienda de Acordeones')
   const params = useParams() // Detectar slug de categoría
@@ -374,7 +396,7 @@ const PaginaTienda = () => {
         </div>
       </div>
 
-      <div className="tienda-productos">
+      {cargandoCategoria ? <SkeletonCards /> : <div className="tienda-productos">
         {totalProductos === 0 ? (
           <div className="tienda-empty">
             <div className="tienda-empty-icono">!</div>
@@ -396,7 +418,7 @@ const PaginaTienda = () => {
           onTotalChange={setTotalProductos}
           mostrarEmpty={false}
         />
-      </div>
+      </div>}
     </LayoutTienda>
     </>
   )

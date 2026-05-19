@@ -30,7 +30,7 @@ export default function PaginaCarrito() {
   useTituloPagina('Mi Carrito')
   const { usuario } = useAuth()
   const { items, cargando, totalItems, subtotal, descuentos, envio, total, actualizarCantidad, eliminarDelCarrito, limpiarCarrito } = useCarrito()
-  const { codigoCupon, setCodigoCupon, cuponAplicado, descuentoCupon, cargandoCupon, errorCupon, validarCupon, aplicarCupon, limpiarCupon } = usarCupones()
+  const { codigoCupon, setCodigoCupon, cuponAplicado, descuentoCupon, cargandoCupon, errorCupon, validarCupon, aplicarCupon, limpiarCupon, registrarUsoCupon } = usarCupones()
   const { procesarPagoOnPage, cargando: cargandoPago, error: errorPago } = usarEpayco()
 
   const [paso, setPaso] = useState(1)
@@ -51,7 +51,7 @@ export default function PaginaCarrito() {
           ...d,
           nombre:   data.nombre   || d.nombre,
           apellido: data.apellido || d.apellido,
-          email:    data.email    || d.email,
+          email:    usuario?.email || data.email || d.email,
           telefono: data.whatsapp || d.telefono,
           ciudad:   data.ciudad   || d.ciudad,
         }))
@@ -121,6 +121,9 @@ export default function PaginaCarrito() {
           confirmacion: `${window.location.origin}/confirmacion-epayco`
         }
       })
+      if (cuponAplicado) {
+        await registrarUsoCupon(pedido.id, cuponAplicado, subtotal)
+      }
     } catch (err) {
       alert(`Error al procesar el pedido: ${err.message}`)
     }

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Edit3, CheckCircle, X } from 'lucide-react'
 import './CreadorProductoIA.css'
 import CrearProductoIAUI from './CrearProductoIAUI'
-
-const EDGE_URL = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/crear-producto-ia`
+import { clienteSupabase } from '../../../../configuracion/supabase'
 
 const MENSAJE_INICIAL = '¡Hola! Soy tu asistente IA para crear productos. Cuéntame qué producto quieres crear y te ayudo a generar toda la información necesaria.'
 const MENSAJE_EDICION = '¡Hola! Soy tu asistente IA para este producto. Cuéntame qué deseas ajustar y te ayudo a generar o mejorar la información necesaria.'
@@ -168,9 +167,8 @@ const CrearProductoIA = ({
       setTextoMensaje('')
 
       const payload = construirPayload(nuevoMensaje.contenido, mensajesActualizados)
-      const resp = await fetch(EDGE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      if (!resp.ok) throw new Error(`Error del servidor: ${resp.status}`)
-      const data = await resp.json()
+      const { data, error: fnError } = await clienteSupabase.functions.invoke('crear-producto-ia', { body: payload })
+      if (fnError) throw new Error(fnError.message)
 
       const productoExtraido = extraerProducto(data)
 

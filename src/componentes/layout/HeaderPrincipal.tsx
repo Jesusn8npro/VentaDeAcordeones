@@ -177,8 +177,8 @@ const HeaderPrincipal = () => {
   }, [cerrarSesion, router])
 
   const navegarAAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin') }
-  const navegarAProductosAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin/productos') }
-  const navegarAAgregarProducto = () => { setMenuUsuarioAbierto(false); router.push('/admin/productos/creador-pr') }
+  const navegarAProductosAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin/gestion-productos') }
+  const navegarAAgregarProducto = () => { setMenuUsuarioAbierto(false); router.push('/admin/productos/agregar') }
   const navegarAPerfil = () => { setMenuUsuarioAbierto(false); router.push('/perfil') }
   const navegarAFavoritos = () => { setMenuUsuarioAbierto(false); router.push('/favoritos') }
 
