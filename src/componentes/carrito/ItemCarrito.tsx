@@ -1,6 +1,7 @@
 'use client'
 
 import React, { memo, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { 
   Plus, 
@@ -128,9 +129,11 @@ const ItemCarrito = ({
       {/* Imagen del producto */}
       <div className="item-imagen-container">
         <Link href={`/producto/${item.productos?.id}`}>
-          <img 
-            src={imagenPrincipal}
-            alt={item.productos?.nombre}
+          <Image
+            src={imagenPrincipal || '/placeholder-producto.jpg'}
+            alt={item.productos?.nombre || 'Producto'}
+            width={120}
+            height={120}
             className="item-imagen"
           />
         </Link>

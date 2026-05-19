@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Phone, Mail, MapPin, MessageCircle, Instagram, Facebook, Youtube } from 'lucide-react'
 import './FooterPrincipal.css'
@@ -14,7 +15,7 @@ export default function FooterPrincipal() {
 
         {/* Columna: Marca */}
         <div className="footer-marca">
-          <img src="/logo.svg" alt="VentaDeAcordeones.com" className="footer-logo" />
+          <Image src="/logo.svg" alt="VentaDeAcordeones.com" className="footer-logo" width={160} height={40} />
           <p className="footer-desc">
             Más de 10 años vendiendo acordeones y accesorios musicales en Colombia.
             Tu instrumento ideal, a tu puerta.
