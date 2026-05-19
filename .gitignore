@@ -44,3 +44,4 @@ supabase/.temp/
 
 # Evitar nombres reservados de Windows creados accidentalmente
 CON
+.claude/
