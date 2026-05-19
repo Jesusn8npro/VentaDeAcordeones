@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Heart, Eye, ShoppingCart, Star, BadgePercent, Flame, Clock, CircleDollarSign, AlertCircle, Zap, TrendingUp, Info } from 'lucide-react'
@@ -201,30 +202,22 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
           />
         )}
         
-        <img 
-          src={srcPrincipal} 
-          alt={nombre} 
-          className="imagen imagen-principal" 
-          loading="lazy" 
-          decoding="async"
-          fetchPriority="low"
+        <Image
+          src={srcPrincipal}
+          alt={nombre}
+          className="imagen imagen-principal"
+          loading="lazy"
           width={320}
           height={320}
-          referrerPolicy="no-referrer" 
-          crossOrigin="anonymous"
           onError={manejarErrorImagen}
         />
-        <img 
-          src={srcSecundaria} 
-          alt={`${nombre} alternativa`} 
-          className="imagen imagen-secundaria" 
-          loading="lazy" 
-          decoding="async"
-          fetchPriority="low"
+        <Image
+          src={srcSecundaria}
+          alt={`${nombre} alternativa`}
+          className="imagen imagen-secundaria"
+          loading="lazy"
           width={320}
           height={320}
-          referrerPolicy="no-referrer" 
-          crossOrigin="anonymous"
           onError={manejarErrorImagen}
         />
 

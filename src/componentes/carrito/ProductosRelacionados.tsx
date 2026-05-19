@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useMemo } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { 
   Plus, 
@@ -164,14 +165,18 @@ const ProductosRelacionados = ({ categoriaId, onCerrarModal }) => {
 
               return (
                 <div key={producto.id} className="producto-relacionado">
-                  <div className="producto-imagen-container">
+                  <div className="producto-imagen-container" style={{ height: 120 }}>
                     <Link href={`/producto/${producto.id}`} onClick={onCerrarModal}>
-                      <img
-                        src={obtenerImagenPrincipal(producto)}
-                        alt={producto.nombre}
-                        className="producto-imagen"
-                        loading="lazy"
-                      />
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={obtenerImagenPrincipal(producto) || '/placeholder-producto.jpg'}
+                          alt={producto.nombre}
+                          fill
+                          sizes="(max-width: 768px) 50vw, 200px"
+                          className="producto-imagen object-cover"
+                          loading="lazy"
+                        />
+                      </div>
                     </Link>
                     
                     {tieneDescuento && (

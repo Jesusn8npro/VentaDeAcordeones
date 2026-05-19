@@ -1,6 +1,7 @@
 ﻿'use client'
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import {
@@ -225,19 +226,23 @@ const HeaderPrincipal = () => {
               <Menu size={24} />
             </button>
             <Link href="/" className="logo-contenedor">
-              <img
+              <Image
                 src="/logo.svg"
                 alt="VentaDeAcordeones.com"
                 className="logo-imagen"
+                width={160}
+                height={40}
               />
             </Link>
           </div>
 
           <Link href="/" className="logo-contenedor logo-escritorio">
-            <img
+            <Image
               src="/logo.svg"
               alt="VentaDeAcordeones.com"
               className="logo-imagen logo-imagen-escritorio"
+              width={160}
+              height={40}
             />
           </Link>
 

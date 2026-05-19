@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { usarCategorias } from '../../hooks/usarCategorias'
 import './HeroSeccion.css'
@@ -133,7 +134,7 @@ export default function HeroSeccion() {
                   onClick={() => router.push(`/tienda/categoria/${cat.slug}`)}
                 >
                   {cat.imagen_url
-                    ? <img src={cat.imagen_url} alt={cat.nombre} className="imagen-categoria" loading="lazy" decoding="async" />
+                    ? <div className="relative w-full h-full"><Image src={cat.imagen_url} alt={cat.nombre} fill sizes="(max-width: 768px) 100vw, 25vw" className="imagen-categoria object-cover" loading="lazy" /></div>
                     : <div className="categoria-sin-imagen"><span>{cat.icono || '🪗'}</span></div>
                   }
                   <div className="overlay-categoria">
@@ -177,7 +178,7 @@ export default function HeroSeccion() {
                   >
                     <div className="contenedor-imagen-circular">
                       {cat.imagen_url
-                        ? <img src={cat.imagen_url} alt={cat.nombre} className="imagen-categoria-circular" draggable={false} loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }} />
+                        ? <div className="relative w-full h-full"><Image src={cat.imagen_url} alt={cat.nombre} fill sizes="80px" className="imagen-categoria-circular object-cover" loading="lazy" /></div>
                         : <span className="cat-icono-fallback">{cat.icono || '🪗'}</span>
                       }
                     </div>

@@ -7,8 +7,14 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    // Fase inicial: sin optimización (host Nixpacks necesita vips). Se reactiva al final.
-    unoptimized: true,
+    remotePatterns: [
+      { protocol: 'https', hostname: '*.supabase.co' },
+      { protocol: 'https', hostname: 'dxcpzivxzxvhabdimemb.supabase.co' },
+      { protocol: 'https', hostname: 'ventadeacordeones.com' },
+      { protocol: 'https', hostname: 'prd-www-cdn.shure.com' },
+      { protocol: 'https', hostname: '*.shure.com' },
+    ],
+    formats: ['image/webp', 'image/avif'],
   },
   // Next 16 usa Turbopack por defecto; resuelve tsconfig paths (@/*) y .ts/.tsx
   // sin config. Los specifiers '.js'→'.ts' se corrigieron en el código.
