@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import Image from 'next/image'
 import { Package, Heart, ChevronLeft, ChevronRight, Share2, X } from 'lucide-react'
 import { useCarrito } from '../../../../../contextos/CarritoContext'
 import { useFavoritos } from '../../../../../contextos/FavoritosContext'
@@ -168,7 +169,7 @@ const PopupGaleria = ({
                   className={`hero-temu-popup-miniatura-desktop ${index === imagenSeleccionada ? 'activa' : ''}`}
                   onClick={() => onCambioImagen(index)}
                 >
-                  <img src={imagen} alt={`Vista ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
+                  <Image src={imagen} alt={`Vista ${index + 1}`} width={60} height={60} style={{ objectFit: 'cover', width: '100%', height: '100%' }} loading="eager" />
                 </button>
               ))}
             </div>
@@ -205,7 +206,7 @@ const PopupGaleria = ({
                   className={`hero-temu-popup-miniatura-mobile ${index === imagenSeleccionada ? 'activa' : ''}`}
                   onClick={() => onCambioImagen(index)}
                 >
-                  <img src={imagen} alt={`Vista ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
+                  <Image src={imagen} alt={`Vista ${index + 1}`} width={60} height={60} style={{ objectFit: 'cover', width: '100%', height: '100%' }} loading="eager" />
                 </button>
               ))}
             </div>
@@ -408,7 +409,7 @@ const HeroTemu = ({ producto, config, reviews, notificaciones }) => {
                       aria-label={`Ver imagen ${index + 1} de ${imagenesFinales.length}`}
                       tabIndex={index === imagenActual ? 0 : -1}
                     >
-                      <img src={imagen} alt={`Vista ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
+                      <Image src={imagen} alt={`Vista ${index + 1}`} width={60} height={60} style={{ objectFit: 'cover', width: '100%', height: '100%' }} loading="eager" />
                     </button>
                   ))}
                   {esMobile && imagenesFinales.length > 3 && (
@@ -432,7 +433,7 @@ const HeroTemu = ({ producto, config, reviews, notificaciones }) => {
                   setTouchStart(null); setTouchEnd(null)
                 }}
               >
-                <img src={imagenesFinales[imagenActual]} alt={producto?.nombre || 'Producto'} className="hero-temu-imagen-principal-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
+                <Image src={imagenesFinales[imagenActual]} alt={producto?.nombre || 'Producto'} fill priority style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 50vw" />
 
                 {producto?.estado === 'vendido' && (
                   <div className="hero-temu-etiqueta-vendido"><span>VENDIDO</span></div>
