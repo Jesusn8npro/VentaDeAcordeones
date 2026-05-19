@@ -13,6 +13,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'ventadeacordeones.com' },
       { protocol: 'https', hostname: 'prd-www-cdn.shure.com' },
       { protocol: 'https', hostname: '*.shure.com' },
+      { protocol: 'https', hostname: 'konradmusic.com.co' },
     ],
     formats: ['image/webp', 'image/avif'],
   },
