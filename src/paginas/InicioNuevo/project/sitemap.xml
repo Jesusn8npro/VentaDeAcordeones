@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ventadeacordeones.com/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Acordeones -->
+  <url><loc>https://ventadeacordeones.com/#/nuevos</loc>         <changefreq>daily</changefreq>  <priority>0.95</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/personalizados</loc> <changefreq>weekly</changefreq> <priority>0.90</priority></url>
+  <!-- Accesorios -->
+  <url><loc>https://ventadeacordeones.com/#/accesorios</loc>     <changefreq>weekly</changefreq> <priority>0.85</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/parrillas</loc>      <changefreq>weekly</changefreq> <priority>0.80</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/correas</loc>        <changefreq>weekly</changefreq> <priority>0.80</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/fuelles</loc>        <changefreq>weekly</changefreq> <priority>0.80</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/estuches</loc>       <changefreq>weekly</changefreq> <priority>0.80</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/broches</loc>        <changefreq>weekly</changefreq> <priority>0.75</priority></url>
+  <!-- Repuestos técnicos -->
+  <url><loc>https://ventadeacordeones.com/#/tecnicos</loc>       <changefreq>weekly</changefreq> <priority>0.80</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/lenguetas</loc>      <changefreq>weekly</changefreq> <priority>0.85</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/resortes</loc>       <changefreq>weekly</changefreq> <priority>0.75</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/celuloide</loc>      <changefreq>weekly</changefreq> <priority>0.75</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/herramientas</loc>   <changefreq>weekly</changefreq> <priority>0.70</priority></url>
+  <!-- Otros instrumentos -->
+  <url><loc>https://ventadeacordeones.com/#/pianos</loc>         <changefreq>weekly</changefreq> <priority>0.70</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/guitarras</loc>      <changefreq>weekly</changefreq> <priority>0.70</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/bajos</loc>          <changefreq>weekly</changefreq> <priority>0.65</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/baterias</loc>       <changefreq>weekly</changefreq> <priority>0.65</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/electronica</loc>    <changefreq>weekly</changefreq> <priority>0.70</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/cursos</loc>         <changefreq>weekly</changefreq> <priority>0.80</priority></url>
+  <!-- Empresa -->
+  <url><loc>https://ventadeacordeones.com/#/sobre</loc>          <changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/contacto</loc>       <changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/taller</loc>         <changefreq>monthly</changefreq><priority>0.60</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/mayoristas</loc>     <changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <!-- Soporte -->
+  <url><loc>https://ventadeacordeones.com/#/envios</loc>         <changefreq>monthly</changefreq><priority>0.60</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/garantia</loc>       <changefreq>monthly</changefreq><priority>0.60</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/faq</loc>            <changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/devoluciones</loc>   <changefreq>monthly</changefreq><priority>0.50</priority></url>
+  <!-- Legal -->
+  <url><loc>https://ventadeacordeones.com/#/privacidad</loc>     <changefreq>yearly</changefreq> <priority>0.30</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/terminos</loc>       <changefreq>yearly</changefreq> <priority>0.30</priority></url>
+  <url><loc>https://ventadeacordeones.com/#/cookies</loc>        <changefreq>yearly</changefreq> <priority>0.30</priority></url>
+</urlset>

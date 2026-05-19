@@ -1,0 +1,163 @@
+/* ============ PRODUCTOS DESTACADOS ============ */
+.pd-sec {
+  background: var(--vda-superficie);
+  border-top: 1px solid var(--vda-linea);
+}
+.pd-inner {
+  max-width: var(--vda-contenedor);
+  margin: 0 auto;
+  padding: 72px var(--vda-pad-x);
+}
+
+.pd-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.pd-titulo {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  color: var(--vda-tinta);
+  line-height: 0.92;
+}
+
+.pd-pestañas {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--vda-linea-fuerte);
+}
+.pd-pestaña {
+  padding: 10px 18px;
+  font-family: var(--vda-fuente-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-muted);
+  background: transparent;
+  border-right: 1px solid var(--vda-linea);
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.pd-pestaña:last-child { border-right: none; }
+.pd-pestaña:hover { background: var(--vda-superficie-2); color: var(--vda-tinta); }
+.pd-pestaña.activa { background: var(--vda-oro); color: #000; font-weight: 700; }
+
+/* Grilla */
+.pd-grilla {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--vda-linea);
+  border: 1px solid var(--vda-linea);
+  margin-bottom: 32px;
+}
+
+/* Tarjeta */
+.pd-tarjeta {
+  display: flex;
+  flex-direction: column;
+  background: var(--vda-fondo);
+  text-decoration: none;
+  color: var(--vda-tinta);
+  transition: background 0.25s;
+}
+.pd-tarjeta:hover { background: var(--vda-superficie-2); }
+
+.pd-tarjeta-img {
+  aspect-ratio: 4/3;
+  background: var(--vda-superficie-3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pd-tarjeta-visual { color: var(--vda-tinta-muted); opacity: 0.5; }
+.pd-tarjeta:hover .pd-tarjeta-visual { color: var(--vda-oro); opacity: 0.8; transition: color 0.3s, opacity 0.3s; }
+
+.pd-tarjeta-tag {
+  position: absolute;
+  top: 12px; left: 12px;
+  font-family: var(--vda-fuente-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  padding: 4px 9px;
+  background: var(--vda-superficie-2);
+  color: var(--vda-tinta-dim);
+}
+.pd-tarjeta-tag.new { background: var(--vda-oro); color: #000; }
+.pd-tarjeta-tag.sale { background: var(--vda-peligro); color: #fff; }
+
+.pd-tarjeta-fav {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 32px; height: 32px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--vda-linea-fuerte);
+  display: grid; place-items: center;
+  color: var(--vda-tinta-muted);
+  transition: color 0.25s, background 0.25s;
+}
+.pd-tarjeta-fav.activo { color: var(--vda-peligro); }
+
+.pd-tarjeta-info { padding: 18px 20px; flex: 1; display: flex; flex-direction: column; }
+.pd-tarjeta-marca {
+  font-family: var(--vda-fuente-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-muted);
+  margin-bottom: 4px;
+}
+.pd-tarjeta-nombre {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--vda-tinta);
+  margin-bottom: 14px;
+  flex: 1;
+}
+.pd-tarjeta-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pd-tarjeta-precio { display: flex; flex-direction: column; gap: 2px; }
+.pd-tarjeta-precio-ahora { font-weight: 700; font-size: 15px; color: var(--vda-tinta); }
+.pd-tarjeta-precio-antes {
+  font-size: 11px;
+  color: var(--vda-tinta-muted);
+  text-decoration: line-through;
+}
+.pd-tarjeta-añadir {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--vda-oro);
+  color: #000;
+  font-family: var(--vda-fuente-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.pd-tarjeta-añadir:hover { background: var(--vda-oro-suave); }
+.pd-tarjeta-añadir.agregado { background: var(--vda-exito); color: #fff; }
+
+.pd-ver-mas { display: flex; justify-content: center; }
+
+@media (max-width: 1100px) { .pd-grilla { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .pd-grilla { grid-template-columns: 1fr; }
+  .pd-inner { padding: 52px var(--vda-pad-x); }
+  .pd-cabecera { flex-direction: column; align-items: flex-start; }
+  .pd-pestañas { overflow-x: auto; width: 100%; }
+}

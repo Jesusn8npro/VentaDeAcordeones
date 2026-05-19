@@ -1,0 +1,153 @@
+/* ================================================================
+   VentaDeAcordeones.com — Sistema de Diseño Premium
+   Paleta: #000 base · #FFC300 oro · #0c0c0c superficie · #fff texto
+   Modo claro/oscuro vía [data-theme="light"]
+================================================================ */
+
+:root {
+  --vda-fondo: #000000;
+  --vda-superficie: #0a0a0a;
+  --vda-superficie-2: #141414;
+  --vda-superficie-3: #1a1a1a;
+  --vda-linea: #1f1f1f;
+  --vda-linea-fuerte: #2a2a2a;
+  --vda-oro: #FFC300;
+  --vda-oro-suave: #d9a200;
+  --vda-oro-tenue: #6b5400;
+  --vda-oro-brillo: rgba(255, 195, 0, 0.18);
+  --vda-tinta: #ffffff;
+  --vda-tinta-dim: #b8b8b8;
+  --vda-tinta-muted: #7a7a7a;
+  --vda-peligro: #ff3b3b;
+  --vda-exito: #2ecc71;
+  --vda-fondo-header: rgba(0, 0, 0, 0.88);
+  --vda-fondo-header-fuerte: rgba(0, 0, 0, 0.96);
+  --vda-sombra-card: 0 24px 60px -20px rgba(0,0,0,0.9);
+  --vda-superficie-profunda: #050505;
+  --vda-superficie-mas-profunda: #030303;
+  --vda-overlay: rgba(0, 0, 0, 0.7);
+  --vda-overlay-fuerte: rgba(0, 0, 0, 0.78);
+  --vda-fuente-display: var(--font-bebas), "Bebas Neue", "Oswald", sans-serif;
+  --vda-fuente-cuerpo: var(--font-poppins), var(--font-inter), system-ui, sans-serif;
+  --vda-fuente-italica: var(--font-cormorant), "Cormorant Garamond", serif;
+  --vda-fuente-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+  --vda-contenedor: 1480px;
+  --vda-pad-x: 56px;
+}
+
+[data-theme="light"] {
+  --vda-fondo: #f5f3ee;
+  --vda-superficie: #ffffff;
+  --vda-superficie-2: #f0ede5;
+  --vda-superficie-3: #e8e4d8;
+  --vda-linea: #e4dfd2;
+  --vda-linea-fuerte: #cfc8b5;
+  --vda-oro: #c79100;
+  --vda-oro-suave: #a87800;
+  --vda-oro-tenue: #d9a800;
+  --vda-oro-brillo: rgba(199, 145, 0, 0.18);
+  --vda-tinta: #161310;
+  --vda-tinta-dim: #4a4540;
+  --vda-tinta-muted: #8a857c;
+  --vda-fondo-header: rgba(255, 252, 246, 0.92);
+  --vda-fondo-header-fuerte: rgba(255, 252, 246, 0.98);
+  --vda-sombra-card: 0 24px 60px -20px rgba(120, 90, 30, 0.22);
+  --vda-superficie-profunda: #ffffff;
+  --vda-superficie-mas-profunda: #efece2;
+  --vda-overlay: rgba(40, 30, 10, 0.55);
+  --vda-overlay-fuerte: rgba(40, 30, 10, 0.7);
+}
+
+/* ============ TIPOGRAFÍA COMPARTIDA ============ */
+.vda-display {
+  font-family: var(--vda-fuente-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+.vda-eyebrow {
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--vda-oro);
+  font-weight: 500;
+}
+.vda-italica {
+  font-family: var(--vda-fuente-italica);
+  font-style: italic;
+  font-weight: 300;
+  text-transform: none;
+}
+
+/* ============ BOTONES COMPARTIDOS ============ */
+.vda-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease,
+    border-color 0.25s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--vda-fuente-cuerpo);
+}
+.vda-btn .vda-flecha { display: inline-block; transition: transform 0.3s ease; }
+.vda-btn:hover .vda-flecha { transform: translateX(4px); }
+.vda-btn-primario { background: var(--vda-oro); color: #000; }
+.vda-btn-primario:hover {
+  box-shadow: 0 0 0 1px var(--vda-oro), 0 12px 40px -8px rgba(255,195,0,0.55);
+  transform: translateY(-2px);
+}
+.vda-btn-fantasma {
+  background: transparent;
+  color: var(--vda-tinta);
+  border-color: var(--vda-linea-fuerte);
+}
+.vda-btn-fantasma:hover {
+  border-color: var(--vda-oro);
+  color: var(--vda-oro);
+  box-shadow: 0 0 0 1px rgba(255,195,0,0.3), 0 8px 30px -10px rgba(255,195,0,0.4);
+  transform: translateY(-2px);
+}
+.vda-btn-whatsapp { background: #fff; color: #000; }
+.vda-btn-whatsapp:hover { background: var(--vda-oro); transform: translateY(-2px); }
+
+/* ============ BARRA DE PROGRESO SCROLL ============ */
+.vda-barra-progreso {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--vda-oro);
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* ============ ANIMACIONES COMPARTIDAS ============ */
+@keyframes vda-dot-pulso {
+  0%   { box-shadow: 0 0 0 0 rgba(46,204,113,0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+  100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+}
+@keyframes vda-entrada-arriba {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.vda-fade-up {
+  animation: vda-entrada-arriba 0.55s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vda-fade-up { animation: none; }
+}

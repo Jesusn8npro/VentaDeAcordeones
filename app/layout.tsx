@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Suspense } from 'react'
-import { Inter, Poppins } from 'next/font/google'
+import { Inter, Poppins, Bebas_Neue, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
 import Providers from './providers'
 import CargandoPagina from '@/componentes/sistema/CargandoPagina'
 import '@/estilos/index.css'
@@ -17,6 +17,28 @@ const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-poppins',
+})
+
+const bebasNeue = Bebas_Neue({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-bebas',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  style: ['italic', 'normal'],
+  display: 'swap',
+  variable: '--font-cormorant',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-jetbrains',
 })
 
 // JSON-LD site-wide (Organization + WebSite) — recomendado en el layout.
@@ -85,7 +107,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="es" className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable}`}>
       <head>
         {/* Performance: preconnect a recursos externos críticos */}
         <link

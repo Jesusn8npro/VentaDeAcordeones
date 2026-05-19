@@ -1,3 +1,5 @@
+@import './diseno.css';
+
 :root {
   --fuente-principal: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --fuente-secundaria: var(--font-poppins), sans-serif;
@@ -15,8 +17,8 @@ body {
   overflow-x: hidden !important;
   font-family: var(--fuente-principal);
   line-height: 1.6;
-  color: var(--color-gris-oscuro);
-  background-color: var(--fondo-principal);
+  color: var(--vda-tinta);
+  background-color: var(--vda-fondo);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

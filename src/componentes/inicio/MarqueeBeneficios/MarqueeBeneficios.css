@@ -1,0 +1,71 @@
+/* ============ MARQUEE DE BENEFICIOS ============ */
+.mq {
+  overflow: hidden;
+  background: var(--vda-superficie);
+  border-top: 1px solid var(--vda-linea);
+  border-bottom: 1px solid var(--vda-linea);
+  padding: 14px 0;
+  position: relative;
+}
+.mq::before,
+.mq::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.mq::before {
+  left: 0;
+  background: linear-gradient(to right, var(--vda-superficie), transparent);
+}
+.mq::after {
+  right: 0;
+  background: linear-gradient(to left, var(--vda-superficie), transparent);
+}
+
+.mq-pista {
+  display: flex;
+  width: max-content;
+  animation: mq-scroll 38s linear infinite;
+}
+.mq-pista:hover { animation-play-state: paused; }
+
+@keyframes mq-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.mq-grupo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+}
+
+.mq-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-dim);
+  padding: 0 20px;
+  transition: color 0.25s;
+}
+.mq-item:hover { color: var(--vda-oro); }
+.mq-item svg { color: var(--vda-oro); flex-shrink: 0; }
+
+.mq-sep {
+  color: var(--vda-oro);
+  font-size: 14px;
+  opacity: 0.5;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mq-pista { animation: none; }
+}

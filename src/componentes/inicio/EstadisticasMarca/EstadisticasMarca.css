@@ -1,0 +1,51 @@
+/* ============ ESTADÍSTICAS DE MARCA ============ */
+.em-sec {
+  background: var(--vda-superficie-profunda);
+  border-top: 1px solid var(--vda-linea);
+  border-bottom: 1px solid var(--vda-linea);
+}
+.em-inner {
+  max-width: var(--vda-contenedor);
+  margin: 0 auto;
+  padding: 0 var(--vda-pad-x);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-left: 1px solid var(--vda-linea);
+}
+
+.em-item {
+  padding: 52px 36px;
+  border-right: 1px solid var(--vda-linea);
+  border-bottom: 1px solid var(--vda-linea);
+  border-top: 1px solid var(--vda-linea);
+  text-align: center;
+  transition: background 0.3s;
+}
+.em-item:hover { background: var(--vda-superficie-2); }
+
+.em-num {
+  font-family: var(--vda-fuente-display);
+  font-size: clamp(3rem, 5vw, 5rem);
+  color: var(--vda-tinta);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  transition: color 0.3s;
+}
+.em-item:hover .em-num { color: var(--vda-oro); }
+
+.em-etiqueta {
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-muted);
+}
+
+@media (max-width: 900px) {
+  .em-inner { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .em-inner { grid-template-columns: 1fr; }
+  .em-item { padding: 36px 24px; }
+}
