@@ -16,7 +16,7 @@ import { AlertCircle, ArrowLeft } from 'lucide-react'
  * Aquí se renderizan las landing pages optimizadas para conversión
  */
 
-const LandingProducto = () => {
+const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) => {
   const params = useParams()
   const slug = params.slug as string
   const router = useRouter()

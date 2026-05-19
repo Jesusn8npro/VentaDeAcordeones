@@ -1,2 +1,5 @@
 'use client'
-export { default } from '@/paginas/ecommerce/PaginaProducto/PaginaProducto'
+import PaginaProducto from '@/paginas/ecommerce/PaginaProducto/PaginaProducto'
+export default function ProductoCliente({ initialData }: { initialData?: any }) {
+  return <PaginaProducto initialData={initialData} />
+}

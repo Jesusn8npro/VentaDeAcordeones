@@ -130,7 +130,7 @@ export default async function PaginaLandingRoute({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <LandingCliente />
+      <LandingCliente initialData={p} />
     </>
   )
 }

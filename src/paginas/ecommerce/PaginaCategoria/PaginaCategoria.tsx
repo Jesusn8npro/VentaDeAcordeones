@@ -17,7 +17,7 @@ const OPCIONES_ORDEN = [
   { label: 'Mejor calificados',     valor: { campo: 'calificacion_promedio', ascendente: false } },
 ]
 
-export default function PaginaCategoria() {
+export default function PaginaCategoria({ initialData: _initialData }: { initialData?: any }) {
   const params = useParams()
   const slug = params.slug as string
   const [categoria, setCategoria] = useState(null)

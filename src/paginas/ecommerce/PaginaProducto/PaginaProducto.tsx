@@ -17,14 +17,14 @@ import LandingPage from '../../../componentes/landing/LandingPage'
  * 
  * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automáticamente
  */
-export default function PaginaProducto() {
+export default function PaginaProducto({ initialData: _initialData }: { initialData?: any }) {
   const params = useParams()
   const slug = params.slug as string
   const router = useRouter()
-  
+
   // ⚡ Estado de carga paralela optimizada
   const [cargaCompleta, setCargaCompleta] = useState(false)
-  
+
   // Usar los hooks para cargar datos EN PARALELO
   const { producto, cargando: cargandoProducto, error } = usarProducto(slug)
   const { 

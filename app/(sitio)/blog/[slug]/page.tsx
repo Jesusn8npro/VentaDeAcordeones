@@ -125,7 +125,7 @@ export default async function ArticuloBlogRoute({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <ArticuloCliente />
+      <ArticuloCliente initialData={a} />
     </>
   )
 }

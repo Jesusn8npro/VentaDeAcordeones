@@ -117,7 +117,7 @@ export default async function PaginaCategoriaRoute({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <CategoriaCliente />
+      <CategoriaCliente initialData={c} />
     </>
   )
 }

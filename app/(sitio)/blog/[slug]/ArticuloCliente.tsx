@@ -1,2 +1,5 @@
 'use client'
-export { default } from '@/paginas/blog/ArticuloBlog'
+import ArticuloBlog from '@/paginas/blog/ArticuloBlog'
+export default function ArticuloCliente({ initialData }: { initialData?: any }) {
+  return <ArticuloBlog initialData={initialData} />
+}

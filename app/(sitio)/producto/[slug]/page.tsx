@@ -134,7 +134,7 @@ export default async function PaginaProductoRoute({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <ProductoCliente />
+      <ProductoCliente initialData={p} />
     </>
   )
 }

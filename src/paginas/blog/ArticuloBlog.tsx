@@ -165,7 +165,7 @@ const ReproductorAudio = ({ texto }) => {
 
 
 // Página de detalle de artículo con contenido completo y tabla de contenidos
-export default function ArticuloBlog() {
+export default function ArticuloBlog({ initialData: _initialData }: { initialData?: any }) {
   const params = useParams();
   const slug = params.slug as string;
   const [resumenExpandido, setResumenExpandido] = useState(false);

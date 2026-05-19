@@ -1,2 +1,5 @@
 'use client'
-export { default } from '@/paginas/LandingProducto'
+import LandingProducto from '@/paginas/LandingProducto'
+export default function LandingCliente({ initialData }: { initialData?: any }) {
+  return <LandingProducto initialData={initialData} />
+}
