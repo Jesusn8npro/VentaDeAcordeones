@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
 import './PuntosDeDolorTemu.css'
 
 const PuntosDeDolorTemu = ({ 
@@ -184,12 +183,11 @@ const PuntosDeDolorTemu = ({
                     onKeyDown={(e) => { if (e.key === 'Enter') abrirModalImagen(punto.imagen) }}
                     aria-label={`Ver ${punto.nombre} en grande`}
                   >
-                    <Image
+                    <img
                       src={punto.imagen}
                       alt={punto.nombre}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="puntos-dolor-temu-imagen"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   </div>
                 )}
