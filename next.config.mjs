@@ -8,12 +8,9 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: '*.supabase.co' },
-      { protocol: 'https', hostname: 'dxcpzivxzxvhabdimemb.supabase.co' },
-      { protocol: 'https', hostname: 'ventadeacordeones.com' },
-      { protocol: 'https', hostname: 'prd-www-cdn.shure.com' },
-      { protocol: 'https', hostname: '*.shure.com' },
-      { protocol: 'https', hostname: 'konradmusic.com.co' },
+      // Comodín: cubre cualquier imagen HTTPS mientras se migran
+      // los productos a imágenes propias en Supabase Storage.
+      { protocol: 'https', hostname: '**' },
     ],
     formats: ['image/webp', 'image/avif'],
   },
