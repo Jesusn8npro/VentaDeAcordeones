@@ -173,7 +173,7 @@ const HeaderPrincipal = () => {
     } catch (error) {
       // silencioso
     }
-  }, [cerrarSesion, navigate])
+  }, [cerrarSesion, router])
 
   const navegarAAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin') }
   const navegarAProductosAdmin = () => { setMenuUsuarioAbierto(false); router.push('/admin/productos') }
@@ -186,7 +186,7 @@ const HeaderPrincipal = () => {
     setProductAbierto(false)
     setDepartamentosAbierto(false)
     router.push(ruta)
-  }, [navigate])
+  }, [router])
 
   const obtenerNombreUsuario = () => {
     if (typeof usuario.nombre === 'string' && usuario.nombre.trim() && !usuario.nombre.includes('{')) {

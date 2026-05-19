@@ -11,7 +11,7 @@ export default function PaginaSesionCerrada() {
       router.push('/')
     }, 4000)
     return () => clearTimeout(timer)
-  }, [navigate])
+  }, [router])
 
   return (
     <div style={{ maxWidth: 900, margin: '40px auto', padding: '20px' }}>

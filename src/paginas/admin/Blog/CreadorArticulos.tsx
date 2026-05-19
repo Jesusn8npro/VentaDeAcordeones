@@ -68,7 +68,7 @@ const CreadorArticulos = () => {
       setArticulo(estadoInicialArticulo);
       setImagenesOriginales([]);
     }
-  }, [modo, slug, navigate]);
+  }, [modo, slug, router]);
 
   const handleArticuloChange = (articuloActualizado) => {
     setArticulo(articuloActualizado);

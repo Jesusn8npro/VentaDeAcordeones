@@ -42,16 +42,12 @@ export function useChatEnVivo() {
   const { usuario } = useAuth()
   const { agregarAlCarrito } = useCarrito()
 
-  const [chatAbierto, setChatAbierto] = useState(() => localStorage.getItem('vda_chat_abierto') === 'true')
-  const [mensajes, setMensajes] = useState<any[]>(() => {
-    try {
-      const saved = localStorage.getItem('vda_chat_historial')
-      return saved ? JSON.parse(saved) : []
-    } catch { return [] }
-  })
+  const [chatAbierto, setChatAbierto] = useState(false)
+  const [mensajes, setMensajes] = useState<any[]>([])
   const [nuevoMensaje, setNuevoMensaje] = useState('')
   const [escribiendo, setEscribiendo] = useState(false)
-  const [chatId] = useState<string>(obtenerSessionId)
+  const [chatId, setChatId] = useState<string>('')
+  const [montado, setMontado] = useState(false)
   const [contadorNoLeidos, setContadorNoLeidos] = useState(0)
   const [imagenPopup, setImagenPopup] = useState<string | null>(null)
   const [datosUsuario, setDatosUsuario] = useState({ nombre: '', email: '', whatsapp: '', tipoConsulta: 'general' })
@@ -63,14 +59,27 @@ export function useChatEnVivo() {
   const historialCargadoRef = useRef(false)
   const usuarioInteractuoRef = useRef(false)
 
-  // Persistencia local
+  // Inicialización desde localStorage (solo en cliente, tras primer render)
   useEffect(() => {
+    setChatAbierto(localStorage.getItem('vda_chat_abierto') === 'true')
+    try {
+      const saved = localStorage.getItem('vda_chat_historial')
+      if (saved) setMensajes(JSON.parse(saved))
+    } catch {}
+    setChatId(obtenerSessionId())
+    setMontado(true)
+  }, [])
+
+  // Persistencia local (solo tras inicialización para no sobrescribir datos reales)
+  useEffect(() => {
+    if (!montado) return
     localStorage.setItem('vda_chat_historial', JSON.stringify(mensajes))
-  }, [mensajes])
+  }, [mensajes, montado])
 
   useEffect(() => {
+    if (!montado) return
     localStorage.setItem('vda_chat_abierto', chatAbierto.toString())
-  }, [chatAbierto])
+  }, [chatAbierto, montado])
 
   // Detectar primera interacción del usuario (necesaria para AudioContext)
   useEffect(() => {

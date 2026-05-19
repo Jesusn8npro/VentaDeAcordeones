@@ -64,7 +64,7 @@ export default function DashboardAdmin() {
         return
       }
     }
-  }, [cargando, sesionInicializada, usuario, navigate, esAdmin])
+  }, [cargando, sesionInicializada, usuario, router, esAdmin])
 
   if (cargando && !usuario) {
     return (

@@ -19,7 +19,7 @@ const PaginaLogin = () => {
                 router.push('/perfil');
             }
         }
-    }, [usuario, sesionInicializada, navigate]);
+    }, [usuario, sesionInicializada, router]);
 
     return (
         <div className="pagina-login-contenedor" style={{
