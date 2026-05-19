@@ -1,13 +1,7 @@
 'use client'
-
 import { Suspense } from 'react'
-import dynamic from 'next/dynamic'
 import CargandoPagina from '@/componentes/sistema/CargandoPagina'
-
-const ConfirmacionEpayco = dynamic(
-  () => import('@/paginas/ecommerce/ConfirmacionEpayco'),
-  { ssr: false, loading: () => <CargandoPagina /> }
-)
+import ConfirmacionEpayco from '@/paginas/ecommerce/ConfirmacionEpayco'
 
 export default function ConfirmacionEpaycoCliente() {
   return (
