@@ -72,6 +72,24 @@ class PedidosServicio {
         throw new Error(`Error al crear pedido: ${error.message}`)
       }
 
+      // Decrementar stock por cada producto del pedido
+      for (const item of datosPedido.productos) {
+        const productoId = item.producto_id || item.id
+        const cantidad = item.cantidad || item.quantity || 1
+        if (!productoId) continue
+        const { data: prod } = await clienteSupabase
+          .from('productos')
+          .select('stock')
+          .eq('id', productoId)
+          .maybeSingle()
+        if (prod && typeof prod.stock === 'number') {
+          await clienteSupabase
+            .from('productos')
+            .update({ stock: Math.max(0, prod.stock - cantidad) })
+            .eq('id', productoId)
+        }
+      }
+
       return data
 
     } catch (error) {
@@ -117,6 +135,12 @@ class PedidosServicio {
 
       if (error) {
         throw new Error(`Error al actualizar pedido: ${error.message}`)
+      }
+
+      // Enviar email de confirmación cuando el pago es aprobado
+      if (data?.estado === 'pagado') {
+        clienteSupabase.functions.invoke('email-confirmacion', { body: { pedido_id: pedidoId } })
+          .catch(() => {/* no bloquear si falla el email */})
       }
 
       return data

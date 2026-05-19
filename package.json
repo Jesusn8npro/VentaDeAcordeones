@@ -17,26 +17,18 @@
     "@fullcalendar/react": "^6.1.19",
     "@fullcalendar/timegrid": "^6.1.19",
     "@radix-ui/react-select": "^2.2.6",
-    "@react-jvectormap/core": "^1.0.4",
-    "@react-jvectormap/world": "^1.1.2",
-    "@supabase/auth-helpers-react": "^0.4.2",
     "@supabase/supabase-js": "^2.57.4",
-    "apexcharts": "^5.3.5",
     "clsx": "^2.0.0",
     "compressorjs": "^1.2.1",
-    "dotenv": "^17.2.3",
     "epayco-sdk-node": "^1.4.4",
-    "flatpickr": "^4.6.13",
     "lucide-react": "^0.263.1",
     "next": "^16.2.6",
     "react": "^18.2.0",
-    "react-apexcharts": "^1.7.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
     "react-epayco": "^0.1.5",
-    "swiper": "^12.0.3",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
@@ -50,6 +42,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
+    "dotenv": "^17.2.3",
     "typescript": "^6.0.3"
   }
 }
