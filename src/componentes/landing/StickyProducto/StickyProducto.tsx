@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDeteccionScroll } from "../../../hooks/useDeteccionScroll";
 import { useCarrito } from "../../../contextos/CarritoContext";
-import ContraEntregaModal from "../../checkout/ContraEntregaModal";
+import ModalContraEntrega from "../../checkout/ModalContraEntrega";
 import StickyProductoEscritorio from "./StickyProductoEscritorio";
 import "./StickyProducto.css";
 
@@ -199,7 +199,7 @@ const StickyProducto = ({ producto, mostrar }) => {
         </div>
       
       {/* Modal de Contra Entrega */}
-      <ContraEntregaModal
+      <ModalContraEntrega
         abierto={modalContraEntregaAbierto}
         onCerrar={() => setModalContraEntregaAbierto(false)}
         producto={producto}

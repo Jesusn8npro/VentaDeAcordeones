@@ -352,7 +352,7 @@ const FormularioProductoUI: React.FC<FormularioProductoUIProps> = ({
         <div className="botones">
           <button
             type="button"
-            className="btn-debug"
+            className="btn-descargar-json"
             onClick={descargarJSON}
             style={{
               backgroundColor: '#6366f1',

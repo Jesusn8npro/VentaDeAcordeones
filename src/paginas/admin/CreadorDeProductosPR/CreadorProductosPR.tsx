@@ -6,7 +6,7 @@ import './CreadorProductosPR.css'
 
 import ContenidoPestana from './Componentes/ContenidoPestana'
 import { clienteSupabase } from '../../../configuracion/supabase'
-import { construirDatosParaGuardar } from './utilsProducto'
+import { construirDatosParaGuardar } from './utilidadesProducto'
 
 const STORAGE_KEY = 'creadorProductosPR_estado'
 const PESTANA_KEY = 'creadorProductosPR_pestana'

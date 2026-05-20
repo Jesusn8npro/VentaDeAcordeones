@@ -3,7 +3,7 @@ import { Package, Heart, ChevronLeft, ChevronRight, Share2, X } from 'lucide-rea
 import { useCarrito } from '../../../../../contextos/CarritoContext'
 import { useFavoritos } from '../../../../../contextos/FavoritosContext'
 import './HeroTemu.css'
-import ContraEntregaModal from '../../../../../componentes/checkout/ContraEntregaModal'
+import ModalContraEntrega from '../../../../../componentes/checkout/ModalContraEntrega'
 import ModalPromociones from '../../../../../componentes/checkout/ModalPromociones'
 import BotonCarritoAnimado from '../../../../../componentes/ui/BotonCarritoAnimado'
 import DetalleProductoHero from './DetalleProductoHero'
@@ -492,7 +492,7 @@ const HeroTemu = ({ producto, config, reviews, notificaciones }) => {
         />
       )}
 
-      <ContraEntregaModal
+      <ModalContraEntrega
         abierto={modalContraEntregaAbierto}
         onCerrar={() => setModalContraEntregaAbierto(false)}
         producto={producto}

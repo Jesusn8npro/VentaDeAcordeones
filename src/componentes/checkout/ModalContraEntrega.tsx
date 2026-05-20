@@ -8,9 +8,9 @@ import { validarNombre, validarTelefono, validarDireccion, validarEmail } from '
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../configuracion/supabase'
 import Portal from '../ui/Portal'
-import './ContraEntregaModal.css'
+import './ModalContraEntrega.css'
 
-const ContraEntregaModal = ({
+const ModalContraEntrega = ({
   abierto,
   onCerrar,
   producto,
@@ -381,4 +381,4 @@ const ContraEntregaModal = ({
   )
 }
 
-export default ContraEntregaModal
+export default ModalContraEntrega

@@ -1,7 +1,7 @@
 import React from "react";
 import { Star, ShoppingCart, Heart, Truck, Shield, Clock, Award } from 'lucide-react';
 import { useFavoritos } from "../../../contextos/FavoritosContext";
-import ContraEntregaModal from "../../checkout/ContraEntregaModal";
+import ModalContraEntrega from "../../checkout/ModalContraEntrega";
 import "./StickyProductoEscritorio.css";
 
 const StickyProductoEscritorio = ({ 
@@ -210,7 +210,7 @@ const StickyProductoEscritorio = ({
       </div>
       
       {/* Modal de Contra Entrega */}
-      <ContraEntregaModal
+      <ModalContraEntrega
         abierto={modalContraEntregaAbierto}
         onCerrar={() => setModalContraEntregaAbierto(false)}
         producto={producto}
