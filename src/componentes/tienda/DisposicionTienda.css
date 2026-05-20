@@ -1,11 +1,11 @@
-/* LayoutTienda.css - Layout principal de la tienda */
+﻿/* DisposicionTienda.css - Layout principal de la tienda */
 
 .layout-tienda {
   min-height: 100vh;
   background: #f8f9fa;
 }
 
-/* Header móvil - OCULTO (usamos los botones de PaginaTienda) */
+/* Header mÃ³vil - OCULTO (usamos los botones de PaginaTienda) */
 .layout-header-movil {
   display: none !important; /* Siempre oculto */
 }
@@ -36,7 +36,7 @@
   margin: 0;
 }
 
-/* Overlay para móvil */
+/* Overlay para mÃ³vil */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -198,7 +198,7 @@
 
 /* Tablet */
 @media (max-width: 1024px) {
-  /* Header móvil siempre oculto - usamos botones de PaginaTienda */
+  /* Header mÃ³vil siempre oculto - usamos botones de PaginaTienda */
   
   .layout-sidebar {
     position: fixed;
@@ -208,7 +208,7 @@
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
   }
   
-  /* Desactivar sticky en tablet y móvil */
+  /* Desactivar sticky en tablet y mÃ³vil */
   .sidebar-contenido-completo.sticky-activo {
     position: static !important;
     box-shadow: none !important;
@@ -233,7 +233,7 @@
   }
 }
 
-/* Móvil */
+/* MÃ³vil */
 @media (max-width: 768px) {
   .layout-header-movil {
     padding: 12px 16px;
@@ -245,7 +245,7 @@
   }
   
   .layout-contenido {
-    padding: 0; /* Sin padding en móvil */
+    padding: 0; /* Sin padding en mÃ³vil */
   }
   
   .layout-contenido.sin-sidebar {
@@ -253,7 +253,7 @@
   }
 }
 
-/* Móvil pequeño */
+/* MÃ³vil pequeÃ±o */
 @media (max-width: 480px) {
   .sidebar-header-interno {
     padding: 8px 12px;

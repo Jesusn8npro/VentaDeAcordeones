@@ -1,28 +1,28 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { AlertCircle, ArrowLeft } from 'lucide-react'
 import { usarProducto } from '../../../hooks/usarProducto'
 import { usarLandingData } from '../../../hooks/usarLandingData'
-import LandingPage from '../../../componentes/landing/LandingPage'
+import SelectorPlantilla from '../../../componentes/landing/SelectorPlantilla'
 
 /**
- * PaginaProducto - Página que detecta automáticamente la plantilla del producto
+ * PaginaProducto - PÃ¡gina que detecta automÃ¡ticamente la plantilla del producto
  * 
- * Esta página ahora funciona como un router inteligente que:
+ * Esta pÃ¡gina ahora funciona como un router inteligente que:
  * 1. Carga el producto
- * 2. Detecta qué plantilla tiene asignada (landing_tipo)
- * 3. Renderiza automáticamente la plantilla correcta
+ * 2. Detecta quÃ© plantilla tiene asignada (landing_tipo)
+ * 3. Renderiza automÃ¡ticamente la plantilla correcta
  * 
- * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automáticamente
+ * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automÃ¡ticamente
  */
 export default function PaginaProducto({ initialData: _initialData }: { initialData?: any }) {
   const params = useParams()
   const slug = params.slug as string
   const router = useRouter()
 
-  // ⚡ Estado de carga paralela optimizada
+  // âš¡ Estado de carga paralela optimizada
   const [cargaCompleta, setCargaCompleta] = useState(false)
 
   // Usar los hooks para cargar datos EN PARALELO
@@ -34,19 +34,19 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
     cargando: cargandoLanding 
   } = usarLandingData(producto?.id)
 
-  // ⚡ Efecto para detectar cuando ambas cargas están completas
+  // âš¡ Efecto para detectar cuando ambas cargas estÃ¡n completas
   useEffect(() => {
     if (!cargandoProducto && !cargandoLanding && producto) {
-      // Pequeño delay para suavizar la transición (opcional)
+      // PequeÃ±o delay para suavizar la transiciÃ³n (opcional)
       const timer = setTimeout(() => {
         setCargaCompleta(true)
-      }, 50) // 50ms para transición suave
+      }, 50) // 50ms para transiciÃ³n suave
       
       return () => clearTimeout(timer)
     }
   }, [cargandoProducto, cargandoLanding, producto])
 
-  // ⚡ Estado de carga ultra optimizado - solo mientras ambos cargan
+  // âš¡ Estado de carga ultra optimizado - solo mientras ambos cargan
   const estasCargando = cargandoProducto || cargandoLanding || !cargaCompleta
   
   if (estasCargando) {
@@ -65,7 +65,7 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
           border: '3px solid #f3f3f3',
           borderTop: '3px solid #ff6b35',
           borderRadius: '50%',
-          animation: 'ultraSpin 0.6s linear infinite' // ⚡ Animación más rápida
+          animation: 'ultraSpin 0.6s linear infinite' // âš¡ AnimaciÃ³n mÃ¡s rÃ¡pida
         }}></div>
         <p style={{ 
           fontSize: '14px', 
@@ -91,7 +91,7 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
       }}>
         <AlertCircle size={48} color="#e74c3c" />
         <h2>Producto no encontrado</h2>
-        <p>{error || 'El producto que buscas no existe o no está disponible'}</p>
+        <p>{error || 'El producto que buscas no existe o no estÃ¡ disponible'}</p>
         <button 
           onClick={() => router.push('/')}
           style={{
@@ -115,14 +115,14 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
 
   return (
     <div className="pagina-producto-auto">
-      <LandingPage 
+      <SelectorPlantilla 
         producto={producto}
         config={landingConfig}
         reviews={reviews}
         notificaciones={notificaciones}
       />
 
-      {/* ⚡ Estilos optimizados para animación ultra rápida */}
+      {/* âš¡ Estilos optimizados para animaciÃ³n ultra rÃ¡pida */}
       <style>
         {`
           @keyframes ultraSpin {
@@ -130,7 +130,7 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
             100% { transform: rotate(360deg); }
           }
           
-          /* ⚡ Optimización para transiciones suaves */
+          /* âš¡ OptimizaciÃ³n para transiciones suaves */
           .pagina-producto-auto {
             animation: fadeIn 0.2s ease-in-out;
           }

@@ -1,32 +1,32 @@
-import React from 'react'
+﻿import React from 'react'
 import PlantillaTemu from './plantillas/PlantillaTemu/PlantillaTemu'
 import PlantillaCatalogo from './plantillas/PlantillaCatalogo/PlantillaCatalogo'
 
 /**
- * LandingPage - Componente principal que decide qué plantilla usar
+ * SelectorPlantilla - Componente principal que decide quÃ© plantilla usar
  * 
- * Este componente actúa como selector/router de plantillas
- * Según el campo 'landing_tipo' del producto, renderiza la plantilla correspondiente
+ * Este componente actÃºa como selector/router de plantillas
+ * SegÃºn el campo 'landing_tipo' del producto, renderiza la plantilla correspondiente
  */
 
 // Mapeo de tipos de plantilla a componentes
 const PLANTILLAS_DISPONIBLES = {
   'catalogo': PlantillaCatalogo,
   'temu': PlantillaTemu,
-  // TODO: Agregar más plantillas aquí
+  // TODO: Agregar mÃ¡s plantillas aquÃ­
   // 'lujo': PlantillaLujo,
   // 'oferta_flash': PlantillaOfertaFlash,
   // 'aventura': PlantillaAventura,
 }
 
-const LandingPage = ({ producto, config, reviews, notificaciones }) => {
-  // Determinar qué plantilla usar
-  const tipoPlantilla = producto?.landing_tipo || 'catalogo' // Default a catálogo
+const SelectorPlantilla = ({ producto, config, reviews, notificaciones }) => {
+  // Determinar quÃ© plantilla usar
+  const tipoPlantilla = producto?.landing_tipo || 'catalogo' // Default a catÃ¡logo
   
   // Obtener el componente de plantilla
   const PlantillaComponent = PLANTILLAS_DISPONIBLES[tipoPlantilla]
   
-  // Si no existe la plantilla, usar catálogo como fallback
+  // Si no existe la plantilla, usar catÃ¡logo como fallback
   if (!PlantillaComponent) {
     const FallbackComponent = PLANTILLAS_DISPONIBLES['catalogo']
     return (
@@ -49,4 +49,4 @@ const LandingPage = ({ producto, config, reviews, notificaciones }) => {
   )
 }
 
-export default LandingPage
+export default SelectorPlantilla

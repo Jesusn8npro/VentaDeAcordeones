@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import usarStickyElemento from '../../hooks/usarStickyElemento'
-import './LayoutTienda.css'
+import './DisposicionTienda.css'
 
 /**
- * LayoutTienda - Layout principal para la tienda con sidebar fijo
+ * DisposicionTienda - Layout principal para la tienda con sidebar fijo
  * 
- * Características:
+ * CaracterÃ­sticas:
  * - Sidebar fijo en desktop (280px)
  * - Sidebar colapsable en tablet
- * - Modal sidebar en móvil
- * - Área de contenido responsive
+ * - Modal sidebar en mÃ³vil
+ * - Ãrea de contenido responsive
  * - Mejor que las referencias mostradas
  */
 
-const LayoutTienda = ({ 
+const DisposicionTienda = ({ 
   children, 
   sidebar, 
   titulo = "Tienda",
@@ -38,7 +38,7 @@ const LayoutTienda = ({
 
   return (
     <div className="layout-tienda">
-      {/* Header móvil con botón hamburguesa */}
+      {/* Header mÃ³vil con botÃ³n hamburguesa */}
       <div className="layout-header-movil">
         <button 
           className="btn-toggle-sidebar"
@@ -50,7 +50,7 @@ const LayoutTienda = ({
         <h1 className="titulo-tienda-movil">{titulo}</h1>
       </div>
 
-      {/* Overlay para móvil */}
+      {/* Overlay para mÃ³vil */}
       {sidebarAbierto && (
         <div 
           className="sidebar-overlay"
@@ -97,4 +97,4 @@ const LayoutTienda = ({
   )
 }
 
-export default LayoutTienda
+export default DisposicionTienda

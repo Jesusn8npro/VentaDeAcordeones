@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
-import AccordeonArte from '@/componentes/ui/AccordeonArte'
+import AccordeonArte from '../AccordeonArte'
 
 const NUMERO_WA = '573208492093'
 

@@ -1,10 +1,10 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, useParams, useRouter, usePathname } from 'next/navigation'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
-import LayoutTienda from '../../../componentes/tienda/LayoutTienda'
-import SidebarFiltros from '../../../componentes/tienda/SidebarFiltros'
+import DisposicionTienda from '../../../componentes/tienda/DisposicionTienda'
+import PanelFiltros from '../../../componentes/tienda/PanelFiltros'
 import GridProductosVendedor from '../../../componentes/producto/GridProductosVendedor'
 import { ModalFiltrosMovil, ModalOrdenarMovil } from './ModalesTienda'
 import { Grid, List, SlidersHorizontal, X, Flame, TrendingUp, Package, Zap } from 'lucide-react'
@@ -35,7 +35,7 @@ const SkeletonCards = () => (
 
 const PaginaTienda = () => {
   useTituloPagina('Tienda de Acordeones')
-  const params = useParams() // Detectar slug de categoría
+  const params = useParams() // Detectar slug de categorÃ­a
   const slug = params.slug as string | undefined
   const router = useRouter()
   const pathname = usePathname()
@@ -55,7 +55,7 @@ const PaginaTienda = () => {
   const [ordenar, setOrdenar] = useState('nuevos')
   const [totalProductos, setTotalProductos] = useState(0)
   
-  // Estados para modales móviles
+  // Estados para modales mÃ³viles
   const [modalFiltrosAbierto, setModalFiltrosAbierto] = useState(false)
   const [modalOrdenarAbierto, setModalOrdenarAbierto] = useState(false)
 
@@ -83,7 +83,7 @@ const PaginaTienda = () => {
           return
         }
 
-        // Contar productos de la categoría
+        // Contar productos de la categorÃ­a
         const { count: totalProductos } = await clienteSupabase
           .from('productos')
           .select('*', { count: 'exact', head: true })
@@ -226,8 +226,8 @@ const PaginaTienda = () => {
   const opcionesOrdenar = [
     { value: 'relevancia', label: 'Por defecto' },
     { value: 'popular', label: 'Popularidad' },
-    { value: 'rating', label: 'Calificación promedio' },
-    { value: 'nuevo', label: 'Más recientes' },
+    { value: 'rating', label: 'CalificaciÃ³n promedio' },
+    { value: 'nuevo', label: 'MÃ¡s recientes' },
     { value: 'precio-menor', label: 'Precio: menor a mayor' },
     { value: 'precio-mayor', label: 'Precio: mayor a menor' }
   ]
@@ -248,9 +248,9 @@ const PaginaTienda = () => {
         onOrdenarChange={handleOrdenarChange}
       />
 
-      <LayoutTienda
+      <DisposicionTienda
         titulo="Tienda"
-        sidebar={<SidebarFiltros filtros={filtros} onFiltrosChange={handleFiltrosChange} />}
+        sidebar={<PanelFiltros filtros={filtros} onFiltrosChange={handleFiltrosChange} />}
       >
       <div className="tienda-controles-movil">
         <button 
@@ -276,7 +276,7 @@ const PaginaTienda = () => {
           <button
             onClick={() => handleVistaChange('grid')}
             className={`vista-btn-icono ${vista === 'grid' ? 'activo' : ''}`}
-            title="Vista en cuadrícula"
+            title="Vista en cuadrÃ­cula"
           >
             <Grid size={18} />
           </button>
@@ -311,7 +311,7 @@ const PaginaTienda = () => {
 
               <h1 className="tienda-titulo">{categoriaActual.nombre}</h1>
               <p className="tienda-descripcion">
-                {categoriaActual.descripcion || `Explora nuestra selección de ${categoriaActual.nombre.toLowerCase()}`}
+                {categoriaActual.descripcion || `Explora nuestra selecciÃ³n de ${categoriaActual.nombre.toLowerCase()}`}
               </p>
 
               <div className="categoria-stats">
@@ -321,7 +321,7 @@ const PaginaTienda = () => {
                 </div>
                 <div className="stat-item">
                   <Zap size={18} />
-                  <span><strong>24h</strong> Envío Express</span>
+                  <span><strong>24h</strong> EnvÃ­o Express</span>
                 </div>
                 <div className="stat-item">
                   <TrendingUp size={18} />
@@ -333,7 +333,7 @@ const PaginaTienda = () => {
             <>
               <h1 className="tienda-titulo">Todos los productos</h1>
               <p className="tienda-descripcion">
-                Descubre nuestra colección completa con los mejores precios
+                Descubre nuestra colecciÃ³n completa con los mejores precios
               </p>
             </>
           )}
@@ -369,8 +369,8 @@ const PaginaTienda = () => {
               <option value="precio-menor">Precio: menor a mayor</option>
               <option value="precio-mayor">Precio: mayor a menor</option>
               <option value="nombre">Nombre A-Z</option>
-              <option value="nuevo">Más recientes</option>
-              <option value="popular">Más populares</option>
+              <option value="nuevo">MÃ¡s recientes</option>
+              <option value="popular">MÃ¡s populares</option>
             </select>
           </div>
 
@@ -380,7 +380,7 @@ const PaginaTienda = () => {
               <button
                 onClick={() => handleVistaChange('grid')}
                 className={`vista-btn ${vista === 'grid' ? 'activo' : ''}`}
-                title="Vista en cuadrícula"
+                title="Vista en cuadrÃ­cula"
               >
                 <Grid size={18} />
               </button>
@@ -401,7 +401,7 @@ const PaginaTienda = () => {
           <div className="tienda-empty">
             <div className="tienda-empty-icono">!</div>
             <h3 className="tienda-empty-titulo">No encontramos productos</h3>
-            <p className="tienda-empty-desc">Ajusta los filtros o explora otras categorías</p>
+            <p className="tienda-empty-desc">Ajusta los filtros o explora otras categorÃ­as</p>
             <div className="tienda-empty-acciones">
               <button className="btn-primario" onClick={() => router.push('/tienda')}>Ver todos los productos</button>
               <button className="btn-secundario" onClick={() => setModalFiltrosAbierto(true)}>Abrir filtros</button>
@@ -419,7 +419,7 @@ const PaginaTienda = () => {
           mostrarEmpty={false}
         />
       </div>}
-    </LayoutTienda>
+    </DisposicionTienda>
     </>
   )
 }

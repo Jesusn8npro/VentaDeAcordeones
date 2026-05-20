@@ -1,19 +1,19 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { usarProducto } from '@/hooks/usarProducto'
 import { usarLandingData } from '@/hooks/usarLandingData'
-import LandingPage from '@/componentes/landing/LandingPage'
+import SelectorPlantilla from '@/componentes/landing/SelectorPlantilla'
 import { AlertCircle, ArrowLeft } from 'lucide-react'
 
 /**
- * LandingProducto - Página que renderiza las landing pages de productos
+ * LandingProducto - PÃ¡gina que renderiza las landing pages de productos
  * 
- * Esta página se accede mediante /landing/:slug
+ * Esta pÃ¡gina se accede mediante /landing/:slug
  * Es diferente a /producto/:slug (que es la vista normal del producto)
  * 
- * Aquí se renderizan las landing pages optimizadas para conversión
+ * AquÃ­ se renderizan las landing pages optimizadas para conversiÃ³n
  */
 
 const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) => {
@@ -66,7 +66,7 @@ const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) =
       }}>
         <AlertCircle size={48} color="#e74c3c" />
         <h2>Landing page no encontrada</h2>
-        <p>{error || 'El producto que buscas no existe o no está disponible'}</p>
+        <p>{error || 'El producto que buscas no existe o no estÃ¡ disponible'}</p>
         <button 
           onClick={() => router.push('/')}
           style={{
@@ -92,14 +92,14 @@ const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) =
 
   return (
     <div className="landing-producto-page">
-      <LandingPage 
+      <SelectorPlantilla 
         producto={producto}
         config={landingConfig}
         reviews={reviews}
         notificaciones={notificaciones}
       />
 
-      {/* Estilos para animación de carga */}
+      {/* Estilos para animaciÃ³n de carga */}
       <style>
         {`
           @keyframes spin {

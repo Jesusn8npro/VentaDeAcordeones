@@ -1,6 +1,6 @@
-import React from 'react'
+﻿import React from 'react'
 import { X, Check } from 'lucide-react'
-import SidebarFiltros from '../../../componentes/tienda/SidebarFiltros'
+import PanelFiltros from '../../../componentes/tienda/PanelFiltros'
 
 const FILTROS_VACIOS = {
   busqueda: '',
@@ -38,7 +38,7 @@ export const ModalFiltrosMovil = ({ abierto, filtros, onCerrar, onFiltrosChange 
           </button>
         </div>
         <div className="modal-filtros-contenido">
-          <SidebarFiltros filtros={filtros} onFiltrosChange={onFiltrosChange} />
+          <PanelFiltros filtros={filtros} onFiltrosChange={onFiltrosChange} />
         </div>
       </div>
     </div>

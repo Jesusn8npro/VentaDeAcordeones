@@ -1,4 +1,4 @@
-/* SidebarFiltros.css - Filtros ultra funcionales */
+﻿/* PanelFiltros.css - Filtros ultra funcionales */
 
 .sidebar-filtros {
   padding: 0;
@@ -48,7 +48,7 @@
   text-align: center;
 }
 
-/* Búsqueda */
+/* BÃºsqueda */
 .busqueda-container {
   position: relative;
   display: flex;
@@ -116,7 +116,7 @@
   color: #495057;
 }
 
-/* Categorías - Exactamente como la imagen */
+/* CategorÃ­as - Exactamente como la imagen */
 .categorias-lista {
   display: flex;
   flex-direction: column;
@@ -342,7 +342,7 @@
   color: #495057;
 }
 
-/* Botón limpiar filtros */
+/* BotÃ³n limpiar filtros */
 .btn-limpiar-filtros {
   width: 100%;
   display: flex;

@@ -1,12 +1,12 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Search, Star, X, Filter } from 'lucide-react'
 import { clienteSupabase } from '../../configuracion/supabase'
-import './SidebarFiltros.css'
+import './PanelFiltros.css'
 
-const SidebarFiltros = ({ 
+const PanelFiltros = ({ 
   filtros = {}, 
   onFiltrosChange,
   cargando = false 
@@ -45,7 +45,7 @@ const SidebarFiltros = ({
 
       if (categoriasError) throw categoriasError
 
-      // Contar productos por categoría
+      // Contar productos por categorÃ­a
       const categoriasConConteo = await Promise.all(
         (categoriasData || []).map(async (categoria) => {
           const { count, error: countError } = await clienteSupabase
@@ -58,7 +58,7 @@ const SidebarFiltros = ({
             return { ...categoria, cantidad: 0 }
           }
 
-          // Si la categoría no tiene slug, generarlo desde el nombre
+          // Si la categorÃ­a no tiene slug, generarlo desde el nombre
           const slugFinal = categoria.slug || categoria.nombre
             .toLowerCase()
             .normalize('NFD')
@@ -119,7 +119,7 @@ const SidebarFiltros = ({
         }))
       }
     } catch (error) {
-      // Error silencioso en producción
+      // Error silencioso en producciÃ³n
     }
   }
 
@@ -210,7 +210,7 @@ const SidebarFiltros = ({
 
   return (
     <div className="sidebar-filtros">
-      {/* Búsqueda rápida */}
+      {/* BÃºsqueda rÃ¡pida */}
       <div className="filtro-seccion">
         <div className="filtro-header">
           <h3 className="filtro-titulo">Buscar productos</h3>
@@ -219,7 +219,7 @@ const SidebarFiltros = ({
           <Search size={18} className="busqueda-icono" />
           <input
             type="text"
-            placeholder="¿Qué estás buscando?"
+            placeholder="Â¿QuÃ© estÃ¡s buscando?"
             value={busqueda}
             onChange={handleBusquedaChange}
             className="busqueda-input"
@@ -235,10 +235,10 @@ const SidebarFiltros = ({
         </div>
       </div>
 
-      {/* Categorías */}
+      {/* CategorÃ­as */}
       <div className="filtro-seccion">
         <div className="filtro-header">
-          <h3 className="filtro-titulo">Categorías</h3>
+          <h3 className="filtro-titulo">CategorÃ­as</h3>
         </div>
         <div className="categorias-lista">
           {(mostrarTodasCategorias ? categoriasConProductos : categoriasConProductos.slice(0, 5)).map(categoria => (
@@ -260,7 +260,7 @@ const SidebarFiltros = ({
               className="btn-ver-mas"
               onClick={() => setMostrarTodasCategorias(!mostrarTodasCategorias)}
             >
-              {mostrarTodasCategorias ? 'Ver menos' : 'Ver más'}
+              {mostrarTodasCategorias ? 'Ver menos' : 'Ver mÃ¡s'}
             </button>
           )}
         </div>
@@ -273,7 +273,7 @@ const SidebarFiltros = ({
         </div>
         <div className="precio-inputs">
           <div className="precio-input-group">
-            <label>Mínimo</label>
+            <label>MÃ­nimo</label>
             <input
               type="number"
               value={filtrosInternos.precioMin}
@@ -285,7 +285,7 @@ const SidebarFiltros = ({
           </div>
           <div className="precio-separador">-</div>
           <div className="precio-input-group">
-            <label>Máximo</label>
+            <label>MÃ¡ximo</label>
             <input
               type="number"
               value={filtrosInternos.precioMax}
@@ -331,7 +331,7 @@ const SidebarFiltros = ({
       {/* Rating */}
       <div className="filtro-seccion">
         <div className="filtro-header">
-          <h3 className="filtro-titulo">Calificación</h3>
+          <h3 className="filtro-titulo">CalificaciÃ³n</h3>
         </div>
         <div className="rating-lista">
           {[5, 4, 3, 2, 1].map(rating => (
@@ -350,7 +350,7 @@ const SidebarFiltros = ({
                   />
                 ))}
               </div>
-              <span>y más</span>
+              <span>y mÃ¡s</span>
             </button>
           ))}
         </div>
@@ -388,4 +388,4 @@ const SidebarFiltros = ({
   )
 }
 
-export default SidebarFiltros
+export default PanelFiltros
