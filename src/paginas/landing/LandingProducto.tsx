@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { usarProducto } from '../hooks/usarProducto'
-import { usarLandingData } from '../hooks/usarLandingData'
-import LandingPage from '../componentes/landing/LandingPage'
+import { usarProducto } from '@/hooks/usarProducto'
+import { usarLandingData } from '@/hooks/usarLandingData'
+import LandingPage from '@/componentes/landing/LandingPage'
 import { AlertCircle, ArrowLeft } from 'lucide-react'
 
 /**

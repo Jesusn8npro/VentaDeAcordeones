@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import servicioEpayco from '../../servicios/epayco/servicioEpayco';
+import servicioEpayco from '@/servicios/epayco/servicioEpayco';
 
 const ConfirmacionEpayco = () => {
   const searchParams = useSearchParams();
