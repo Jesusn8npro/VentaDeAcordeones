@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import './GestionProductos.css'
-import { Search, Filter, Plus, Edit, Trash2, Eye, Package, DollarSign, TrendingUp, AlertCircle } from 'lucide-react'
+import { Search, Filter, Plus, Trash2, Package, DollarSign, TrendingUp, AlertCircle } from 'lucide-react'
+import FilaProducto from './FilaProducto'
 
 const GestionProductos = () => {
   const { cargando: cargandoAuth } = useAuth()
@@ -34,18 +35,14 @@ const GestionProductos = () => {
   })
 
   const formatearPrecio = (valor) => {
-    try {
-      return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(valor || 0)
-    } catch {
-      return `$${Number(valor || 0).toLocaleString('es-CO')}`
-    }
+    try { return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(valor || 0) }
+    catch { return `$${Number(valor || 0).toLocaleString('es-CO')}` }
   }
 
   const obtenerEstadoStock = (producto) => {
     const cantidad = Number(producto?.stock || 0)
     if (cantidad <= 0) return { estado: 'agotado', texto: 'Agotado' }
-    if (cantidad < 5) return { estado: 'bajo', texto: 'Bajo stock' }
-    return { estado: 'disponible', texto: 'Disponible' }
+    return cantidad < 5 ? { estado: 'bajo', texto: 'Bajo stock' } : { estado: 'disponible', texto: 'Disponible' }
   }
 
   useEffect(() => {
@@ -341,73 +338,18 @@ const GestionProductos = () => {
                 </tr>
               </thead>
               <tbody>
-                {productosFiltrados.map(producto => {
-                  const estadoStock = obtenerEstadoStock(producto)
-                  const estaSeleccionado = seleccionados.includes(producto.id)
-                  return (
-                    <tr key={producto.id} className={`gestion-fila ${estaSeleccionado ? 'gestion-fila-seleccionada' : ''}`}>
-                      <td className="gestion-td-check">
-                        <input
-                          type="checkbox"
-                          checked={estaSeleccionado}
-                          onChange={() => toggleSeleccion(producto.id)}
-                          className="gestion-checkbox"
-                        />
-                      </td>
-                      <td>
-                        <div className="gestion-producto">
-                          <div className="gestion-imagen">
-                            {producto.fotos_principales?.[0] ? (
-                              <img src={producto.fotos_principales[0]} alt={producto.nombre} className="gestion-miniatura" />
-                            ) : (
-                              <div className="gestion-placeholder"><Package /></div>
-                            )}
-                          </div>
-                          <div className="gestion-detalles">
-                            <h4 className="gestion-nombre">{producto.nombre}</h4>
-                            <p className="gestion-id">ID: {producto.id}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        {producto.categoria?.nombre ? (
-                          <span className="gestion-badge gestion-badge-categoria">
-                            <span className="gestion-badge-icono">{producto.categoria.icono}</span>
-                            <span className="gestion-badge-texto">{producto.categoria.nombre}</span>
-                          </span>
-                        ) : (
-                          <span className="gestion-badge gestion-badge-sin-categoria">
-                            <span className="gestion-badge-icono">❓</span>
-                            <span className="gestion-badge-texto">Sin categoría</span>
-                          </span>
-                        )}
-                      </td>
-                      <td className="gestion-precio">{formatearPrecio(producto.precio)}</td>
-                      <td>
-                        <div className="gestion-stock">
-                          <span className="gestion-stock-cantidad">{producto.stock || 0}</span>
-                          <span className={`gestion-stock-estado ${estadoStock.estado}`}>{estadoStock.texto}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <button
-                          className={`gestion-toggle ${producto.activo ? 'activo' : 'inactivo'}`}
-                          onClick={() => alternarEstadoProducto(producto)}
-                        >
-                          {producto.activo ? 'Activo' : 'Inactivo'}
-                        </button>
-                      </td>
-                      <td>{new Date(producto.creado_el).toLocaleDateString('es-CO')}</td>
-                      <td>
-                        <div className="gestion-acciones">
-                          <Link href={`/admin/productos/editar/${encodeURIComponent(producto.slug || producto.nombre || producto.id)}`} className="gestion-accion" title="Editar"><Edit /></Link>
-                          <Link href={`/producto/${producto.slug || producto.id}`} className="gestion-accion" title="Ver"><Eye /></Link>
-                          <button onClick={() => eliminarProducto(producto.id)} className="gestion-accion eliminar" title="Eliminar"><Trash2 /></button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
+                {productosFiltrados.map(producto => (
+                  <FilaProducto
+                    key={producto.id}
+                    producto={producto}
+                    seleccionado={seleccionados.includes(producto.id)}
+                    formatearPrecio={formatearPrecio}
+                    obtenerEstadoStock={obtenerEstadoStock}
+                    onToggle={toggleSeleccion}
+                    onAlternarEstado={alternarEstadoProducto}
+                    onEliminar={eliminarProducto}
+                  />
+                ))}
               </tbody>
             </table>
           )}

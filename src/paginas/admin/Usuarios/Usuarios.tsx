@@ -3,6 +3,7 @@ import { clienteSupabase } from '../../../configuracion/supabase';
 import { useAuth } from '../../../contextos/ContextoAutenticacion';
 import ModalUsuario from './ModalUsuario';
 import ListaUsuarios from './ListaUsuarios';
+import ModalConfirmacionEliminar from './ModalConfirmacionEliminar';
 import './Usuarios.css';
 
 const FORMULARIO_INICIAL = {
@@ -385,36 +386,15 @@ const Usuarios = () => {
           onCerrar={cerrarModal}
         />
       )}
-
       {modalConfirmacion && (
-        <div className="modal-overlay" onClick={() => setModalConfirmacion(false)}>
-          <div className="modal-confirmacion" onClick={(e) => e.stopPropagation()}>
-            <div className="confirmacion-icono">⚠</div>
-            <h3>¿Eliminar Usuario?</h3>
-            <p>
-              ¿Estás seguro de que deseas eliminar a <strong>{usuarioAEliminar?.nombre}</strong>?
-              Esta acción no se puede deshacer.
-            </p>
-            <div className="confirmacion-acciones">
-              <button
-                className="btn-cancelar-confirmacion"
-                onClick={() => setModalConfirmacion(false)}
-              >
-                Cancelar
-              </button>
-              <button
-                className="btn-confirmar-eliminacion"
-                onClick={eliminarUsuario}
-                disabled={cargando}
-              >
-                {cargando ? 'Eliminando...' : 'Sí, Eliminar'}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ModalConfirmacionEliminar
+          usuario={usuarioAEliminar}
+          cargando={cargando}
+          onCerrar={() => setModalConfirmacion(false)}
+          onConfirmar={eliminarUsuario}
+        />
       )}
     </div>
   );
 };
-
 export default Usuarios;

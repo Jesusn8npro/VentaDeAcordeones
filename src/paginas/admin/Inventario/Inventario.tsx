@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
-import { Search, AlertTriangle, AlertCircle, CheckCircle, RefreshCw, X, Edit2 } from 'lucide-react'
+import { Search, AlertTriangle, AlertCircle, CheckCircle, RefreshCw, X } from 'lucide-react'
 import ModalAjusteStock from './ModalAjusteStock'
+import FilaInventario from './FilaInventario'
 import './Inventario.css'
 
 const FORMATO_COP = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })
@@ -307,76 +308,24 @@ const Inventario = () => {
               </tr>
             </thead>
             <tbody>
-              {inventario.map(item => {
-                const est = obtenerEstadoStock(item)
-                const IconoEst = est.icono
-                const selec = seleccionados.includes(item.id)
-                const editando = editandoId === item.id
-                return (
-                  <tr key={item.id} className={`fila-inventario${selec ? ' inv-seleccionada' : ''}`}>
-                    <td><input type="checkbox" checked={selec} onChange={() => toggleUno(item.id)} /></td>
-                    <td>
-                      <div className="producto-info">
-                        <div className="producto-detalles">
-                          <h4 className="producto-nombre">{item.productos?.nombre || '—'}</h4>
-                          <p className="producto-sku" style={{ fontSize: '0.75rem', color: 'var(--color-texto-secundario)' }}>
-                            {formatearPrecio(item.productos?.precio || 0)}
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="celda-sku">
-                      {item.productos?.slug
-                        ? <code className="sku-codigo">{item.productos.slug}</code>
-                        : <span style={{ color: 'var(--color-texto-secundario)' }}>—</span>}
-                    </td>
-                    <td className="celda-stock-actual">
-                      {editando ? (
-                        <div className="inv-inline-edit">
-                          <input
-                            ref={inputInlineRef}
-                            type="number"
-                            min="0"
-                            value={editandoValor}
-                            onChange={e => setEditandoValor(e.target.value)}
-                            onBlur={() => guardarEdicionInline(item)}
-                            onKeyDown={e => {
-                              if (e.key === 'Enter') guardarEdicionInline(item)
-                              if (e.key === 'Escape') cancelarEdicionInline()
-                            }}
-                            className="inv-inline-input"
-                          />
-                        </div>
-                      ) : (
-                        <button className="inv-stock-btn" onClick={() => iniciarEdicionInline(item)} title="Click para editar">
-                          <span className={`inv-stock-num${item.cantidad === 0 ? ' inv-zero' : item.cantidad < 5 ? ' inv-crit' : ''}`}>
-                            {item.cantidad}
-                          </span>
-                          <Edit2 size={11} className="inv-edit-hint" />
-                        </button>
-                      )}
-                    </td>
-                    <td className="celda-stock-minimo">
-                      <span className="stock-minimo">{item.stock_minimo}</span>
-                    </td>
-                    <td className="celda-estado">
-                      <span className={`inv-sem-badge ${est.clase}`}>
-                        <IconoEst size={12} /> {est.texto}
-                      </span>
-                    </td>
-                    <td className="celda-valor">
-                      <span className="valor-total">{formatearPrecio(item.cantidad * (item.productos?.precio || 0))}</span>
-                    </td>
-                    <td className="celda-acciones">
-                      <div className="acciones-inventario">
-                        <button onClick={() => abrirModalAjuste(item)} className="accion-boton ajustar" title="Ajustar stock">
-                          <Edit2 size={14} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
+              {inventario.map(item => (
+                <FilaInventario
+                  key={item.id}
+                  item={item}
+                  selec={seleccionados.includes(item.id)}
+                  editando={editandoId === item.id}
+                  editandoValor={editandoValor}
+                  inputRef={inputInlineRef}
+                  obtenerEstadoStock={obtenerEstadoStock}
+                  formatearPrecio={formatearPrecio}
+                  onToggle={toggleUno}
+                  onIniciarEdicion={iniciarEdicionInline}
+                  onGuardarEdicion={guardarEdicionInline}
+                  onCancelarEdicion={cancelarEdicionInline}
+                  onEditandoValorChange={setEditandoValor}
+                  onAbrirModal={abrirModalAjuste}
+                />
+              ))}
             </tbody>
           </table>
         )}

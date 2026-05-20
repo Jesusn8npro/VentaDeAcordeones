@@ -4,49 +4,12 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../../configuracion/supabase'
-import {
-  Search, Download, AlertCircle, CheckCircle, XCircle, Clock,
-  Truck, Eye, ChevronDown, X, Package
-} from 'lucide-react'
+import { Search, Download, AlertCircle, Eye, ChevronDown, X } from 'lucide-react'
 import './PedidosTransacciones.css'
 import '../../../componentes/admin/EstilosBotonesAdmin.css'
-
-const FORMATO_MONEDA = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })
-
-function formatearPrecio(valor = 0) {
-  try { return FORMATO_MONEDA.format(Number(valor || 0)) } catch { return `$${valor}` }
-}
-
-function formatearFecha(iso) {
-  if (!iso) return '—'
-  const f = new Date(iso)
-  return f.toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' })
-}
-
-function formatearFechaHora(iso) {
-  if (!iso) return '—'
-  const f = new Date(iso)
-  const hora = f.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })
-  return `${f.toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' })} · ${hora}`
-}
-
-const ESTADOS_CONFIG = {
-  pendiente:   { etiqueta: 'Pendiente',   clase: 'badge-pendiente',   icono: Clock,        color: 'advertencia' },
-  en_proceso:  { etiqueta: 'En proceso',  clase: 'badge-pendiente',   icono: Clock,        color: 'advertencia' },
-  enviado:     { etiqueta: 'Enviado',     clase: 'badge-enviado',     icono: Truck,        color: 'info' },
-  entregado:   { etiqueta: 'Entregado',   clase: 'badge-entregado',   icono: CheckCircle,  color: 'exito' },
-  cancelado:   { etiqueta: 'Cancelado',   clase: 'badge-cancelado',   icono: XCircle,      color: 'error' },
-}
-
-const FILTROS_RAPIDOS = [
-  { valor: 'todos',     etiqueta: 'Todos' },
-  { valor: 'pendiente', etiqueta: 'Pendientes' },
-  { valor: 'enviado',   etiqueta: 'Enviados' },
-  { valor: 'entregado', etiqueta: 'Entregados' },
-  { valor: 'cancelado', etiqueta: 'Cancelados' },
-]
-
-const ESTADOS_OPCIONES = ['pendiente', 'en_proceso', 'enviado', 'entregado', 'cancelado']
+import { formatearPrecio, formatearFecha, ESTADOS_CONFIG, FILTROS_RAPIDOS, ESTADOS_OPCIONES } from './pedidosUtils'
+import ModalDetallePedido from './ModalDetallePedido'
+import ModalCambioEstado from './ModalCambioEstado'
 
 export default function Pedidos() {
   const router = useRouter()
@@ -354,101 +317,18 @@ export default function Pedidos() {
         </div>
       )}
 
-      {/* Modal detalle */}
       {pedidoDetalle && (
-        <div className="ped-modal-overlay" onClick={() => setPedidoDetalle(null)}>
-          <div className="ped-modal" onClick={e => e.stopPropagation()}>
-            <div className="ped-modal-header">
-              <h2>Detalle del pedido</h2>
-              <button className="ped-modal-cerrar" onClick={() => setPedidoDetalle(null)}><X size={18} /></button>
-            </div>
-            <div className="ped-modal-body">
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">#Pedido</span>
-                <span className="ped-det-val">TXN-{pedidoDetalle.numero_pedido || String(pedidoDetalle.id).slice(0, 8)}</span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Cliente</span>
-                <span className="ped-det-val">{pedidoDetalle.usuarios?.nombre || pedidoDetalle.nombre_cliente || '—'}</span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Email</span>
-                <span className="ped-det-val">{pedidoDetalle.usuarios?.email || pedidoDetalle.email_cliente || '—'}</span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Teléfono</span>
-                <span className="ped-det-val">
-                  {typeof pedidoDetalle.telefono_cliente === 'object'
-                    ? pedidoDetalle.telefono_cliente?.telefono || '—'
-                    : pedidoDetalle.telefono_cliente || '—'}
-                </span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Total</span>
-                <span className="ped-det-val ped-det-total">{formatearPrecio(Number(pedidoDetalle.total) || 0)}</span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Estado</span>
-                <span className={`ped-badge ${(ESTADOS_CONFIG[pedidoDetalle.estado] || ESTADOS_CONFIG.pendiente).clase}`}>
-                  {(ESTADOS_CONFIG[pedidoDetalle.estado] || ESTADOS_CONFIG.pendiente).etiqueta}
-                </span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Fecha</span>
-                <span className="ped-det-val">{formatearFechaHora(pedidoDetalle.creado_el)}</span>
-              </div>
-              <div className="ped-det-fila">
-                <span className="ped-det-lbl">Método de pago</span>
-                <span className="ped-det-val">{pedidoDetalle.metodo_pago || '—'}</span>
-              </div>
-              {pedidoDetalle.direccion_envio && (
-                <div className="ped-det-fila">
-                  <span className="ped-det-lbl">Dirección</span>
-                  <span className="ped-det-val">{typeof pedidoDetalle.direccion_envio === 'object'
-                    ? JSON.stringify(pedidoDetalle.direccion_envio)
-                    : pedidoDetalle.direccion_envio}</span>
-                </div>
-              )}
-              {Array.isArray(pedidoDetalle.productos) && pedidoDetalle.productos.length > 0 && (
-                <div className="ped-det-productos">
-                  <h3>Productos</h3>
-                  {pedidoDetalle.productos.map((prod, i) => (
-                    <div key={i} className="ped-det-prod-item">
-                      <Package size={14} />
-                      <span className="ped-det-prod-nombre">{prod.nombre || prod.name || '—'}</span>
-                      {prod.cantidad && <span className="ped-det-prod-qty">x{prod.cantidad}</span>}
-                      {prod.precio && <span className="ped-det-prod-precio">{formatearPrecio(prod.precio)}</span>}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <ModalDetallePedido pedido={pedidoDetalle} onCerrar={() => setPedidoDetalle(null)} />
       )}
 
-      {/* Modal cambio de estado individual */}
       {modalEstado.abierto && modalEstado.pedido && (
-        <div className="ped-modal-overlay" onClick={() => setModalEstado({ pedido: null, abierto: false })}>
-          <div className="ped-modal ped-modal-sm" onClick={e => e.stopPropagation()}>
-            <div className="ped-modal-header">
-              <h2>Cambiar estado</h2>
-              <button className="ped-modal-cerrar" onClick={() => setModalEstado({ pedido: null, abierto: false })}><X size={18} /></button>
-            </div>
-            <div className="ped-modal-body">
-              <p className="ped-det-lbl">Pedido: <strong>TXN-{modalEstado.pedido.numero_pedido || String(modalEstado.pedido.id).slice(0, 8)}</strong></p>
-              <select className="ped-select-estado" value={nuevoEstado} onChange={e => setNuevoEstado(e.target.value)}>
-                {ESTADOS_OPCIONES.map(e => (
-                  <option key={e} value={e}>{ESTADOS_CONFIG[e]?.etiqueta || e}</option>
-                ))}
-              </select>
-              <div className="ped-modal-acciones">
-                <button className="ped-btn-sec" onClick={() => setModalEstado({ pedido: null, abierto: false })}>Cancelar</button>
-                <button className="ped-btn-prim" onClick={guardarCambioEstado}>Guardar</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ModalCambioEstado
+          pedido={modalEstado.pedido}
+          nuevoEstado={nuevoEstado}
+          setNuevoEstado={setNuevoEstado}
+          onCerrar={() => setModalEstado({ pedido: null, abierto: false })}
+          onGuardar={guardarCambioEstado}
+        />
       )}
     </div>
   )

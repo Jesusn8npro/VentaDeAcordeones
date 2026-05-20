@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react'
 import './VideosIA.css'
 import { clienteSupabase } from '../../../configuracion/supabase'
+import ModalUsos from './ModalUsos'
+import ModalOptimizar from './ModalOptimizar'
 
 export default function VideosIA() {
   const [archivos, setArchivos] = useState([])
@@ -311,123 +313,39 @@ export default function VideosIA() {
         </div>
       )}
 
-      {/* Modal usos */}
       {modalUsos && (
-        <div className="modal-subida-ia" onClick={() => setModalUsos(null)}>
-          <div className="modal-subida-contenido" onClick={e => e.stopPropagation()}>
-            <h2 className="modal-subida-titulo">Usos del video</h2>
-            <div className="modal-subida-form">
-              <video src={modalUsos.archivo.url} className="video-preview" controls muted preload="metadata" style={{ borderRadius: 8, maxHeight: 200 }} />
-              <div>
-                <label>Producto</label>
-                <select value={productoSel} onChange={e => setProductoSel(e.target.value)}>
-                  <option value="">Selecciona…</option>
-                  {productos.map(p => <option key={p.id} value={p.id}>{p.nombre}</option>)}
-                </select>
-              </div>
-              <div>
-                <label>Tipo</label>
-                <select value={tipoSel} onChange={e => setTipoSel(e.target.value)}>
-                  <option value="producto">Producto</option>
-                  <option value="beneficios">Beneficios</option>
-                  <option value="anuncio_1">Anuncio 1</option>
-                  <option value="anuncio_2">Anuncio 2</option>
-                  <option value="anuncio_3">Anuncio 3</option>
-                  <option value="testimonio">Testimonio</option>
-                  <option value="extra">Extra</option>
-                </select>
-              </div>
-            </div>
-            <div className="modal-subida-acciones">
-              <button className="btn" onClick={() => setModalUsos(null)}>Cerrar</button>
-              <button className="btn btn-primario" onClick={asignar}>Asignar a producto</button>
-            </div>
-          </div>
-        </div>
+        <ModalUsos
+          modalUsos={modalUsos}
+          productos={productos}
+          productoSel={productoSel}
+          setProductoSel={setProductoSel}
+          tipoSel={tipoSel}
+          setTipoSel={setTipoSel}
+          onCerrar={() => setModalUsos(null)}
+          onAsignar={asignar}
+        />
       )}
 
-      {/* Modal optimizar */}
       {modalOptimizar && (
-        <div className="modal-subida-ia" onClick={() => setModalOptimizar(null)}>
-          <div className="modal-subida-contenido modal-optimizacion" onClick={e => e.stopPropagation()}>
-            <h2 className="modal-subida-titulo">Optimizar video</h2>
-            <div className="modal-optimizacion-body">
-              <div className="video-preview-container">
-                <video src={modalOptimizar.url} className="video-preview" controls muted preload="metadata" />
-              </div>
-              <div className="optimizacion-config">
-                <div>
-                  <label>Preset de optimización</label>
-                  <select value={optimizacionPreset} onChange={e => setOptimizacionPreset(e.target.value)}>
-                    <option value="web">Web (80%)</option>
-                    <option value="mobile">Móvil (60%)</option>
-                    <option value="high">Alta calidad (90%)</option>
-                    <option value="low">Baja calidad (40%)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label>Calidad manual</label>
-                  <div className="slider-container">
-                    <input
-                      type="range"
-                      min="10"
-                      max="100"
-                      value={optimizacionCalidad}
-                      onChange={e => setOptimizacionCalidad(parseInt(e.target.value))}
-                      onMouseUp={e => e.stopPropagation()}
-                      onTouchEnd={e => e.stopPropagation()}
-                      disabled={optimizacionPreset !== 'web'}
-                    />
-                    <span className="slider-valor">{optimizacionCalidad}%</span>
-                  </div>
-                </div>
-
-                <div className="info-tamanio">
-                  <div>Original: {tamOriginalModalKB ? `${tamOriginalModalKB} KB` : (tamanos[modalOptimizar.url] ? `${Math.round(tamanos[modalOptimizar.url] / 1024)} KB` : '—')}</div>
-                  <div>Optimizado: {tamanioOptimizado ? `${Math.round(tamanioOptimizado / 1024)} KB` : 'Calculando...'}</div>
-                  {tamanioOptimizado && tamanos[modalOptimizar.url] && (
-                    <div className="ahorro-info">
-                      Ahorro: {Math.round((1 - tamanioOptimizado / tamanos[modalOptimizar.url]) * 100)}%
-                    </div>
-                  )}
-                </div>
-
-                <label className="checkbox-label">
-                  <input type="checkbox" checked={conservarOriginal} onChange={e => setConservarOriginal(e.target.checked)} onClick={e => e.stopPropagation()} />
-                  Conservar original (backup)
-                </label>
-
-                <label className="checkbox-label">
-                  <input type="checkbox" checked={actualizarVideo} onChange={e => setActualizarVideo(e.target.checked)} onClick={e => e.stopPropagation()} />
-                  Actualizar este video (sobrescribir)
-                </label>
-
-                {!actualizarVideo && (
-                  <div>
-                    <label>Nombre de archivo destino</label>
-                    <input
-                      type="text"
-                      value={nombreOptimizado}
-                      onChange={e => setNombreOptimizado(e.target.value)}
-                      placeholder="nombre_del_archivo"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="modal-subida-acciones">
-              <button className="btn" onClick={() => setModalOptimizar(null)}>Cancelar</button>
-              <button
-                className="btn btn-primario"
-                onClick={aplicarOptimizacion}
-                disabled={optimizacionCargando}
-              >
-                {optimizacionCargando ? 'Optimizando...' : actualizarVideo ? 'Actualizar video' : 'Aplicar cambios'}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ModalOptimizar
+          modalOptimizar={modalOptimizar}
+          tamanos={tamanos}
+          tamOriginalModalKB={tamOriginalModalKB}
+          tamanioOptimizado={tamanioOptimizado}
+          optimizacionPreset={optimizacionPreset}
+          setOptimizacionPreset={setOptimizacionPreset}
+          optimizacionCalidad={optimizacionCalidad}
+          setOptimizacionCalidad={setOptimizacionCalidad}
+          conservarOriginal={conservarOriginal}
+          setConservarOriginal={setConservarOriginal}
+          actualizarVideo={actualizarVideo}
+          setActualizarVideo={setActualizarVideo}
+          nombreOptimizado={nombreOptimizado}
+          setNombreOptimizado={setNombreOptimizado}
+          optimizacionCargando={optimizacionCargando}
+          onCerrar={() => setModalOptimizar(null)}
+          onAplicar={aplicarOptimizacion}
+        />
       )}
     </div>
   )

@@ -7,31 +7,11 @@ import DisposicionTienda from '../../../componentes/tienda/DisposicionTienda'
 import PanelFiltros from '../../../componentes/tienda/PanelFiltros'
 import GridProductosVendedor from '../../../componentes/producto/GridProductosVendedor'
 import { ModalFiltrosMovil, ModalOrdenarMovil } from './ModalesTienda'
-import { Grid, List, SlidersHorizontal, X, Flame, TrendingUp, Package, Zap } from 'lucide-react'
+import { Grid, List, SlidersHorizontal } from 'lucide-react'
 import { clienteSupabase } from '../../../configuracion/supabase'
+import SkeletonCards from './SkeletonCards'
+import EncabezadoTienda from './EncabezadoTienda'
 import './PaginaTienda.css'
-
-const SkeletonCards = () => (
-  <div className="tienda-productos">
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.25rem' }}>
-      {Array.from({ length: 8 }).map((_, i) => (
-        <div key={i} style={{
-          background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-          backgroundSize: '200% 100%',
-          animation: 'skeleton-shimmer 1.5s infinite',
-          borderRadius: '12px',
-          height: '320px'
-        }} />
-      ))}
-      <style>{`
-        @keyframes skeleton-shimmer {
-          0% { background-position: 200% 0 }
-          100% { background-position: -200% 0 }
-        }
-      `}</style>
-    </div>
-  </div>
-)
 
 const PaginaTienda = () => {
   useTituloPagina('Tienda de Acordeones')
@@ -290,111 +270,15 @@ const PaginaTienda = () => {
         </div>
       </div>
 
-      <div className="tienda-header">
-        <div className="tienda-info-categoria">
-          {categoriaActual ? (
-            <>
-              <div className="categoria-badges">
-                {categoriaActual.productos_en_oferta > 0 && (
-                  <span className="categoria-badge badge-ofertas">
-                    <Flame size={14} />
-                    {categoriaActual.productos_en_oferta} Ofertas Activas
-                  </span>
-                )}
-                {categoriaActual.descuento_promedio > 0 && (
-                  <span className="categoria-badge badge-descuento">
-                    <TrendingUp size={14} />
-                    Hasta {categoriaActual.descuento_promedio}% OFF
-                  </span>
-                )}
-              </div>
-
-              <h1 className="tienda-titulo">{categoriaActual.nombre}</h1>
-              <p className="tienda-descripcion">
-                {categoriaActual.descripcion || `Explora nuestra selecciÃ³n de ${categoriaActual.nombre.toLowerCase()}`}
-              </p>
-
-              <div className="categoria-stats">
-                <div className="stat-item">
-                  <Package size={18} />
-                  <span><strong>{categoriaActual.total_productos}+</strong> Productos</span>
-                </div>
-                <div className="stat-item">
-                  <Zap size={18} />
-                  <span><strong>24h</strong> EnvÃ­o Express</span>
-                </div>
-                <div className="stat-item">
-                  <TrendingUp size={18} />
-                  <span><strong>TOP</strong> Ventas</span>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <h1 className="tienda-titulo">Todos los productos</h1>
-              <p className="tienda-descripcion">
-                Descubre nuestra colecciÃ³n completa con los mejores precios
-              </p>
-            </>
-          )}
-        </div>
-
-        <div className="tienda-controles">
-          {contarFiltrosActivos() > 0 && (
-            <div className="filtros-activos-grupo">
-              <div className="filtros-activos">
-                <SlidersHorizontal size={16} />
-                <span>{contarFiltrosActivos()} filtro{contarFiltrosActivos() !== 1 ? 's' : ''} activo{contarFiltrosActivos() !== 1 ? 's' : ''}</span>
-              </div>
-              <button 
-                onClick={limpiarFiltros}
-                className="btn-limpiar-filtros"
-                title="Limpiar todos los filtros"
-              >
-                <X size={16} />
-                Limpiar
-              </button>
-            </div>
-          )}
-
-          <div className="control-grupo">
-            <label htmlFor="ordenar">Ordenar por:</label>
-            <select
-              id="ordenar"
-              value={ordenar}
-              onChange={(e) => handleOrdenarChange(e.target.value)}
-              className="control-select"
-            >
-              <option value="relevancia">Relevancia</option>
-              <option value="precio-menor">Precio: menor a mayor</option>
-              <option value="precio-mayor">Precio: mayor a menor</option>
-              <option value="nombre">Nombre A-Z</option>
-              <option value="nuevo">MÃ¡s recientes</option>
-              <option value="popular">MÃ¡s populares</option>
-            </select>
-          </div>
-
-          <div className="control-grupo">
-            <label>Vista:</label>
-            <div className="vista-botones">
-              <button
-                onClick={() => handleVistaChange('grid')}
-                className={`vista-btn ${vista === 'grid' ? 'activo' : ''}`}
-                title="Vista en cuadrÃ­cula"
-              >
-                <Grid size={18} />
-              </button>
-              <button
-                onClick={() => handleVistaChange('lista')}
-                className={`vista-btn ${vista === 'lista' ? 'activo' : ''}`}
-                title="Vista en lista"
-              >
-                <List size={18} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <EncabezadoTienda
+        categoriaActual={categoriaActual}
+        filtrosActivos={contarFiltrosActivos()}
+        limpiarFiltros={limpiarFiltros}
+        ordenar={ordenar}
+        onOrdenarChange={handleOrdenarChange}
+        vista={vista}
+        onVistaChange={handleVistaChange}
+      />
 
       {cargandoCategoria ? <SkeletonCards /> : <div className="tienda-productos">
         {totalProductos === 0 ? (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { Plus, Search, AlertCircle, Trash2 } from 'lucide-react'
@@ -8,33 +8,19 @@ import GridCategorias from './GridCategorias'
 import EstadisticasCategorias from './EstadisticasCategorias'
 import { useImagenCategoria } from './useImagenCategoria'
 import { useDragDropCategorias } from './useDragDropCategorias'
+import { useCategorias } from './useCategorias'
 import './Categorias.css'
 import './CategoriasExtra.css'
 
 const Categorias = () => {
-  const [categorias, setCategorias] = useState([])
-  const [productos, setProductos] = useState([])
-  const [cargando, setCargando] = useState(true)
-  const [cargandoProductos, setCargandoProductos] = useState(false)
-  const [error, setError] = useState(null)
   const [busqueda, setBusqueda] = useState('')
-  const [busquedaProductos, setBusquedaProductos] = useState('')
-  const [soloSinCategoria, setSoloSinCategoria] = useState(false)
   const [modalAbierto, setModalAbierto] = useState(false)
   const [categoriaEditando, setCategoriaEditando] = useState(null)
   const [guardando, setGuardando] = useState(false)
   const [formulario, setFormulario] = useState({
-    nombre: '',
-    descripcion: '',
-    slug: '',
-    imagen_url: '',
-    icono: '',
-    activo: true,
-    destacado: false,
-    orden: 0
+    nombre: '', descripcion: '', slug: '', imagen_url: '',
+    icono: '', activo: true, destacado: false, orden: 0
   })
-
-  // Bulk selection
   const [seleccionadas, setSeleccionadas] = useState<(string | number)[]>([])
   const [eliminandoMasivo, setEliminandoMasivo] = useState(false)
 
@@ -46,6 +32,15 @@ const Categorias = () => {
     manejarDropSinCategoria,
     registrarActualizacion
   } = useDragDropCategorias()
+
+  const {
+    categorias, productos, cargando,
+    error, setError, estadisticas,
+    busquedaProductos, setBusquedaProductos,
+    soloSinCategoria, setSoloSinCategoria,
+    cargarDatos
+  } = useCategorias(registrarActualizacion)
+
   const {
     archivoImagen,
     previewImagen,
@@ -58,99 +53,8 @@ const Categorias = () => {
     eliminarImagen: eliminarImagenArchivo,
     resetImagen
   } = useImagenCategoria(setError)
-  const [estadisticas, setEstadisticas] = useState({
-    totalCategorias: 0,
-    categoriasActivas: 0,
-    categoriasConProductos: 0,
-    categoriasSinProductos: 0
-  })
 
   const { esAdmin } = useAuth()
-
-  useEffect(() => {
-    registrarActualizacion(cargarDatos)
-    cargarDatos()
-  }, [])
-
-  const cargarDatos = async () => {
-    await Promise.all([
-      cargarCategorias(),
-      cargarEstadisticas(),
-      cargarProductos()
-    ])
-  }
-
-  const cargarCategorias = async () => {
-    try {
-      setCargando(true)
-      const { data, error } = await clienteSupabase
-        .from('categorias')
-        .select('id,nombre,slug,descripcion,icono,imagen_url,destacado,orden,activo,total_productos')
-        .order('orden', { ascending: true })
-
-      if (error) throw error
-      setCategorias(data || [])
-    } catch (error) {
-      setError('Error al cargar las categorías')
-    } finally {
-      setCargando(false)
-    }
-  }
-
-  const cargarEstadisticas = async () => {
-    try {
-      const { count: total } = await clienteSupabase
-        .from('categorias')
-        .select('*', { count: 'exact', head: true })
-
-      const { count: activas } = await clienteSupabase
-        .from('categorias')
-        .select('*', { count: 'exact', head: true })
-        .eq('activo', true)
-
-      const { data: categoriasConProductos } = await clienteSupabase
-        .from('categorias')
-        .select('id,total_productos')
-
-      const conProductos = categoriasConProductos?.filter(cat =>
-        (cat.total_productos || 0) > 0
-      ).length || 0
-
-      setEstadisticas({
-        totalCategorias: total || 0,
-        categoriasActivas: activas || 0,
-        categoriasConProductos: conProductos,
-        categoriasSinProductos: (total || 0) - conProductos
-      })
-    } catch {
-    }
-  }
-
-  const cargarProductos = async () => {
-    try {
-      setCargandoProductos(true)
-      let query = clienteSupabase
-        .from('productos')
-        .select('id, nombre, categoria_id')
-        .order('nombre')
-
-      if (soloSinCategoria) {
-        query = query.is('categoria_id', null)
-      }
-
-      if (busquedaProductos.trim()) {
-        query = query.ilike('nombre', `%${busquedaProductos.trim()}%`)
-      }
-
-      const { data, error } = await query
-
-      if (error) throw error
-      setProductos(data || [])
-    } catch {
-    } finally {
-      setCargandoProductos(false)
-    }
-  }
 
   const abrirModal = (categoria = null) => {
     setCategoriaEditando(categoria)
