@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-// @ts-ignore — módulo backend JS intacto (no se reescribe)
-import { generarFeedXML } from '../../../../api/meta/feed-productos.js'
+import { generarFeedXML } from '../../../../api/meta/feed-productos'
 import { ipDe, permitir } from '../../_lib/rateLimit'
 
 export const runtime = 'nodejs'

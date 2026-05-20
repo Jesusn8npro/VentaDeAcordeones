@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-// @ts-ignore — módulo backend JS intacto
-import { obtenerEstadisticasFeed } from '../../../../api/meta/actualizacion-automatica.js'
+import { obtenerEstadisticasFeed } from '../../../../api/meta/actualizacion-automatica'
 import { ipDe, permitir } from '../../_lib/rateLimit'
 
 export const runtime = 'nodejs'
