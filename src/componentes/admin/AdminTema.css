@@ -166,4 +166,8 @@
 }
 
 /* Base */
+.admin-theme {
+  background-color: var(--color-fondo-secundario);
+  min-height: 100vh;
+}
 .admin-theme * { box-sizing: border-box; }

@@ -47,10 +47,10 @@ const GridProductosVendedor = ({
     cargarProductos()
   }, [filtrosExternos, filtros, paginaActual, ordenar])
 
-  // Cargar categorías
+  // Cargar categorías solo si los filtros internos están visibles
   useEffect(() => {
-    cargarCategorias()
-  }, [])
+    if (mostrarFiltros && !filtrosExternos) cargarCategorias()
+  }, [mostrarFiltros])
 
   const cargarProductos = async () => {
     try {

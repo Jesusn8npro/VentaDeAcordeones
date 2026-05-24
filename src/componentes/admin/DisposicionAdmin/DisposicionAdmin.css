@@ -1,6 +1,6 @@
 /* ===== DisposicionAdmin ===== */
 
-.admin-theme .disposicion-admin {
+.admin-theme.disposicion-admin {
   display: flex;
   min-height: 100vh;
   background-color: var(--color-fondo-secundario);

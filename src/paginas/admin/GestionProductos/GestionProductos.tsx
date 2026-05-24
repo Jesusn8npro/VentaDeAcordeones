@@ -5,16 +5,17 @@ import Link from 'next/link'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import './GestionProductos.css'
-import { Search, Filter, Plus, Trash2, Package, DollarSign, TrendingUp, AlertCircle } from 'lucide-react'
+import { Search, Filter, Plus, Trash2, Package, AlertCircle } from 'lucide-react'
 import FilaProducto from './FilaProducto'
+import EstadisticasGestion from './EstadisticasGestion'
 
 const GestionProductos = () => {
   const { cargando: cargandoAuth } = useAuth()
 
-  const [productos, setProductos] = useState([])
-  const [categorias, setCategorias] = useState([])
+  const [productos, setProductos] = useState<any[]>([])
+  const [categorias, setCategorias] = useState<any[]>([])
   const [cargando, setCargando] = useState(true)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   const [busqueda, setBusqueda] = useState('')
   const [filtroCategoria, setFiltroCategoria] = useState('')
@@ -246,37 +247,13 @@ const GestionProductos = () => {
           </div>
         </div>
 
-        {/* Estadísticas */}
-        <div className="gestion-estadisticas">
-          <div className="gestion-card">
-            <div className="gestion-card-icono"><Package /></div>
-            <div>
-              <h4>Total</h4>
-              <p className="gestion-card-numero">{estadisticas.totalProductos}</p>
-            </div>
-          </div>
-          <div className="gestion-card">
-            <div className="gestion-card-icono"><DollarSign /></div>
-            <div>
-              <h4>Inventario</h4>
-              <p className="gestion-card-numero">{formatearPrecio(estadisticas.valorInventario)}</p>
-            </div>
-          </div>
-          <div className="gestion-card">
-            <div className="gestion-card-icono"><TrendingUp /></div>
-            <div>
-              <h4>Activos</h4>
-              <p className="gestion-card-numero">{estadisticas.productosActivos}</p>
-            </div>
-          </div>
-          <div className="gestion-card">
-            <div className="gestion-card-icono"><AlertCircle /></div>
-            <div>
-              <h4>Bajo stock</h4>
-              <p className="gestion-card-numero">{estadisticas.productosBajoStock}</p>
-            </div>
-          </div>
-        </div>
+        <EstadisticasGestion
+          totalProductos={estadisticas.totalProductos}
+          productosActivos={estadisticas.productosActivos}
+          valorInventario={estadisticas.valorInventario}
+          productosBajoStock={estadisticas.productosBajoStock}
+          formatearPrecio={formatearPrecio}
+        />
 
         {/* Filtros */}
         <div className="gestion-filtros">

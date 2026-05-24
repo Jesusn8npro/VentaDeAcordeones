@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCarrito } from '@/contextos/CarritoContext'
 import { useFavoritos } from '@/contextos/FavoritosContext'
+import { useAuth } from '@/contextos/ContextoAutenticacion'
 import { CATS } from './encabezadoDatos'
 import { I } from '../navIconos'
 import './Encabezado.css'
@@ -43,6 +44,9 @@ interface Props {
 export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavoritos, onOpenNotif }: Props) {
   const { totalItems } = useCarrito()
   const { contadorFavoritos } = useFavoritos()
+  const { usuario, esAdmin } = useAuth()
+  const isAdmin = esAdmin?.() ?? false
+  const primerNombre = usuario?.nombre?.split(' ')[0]?.toUpperCase() ?? ''
   const [exiting, setExiting] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
 
@@ -166,15 +170,21 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
         {/* Bottom bar */}
         <div className={`px-2 py-3 border-t ${t.line} grid grid-cols-4 gap-1`}>
           {[
-            { icon: 'User',  up: 'HOLA,',     down: 'CUENTA',   href: '/perfil', count: null,             action: null },
-            { icon: 'Heart', up: 'FAVORITOS', down: contadorFavoritos > 0 ? `${contadorFavoritos}` : 'GUARDADOS', href: null, count: contadorFavoritos, action: 'favoritos' },
-            { icon: 'Bell',  up: 'AVISOS',    down: 'NUEVOS',   href: null,      count: null,             action: 'notif' },
-            { icon: 'Cart',  up: 'CARRITO',   down: totalItems > 0 ? `${totalItems}` : 'TOTAL', href: null, count: totalItems, action: 'cart' },
+            {
+              icon: isAdmin ? 'Shield' : 'User',
+              up: usuario ? `HOLA, ${primerNombre}` : 'HOLA,',
+              down: isAdmin ? 'ADMIN' : (usuario ? 'PERFIL' : 'CUENTA'),
+              href: isAdmin ? '/admin' : '/perfil',
+              count: null, action: null, adminHighlight: isAdmin
+            },
+            { icon: 'Heart', up: 'FAVORITOS', down: contadorFavoritos > 0 ? `${contadorFavoritos}` : 'GUARDADOS', href: null, count: contadorFavoritos, action: 'favoritos', adminHighlight: false },
+            { icon: 'Bell',  up: 'AVISOS',    down: 'NUEVOS',   href: null, count: null, action: 'notif', adminHighlight: false },
+            { icon: 'Cart',  up: 'CARRITO',   down: totalItems > 0 ? `${totalItems}` : 'TOTAL', href: null, count: totalItems, action: 'cart', adminHighlight: false },
           ].map((b, i) => (
             <button
               key={i}
               onClick={() => {
-                if (b.action === 'cart')      { handleClose(); setTimeout(() => onOpenCart?.(), 280) }
+                if (b.action === 'cart')           { handleClose(); setTimeout(() => onOpenCart?.(), 280) }
                 else if (b.action === 'favoritos') { handleClose(); setTimeout(() => onOpenFavoritos?.(), 280) }
                 else if (b.action === 'notif')     { handleClose(); setTimeout(() => onOpenNotif?.(), 280) }
                 else if (b.href) { handleClose(); window.location.href = b.href }
@@ -182,15 +192,15 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
               className={`flex flex-col items-center gap-1 py-2.5 rounded-md transition-colors relative ${t.hover}`}
             >
               <span className="relative">
-                {(() => { const Icon = I[b.icon]; return <Icon className={`h-5 w-5 ${light ? 'text-ink-800' : 'text-white'}`} /> })()}
+                {(() => { const Icon = I[b.icon]; return <Icon className={`h-5 w-5 ${b.adminHighlight ? 'text-gold' : (light ? 'text-ink-800' : 'text-white')}`} /> })()}
                 {b.count != null && b.count > 0 && (
                   <span className="badge-pop absolute -top-1.5 -right-2 min-w-[16px] h-[16px] px-1 rounded-full bg-gold text-black text-[9px] font-bold flex items-center justify-center tabular-nums">
                     {b.count > 99 ? '99+' : b.count}
                   </span>
                 )}
               </span>
-              <span className={`cond text-[9px] tracking-[0.14em] ${light ? 'text-ink-500' : 'text-white/55'}`}>{b.up}</span>
-              <span className={`cond text-[10px] tracking-[0.12em] font-semibold -mt-0.5 ${light ? 'text-ink-900' : 'text-white'}`}>{b.down}</span>
+              <span className={`cond text-[9px] tracking-[0.14em] ${b.adminHighlight ? 'text-gold/80' : (light ? 'text-ink-500' : 'text-white/55')}`}>{b.up}</span>
+              <span className={`cond text-[10px] tracking-[0.12em] font-semibold -mt-0.5 ${b.adminHighlight ? 'text-gold' : (light ? 'text-ink-900' : 'text-white')}`}>{b.down}</span>
             </button>
           ))}
         </div>

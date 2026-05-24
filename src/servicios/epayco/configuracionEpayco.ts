@@ -9,7 +9,7 @@ export const configuracionEpayco = {
   clavePublica: process.env.NEXT_PUBLIC_EPAYCO_PUBLIC_KEY,
   clavePrivada: undefined,
   
-  // Configuración del entorno — lee VITE_EPAYCO_ENVIRONMENT, con fallback a !TEST_MODE
+  // Configuración del entorno
   esProduccion: process.env.NEXT_PUBLIC_EPAYCO_ENVIRONMENT === 'production'
     || process.env.NEXT_PUBLIC_EPAYCO_TEST_MODE === 'false',
   idioma: 'ES', // Español por defecto
@@ -46,15 +46,15 @@ export const validarConfiguracion = () => {
   const errores = [];
   
   if (!configuracionEpayco.clavePublica) {
-    errores.push('VITE_EPAYCO_PUBLIC_KEY no está configurada');
+    errores.push('NEXT_PUBLIC_EPAYCO_PUBLIC_KEY no está configurada');
   }
-  
+
   if (!configuracionEpayco.urlConfirmacion) {
-    errores.push('VITE_EPAYCO_URL_CONFIRMATION no está configurada');
+    errores.push('NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION no está configurada');
   }
-  
+
   if (!configuracionEpayco.urlRespuesta) {
-    errores.push('VITE_EPAYCO_URL_RESPONSE no está configurada');
+    errores.push('NEXT_PUBLIC_EPAYCO_URL_RESPONSE no está configurada');
   }
   
   return {

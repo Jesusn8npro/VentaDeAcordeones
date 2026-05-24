@@ -196,7 +196,7 @@ export default function VideosIA() {
 
   const optimizar = useCallback(async (a) => {
     if (!urlOpt || !apiKey) {
-      alert('Error: Configura VITE_N8N_VIDEO_OPTIMIZE_URL y VITE_N8N_API_KEY')
+      alert('Error: Configura NEXT_PUBLIC_N8N_VIDEO_OPTIMIZE_URL y NEXT_PUBLIC_N8N_API_KEY')
       return
     }
     setModalOptimizar(a)

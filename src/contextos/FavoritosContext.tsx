@@ -77,9 +77,9 @@ const favoritosReducer = (estado, accion) => {
   }
 }
 
-const FavoritosContext = createContext()
+const FavoritosContext = createContext<any>(null)
 
-const FavoritosProvider = ({ children }) => {
+const FavoritosProvider = ({ children }: { children: React.ReactNode }) => {
   const [estado, dispatch] = useReducer(favoritosReducer, estadoInicial)
   const { usuario, sesionInicializada } = useAuth()
 

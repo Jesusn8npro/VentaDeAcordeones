@@ -1,3 +1,4 @@
+import React from 'react'
 import { ProveedorBarraLateral, useBarraLateral } from '../../../contextos/ContextoBarraLateral'
 import { useTema } from '../../../contextos/ContextoTema'
 import EncabezadoAdmin from '../EncabezadoAdmin/EncabezadoAdmin'
@@ -5,7 +6,7 @@ import BarraLateralAdmin from '../BarraLateralAdmin/BarraLateralAdmin'
 import '../AdminTema.css'
 import './DisposicionAdmin.css'
 
-const ContenidoDisposicion = ({ children }) => {
+const ContenidoDisposicion = ({ children }: { children: React.ReactNode }) => {
   const { estaExpandida, estaEnHover, movilAbierto, alternarBarraLateralMovil } = useBarraLateral()
   const { tema } = useTema()
 
@@ -34,7 +35,7 @@ const ContenidoDisposicion = ({ children }) => {
   )
 }
 
-const DisposicionAdmin = ({ children }) => {
+const DisposicionAdmin = ({ children }: { children: React.ReactNode }) => {
   return (
     <ProveedorBarraLateral>
       <ContenidoDisposicion>{children}</ContenidoDisposicion>

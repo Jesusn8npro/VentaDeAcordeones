@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import { clienteSupabase } from '../configuracion/supabase'
 
-const ContextoAutenticacion = createContext({})
+const ContextoAutenticacion = createContext<any>(null)
 
-export const ProveedorAutenticacion = ({ children }) => {
+export const ProveedorAutenticacion = ({ children }: { children: React.ReactNode }) => {
   const [usuario, setUsuario] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [sesionInicializada, setSesionInicializada] = useState(false)

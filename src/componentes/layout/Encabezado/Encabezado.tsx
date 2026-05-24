@@ -1,25 +1,19 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCarrito } from '@/contextos/CarritoContext'
 import { useFavoritos } from '@/contextos/FavoritosContext'
 import { useTema } from '@/contextos/ContextoTema'
 import { useAuth } from '@/contextos/ContextoAutenticacion'
-import { CATS } from './encabezadoDatos'
 import { I } from '../navIconos'
 import MenuMovil from './MenuMovil'
+import BarraCategorias from './BarraCategorias'
+import BuscadorOverlay from './BuscadorOverlay'
 import CarritoDrawer from './CarritoDrawer'
 import FavoritosDrawer from './FavoritosDrawer'
 import NotificacionesDrawer from './NotificacionesDrawer'
 import './Encabezado.css'
-
-// ── Badge ─────────────────────────────────────────────────────
-function Badge({ kind }: { kind: string | null }) {
-  if (!kind) return null
-  const tone = ({ HOT: 'bg-gold text-black', NEW: 'bg-white text-black dark:bg-gold dark:text-black', SEO: 'bg-transparent text-gold border border-gold/70' } as Record<string,string>)[kind] ?? 'bg-gold text-black'
-  return <span className={`cond ${tone} text-[10px] leading-none font-bold tracking-[0.12em] px-1.5 py-[3px] rounded-sm ml-1.5 align-middle`}>{kind}</span>
-}
 
 // ── Logo ──────────────────────────────────────────────────────
 function Logo({ light }: { light: boolean }) {
@@ -192,224 +186,14 @@ function IconBtn({ icon, filledIcon, label, count, light, onClick, bumpKey, acti
   )
 }
 
-// ── MegaMenu ──────────────────────────────────────────────────
-function MegaMenu({ cat, light, pinned, onClose }: {
-  cat: typeof CATS[number]; light: boolean; pinned: boolean; onClose: () => void
-}) {
-  const { columns, feature, ctaLabel, ctaHref } = cat.mega
-  return (
-    <div
-      className={`mega-enter absolute left-0 right-0 top-full z-30 ${
-        light ? 'mega-bg-light text-ink-900 border-t border-ink-100' : 'mega-bg text-white border-t border-white/10'
-      } shadow-2xl`}
-      onMouseDown={(e) => e.stopPropagation()}
-    >
-      {pinned && (
-        <button onClick={onClose} className={`absolute right-4 top-4 z-10 h-9 w-9 rounded-full border ${light ? 'border-ink-200 hover:border-ink-900' : 'border-white/15 hover:border-gold hover:text-gold'} flex items-center justify-center transition-colors`} aria-label="Cerrar menú">
-          <I.Close className="h-4 w-4" />
-        </button>
-      )}
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 py-6 lg:py-8 grid grid-cols-12 gap-6 lg:gap-8">
-        <div className="col-span-12 xl:col-span-8 grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {columns.map((col, i) => (
-            <div key={i}>
-              <div className={`cond text-[11px] font-bold tracking-[0.22em] mb-3 flex items-center gap-2 ${light ? 'text-ink-400' : 'text-gold/80'}`}>
-                <span className="h-px w-5 bg-gold inline-block" />
-                {col.title.toUpperCase()}
-              </div>
-              <ul className="space-y-1.5">
-                {col.items.map((it) => (
-                  <li key={it}>
-                    <Link href="/tienda" className={`group flex items-center justify-between text-[14px] py-1 transition-colors ${light ? 'text-ink-700 hover:text-ink-900' : 'text-white/85 hover:text-gold'}`}>
-                      <span>{it}</span>
-                      <I.ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all text-gold" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div className="col-span-12 xl:col-span-4">
-          <div className={`rounded-lg overflow-hidden ${light ? 'bg-ink-50 border border-ink-100' : 'bg-ink-800/60 border border-white/10'}`}>
-            <div className={`aspect-[4/3] ${light ? 'stripe-placeholder-light' : 'stripe-placeholder'} flex items-end p-4`}>
-              <span className="cond text-[10px] tracking-[0.22em] font-bold bg-gold text-black px-2 py-1 rounded-sm">{feature.tag.toUpperCase()}</span>
-            </div>
-            <div className="p-4">
-              <div className={`cond text-[11px] tracking-[0.2em] font-semibold mb-1 ${light ? 'text-ink-400' : 'text-white/45'}`}>DESTACADO</div>
-              <div className={`text-[15px] font-semibold leading-snug ${light ? 'text-ink-900' : 'text-white'}`}>{feature.title}</div>
-              <div className="mt-3 flex items-center justify-between">
-                <div className="cond font-bold text-gold text-[18px]">{feature.price}</div>
-                <Link href={ctaHref} className="cond text-[12px] font-bold tracking-[0.18em] inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-gold text-black hover:bg-gold-300 transition-colors">
-                  {ctaLabel.toUpperCase()} <I.ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ── CategoryBar ───────────────────────────────────────────────
-function CategoryBar({ light, scrolled }: { light: boolean; scrolled: boolean }) {
-  const [hover, setHover] = useState<string | null>(null)
-  const [pinned, setPinned] = useState<string | null>(null)
-  const closeT = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const wrapRef = useRef<HTMLDivElement>(null)
-  const active = pinned || hover
-
-  const onEnter = (id: string) => { if (closeT.current) clearTimeout(closeT.current); if (!pinned) setHover(id) }
-  const onLeave = () => { closeT.current = setTimeout(() => setHover(null), 120) }
-
-  useEffect(() => {
-    if (!pinned) return
-    const fn = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) { setPinned(null); setHover(null) }
-    }
-    document.addEventListener('mousedown', fn)
-    return () => document.removeEventListener('mousedown', fn)
-  }, [pinned])
-
-  return (
-    <div
-      ref={wrapRef}
-      className={`relative hidden lg:block ${light ? 'bg-white hairline-light' : 'bg-black hairline'} ${scrolled ? 'h-[44px]' : 'h-[52px]'} transition-all`}
-      onMouseLeave={onLeave}
-    >
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-6 h-full flex items-stretch gap-2">
-        <div className="flex-1 min-w-0 flex items-stretch gap-0.5 xl:gap-1 overflow-x-auto no-scrollbar">
-          <Link
-            href="/tienda"
-            className={`group cond relative flex items-center gap-1.5 xl:gap-2 px-2.5 xl:px-3.5 h-full shrink-0 text-[12px] xl:text-[13px] font-bold tracking-[0.12em] xl:tracking-[0.14em] transition-colors border-r ${
-              light ? 'text-ink-700 hover:text-ink-900 border-ink-100' : 'text-white/80 hover:text-white border-white/10'
-            } mr-1`}
-          >
-            <I.Grid className="h-4 w-4 shrink-0 text-gold/70 group-hover:text-gold transition-colors" />
-            <span>TODAS LAS CATEGORÍAS</span>
-            <I.Chevron className="h-3 w-3 opacity-50" />
-          </Link>
-          {CATS.map((c) => {
-            const Icon = I[c.icon]
-            const isActive = active === c.id
-            const isPinned = pinned === c.id
-            return (
-              <button
-                key={c.id}
-                onMouseEnter={() => onEnter(c.id)}
-                onFocus={() => onEnter(c.id)}
-                onClick={() => { setPinned((p) => (p === c.id ? null : c.id)); setHover(null) }}
-                className={`group cond relative flex items-center gap-1.5 xl:gap-2 px-2.5 xl:px-3.5 h-full shrink-0 text-[12px] xl:text-[13px] font-bold tracking-[0.12em] xl:tracking-[0.14em] transition-colors
-                  ${light ? (isActive ? 'text-ink-900' : 'text-ink-700 hover:text-ink-900') : (isActive ? 'text-white' : 'text-white/80 hover:text-white')}
-                  ${isPinned ? (light ? 'bg-ink-50' : 'bg-white/[.04]') : ''}`}
-                aria-expanded={isActive}
-              >
-                <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-gold' : 'text-gold/70 group-hover:text-gold'} transition-colors`} />
-                <span>{c.label.toUpperCase()}</span>
-                <Badge kind={c.badge} />
-                <I.Chevron className={`h-3 w-3 transition-transform ${isActive ? 'rotate-180 text-gold' : 'text-current opacity-50'}`} />
-                <span className={`absolute left-3 right-3 bottom-0 h-[2px] bg-gold transition-transform origin-left ${isActive ? 'scale-x-100' : 'scale-x-0'}`} />
-              </button>
-            )
-          })}
-        </div>
-        <Link href="/tienda" className="self-center flex items-center gap-1.5 xl:gap-2 pl-2.5 xl:pl-3 pr-1 py-1.5 rounded-md border border-gold/50 bg-gold/[.08] flash-pulse shrink-0" aria-label="Flash sale hoy 30% off">
-          <I.Bolt className="h-4 w-4 text-gold flash-text shrink-0" />
-          <span className="cond text-[11px] xl:text-[12px] font-bold tracking-[0.14em] xl:tracking-[0.16em] text-gold flash-text whitespace-nowrap">
-            <span className="hidden xl:inline">FLASH SALE HOY · </span>30% OFF
-          </span>
-          <span className="cond text-[10px] xl:text-[11px] font-bold tracking-[0.16em] xl:tracking-[0.18em] bg-gold text-black px-2 xl:px-2.5 py-1 rounded-sm hover:bg-gold-300 transition-colors whitespace-nowrap">VER OFERTA</span>
-        </Link>
-      </div>
-      {active && CATS.find((c) => c.id === active) && (
-        <div onMouseEnter={() => onEnter(active)}>
-          <MegaMenu
-            cat={CATS.find((c) => c.id === active)!}
-            light={light}
-            pinned={!!pinned}
-            onClose={() => { setPinned(null); setHover(null) }}
-          />
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ── SearchOverlay ─────────────────────────────────────────────
-const QUICK = [
-  { text: 'Hohner Corona III Sol Do Fa', badge: 'MÁS BUSCADO' },
-  { text: 'Estuche rígido acordeón',     badge: 'TOP' },
-  { text: 'Afinación profesional',       badge: null },
-  { text: 'Voces Hohner repuesto',       badge: null },
-  { text: 'Cursos vallenato online',     badge: null },
-]
-
-function SearchOverlay({ open, onClose, light }: { open: boolean; onClose: () => void; light: boolean }) {
-  const [query, setQuery] = useState('')
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 50)
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-      setQuery('')
-    }
-    return () => { document.body.style.overflow = '' }
-  }, [open])
-
-  const doSearch = useCallback(() => {
-    if (!query.trim()) return
-    window.location.href = `/buscar?q=${encodeURIComponent(query.trim())}`
-    onClose()
-  }, [query, onClose])
-
-  if (!open) return null
-  return (
-    <div className="fixed inset-0 z-[70] flex flex-col px-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className={`relative mx-auto w-full max-w-[700px] mt-16 sm:mt-24 rounded-xl shadow-2xl mega-enter ${light ? 'bg-white' : 'bg-ink-900 border border-white/10'}`}>
-        <div className="flex items-stretch p-2 gap-2">
-          <div className={`flex-1 flex items-center gap-3 px-3 rounded-lg ${light ? 'bg-ink-50' : 'bg-white/[.05]'}`}>
-            <I.Search className={`h-5 w-5 shrink-0 ${light ? 'text-ink-400' : 'text-white/50'}`} />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') doSearch(); if (e.key === 'Escape') onClose() }}
-              placeholder="Busca acordeones, repuestos, cursos…"
-              className={`flex-1 h-12 bg-transparent text-[15px] outline-none ${light ? 'text-ink-900 placeholder-ink-400' : 'text-white placeholder-white/45'}`}
-            />
-            {query && <button onClick={() => setQuery('')} className="opacity-60 hover:opacity-100 transition-opacity"><I.Close className="h-4 w-4" /></button>}
-          </div>
-          <button onClick={doSearch} className="cond px-5 bg-gold text-black font-bold tracking-[0.16em] text-[13px] rounded-lg hover:bg-gold-300 transition-colors">BUSCAR</button>
-        </div>
-        <div className={`px-4 py-3 border-t ${light ? 'border-ink-100' : 'border-white/[.06]'}`}>
-          <div className={`cond text-[10px] tracking-[0.22em] font-bold mb-2.5 ${light ? 'text-ink-400' : 'text-white/45'}`}>BÚSQUEDAS POPULARES</div>
-          <div className="space-y-0.5">
-            {QUICK.map((s, i) => (
-              <button key={i} onClick={() => { setQuery(s.text); inputRef.current?.focus() }} className={`w-full flex items-center gap-3 py-2 px-2 rounded-md text-left transition-colors ${light ? 'hover:bg-ink-50 text-ink-700' : 'hover:bg-white/[.04] text-white/80'}`}>
-                <I.Search className="h-3.5 w-3.5 opacity-50 shrink-0" />
-                <span className="text-[14px] flex-1">{s.text}</span>
-                {s.badge && <span className="cond text-[9px] tracking-[0.16em] font-bold bg-gold/20 text-gold px-2 py-0.5 rounded-sm">{s.badge}</span>}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ── Encabezado ────────────────────────────────────────────────
 export default function Encabezado() {
   const { tema, alternarTema } = useTema()
   const { totalItems } = useCarrito()
   const { contadorFavoritos } = useFavoritos()
-  const { usuario } = useAuth()
+  const { usuario, esAdmin } = useAuth()
+  const isAdmin = esAdmin?.() ?? false
+  const primerNombre = usuario?.nombre?.split(' ')[0]?.toUpperCase() ?? ''
 
   const light = tema === 'light'
   const [scrolled, setScrolled] = useState(false)
@@ -466,11 +250,15 @@ export default function Encabezado() {
 
             <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
               <IconBtn
-                icon="User"
-                label={{ up: 'HOLA,', down: usuario ? 'PERFIL' : 'CUENTA' }}
+                icon={isAdmin ? 'Shield' : 'User'}
+                label={{
+                  up: usuario ? `HOLA, ${primerNombre}` : 'HOLA,',
+                  down: isAdmin ? 'ADMIN' : (usuario ? 'PERFIL' : 'CUENTA')
+                }}
+                active={isAdmin}
                 light={light}
                 hideOnMobile
-                onClick={() => { window.location.href = usuario ? '/perfil' : '/login' }}
+                onClick={() => { window.location.href = isAdmin ? '/admin' : (usuario ? '/perfil' : '/login') }}
               />
               <IconBtn
                 icon="Bell"
@@ -505,7 +293,7 @@ export default function Encabezado() {
           </div>
         </div>
 
-        <CategoryBar light={light} scrolled={scrolled} />
+        <BarraCategorias light={light} scrolled={scrolled} />
       </header>
 
       <MenuMovil
@@ -516,7 +304,7 @@ export default function Encabezado() {
         onOpenFavoritos={() => setFavoritosOpen(true)}
         onOpenNotif={() => setNotifOpen(true)}
       />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} light={light} />
+      <BuscadorOverlay open={searchOpen} onClose={() => setSearchOpen(false)} light={light} />
       <CarritoDrawer open={carritoOpen} onClose={() => setCarritoOpen(false)} light={light} />
       <FavoritosDrawer open={favoritosOpen} onClose={() => setFavoritosOpen(false)} light={light} />
       <NotificacionesDrawer open={notifOpen} onClose={() => setNotifOpen(false)} light={light} />

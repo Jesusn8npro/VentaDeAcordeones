@@ -226,7 +226,7 @@ export default function VideosProducto({ productoId, manejarExito, manejarError 
 
   const optimizarVideo = useCallback(async (video) => {
     try {
-      if (!urlOpt || !apiKey) { manejarError('Configura VITE_N8N_VIDEO_OPTIMIZE_URL y VITE_N8N_API_KEY'); return }
+      if (!urlOpt || !apiKey) { manejarError('Configura NEXT_PUBLIC_N8N_VIDEO_OPTIMIZE_URL y NEXT_PUBLIC_N8N_API_KEY'); return }
       setSubiendo(true)
       const resp = await fetch(urlOpt, {
         method: 'POST',

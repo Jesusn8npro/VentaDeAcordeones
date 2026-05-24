@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useMemo, useCallback } from 'react'
 
-const ChatContext = createContext()
+const ChatContext = createContext<any>(null)
 
 export const useChat = () => {
   const context = useContext(ChatContext)

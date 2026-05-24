@@ -9,7 +9,7 @@ import { clienteSupabase } from '../../configuracion/supabase'
 
 const ADMIN_EMAILS = ['acordeon91@gmail.com', 'shalom@gmail.com']
 
-export default function ModalAutenticacionIsolado({ abierto, onCerrar }) {
+export default function ModalAutenticacionIsolado({ abierto, onCerrar }: { abierto: boolean; onCerrar: () => void }) {
   const router = useRouter()
   const { iniciarSesion, registrarse, usuario } = useAuth()
   const [mountNode, setMountNode] = useState(null)

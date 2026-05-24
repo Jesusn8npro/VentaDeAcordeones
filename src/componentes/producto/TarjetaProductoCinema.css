@@ -1,0 +1,269 @@
+/* TarjetaProductoCinema.css — Plantilla oscura/dorada estilo cinematic */
+
+.cinema-card {
+  position: relative;
+  background: #050505;
+  border: 1px solid #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+}
+.cinema-card:hover {
+  border-color: #FFC300;
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,195,0,0.18);
+}
+
+/* ── IMAGEN ── */
+.cinema-card__img {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 60%, rgba(255,195,0,0.1), transparent 60%),
+    linear-gradient(160deg, #141414, #000);
+  display: grid;
+  place-items: center;
+}
+.cinema-card__img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease, opacity 0.35s ease;
+}
+.cinema-card__img .img-principal { opacity: 1; }
+.cinema-card__img .img-secundaria { opacity: 0; }
+.cinema-card:hover .img-principal { opacity: 0; }
+.cinema-card:hover .img-secundaria { opacity: 1; }
+.cinema-card:hover .img-principal,
+.cinema-card:hover .img-secundaria { transform: scale(1.04); }
+
+.img-placeholder { background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%); background-size: 200% 200%; animation: cinema-shimmer 1.5s ease-in-out infinite; }
+@keyframes cinema-shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+/* placeholder cuando no hay imagen */
+.cinema-card__img-placeholder {
+  width: 60%;
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  border: 1px solid #2a2a2a;
+  display: grid;
+  place-items: center;
+  color: #3a3a3a;
+  font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+}
+
+/* ── TAG BADGE ── */
+.cinema-card__tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid #FFC300;
+  color: #FFC300;
+  padding: 4px 9px;
+  z-index: 3;
+  backdrop-filter: blur(4px);
+}
+.cinema-card__tag--new {
+  background: #FFC300;
+  color: #000;
+  border-color: #FFC300;
+}
+.cinema-card__tag--sale {
+  background: #ff3b3b;
+  color: #fff;
+  border-color: #ff3b3b;
+}
+
+/* ── FAVORITO ── */
+.cinema-card__fav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid #2a2a2a;
+  border-radius: 50%;
+  color: #7a7a7a;
+  transition: all 0.25s;
+  backdrop-filter: blur(4px);
+}
+.cinema-card__fav:hover { color: #FFC300; border-color: #FFC300; }
+.cinema-card__fav--activo {
+  color: #FFC300;
+  background: rgba(255,195,0,0.12);
+  border-color: #FFC300;
+}
+
+/* ── ACCIONES HOVER (carrito + vista rápida) ── */
+.cinema-card__quick {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s;
+  z-index: 3;
+}
+.cinema-card:hover .cinema-card__quick {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cinema-card__quick-btn {
+  flex: 1;
+  padding: 9px 8px;
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  background: rgba(0,0,0,0.78);
+  border: 1px solid #2a2a2a;
+  color: #fff;
+  backdrop-filter: blur(6px);
+  transition: all 0.22s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.cinema-card__quick-btn:hover {
+  background: #FFC300;
+  color: #000;
+  border-color: #FFC300;
+}
+
+/* ── INFO ── */
+.cinema-card__info {
+  padding: 16px 16px 14px;
+  border-top: 1px solid #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.cinema-card__brand {
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+  margin-bottom: 5px;
+}
+.cinema-card__name {
+  font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
+  font-size: 19px;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 12px;
+  min-height: 36px;
+}
+
+/* ── PRECIO + BOTÓN ── */
+.cinema-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+}
+.cinema-card__price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cinema-card__price-now {
+  font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
+  font-size: 21px;
+  color: #FFC300;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.cinema-card__price-was {
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  color: #7a7a7a;
+  text-decoration: line-through;
+  letter-spacing: 0.1em;
+}
+
+.cinema-card__add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 11px;
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid #2a2a2a;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.28s;
+  white-space: nowrap;
+}
+.cinema-card__add:hover {
+  background: #FFC300;
+  color: #000;
+  border-color: #FFC300;
+  box-shadow: 0 0 0 1px #FFC300, 0 8px 24px -8px rgba(255,195,0,0.5);
+}
+.cinema-card__add--added {
+  background: #FFC300;
+  color: #000;
+  border-color: #FFC300;
+}
+
+/* ── CALIFICACIÓN ── */
+.cinema-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  color: #7a7a7a;
+  letter-spacing: 0.08em;
+}
+.cinema-card__stars {
+  display: flex;
+  gap: 2px;
+  color: #FFC300;
+}
+
+/* ── ESTADO VENDIDO ── */
+.cinema-card__vendido {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(2px);
+  font-family: var(--font-bebas, sans-serif);
+  font-size: 28px;
+  letter-spacing: 0.15em;
+  color: #fff;
+  pointer-events: none;
+}

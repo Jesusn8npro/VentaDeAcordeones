@@ -33,7 +33,8 @@ const PaginaTienda = () => {
   })
   const [vista, setVista] = useState('grid') // 'grid' | 'lista'
   const [ordenar, setOrdenar] = useState('nuevos')
-  const [totalProductos, setTotalProductos] = useState(0)
+  const [totalProductos, setTotalProductos] = useState<number | null>(null)
+  const [gridCargando, setGridCargando] = useState(true)
   
   // Estados para modales mÃ³viles
   const [modalFiltrosAbierto, setModalFiltrosAbierto] = useState(false)
@@ -63,18 +64,18 @@ const PaginaTienda = () => {
           return
         }
 
-        // Contar productos de la categorÃ­a
-        const { count: totalProductos } = await clienteSupabase
-          .from('productos')
-          .select('*', { count: 'exact', head: true })
-          .eq('categoria_id', categoria.id)
-
-        // Calcular stats de ofertas
-        const { data: productosConDescuento } = await clienteSupabase
-          .from('productos')
-          .select('precio, precio_original')
-          .eq('categoria_id', categoria.id)
-          .not('precio_original', 'is', null)
+        // Contar productos y calcular stats en paralelo
+        const [{ count: totalProductos }, { data: productosConDescuento }] = await Promise.all([
+          clienteSupabase
+            .from('productos')
+            .select('*', { count: 'exact', head: true })
+            .eq('categoria_id', categoria.id),
+          clienteSupabase
+            .from('productos')
+            .select('precio, precio_original')
+            .eq('categoria_id', categoria.id)
+            .not('precio_original', 'is', null)
+        ])
 
         const productosEnOferta = productosConDescuento?.length || 0
         const descuentoPromedio = productosEnOferta > 0
@@ -250,7 +251,7 @@ const PaginaTienda = () => {
 
       <div className="tienda-barra-resultados">
         <div className="resultados-info">
-          <span>{totalProductos > 0 ? `1-${Math.min(12, totalProductos)} de ${totalProductos}` : '0'} Resultados</span>
+          <span>{totalProductos != null && totalProductos > 0 ? `1-${Math.min(12, totalProductos)} de ${totalProductos}` : totalProductos === 0 ? '0' : ''} Resultados</span>
         </div>
         <div className="vista-botones-movil">
           <button
@@ -281,11 +282,11 @@ const PaginaTienda = () => {
       />
 
       {cargandoCategoria ? <SkeletonCards /> : <div className="tienda-productos">
-        {totalProductos === 0 ? (
+        {!gridCargando && totalProductos === 0 ? (
           <div className="tienda-empty">
             <div className="tienda-empty-icono">!</div>
             <h3 className="tienda-empty-titulo">No encontramos productos</h3>
-            <p className="tienda-empty-desc">Ajusta los filtros o explora otras categorÃ­as</p>
+            <p className="tienda-empty-desc">Ajusta los filtros o explora otras categorías</p>
             <div className="tienda-empty-acciones">
               <button className="btn-primario" onClick={() => router.push('/tienda')}>Ver todos los productos</button>
               <button className="btn-secundario" onClick={() => setModalFiltrosAbierto(true)}>Abrir filtros</button>
@@ -299,7 +300,7 @@ const PaginaTienda = () => {
           titulo=""
           mostrarHeader={false}
           mostrarFiltros={false}
-          onTotalChange={setTotalProductos}
+          onTotalChange={(total) => { setTotalProductos(total); setGridCargando(false) }}
           mostrarEmpty={false}
         />
       </div>}

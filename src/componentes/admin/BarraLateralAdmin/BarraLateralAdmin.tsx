@@ -99,8 +99,8 @@ const BarraLateralAdmin = () => {
   const { estaExpandida, movilAbierto, estaEnHover, setEstaEnHover, alternarSubmenu, submenuAbierto, setSubmenuAbierto } = useBarraLateral()
   const pathname = usePathname()
 
-  const [alturaSubmenu, setAlturaSubmenu] = useState({})
-  const refsSubmenu = useRef({})
+  const [alturaSubmenu, setAlturaSubmenu] = useState<Record<string, number>>({})
+  const refsSubmenu = useRef<Record<string, HTMLElement | null>>({})
 
   // Memoizar la función estaActivo para evitar re-renders innecesarios
   const estaActivo = useCallback(
@@ -153,12 +153,12 @@ const BarraLateralAdmin = () => {
     }
   }, [submenuAbierto])
 
-  const manejarAlternarSubmenu = useCallback((index, tipoMenu) => {
+  const manejarAlternarSubmenu = useCallback((index: number, tipoMenu: string) => {
     alternarSubmenu(index, tipoMenu)
   }, [alternarSubmenu])
 
   // Memoizar la función de renderizado para evitar re-renders innecesarios
-  const renderizarElementosMenu = useCallback((items, tipoMenu) => (
+  const renderizarElementosMenu = useCallback((items: any[], tipoMenu: string) => (
     <ul className="barra-lateral-menu-lista">
       {items
         .filter((nav) => nav && (nav.nombre || nav.ruta || nav.subItems))
@@ -238,7 +238,7 @@ const BarraLateralAdmin = () => {
               }}
             >
               <ul className="barra-lateral-submenu-lista">
-                {nav.subItems.map((subItem) => (
+                {nav.subItems.map((subItem: any) => (
                   <li key={subItem.nombre}>
                     <Link
                       href={subItem.ruta}

@@ -40,10 +40,10 @@ const EncabezadoAdmin = () => {
     }
   }
 
-  const refEntrada = useRef(null)
+  const refEntrada = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const manejarTeclaAbajo = (evento) => {
+    const manejarTeclaAbajo = (evento: KeyboardEvent) => {
       if ((evento.metaKey || evento.ctrlKey) && evento.key === 'k') {
         evento.preventDefault()
         refEntrada.current?.focus()
