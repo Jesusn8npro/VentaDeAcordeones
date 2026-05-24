@@ -4,13 +4,12 @@ import './ImagenOptimizada.css'
 const PLACEHOLDER_SVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f1f3f5'/%3E%3Ctext x='50%25' y='50%25' font-family='system-ui' font-size='14' fill='%23adb5bd' text-anchor='middle' dy='.3em'%3ESin imagen%3C%2Ftext%3E%3C%2Fsvg%3E`
 
 /**
- * Genera URL optimizada para Supabase Storage Image Transform API.
+ * Retorna la URL original de Supabase Storage sin transformación.
+ * Next.js Image ya optimiza externamente vía /_next/image.
+ * La API /render/image requiere plan Pro de Supabase.
  */
-export const optimizarUrlSupabase = (url: string, width: number, height: number): string => {
-  if (!url || !url.includes('/storage/v1/object/public/')) return url
-  return url
-    .replace('/storage/v1/object/public/', '/storage/v1/render/image/public/')
-    + `?width=${width}&height=${height}&resize=cover&quality=80&format=webp`
+export const optimizarUrlSupabase = (url: string, _width?: number, _height?: number): string => {
+  return url || ''
 }
 
 interface ImagenOptimizadaProps {

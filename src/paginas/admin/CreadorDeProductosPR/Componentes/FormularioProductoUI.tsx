@@ -291,9 +291,10 @@ const FormularioProductoUI: React.FC<FormularioProductoUIProps> = ({
                 value={datosProducto.landing_tipo || 'temu'}
                 onChange={(e) => manejarCambio('landing_tipo', e.target.value)}
               >
-                <option value="temu">Temu</option>
-                <option value="amazon">Amazon</option>
-                <option value="clasico">Clásico</option>
+                <option value="temu">⭐ Temu (estándar)</option>
+                <option value="amazon">🛒 Amazon</option>
+                <option value="clasico">📄 Clásico</option>
+                <option value="cinema">🎬 Cinema (negro/dorado)</option>
               </select>
             </div>
 

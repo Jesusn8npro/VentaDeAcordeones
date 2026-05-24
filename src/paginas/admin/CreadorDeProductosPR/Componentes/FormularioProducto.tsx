@@ -8,6 +8,7 @@ const FormularioProducto = ({
   actualizarDatosProducto,
   modo = 'crear',
   onGuardar,
+  onError,
   cargando = false
 }) => {
   const [errores, setErrores] = useState({})
@@ -112,8 +113,8 @@ const FormularioProducto = ({
     if (!datosProducto.nombre?.trim()) {
       nuevosErrores.nombre = 'El nombre es obligatorio'
     }
-    if (!datosProducto.descripcion?.trim()) {
-      nuevosErrores.descripcion = 'La descripción es obligatoria'
+    if (!datosProducto.descripcion_contenido?.trim() && !datosProducto.descripcion?.trim()) {
+      nuevosErrores.descripcion_contenido = 'La descripción es obligatoria'
     }
     if (!datosProducto.precio || datosProducto.precio <= 0) {
       nuevosErrores.precio = 'El precio debe ser mayor a 0'
@@ -139,7 +140,7 @@ const FormularioProducto = ({
 
     setErrores(nuevosErrores)
     return Object.keys(nuevosErrores).length === 0
-  }, [datosProducto.nombre, datosProducto.descripcion, datosProducto.precio, datosProducto.categoria_id, datosProducto.descuento, datosProducto.stock, datosProducto.stock_minimo, datosProducto.garantia_meses, datosProducto.calificacion_promedio])
+  }, [datosProducto.nombre, datosProducto.descripcion_contenido, datosProducto.descripcion, datosProducto.precio, datosProducto.categoria_id, datosProducto.descuento, datosProducto.stock, datosProducto.stock_minimo, datosProducto.garantia_meses, datosProducto.calificacion_promedio])
 
   const descargarJSON = () => {
     const datosCompletos = {
@@ -158,10 +159,12 @@ const FormularioProducto = ({
 
   const manejarEnvio = useCallback((e) => {
     e.preventDefault()
-    if (validarFormulario() && onGuardar) {
-      onGuardar()
+    if (validarFormulario()) {
+      if (onGuardar) onGuardar()
+    } else {
+      if (onError) onError('Revisa los campos obligatorios marcados en rojo')
     }
-  }, [validarFormulario, onGuardar])
+  }, [validarFormulario, onGuardar, onError])
 
   return (
     <FormularioProductoUI

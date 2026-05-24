@@ -365,6 +365,20 @@
 .grid-productos-vendedor.cargando { pointer-events: none; }
 .grid-productos-vendedor.cargando .productos-grid { opacity: 0.5; }
 
+/* ── CINEMA en vista lista ── */
+.productos-grid.vista-lista .cinema-card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  grid-template-rows: 1fr;
+}
+.productos-grid.vista-lista .cinema-card .cinema-card__img {
+  aspect-ratio: auto;
+  height: 120px;
+}
+.productos-grid.vista-lista .cinema-card .cinema-card__info {
+  padding: 12px 14px;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1280px) {
   .productos-grid.vista-grid { grid-template-columns: repeat(3, 1fr); }

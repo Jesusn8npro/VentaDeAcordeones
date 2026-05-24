@@ -56,9 +56,8 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
     imagenSecundaria = producto.fotos_principales[1] || imagenSecundaria
   }
 
-  // Construir URLs optimizadas para tarjeta (400x300 WebP via Supabase transforms)
-  const srcPrincipal = optimizarUrlSupabase(imagenPrincipal || '', 400, 300) || PLACEHOLDER_SVG
-  const srcSecundaria = optimizarUrlSupabase(imagenSecundaria || imagenPrincipal || '', 400, 300) || srcPrincipal
+  const srcPrincipal = optimizarUrlSupabase(imagenPrincipal || '') || null
+  const srcSecundaria = optimizarUrlSupabase(imagenSecundaria || imagenPrincipal || '') || srcPrincipal
 
   // Cuenta regresiva: objetivo aleatorio entre 1 y 12 horas
   React.useEffect(() => {
@@ -202,24 +201,32 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
           />
         )}
         
-        <Image
-          src={srcPrincipal}
-          alt={nombre}
-          className="imagen imagen-principal"
-          loading="lazy"
-          width={320}
-          height={320}
-          onError={manejarErrorImagen}
-        />
-        <Image
-          src={srcSecundaria}
-          alt={`${nombre} alternativa`}
-          className="imagen imagen-secundaria"
-          loading="lazy"
-          width={320}
-          height={320}
-          onError={manejarErrorImagen}
-        />
+        {srcPrincipal ? (
+          <Image
+            src={srcPrincipal}
+            alt={nombre}
+            className="imagen imagen-principal"
+            loading="lazy"
+            width={320}
+            height={320}
+            onError={manejarErrorImagen}
+          />
+        ) : (
+          <div className="imagen imagen-principal imagen-placeholder" aria-hidden="true" />
+        )}
+        {srcSecundaria ? (
+          <Image
+            src={srcSecundaria}
+            alt={`${nombre} alternativa`}
+            className="imagen imagen-secundaria"
+            loading="lazy"
+            width={320}
+            height={320}
+            onError={manejarErrorImagen}
+          />
+        ) : (
+          <div className="imagen imagen-secundaria imagen-placeholder" aria-hidden="true" />
+        )}
 
         {/* Acciones flotantes */}
         <div className="acciones-flotantes">

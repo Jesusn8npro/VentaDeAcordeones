@@ -256,7 +256,7 @@ const PaginaTienda = () => {
           <button
             onClick={() => handleVistaChange('grid')}
             className={`vista-btn-icono ${vista === 'grid' ? 'activo' : ''}`}
-            title="Vista en cuadrÃ­cula"
+            title="Vista en cuadrícula"
           >
             <Grid size={18} />
           </button>

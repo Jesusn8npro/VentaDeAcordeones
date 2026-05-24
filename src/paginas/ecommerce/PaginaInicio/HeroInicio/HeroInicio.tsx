@@ -4,8 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
 import AccordeonArte from '../AccordeonArte'
+import { clienteSupabase } from '@/configuracion/supabase'
+import { optimizarUrlSupabase } from '@/componentes/ImagenOptimizada'
 
 const NUMERO_WA = '573208492093'
+
+const BASE = 'https://ventadeacordeones.com/storage'
 
 const DIAPOSITIVAS = [
   {
@@ -16,6 +20,7 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Otros Instrumentos', tipo: 'wa' },
     tag: 'TIENDA OFICIAL · DESDE 1998',
     variante: 'pearl',
+    imagen: `${BASE}/2024/01/Acordeon-Rey-Vallenato.jpg`,
   },
   {
     hashtag: 'EdiciónVallenata',
@@ -26,6 +31,7 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Personaliza el Tuyo', href: '/acordeones-personalizados' },
     tag: 'COLECCIÓN 2026',
     variante: '',
+    imagen: `${BASE}/2023/08/Acordeon-Blanco-HOHNER-ORIGINAL-600x600.jpg`,
   },
   {
     hashtag: 'PersonalizadosÚnicos',
@@ -36,6 +42,7 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Galería Custom', href: '/acordeones-personalizados' },
     tag: 'EDICIÓN PRIVADA',
     variante: 'onyx',
+    imagen: `${BASE}/2023/08/Acordeon-de-botones-de-dos-colores-600x600.jpg`,
   },
   {
     hashtag: 'ReyVallenato',
@@ -46,14 +53,33 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Hablar con un Maestro', tipo: 'wa' },
     tag: 'TALLER VALLEDUPAR',
     variante: 'rojo',
+    imagen: `${BASE}/2023/08/Acordeon-vallenato-hohner-de-lujo-600x600.jpg`,
   },
 ]
 
 export default function HeroInicio() {
   const [diapositiva, setDiapositiva] = useState(0)
   const [pausado, setPausado] = useState(false)
+  const [imgs, setImgs] = useState<string[]>([])
   const bannerRef = useRef<HTMLDivElement>(null)
   const total = DIAPOSITIVAS.length
+
+  useEffect(() => {
+    clienteSupabase
+      .from('productos')
+      .select('producto_imagenes(imagen_principal)')
+      .eq('activo', true)
+      .gt('stock', 0)
+      .limit(4)
+      .then(({ data }) => {
+        if (!data) return
+        const urls = (data as any[])
+          .flatMap((p) => Array.isArray(p.producto_imagenes) ? p.producto_imagenes : [])
+          .map((img: any) => optimizarUrlSupabase(img?.imagen_principal || ''))
+          .filter(Boolean)
+        setImgs(urls)
+      })
+  }, [])
 
   useEffect(() => {
     if (pausado) return
@@ -78,6 +104,16 @@ export default function HeroInicio() {
   const urlCta2 = s.cta2.tipo === 'wa'
     ? `https://wa.me/${NUMERO_WA}?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n`
     : (s.cta2.href ?? '/tienda')
+
+  // Static fallback images per slide (shown when Supabase has no product images yet)
+  const FALLBACK_IMGS = DIAPOSITIVAS.map((d) => d.imagen)
+
+  const n = imgs.length
+  const getImg = (offset: number) => {
+    if (n > 0) return imgs[(diapositiva + offset) % n]
+    // Use the static per-slide image for offset 0; cycle fallbacks for circles
+    return FALLBACK_IMGS[(diapositiva + offset) % FALLBACK_IMGS.length] || null
+  }
 
   return (
     <div className="hero-wrap" id="top">
@@ -161,11 +197,55 @@ export default function HeroInicio() {
         <div className="hero-visual">
           <div className="hero-stage">
             <div className="hero-accordion-fallback">
-              <AccordeonArte variante={s.variante} />
+              {(getImg(0) || FALLBACK_IMGS[diapositiva]) ? (
+                <img
+                  src={getImg(0) || FALLBACK_IMGS[diapositiva]!}
+                  alt="Acordeón destacado"
+                  onError={(e) => {
+                    const fb = FALLBACK_IMGS[diapositiva]
+                    if (fb && e.currentTarget.src !== fb) e.currentTarget.src = fb
+                    else e.currentTarget.style.display = 'none'
+                  }}
+                  style={{
+                    maxWidth: '82%',
+                    maxHeight: '88%',
+                    objectFit: 'contain',
+                    display: 'block',
+                    filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.85))',
+                    transition: 'opacity 0.5s ease',
+                  }}
+                />
+              ) : (
+                <AccordeonArte variante={s.variante} />
+              )}
             </div>
-            <div className="hero-circle hero-circle-1" />
-            <div className="hero-circle hero-circle-2" />
-            <div className="hero-circle hero-circle-3" />
+            <div className="hero-circle hero-circle-1">
+              {getImg(1) && (
+                <img
+                  src={getImg(1)!}
+                  alt=""
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              )}
+            </div>
+            <div className="hero-circle hero-circle-2">
+              {getImg(2) && (
+                <img
+                  src={getImg(2)!}
+                  alt=""
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              )}
+            </div>
+            <div className="hero-circle hero-circle-3">
+              {getImg(3) && (
+                <img
+                  src={getImg(3)!}
+                  alt=""
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { clienteSupabase } from '../../configuracion/supabase'
 import TarjetaProductoLujo from './TarjetaProductoLujo'
+import TarjetaProductoCinema from './TarjetaProductoCinema'
 import FiltrosInternosGrid from './FiltrosInternosGrid'
 import { Grid, List, Loader, AlertCircle, Flame, TrendingUp } from 'lucide-react'
 import './GridProductosVendedor.css'
@@ -339,9 +340,13 @@ const GridProductosVendedor = ({
           )
         ) : (
           <>
-            {productos.map((producto) => (
-              <TarjetaProductoLujo key={producto.id} producto={producto} />
-            ))}
+            {productos.map((producto) =>
+              producto.plantilla_tarjeta === 'cinema' ? (
+                <TarjetaProductoCinema key={producto.id} producto={producto} />
+              ) : (
+                <TarjetaProductoLujo key={producto.id} producto={producto} />
+              )
+            )}
           </>
         )}
       </div>

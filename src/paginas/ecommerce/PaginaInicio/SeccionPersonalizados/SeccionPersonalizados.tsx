@@ -1,10 +1,17 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
-import AccordeonArte from '../AccordeonArte'
 
 const NUMERO_WA = '573208492093'
+const BASE = 'https://ventadeacordeones.com/storage'
+
+const IMGS_CUSTOM = [
+  `${BASE}/2023/08/Acordeon-de-botones-de-dos-colores-600x600.jpg`,
+  `${BASE}/2023/08/Acordeon-Blanco-HOHNER-ORIGINAL-600x600.jpg`,
+  `${BASE}/2021/11/Acordeon-personalizado-Instagram.jpg`,
+]
 
 export default function SeccionPersonalizados() {
   return (
@@ -12,7 +19,21 @@ export default function SeccionPersonalizados() {
       <div className="custom">
         <div className="custom-visual">
           <span className="custom-corner-tag">EXPEDIENTE 0042 / EDICIÓN PRIVADA</span>
-          <AccordeonArte variante="pearl" />
+          <Image
+            src={IMGS_CUSTOM[0]}
+            alt="Acordeón personalizado de dos colores"
+            width={420}
+            height={420}
+            style={{
+              width: '60%',
+              height: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 32px 64px rgba(0,0,0,0.85))',
+              position: 'relative',
+              zIndex: 2,
+            }}
+            priority
+          />
           <span className="custom-spec s1">NÁCAR BLANCO MADREPERLA</span>
           <span className="custom-spec s2">GRABADO LÁSER · TU NOMBRE</span>
           <span className="custom-spec s3">ENTREGA 6–8 SEMANAS</span>

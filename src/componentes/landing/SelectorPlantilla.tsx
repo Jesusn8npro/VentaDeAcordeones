@@ -1,6 +1,7 @@
 ﻿import React from 'react'
 import PlantillaTemu from './plantillas/PlantillaTemu/PlantillaTemu'
 import PlantillaCatalogo from './plantillas/PlantillaCatalogo/PlantillaCatalogo'
+import PlantillaCinema from './plantillas/PlantillaCinema/PlantillaCinema'
 
 /**
  * SelectorPlantilla - Componente principal que decide quÃ© plantilla usar
@@ -13,10 +14,9 @@ import PlantillaCatalogo from './plantillas/PlantillaCatalogo/PlantillaCatalogo'
 const PLANTILLAS_DISPONIBLES = {
   'catalogo': PlantillaCatalogo,
   'temu': PlantillaTemu,
-  // TODO: Agregar mÃ¡s plantillas aquÃ­
-  // 'lujo': PlantillaLujo,
-  // 'oferta_flash': PlantillaOfertaFlash,
-  // 'aventura': PlantillaAventura,
+  'clasico': PlantillaCatalogo,
+  'amazon': PlantillaTemu,
+  'cinema': PlantillaCinema,
 }
 
 const SelectorPlantilla = ({ producto, config, reviews, notificaciones }) => {

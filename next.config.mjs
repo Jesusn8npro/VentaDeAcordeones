@@ -1,18 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // SSR estándar (NO output:export) — necesitamos generateMetadata + route handlers
-  reactStrictMode: false, // El SPA Vite no usaba StrictMode: mantener comportamiento idéntico
+  reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
   typescript: {
-    // Migración progresiva: no bloquear el build por tipos (se endurece al final)
     ignoreBuildErrors: true,
   },
   images: {
     remotePatterns: [
-      // Comodín: cubre cualquier imagen HTTPS mientras se migran
-      // los productos a imágenes propias en Supabase Storage.
-      { protocol: 'https', hostname: '**' },
+      { protocol: 'https', hostname: 'dxcpzivxzxvhabdimemb.supabase.co' },
+      { protocol: 'https', hostname: '*.supabase.co' },
+      { protocol: 'https', hostname: 'ventadeacordeones.com' },
+      { protocol: 'https', hostname: '*.ventadeacordeones.com' },
     ],
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 86400,
   },
   // Next 16 usa Turbopack por defecto; resuelve tsconfig paths (@/*) y .ts/.tsx
   // sin config. Los specifiers '.js'→'.ts' se corrigieron en el código.

@@ -1,3 +1,35 @@
+@import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+
+@theme {
+  --color-gold:     #FFC300;
+  --color-gold-300: #FFD64D;
+  --color-gold-400: #FFC300;
+  --color-gold-500: #E5AF00;
+
+  --color-ink-50:   #F4F4F6;
+  --color-ink-100:  #E8E8EC;
+  --color-ink-200:  #C7C7CF;
+  --color-ink-300:  #8A8A95;
+  --color-ink-400:  #5C5C66;
+  --color-ink-500:  #34343C;
+  --color-ink-600:  #26262D;
+  --color-ink-700:  #1A1A1F;
+  --color-ink-800:  #111114;
+  --color-ink-900:  #0A0A0B;
+  --color-ink-950:  #000000;
+
+  --font-cond: var(--font-barlow), "Barlow Condensed", system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@utility cond {
+  font-family: var(--font-cond);
+}
+
 @import './diseno.css';
 
 :root {
@@ -5,27 +37,30 @@
   --fuente-secundaria: var(--font-poppins), sans-serif;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Global resets en @layer base para que las utilities de Tailwind los puedan sobreescribir */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
 
-body {
-  overflow-x: hidden !important;
-  font-family: var(--fuente-principal);
-  line-height: 1.6;
-  color: var(--vda-tinta);
-  background-color: var(--vda-fondo);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  body {
+    overflow-x: hidden !important;
+    font-family: var(--fuente-principal);
+    line-height: 1.6;
+    color: var(--vda-tinta);
+    background-color: var(--vda-fondo);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-body.menu-movil-abierto {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-  height: 100% !important;
+  body.menu-movil-abierto {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
 }

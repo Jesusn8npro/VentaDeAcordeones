@@ -72,6 +72,14 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
   const [productoId, setProductoId] = useState(null)
   const [cargandoProducto, setCargandoProducto] = useState(false)
   const [estadoGuardado, setEstadoGuardado] = useState(true)
+  const [notificacion, setNotificacion] = useState<{ tipo: 'exito' | 'error'; mensaje: string } | null>(null)
+
+  const mostrarNotificacion = (tipo: 'exito' | 'error', mensaje: string) => {
+    setNotificacion({ tipo, mensaje })
+    if (tipo === 'exito') {
+      setTimeout(() => setNotificacion(null), 4000)
+    }
+  }
 
   useEffect(() => {
     cargarCategorias()
@@ -264,8 +272,8 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
       if (data && data[0]) {
         setProductoId(data[0].id)
         setDatosProducto(prev => ({ ...prev, ...data[0] }))
-        manejarExito(`Producto ${modo === 'crear' ? 'creado' : 'actualizado'} exitosamente`)
       }
+      manejarExito(`Producto ${modo === 'crear' ? 'creado' : 'actualizado'} exitosamente`)
     } catch (err) {
       manejarError(`Error al ${modo === 'crear' ? 'crear' : 'actualizar'} el producto: ${err.message}`)
     } finally {
@@ -273,13 +281,18 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
     }
   }
 
-  const manejarExito = (mensaje) => {
-    if (modo === 'crear') limpiarEstadoGuardado()
+  const manejarExito = (mensaje: string) => {
+    mostrarNotificacion('exito', mensaje)
+    if (modo === 'crear') {
+      limpiarEstadoGuardado()
+      setTimeout(() => router.push('/admin/gestion-productos'), 1500)
+    }
     if (onSuccess) onSuccess(mensaje)
-    if (modo === 'crear') router.push('/admin/gestion-productos')
   }
 
-  const manejarError = (_mensaje) => {}
+  const manejarError = (mensaje: string) => {
+    mostrarNotificacion('error', mensaje)
+  }
 
   const manejarProductoCreado = (producto) => {
     actualizarDatosProducto(producto)
@@ -292,6 +305,38 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
         <div className="cargando-producto">
           <div className="spinner"></div>
           <p>Cargando producto para editar...</p>
+        </div>
+      )}
+
+      {notificacion && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 9999,
+            maxWidth: '420px',
+            padding: '14px 20px',
+            borderRadius: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '12px',
+            background: notificacion.tipo === 'exito' ? '#d1fae5' : '#fee2e2',
+            color: notificacion.tipo === 'exito' ? '#065f46' : '#991b1b',
+            border: `1px solid ${notificacion.tipo === 'exito' ? '#6ee7b7' : '#fca5a5'}`,
+            fontWeight: 600,
+            fontSize: '14px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+          }}
+        >
+          <span>{notificacion.tipo === 'exito' ? '✅' : '❌'} {notificacion.mensaje}</span>
+          <button
+            onClick={() => setNotificacion(null)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '18px', lineHeight: 1, color: 'inherit', padding: '0 4px' }}
+          >
+            ×
+          </button>
         </div>
       )}
 

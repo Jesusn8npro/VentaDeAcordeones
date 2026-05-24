@@ -1,6 +1,25 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react'
 
-const ContextoBarraLateral = createContext(undefined)
+interface SubmenuAbierto {
+  tipo: string
+  index: number
+}
+
+interface ValorBarraLateral {
+  estaExpandida: boolean
+  movilAbierto: boolean
+  estaEnHover: boolean
+  itemActivo: string | null
+  submenuAbierto: SubmenuAbierto | null
+  alternarBarraLateral: () => void
+  alternarBarraLateralMovil: () => void
+  setEstaEnHover: (v: boolean) => void
+  setItemActivo: (v: string | null) => void
+  alternarSubmenu: (index: number, tipoMenu: string) => void
+  setSubmenuAbierto: (v: SubmenuAbierto | null) => void
+}
+
+const ContextoBarraLateral = createContext<ValorBarraLateral | undefined>(undefined)
 
 export const useBarraLateral = () => {
   const contexto = useContext(ContextoBarraLateral)

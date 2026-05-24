@@ -80,7 +80,7 @@
 .admin-theme .barra-lateral-logo-expandido { justify-content: flex-start; padding-left: var(--espaciado-md); }
 .admin-theme .barra-lateral-logo-colapsado { justify-content: center; }
 
-.admin-theme .barra-lateral-logo-img { max-width: 56px; height: auto; display: block; border-radius: var(--radio-borde); }
+.admin-theme .barra-lateral-logo-img { width: 160px; max-width: 100%; height: auto; display: block; }
 .admin-theme .barra-lateral-logo-texto { font-size: var(--font-size-xl); font-weight: 700; color: var(--color-primario); letter-spacing: -0.02em; }
 .admin-theme .barra-lateral-logo-subtitulo { font-size: var(--font-size-sm); color: var(--color-texto-secundario); margin-top: 0.1rem; }
 .admin-theme .barra-lateral-logo-icono { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; }

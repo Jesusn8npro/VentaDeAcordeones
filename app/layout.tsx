@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Suspense } from 'react'
-import { Inter, Poppins, Bebas_Neue, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
+import { Inter, Poppins, Bebas_Neue, Cormorant_Garamond, JetBrains_Mono, Barlow_Condensed } from 'next/font/google'
 import Providers from './providers'
 import CargandoPagina from '@/componentes/sistema/CargandoPagina'
 import '@/estilos/index.css'
@@ -32,6 +32,13 @@ const cormorant = Cormorant_Garamond({
   style: ['italic', 'normal'],
   display: 'swap',
   variable: '--font-cormorant',
+})
+
+const barlowCondensed = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--font-barlow',
 })
 
 const jetbrainsMono = JetBrains_Mono({
@@ -107,7 +114,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable}`}>
+    <html lang="es" className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${barlowCondensed.variable}`}>
       <head>
         {/* Performance: preconnect a recursos externos críticos */}
         <link

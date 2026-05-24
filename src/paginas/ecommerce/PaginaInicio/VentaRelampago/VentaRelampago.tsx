@@ -2,46 +2,22 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Icono from '@/componentes/ui/Icono'
+import { clienteSupabase } from '@/configuracion/supabase'
+import { optimizarUrlSupabase } from '@/componentes/ImagenOptimizada'
+import { useCarrito } from '@/contextos/CarritoContext'
 
 const fmtCOP = (n: number) => `$${n.toLocaleString('es-CO')} COP`
 
-const PRODUCTOS_FLASH = [
-  { id: 'f1', etiqueta: '-30%', claseEtiqueta: 'sale', marca: 'Hohner',          nombre: 'Rey Vallenato Sol',     precio: 6915000,  precioAntes: 9450000,  vendido: 9, stock: 10, visual: 'acc' },
-  { id: 'f2', etiqueta: '-25%', claseEtiqueta: 'sale', marca: 'Edición Maestro', nombre: 'Onix Oro 24K',          precio: 10650000, precioAntes: 14200000, vendido: 6, stock: 10, visual: 'acc' },
-  { id: 'f3', etiqueta: '-18%', claseEtiqueta: 'sale', marca: 'Fender',          nombre: 'Stratocaster Sunburst', precio: 4290000,  precioAntes: 5230000,  vendido: 5, stock: 10, visual: 'guitar' },
-  { id: 'f4', etiqueta: '-22%', claseEtiqueta: 'sale', marca: 'Pearl',           nombre: 'Export 5pc Negro',      precio: 6580000,  precioAntes: 8430000,  vendido: 8, stock: 10, visual: 'drums' },
-]
+const BASE = 'https://ventadeacordeones.com/storage'
 
-function VisualProducto({ tipo }: { tipo: string }) {
-  if (tipo === 'guitar') {
-    return (
-      <div className="mini-guitar">
-        <div className="mini-guitar-neck" />
-        <div className="mini-guitar-head" />
-        <div className="mini-guitar-body" />
-      </div>
-    )
-  }
-  if (tipo === 'drums') {
-    return (
-      <div className="mini-drums">
-        <div className="d-cymbal" />
-        <div className="d-tom t1" />
-        <div className="d-tom t2" />
-        <div className="d-snare" />
-        <div className="d-kick" />
-      </div>
-    )
-  }
-  return (
-    <div className="mini-acc">
-      <div className="h t" />
-      <div className="b" />
-      <div className="h b" />
-    </div>
-  )
-}
+const FALLBACK_FLASH = [
+  { id: 'ff1', nombre: 'Rey del Vallenato', marca: 'Hohner', precio: 6615000, precio_original: 9450000, slug: 'acordeon-rey-del-vallenato',   producto_imagenes: [{ imagen_principal: `${BASE}/2024/01/Acordeon-Rey-Vallenato.jpg` }] },
+  { id: 'ff2', nombre: 'Premium Dorado',    marca: 'Hohner', precio: 11160000, precio_original: 14500000, slug: 'acordeon-hohner-premium-dorado-elegancia-musical-en-oro', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-blanco-premium-con-botones-dorados.jpg` }] },
+  { id: 'ff3', nombre: 'Xtreme Azul',       marca: 'Hohner', precio: 8400000, precio_original: 10500000, slug: 'acordeon-hohner-xtreme-color-azul', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-XTREME-azul-personalizado-600x600.jpg` }] },
+  { id: 'ff4', nombre: 'Verde Personalizado', marca: 'Hohner', precio: 8640000, precio_original: 10800000, slug: 'acordeon-hohner-xtreme-color-verde', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-color-verde-personalizado-600x600.jpg` }] },
+]
 
 function Cuenta() {
   const [t, setT] = useState({ h: 6, m: 17, s: 56 })
@@ -70,27 +46,36 @@ function Cuenta() {
   )
 }
 
-interface PropsTarjeta {
-  etiqueta: string
-  claseEtiqueta: string
-  marca: string
-  nombre: string
-  precio: number
-  precioAntes?: number
-  vendido?: number
-  stock?: number
-  visual: string
-}
-
-function TarjetaFlash({ etiqueta, claseEtiqueta, marca, nombre, precio, precioAntes, vendido, stock, visual }: PropsTarjeta) {
+function TarjetaFlash({ producto }: { producto: any }) {
   const [agregado, setAgregado] = useState(false)
   const [favorito, setFavorito] = useState(false)
-  const porcentaje = vendido && stock ? (vendido / stock) * 100 : 0
+  const { agregarAlCarrito } = useCarrito()
+
+  const imgUrl = optimizarUrlSupabase(
+    (Array.isArray(producto.producto_imagenes) && producto.producto_imagenes[0]?.imagen_principal) || ''
+  )
+
+  const descuento = producto.precio_original && producto.precio_original > producto.precio
+    ? Math.round((1 - producto.precio / producto.precio_original) * 100)
+    : null
+
+  const href = producto.slug ? `/producto/${producto.slug}` : '/tienda'
+  const marca = producto.marca || producto.categorias?.nombre || ''
+
+  const manejarAgregar = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    try { await agregarAlCarrito(producto) } catch {}
+    setAgregado(true)
+    setTimeout(() => setAgregado(false), 1400)
+  }
 
   return (
-    <Link href="/tienda" className="prod clickable">
+    <Link href={href} className="prod clickable">
       <div className="prod-img">
-        <span className={`prod-tag${claseEtiqueta === 'sale' ? ' sale' : ''}`}>{etiqueta}</span>
+        {descuento && (
+          <span className="prod-tag sale">-{descuento}%</span>
+        )}
         <button
           className={`prod-fav${favorito ? ' liked' : ''}`}
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFavorito((f) => !f) }}
@@ -98,20 +83,26 @@ function TarjetaFlash({ etiqueta, claseEtiqueta, marca, nombre, precio, precioAn
         >
           <Icono nombre="corazon" tamaño={14} />
         </button>
-        <VisualProducto tipo={visual} />
+        {imgUrl ? (
+          <Image
+            src={imgUrl}
+            alt={producto.nombre || 'Producto'}
+            width={400}
+            height={400}
+            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '14px' }}
+            loading="lazy"
+          />
+        ) : (
+          <div className="mini-acc"><div className="h t" /><div className="b" /><div className="h b" /></div>
+        )}
         <div className="prod-glow" />
         <div className="prod-quick">
-          <button onClick={(e) => { e.preventDefault(); e.stopPropagation() }}>
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = href }}>
             <Icono nombre="buscar" tamaño={10} /> Ver
           </button>
           <button
             className={agregado ? 'added' : ''}
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              setAgregado(true)
-              setTimeout(() => setAgregado(false), 1400)
-            }}
+            onClick={manejarAgregar}
           >
             <Icono nombre="carrito" tamaño={10} /> Añadir
           </button>
@@ -119,36 +110,62 @@ function TarjetaFlash({ etiqueta, claseEtiqueta, marca, nombre, precio, precioAn
       </div>
       <div className="prod-info">
         <div className="prod-brand">{marca}</div>
-        <div className="prod-name">{nombre}</div>
+        <div className="prod-name">{producto.nombre}</div>
         <div className="prod-meta">
           <div className="prod-price">
-            <span className="now">{fmtCOP(precio)}</span>
-            {precioAntes && <span className="was">{fmtCOP(precioAntes)}</span>}
+            <span className="now">{fmtCOP(producto.precio)}</span>
+            {producto.precio_original && <span className="was">{fmtCOP(producto.precio_original)}</span>}
           </div>
           <button
             className={`prod-add${agregado ? ' added' : ''}`}
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              setAgregado(true)
-              setTimeout(() => setAgregado(false), 1400)
-            }}
+            onClick={manejarAgregar}
           >
             {agregado ? <><Icono nombre="estrella" tamaño={11} /> Añadido</> : <><Icono nombre="carrito" tamaño={11} /> Añadir</>}
           </button>
         </div>
-        {vendido !== undefined && stock !== undefined && (
-          <div className="prod-sale">
-            <div className="prod-sale-bar" style={{ '--p': `${porcentaje}%` } as React.CSSProperties} />
-            <span>{vendido}/{stock} Vendido</span>
-          </div>
-        )}
       </div>
     </Link>
   )
 }
 
 export default function VentaRelampago() {
+  const [productos, setProductos] = useState<any[]>([])
+
+  useEffect(() => {
+    // Prefer discounted products; fallback to newest
+    clienteSupabase
+      .from('productos')
+      .select(`
+        id, nombre, slug, precio, precio_original, marca, estado,
+        categorias(nombre),
+        producto_imagenes(imagen_principal)
+      `)
+      .eq('activo', true)
+      .gt('stock', 0)
+      .not('precio_original', 'is', null)
+      .order('creado_el', { ascending: false })
+      .limit(4)
+      .then(({ data }) => {
+        if (data && data.length >= 2) {
+          setProductos(data as any[])
+          return
+        }
+        // Fallback: any 4 products
+        clienteSupabase
+          .from('productos')
+          .select(`
+            id, nombre, slug, precio, precio_original, marca, estado,
+            categorias(nombre),
+            producto_imagenes(imagen_principal)
+          `)
+          .eq('activo', true)
+          .gt('stock', 0)
+          .order('creado_el', { ascending: false })
+          .limit(4)
+          .then(({ data: fallback }) => setProductos((fallback as any[]) || []))
+      })
+  }, [])
+
   return (
     <section className="section" id="flash">
       <div className="flash reveal">
@@ -169,8 +186,8 @@ export default function VentaRelampago() {
           </div>
         </div>
         <div className="prod-grid">
-          {PRODUCTOS_FLASH.map((p) => (
-            <TarjetaFlash key={p.id} {...p} />
+          {(productos.length > 0 ? productos : FALLBACK_FLASH as any[]).map((p) => (
+            <TarjetaFlash key={p.id} producto={p} />
           ))}
         </div>
       </div>

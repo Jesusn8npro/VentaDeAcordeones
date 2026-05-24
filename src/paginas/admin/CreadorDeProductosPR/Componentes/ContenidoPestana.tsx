@@ -42,6 +42,7 @@ const ContenidoPestana: React.FC<ContenidoPestanaProps> = ({
           actualizarDatosProducto={actualizarDatosProducto}
           modo={modo}
           onGuardar={guardarProducto}
+          onError={manejarError}
           cargando={cargando}
         />
       )

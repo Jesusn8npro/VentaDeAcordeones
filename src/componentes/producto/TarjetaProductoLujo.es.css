@@ -65,6 +65,8 @@
   object-fit: cover;
 }
 .imagen { width: 100%; height: 100%; object-fit: cover; display: block; }
+.imagen-placeholder { background: linear-gradient(135deg, #f1f3f5 0%, #e8eaed 50%, #f1f3f5 100%); background-size: 200% 200%; animation: shimmer-placeholder 1.5s ease-in-out infinite; }
+@keyframes shimmer-placeholder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 .imagen-principal {
   position: absolute;
   inset: 0;

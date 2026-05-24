@@ -104,7 +104,7 @@ const BarraLateralAdmin = () => {
 
   // Memoizar la función estaActivo para evitar re-renders innecesarios
   const estaActivo = useCallback(
-    (ruta) => pathname === ruta,
+    (ruta: string) => pathname === ruta,
     [pathname]
   )
 

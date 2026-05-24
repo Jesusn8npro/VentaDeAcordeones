@@ -21,7 +21,7 @@ const GestionProductos = () => {
   const [filtroEstado, setFiltroEstado] = useState('')
   const [paginaActual, setPaginaActual] = useState(1)
   const [totalProductos, setTotalProductos] = useState(0)
-  const productosPorPagina = 10
+  const productosPorPagina = 25
 
   // Bulk selection
   const [seleccionados, setSeleccionados] = useState<string[]>([])
@@ -74,18 +74,26 @@ const GestionProductos = () => {
       setError(null)
 
       const offset = (paginaActual - 1) * productosPorPagina
-      const { data: productosRaw, error: errorProductos, count } = await clienteSupabase
-        .from('productos')
-        .select('*', { count: 'exact' })
-        .order('creado_el', { ascending: false })
-        .range(offset, offset + productosPorPagina - 1)
+
+      const [
+        { data: productosRaw, error: errorProductos, count },
+        { data: categoriasRaw, error: errorCategorias },
+        { data: statsData }
+      ] = await Promise.all([
+        clienteSupabase
+          .from('productos')
+          .select('*', { count: 'exact' })
+          .order('creado_el', { ascending: false })
+          .range(offset, offset + productosPorPagina - 1),
+        clienteSupabase
+          .from('categorias')
+          .select('id, nombre, icono, slug, activo'),
+        clienteSupabase
+          .from('productos')
+          .select('activo, stock, precio')
+      ])
 
       if (errorProductos) throw errorProductos
-
-      const { data: categoriasRaw, error: errorCategorias } = await clienteSupabase
-        .from('categorias')
-        .select('id, nombre, icono, slug, activo')
-
       if (errorCategorias) throw errorCategorias
 
       const productosConCategoria = (productosRaw || []).map(p => ({
@@ -94,24 +102,24 @@ const GestionProductos = () => {
       }))
 
       setProductos(productosConCategoria)
-      setTotalProductos(count || productosConCategoria.length)
-      calcularEstadisticas(productosConCategoria)
+      const total = count || productosConCategoria.length
+      setTotalProductos(total)
+      calcularEstadisticas(statsData || [], total)
     } catch (e) {
       setError(e?.message || 'Error cargando productos')
       setProductos([])
       setTotalProductos(0)
-      calcularEstadisticas([])
+      calcularEstadisticas([], 0)
     } finally {
       setCargando(false)
     }
   }
 
-  const calcularEstadisticas = (lista) => {
-    const total = lista.length
+  const calcularEstadisticas = (lista, total?: number) => {
     const activos = lista.filter(p => p.activo).length
     const bajo = lista.filter(p => (p.stock || 0) > 0 && (p.stock || 0) < 5).length
     const valor = lista.reduce((acc, p) => acc + (Number(p.stock || 0) * Number(p.precio || 0)), 0)
-    setEstadisticas({ totalProductos: total, productosActivos: activos, valorInventario: valor, productosBajoStock: bajo })
+    setEstadisticas({ totalProductos: total ?? lista.length, productosActivos: activos, valorInventario: valor, productosBajoStock: bajo })
   }
 
   const productosFiltrados = useMemo(() => {
@@ -208,7 +216,7 @@ const GestionProductos = () => {
     setSeleccionados(prev => prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id])
   }
 
-  const totalPaginas = Math.max(1, Math.ceil((productosFiltrados.length || totalProductos) / productosPorPagina))
+  const totalPaginas = Math.max(1, Math.ceil(totalProductos / productosPorPagina))
 
   if (error) {
     return (

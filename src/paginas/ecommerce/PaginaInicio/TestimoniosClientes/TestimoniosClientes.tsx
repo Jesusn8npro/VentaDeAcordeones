@@ -1,5 +1,9 @@
 'use client'
 
+import Image from 'next/image'
+
+const BASE = 'https://ventadeacordeones.com/storage/2021/11'
+
 const TESTIMONIOS = [
   {
     destacado: true,
@@ -8,6 +12,7 @@ const TESTIMONIOS = [
     nombre: 'Camilo Restrepo',
     lugar: 'Medellín, COL',
     iniciales: 'CR',
+    foto: `${BASE}/Acordeon-vendido-Bogota.jpg`,
   },
   {
     estrellas: 5,
@@ -15,6 +20,7 @@ const TESTIMONIOS = [
     nombre: 'Yulissa Mendoza',
     lugar: 'Miami, USA',
     iniciales: 'YM',
+    foto: `${BASE}/Cliente-satisfecho-instagram.jpg`,
   },
   {
     estrellas: 5,
@@ -22,6 +28,7 @@ const TESTIMONIOS = [
     nombre: 'Luis Eduardo Mejía',
     lugar: 'Valledupar, COL',
     iniciales: 'LM',
+    foto: `${BASE}/Fredy-Burbano-Acordeon.jpg`,
   },
 ]
 
@@ -52,8 +59,18 @@ export default function TestimoniosClientes() {
               <div className="stars">{'★'.repeat(t.estrellas)}</div>
               <p className="text">{t.texto}</p>
               <div className="tst-person">
-                <div className="tst-avatar">
-                  <span>{t.iniciales}</span>
+                <div className="tst-avatar" style={{ overflow: 'hidden' }}>
+                  {t.foto ? (
+                    <Image
+                      src={t.foto}
+                      alt={t.nombre}
+                      width={48}
+                      height={48}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <span>{t.iniciales}</span>
+                  )}
                 </div>
                 <div>
                   <div className="tst-name">{t.nombre}</div>
