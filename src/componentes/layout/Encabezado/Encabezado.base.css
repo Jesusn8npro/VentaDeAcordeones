@@ -1,0 +1,320 @@
+﻿/* ================================================================
+   ENCABEZADO PRINCIPAL â€” VentaDeAcordeones.com
+   Copia fiel de InicioNuevo/project/styles.css (secciÃ³n header)
+   Variables: --vda-* en lugar de --gold, --ink, --surface, etc.
+================================================================ */
+
+/* â”€â”€ Contenedor fijo â”€â”€ */
+.enc {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--vda-fondo-header);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--vda-linea);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.enc--desplazado {
+  background: var(--vda-fondo-header-fuerte);
+  box-shadow: 0 12px 40px -20px rgba(0,0,0,0.4);
+}
+
+/* â”€â”€ Barra de progreso de scroll â”€â”€ */
+.enc-progreso {
+  position: absolute;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--vda-oro);
+  transition: width 0.12s linear;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(255,195,0,0.6);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   BARRA UTILIDAD (franja superior)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.enc-util {
+  border-bottom: 1px solid var(--vda-linea);
+  background: var(--vda-superficie);
+}
+.enc-util-interior {
+  max-width: var(--vda-contenedor);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--vda-pad-x);
+  height: 38px;
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-muted);
+}
+.enc-util-izq {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--vda-tinta-dim);
+  transition: color 0.25s ease;
+  text-decoration: none;
+}
+.enc-util-izq:hover { color: var(--vda-oro); }
+.enc-util-icono {
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  border: 1px solid var(--vda-linea-fuerte);
+  border-radius: 4px;
+  color: var(--vda-oro);
+}
+.enc-util-pulso {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.enc-util-pulso::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--vda-exito);
+  box-shadow: 0 0 0 0 rgba(46,204,113,0.55);
+  animation: enc-pulso-punto 1.8s ease-out infinite;
+}
+@keyframes enc-pulso-punto {
+  0%   { box-shadow: 0 0 0 0   rgba(46,204,113,0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+  100% { box-shadow: 0 0 0 0   rgba(46,204,113,0); }
+}
+
+/* Nav derecha â€” completa en escritorio, compacta en tablet */
+.enc-util-der {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+}
+.enc-util-der.enc-util-compact { display: none; }      /* oculta por defecto (especificidad 0,2,0 gana) */
+.enc-util-der a,
+.enc-util-der button {
+  padding: 0 18px;
+  color: var(--vda-tinta-dim);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  transition: color 0.25s ease;
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.enc-util-der > * + *::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  width: 1px; height: 12px;
+  background: var(--vda-linea-fuerte);
+  transform: translateY(-50%);
+}
+.enc-util-der a:hover,
+.enc-util-der button:hover { color: var(--vda-oro); }
+.enc-util-auth        { color: var(--vda-tinta) !important; font-weight: 600 !important; }
+.enc-util-auth--primario { color: var(--vda-oro)   !important; }
+.enc-tema {
+  padding: 0 14px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   BARRA PRINCIPAL
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.enc-barra {
+  max-width: var(--vda-contenedor);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;   /* escritorio: logo | bÃºsqueda | acciones */
+  align-items: center;
+  gap: 32px;
+  padding: 18px var(--vda-pad-x);
+  transition: padding 0.3s ease;
+}
+.enc--desplazado .enc-barra {
+  padding: 12px var(--vda-pad-x);
+}
+
+/* â”€â”€ Logo â”€â”€ */
+.enc-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--vda-tinta);
+}
+.enc-logo-marca {
+  width: 38px; height: 38px;
+  border: 1.5px solid var(--vda-oro);
+  display: grid; place-items: center;
+  font-family: var(--vda-fuente-display);
+  color: var(--vda-oro);
+  font-size: 20px;
+  transform: rotate(45deg);
+  transition: transform 0.5s cubic-bezier(.34,1.56,.64,1), box-shadow 0.4s ease;
+  flex-shrink: 0;
+}
+.enc-logo:hover .enc-logo-marca {
+  transform: rotate(225deg);
+  box-shadow: 0 0 0 1px var(--vda-oro), 0 0 24px rgba(255,195,0,0.45);
+}
+.enc-logo-marca span { transform: rotate(-45deg); display: block; line-height: 1; }
+.enc-logo-texto {
+  font-family: var(--vda-fuente-display);
+  font-size: 20px;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.enc-logo-texto small {
+  display: block;
+  font-family: var(--vda-fuente-mono);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  color: var(--vda-tinta-muted);
+  margin-top: 5px;
+  font-weight: 500;
+}
+.enc-logo-punto { color: var(--vda-oro); }
+
+/* Logo abreviado â€” solo en telÃ©fonos â‰¤480px */
+.enc-logo-abrev {
+  display: none;
+  font-family: var(--vda-fuente-display);
+  font-size: 17px;
+  letter-spacing: 0.16em;
+  color: var(--vda-tinta);
+}
+
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   BUSCADOR
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+.enc-busqueda-wrap {
+  position: relative;
+  max-width: 760px;
+  width: 100%;
+  justify-self: stretch;
+}
+.enc-busqueda {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: stretch;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: rgba(255,255,255,0.02);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  height: 50px;
+}
+.enc-busqueda--foco {
+  border-color: var(--vda-oro);
+  background: rgba(255,195,0,0.04);
+  box-shadow: 0 0 0 1px rgba(255,195,0,0.35), 0 12px 40px -16px rgba(255,195,0,0.3);
+}
+
+/* Dropdown de categorÃ­a */
+.enc-cat-dd {
+  position: relative;
+  border-right: 1px solid var(--vda-linea-fuerte);
+}
+.enc-cat-dd-btn {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--vda-tinta);
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--vda-fuente-mono);
+}
+.enc-cat-dd-chev { transition: transform 0.3s ease; color: var(--vda-oro); }
+.enc-cat-dd--abierto .enc-cat-dd-chev { transform: rotate(180deg); }
+.enc-cat-dd-panel {
+  position: absolute;
+  top: calc(100% + 6px); left: -1px;
+  min-width: 280px;
+  background: var(--vda-superficie-profunda);
+  border: 1px solid var(--vda-oro);
+  box-shadow: 0 24px 60px -10px rgba(0,0,0,0.9);
+  opacity: 0; visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+  z-index: 50;
+  padding: 8px 0;
+  max-height: 480px;
+  overflow-y: auto;
+}
+.enc-cat-dd--abierto .enc-cat-dd-panel {
+  opacity: 1; visibility: visible; transform: translateY(0);
+}
+.enc-cat-dd-grupo {
+  padding: 10px 22px 6px;
+  font-family: var(--vda-fuente-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-muted);
+}
+.enc-cat-dd-panel button {
+  width: 100%;
+  text-align: left;
+  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--vda-tinta-dim);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  transition: background 0.2s, color 0.2s, padding 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--vda-fuente-cuerpo);
+}
+.enc-cat-dd-panel button:hover {
+  background: rgba(255,195,0,0.06);
+  color: var(--vda-oro);
+  padding-left: 28px;
+}
+.enc-cat-dd-panel button.enc-cat-dd-item--sel { color: var(--vda-oro); }
+.enc-cat-dd-conteo {
+  font-family: var(--vda-fuente-mono);
+  font-size: 10px;
+  color: var(--vda-tinta-muted);
+  letter-spacing: 0.16em;
+}
+
+/* Campo de bÃºsqueda */
+.enc-campo-busqueda {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 0 18px;
+}
+.enc-campo-busqueda svg { color: var(--vda-tinta-muted); transition: color 0.25s ease; flex-shrink: 0; }
+.enc-busqueda--foco .enc-campo-busqueda svg { color: var(--vda-oro); }
+.enc-campo-busqueda input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--vda-tinta);
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 14px;
+  width: 100%;
+  letter-spacing: 0.02em;

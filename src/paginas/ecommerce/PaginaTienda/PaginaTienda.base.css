@@ -1,0 +1,215 @@
+﻿/* PaginaTienda.css â€” Premium ecommerce */
+
+:root {
+  --ec-primario: #1a1a2e;
+  --ec-acento: #e94560;
+  --ec-acento-hover: #c73652;
+  --ec-fondo: #ffffff;
+  --ec-fondo-secundario: #f8f9fa;
+  --ec-fondo-terciario: #f1f3f5;
+  --ec-texto: #1a1a2e;
+  --ec-texto-secundario: #6c757d;
+  --ec-borde: #e9ecef;
+  --ec-sombra: 0 2px 12px rgba(0,0,0,0.08);
+  --ec-sombra-hover: 0 8px 24px rgba(0,0,0,0.15);
+  --ec-radio: 12px;
+  --ec-radio-grande: 20px;
+}
+
+@keyframes fadeInPage {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* â”€â”€ CONTENEDOR PÃGINA â”€â”€ */
+.pagina-tienda-contenido {
+  padding: 0;
+  background: var(--ec-fondo-secundario);
+  min-height: calc(100vh - var(--header-height, 80px));
+  animation: fadeInPage 0.4s ease-out forwards;
+}
+@media (min-width: 1025px) {
+  .pagina-tienda-contenido { padding: 24px; }
+}
+
+/* â”€â”€ HEADER â”€â”€ */
+.tienda-header {
+  background: var(--ec-fondo);
+  padding: 32px 24px;
+  border-radius: var(--ec-radio-grande);
+  box-shadow: var(--ec-sombra);
+  margin-bottom: 24px;
+  border: 1px solid var(--ec-borde);
+}
+
+.tienda-info-categoria { margin-bottom: 24px; }
+
+.categoria-badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.categoria-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(233,69,96,0.1);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ec-acento);
+  border: 1px solid rgba(233,69,96,0.2);
+}
+.categoria-badge svg { color: var(--ec-acento); }
+
+.tienda-titulo {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: var(--ec-primario);
+  line-height: 1.2;
+}
+
+.tienda-descripcion {
+  font-size: 16px;
+  color: var(--ec-texto-secundario);
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.categoria-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.categoria-stats .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--ec-fondo-secundario);
+  border-radius: var(--ec-radio);
+  border: 1px solid var(--ec-borde);
+  font-size: 14px;
+  color: var(--ec-texto-secundario);
+}
+.categoria-stats .stat-item svg  { color: var(--ec-acento); }
+.categoria-stats .stat-item strong { color: var(--ec-texto); }
+
+/* â”€â”€ CONTROLES â”€â”€ */
+.tienda-controles {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filtros-activos-grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.filtros-activos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(233,69,96,0.08);
+  color: var(--ec-acento);
+  border-radius: var(--ec-radio);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(233,69,96,0.2);
+  animation: slideIn 0.3s ease;
+}
+
+.btn-limpiar-filtros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--ec-fondo);
+  color: var(--ec-texto-secundario);
+  border: 2px solid var(--ec-borde);
+  border-radius: var(--ec-radio);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+.btn-limpiar-filtros:hover {
+  background: var(--ec-acento);
+  color: #fff;
+  border-color: var(--ec-acento);
+}
+
+.control-grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.control-grupo label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ec-texto-secundario);
+  white-space: nowrap;
+}
+.control-select {
+  padding: 8px 12px;
+  border: 2px solid var(--ec-borde);
+  border-radius: var(--ec-radio);
+  font-size: 14px;
+  background: var(--ec-fondo);
+  color: var(--ec-texto);
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  min-width: 160px;
+  min-height: 44px;
+}
+.control-select:focus {
+  outline: none;
+  border-color: var(--ec-acento);
+  box-shadow: 0 0 0 3px rgba(233,69,96,0.1);
+}
+
+.vista-botones {
+  display: flex;
+  gap: 4px;
+  background: var(--ec-fondo-secundario);
+  border-radius: var(--ec-radio);
+  padding: 4px;
+}
+.vista-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: var(--ec-texto-secundario);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}

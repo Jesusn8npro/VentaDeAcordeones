@@ -1,0 +1,312 @@
+﻿   MODAL DE IMAGEN - PUNTOS DE DOLOR
+   ============================================ */
+.puntos-dolor-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: puntos-dolor-modal-fade-in 0.3s ease;
+  padding: 20px;
+}
+
+.puntos-dolor-modal-contenido {
+  position: relative;
+  max-width: 800px;
+  max-height: 600px;
+  width: 90%;
+  height: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform: scale(0.9);
+  animation: puntos-dolor-modal-scale-in 0.3s ease forwards;
+}
+
+.puntos-dolor-modal-cerrar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.puntos-dolor-modal-cerrar:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.puntos-dolor-modal-cerrar:active {
+  transform: scale(0.95);
+}
+
+.puntos-dolor-modal-imagen-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0;
+}
+
+.puntos-dolor-modal-imagen {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 16px;
+}
+
+@keyframes puntos-dolor-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes puntos-dolor-modal-scale-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive - MÃ“VIL */
+@media (max-width: 768px) {
+  .puntos-dolor-modal-overlay {
+    padding: 10px;
+  }
+
+  .puntos-dolor-modal-contenido {
+    max-width: 95%;
+    max-height: 80vh;
+    width: 95%;
+    border-radius: 12px;
+  }
+
+  .puntos-dolor-modal-cerrar {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .puntos-dolor-modal-imagen {
+    max-height: 70vh;
+    border-radius: 12px;
+  }
+}
+
+/* Responsive - MÃ“VIL PEQUEÃ‘O */
+@media (max-width: 480px) {
+  .puntos-dolor-modal-overlay {
+    padding: 5px;
+  }
+
+  .puntos-dolor-modal-contenido {
+    max-width: 98%;
+    max-height: 85vh;
+    width: 98%;
+    border-radius: 8px;
+  }
+
+  .puntos-dolor-modal-imagen {
+    max-height: 75vh;
+    border-radius: 8px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* TABLETS */
+@media (max-width: 768px) {
+  .puntos-dolor-temu-seccion {
+    padding: 60px 0;
+  }
+  /* ============================================
+   ITEMS DEL TIMELINE
+   ============================================ */
+.puntos-dolor-temu-item {
+  margin-bottom: 100px;
+}
+
+  .puntos-dolor-temu-titulo {
+    font-size: 32px;
+  }
+
+  .puntos-dolor-temu-subtitulo {
+    font-size: 18px;
+  }
+
+  /* Timeline centrado en tablet */
+  .puntos-dolor-temu-linea-central {
+    left: 40px;
+  }
+
+  .puntos-dolor-temu-izquierda,
+  .puntos-dolor-temu-derecha {
+    padding-left: 100px;
+    padding-right: 0;
+    transform: none !important;
+  }
+
+  .puntos-dolor-temu-izquierda .puntos-dolor-temu-contenido,
+  .puntos-dolor-temu-derecha .puntos-dolor-temu-contenido {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+  }
+
+  .puntos-dolor-temu-punto {
+    left: 40px;
+    width: 70px;
+    height: 70px;
+  }
+
+  .puntos-dolor-temu-icono {
+    font-size: 28px;
+  }
+
+  .puntos-dolor-temu-imagen-container {
+    height: 220px;
+  }
+
+  .puntos-dolor-temu-flecha {
+    justify-content: flex-start !important;
+  }
+}
+
+/* MÃ“VILES */
+@media (max-width: 480px) {
+  .puntos-dolor-temu-contenedor {
+    padding: 0 15px;
+  }
+
+  .puntos-dolor-temu-titulo {
+    font-size: 28px;
+    animation: puntos-dolor-temu-titulo-mobile 1s ease-out;
+  }
+
+  .puntos-dolor-temu-subtitulo {
+    font-size: 16px;
+  }
+
+  .puntos-dolor-temu-contenido {
+    padding: 20px;
+  }
+
+  .puntos-dolor-temu-imagen-container {
+    height: 180px;
+  }
+
+  .puntos-dolor-temu-nombre {
+    font-size: 20px;
+  }
+
+  .puntos-dolor-temu-descripcion,
+  .puntos-dolor-temu-solucion-texto {
+    font-size: 14px;
+  }
+
+  .puntos-dolor-temu-cta {
+    padding: 30px 20px;
+    animation: puntos-dolor-temu-cta-mobile 0.8s ease-out;
+  }
+
+  .puntos-dolor-temu-cta-titulo {
+    font-size: 24px;
+  }
+
+  .puntos-dolor-temu-cta-texto {
+    font-size: 16px;
+  }
+
+  .puntos-dolor-temu-cta-boton {
+    padding: 16px 30px;
+    font-size: 18px;
+    animation: puntos-dolor-temu-boton-pulse 2s ease-in-out infinite;
+  }
+}
+
+/* ANIMACIONES MÃ“VILES */
+@keyframes puntos-dolor-temu-titulo-mobile {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes puntos-dolor-temu-cta-mobile {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes puntos-dolor-temu-boton-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(255, 68, 68, 0.4);
+  }
+}
+
+/* ACCESIBILIDAD */
+@media (prefers-reduced-motion: reduce) {
+  .puntos-dolor-temu-item {
+    transition: opacity 0.3s ease;
+  }
+
+  .puntos-dolor-temu-punto {
+    animation: none;
+  }
+
+  .puntos-dolor-temu-flecha-icono {
+    animation: none;
+  }
+
+  .puntos-dolor-temu-cta::before {
+    animation: none;
+  }
+}

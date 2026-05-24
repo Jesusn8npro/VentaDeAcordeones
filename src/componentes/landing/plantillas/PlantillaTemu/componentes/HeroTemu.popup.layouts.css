@@ -1,0 +1,163 @@
+﻿/* ============================================
+   POPUP GALERÃA - LAYOUTS RESPONSIVE SIN SCROLL
+   ============================================ */
+
+/* Layout Desktop - Miniaturas al lado SIN SCROLL */
+.hero-temu-popup-layout-desktop {
+  display: none; /* Oculto por defecto */
+  flex: 1;
+  gap: 20px;
+  padding: 20px;
+  min-height: 0;
+  overflow: hidden; /* CRÃTICO: Sin scroll */
+  max-height: calc(100vh - 120px); /* Espacio para header y acciones */
+}
+
+.hero-temu-popup-miniaturas-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100px; /* MÃ¡s pequeÃ±o para que quepan mÃ¡s */
+  max-height: 100%; /* Usar todo el espacio disponible */
+  overflow: hidden; /* CRÃTICO: Sin scroll vertical */
+  padding-right: 0;
+  justify-content: flex-start;
+  flex-wrap: nowrap; /* No wrap para evitar desbordamiento */
+}
+
+.hero-temu-popup-miniatura-desktop {
+  width: 80px; /* MÃ¡s pequeÃ±o */
+  height: 80px; /* MÃ¡s pequeÃ±o */
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.hero-temu-popup-miniatura-desktop:hover {
+  border-color: #0ea5e9;
+}
+
+.hero-temu-popup-miniatura-desktop.activa {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 1px #0ea5e9;
+}
+
+.hero-temu-popup-miniatura-desktop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Layout MÃ³vil - Miniaturas abajo SIN SCROLL */
+.hero-temu-popup-layout-mobile {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden; /* CRÃTICO: Sin scroll */
+  max-height: calc(100vh - 120px); /* Espacio para header y acciones */
+}
+
+.hero-temu-popup-miniaturas-mobile {
+  display: flex;
+  gap: 6px;
+  padding: 12px 16px;
+  background: transparent;
+  justify-content: center;
+  flex-wrap: nowrap; /* CRÃTICO: Sin wrap para evitar mÃºltiples filas */
+  max-width: 100%;
+  overflow: hidden; /* CRÃTICO: Sin scroll horizontal */
+  max-height: 100px; /* Altura fija */
+}
+
+.hero-temu-popup-miniatura-mobile {
+  width: 60px; /* MÃ¡s pequeÃ±o para que quepan mÃ¡s */
+  height: 60px; /* MÃ¡s pequeÃ±o */
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.hero-temu-popup-miniatura-mobile:hover {
+  border-color: #0ea5e9;
+}
+
+.hero-temu-popup-miniatura-mobile.activa {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 1px #0ea5e9;
+}
+
+.hero-temu-popup-miniatura-mobile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================
+   TABLETS (hasta 1200px)
+   ============================================ */
+@media (max-width: 1200px) {
+  .hero-temu-contenido-principal {
+    grid-template-columns: 46% 1fr !important;
+    gap: 1% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .hero-temu-columna-izquierda {
+    max-width: 100%;
+  }
+
+  .hero-temu-contenedor {
+    padding: 1px 0 !important;
+  }
+
+  /* Ajustes del banner para tablets */
+  .hero-temu-banner-mega-oferta {
+    overflow: hidden;
+    animation: hero-temu-banner-pulse 3s ease-in-out infinite;
+    border-radius: 0;
+  }
+
+  .hero-temu-etiqueta-mega {
+    font-size: 15px;
+    line-height: 15px;
+    padding: 5px;
+    margin: 0;
+  }
+
+  .hero-temu-beneficios-container {
+    display: flex;
+    gap: 0.5px;
+    padding: 0 0.5px;
+  }
+
+  .hero-temu-beneficio-texto {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 10px 5px;
+    gap: 8px;
+  }
+
+  .hero-temu-check-verde {
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .hero-temu-oferta-relampago {
+    border-radius: 0;
+    padding: 10px 12px;
+  }
+}
+

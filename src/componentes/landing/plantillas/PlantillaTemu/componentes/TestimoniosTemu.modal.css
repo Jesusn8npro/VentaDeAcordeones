@@ -1,0 +1,166 @@
+﻿/* ================================================================
+   IMAGEN DE PRODUCTO ULTRA ESPECÃFICA
+   ================================================================ */
+
+.temu-testimonials-ultra-product-image-container {
+  position: relative;
+  margin: 30px 0;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.18),
+    0 8px 25px rgba(0, 0, 0, 0.1);
+  border: 3px solid rgba(255, 68, 68, 0.15);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8f9fa;
+}
+
+.temu-testimonials-ultra-product-image-container:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.25),
+    0 15px 40px rgba(255, 68, 68, 0.2);
+  border-color: rgba(255, 68, 68, 0.4);
+}
+
+.temu-testimonials-ultra-product-image {
+  width: 100% !important;
+  height: 240px !important;
+  object-fit: cover !important;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: #f8f9fa !important;
+  display: block !important;
+}
+
+.temu-testimonials-ultra-card:hover .temu-testimonials-ultra-product-image {
+  transform: scale(1.08) !important;
+  filter: brightness(1.15) contrast(1.08) !important;
+}
+
+.temu-testimonials-ultra-product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.temu-testimonials-ultra-card:hover .temu-testimonials-ultra-product-overlay {
+  opacity: 1;
+}
+
+.temu-testimonials-ultra-zoom-icon {
+  font-size: 28px;
+  color: white;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 15px;
+  border-radius: 50%;
+  backdrop-filter: blur(15px);
+}
+
+/* === MODAL === */
+
+/* ================================================================
+   COMENTARIO ULTRA ESPECÃFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-comment-section {
+  margin: 25px 0;
+}
+
+.temu-testimonials-ultra-comment-text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #374151;
+  font-weight: 500;
+  font-style: italic;
+  position: relative;
+  padding-left: 25px;
+}
+
+.temu-testimonials-ultra-comment-text::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -15px;
+  font-size: 45px;
+  color: #FF4444;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ================================================================
+   FOOTER ULTRA ESPECÃFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.temu-testimonials-ultra-verified-purchase {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(45deg, #10b981, #059669);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: 700;
+  align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.temu-testimonials-ultra-likes-count {
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ================================================================
+   BOTÃ“N VER MÃS ULTRA ESPECÃFICO
+   ================================================================ */
+
+.temu-testimonials-ultra-show-more {
+  text-align: center;
+  margin: 60px auto 0 auto;
+  max-width: 450px;
+}
+
+.temu-testimonials-ultra-show-more-button {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+  border: none;
+  padding: 18px 35px;
+  border-radius: 30px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+  width: 100%;
+}
+
+.temu-testimonials-ultra-show-more-button:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(14, 165, 233, 0.6);
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+}
+
+.temu-testimonials-ultra-show-more-text {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+

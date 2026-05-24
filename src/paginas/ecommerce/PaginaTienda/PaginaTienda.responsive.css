@@ -1,0 +1,235 @@
+﻿.vista-btn:hover { background: var(--ec-borde); }
+.vista-btn.activo {
+  background: var(--ec-acento);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(233,69,96,0.3);
+}
+
+/* â”€â”€ PRODUCTOS CONTENEDOR â”€â”€ */
+.tienda-productos {
+  background: transparent;
+  border: none;
+}
+
+/* â”€â”€ EMPTY STATE â”€â”€ */
+.tienda-empty {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--ec-texto-secundario);
+  background: var(--ec-fondo);
+  border-radius: var(--ec-radio-grande);
+  box-shadow: var(--ec-sombra);
+  margin-bottom: 24px;
+}
+.tienda-empty-icono {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ec-fondo-terciario);
+  color: var(--ec-texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+.tienda-empty-titulo { font-size: 20px; font-weight: 800; color: var(--ec-texto); margin: 0 0 8px; }
+.tienda-empty-desc   { font-size: 14px; margin: 0 0 16px; }
+.tienda-empty-acciones { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.btn-primario {
+  background: var(--ec-acento);
+  color: #fff;
+  border: none;
+  border-radius: var(--ec-radio);
+  padding: 12px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.2s ease;
+}
+.btn-primario:hover { background: var(--ec-acento-hover); }
+.btn-secundario {
+  background: var(--ec-fondo);
+  color: var(--ec-texto);
+  border: 1px solid var(--ec-borde);
+  border-radius: var(--ec-radio);
+  padding: 12px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.2s ease;
+}
+.btn-secundario:hover { background: var(--ec-fondo-secundario); }
+
+/* â”€â”€ MÃ“VIL â”€â”€ */
+.tienda-controles-movil {
+  display: none;
+  gap: 12px;
+  padding: 12px;
+  background: var(--ec-fondo);
+  border-bottom: 1px solid var(--ec-borde);
+}
+.btn-filtros-movil,
+.btn-ordenar-movil {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--ec-fondo);
+  border: 2px solid var(--ec-primario);
+  border-radius: var(--ec-radio);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ec-primario);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+.btn-filtros-movil:active,
+.btn-ordenar-movil:active { background: var(--ec-fondo-secundario); }
+
+.tienda-barra-resultados {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--ec-fondo);
+  border-bottom: 1px solid var(--ec-borde);
+}
+.resultados-info { font-size: 14px; color: var(--ec-texto-secundario); }
+.vista-botones-movil { display: flex; gap: 8px; }
+.vista-btn-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--ec-fondo);
+  border: 1px solid var(--ec-borde);
+  border-radius: 8px;
+  color: var(--ec-texto-secundario);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.vista-btn-icono.activo {
+  background: var(--ec-primario);
+  color: #fff;
+  border-color: var(--ec-primario);
+}
+
+/* â”€â”€ MODAL FILTROS â”€â”€ */
+.modal-filtros-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+}
+.modal-filtros-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--ec-fondo);
+  width: 85%;
+  margin-left: auto;
+  animation: slideInRight 0.3s ease;
+}
+.modal-filtros-header,
+.modal-filtros-refine-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--ec-fondo);
+  border-bottom: 1px solid var(--ec-borde);
+}
+.modal-filtros-header h2 { font-size: 20px; font-weight: 700; color: var(--ec-texto); margin: 0; }
+.modal-filtros-refine-header h3 { font-size: 16px; font-weight: 600; color: var(--ec-texto); margin: 0; }
+.modal-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--ec-texto-secundario);
+  cursor: pointer;
+}
+.clear-all-btn {
+  background: none;
+  border: none;
+  color: var(--ec-texto);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.modal-filtros-contenido {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* â”€â”€ MODAL ORDENAR â”€â”€ */
+.modal-ordenar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+.modal-ordenar-container {
+  width: 100%;
+  background: var(--ec-fondo);
+  border-radius: var(--ec-radio-grande) var(--ec-radio-grande) 0 0;
+  animation: slideUp 0.3s ease;
+}
+.modal-ordenar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid var(--ec-borde);
+}
+.modal-ordenar-header h3 { font-size: 18px; font-weight: 700; color: var(--ec-texto); margin: 0; }
+.modal-ordenar-opciones { padding: 8px 0; }
+.opcion-ordenar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.2s ease;
+}
+.opcion-ordenar:active { background: var(--ec-fondo-secundario); }
+.opcion-ordenar span { font-size: 16px; color: var(--ec-texto-secundario); flex: 1; text-align: center; }
+.opcion-ordenar.activo span { color: var(--ec-texto); font-weight: 600; }
+.opcion-ordenar svg { color: var(--ec-acento); position: absolute; right: 20px; }
+
+/* â”€â”€ RESPONSIVE â”€â”€ */
+@media (max-width: 1024px) {
+  .tienda-controles-movil  { display: flex; }
+  .tienda-barra-resultados { display: flex; }
+  .tienda-header           { display: none; }
+}
+@media (max-width: 768px) {
+  .tienda-titulo { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .tienda-titulo { font-size: 20px; }
+}

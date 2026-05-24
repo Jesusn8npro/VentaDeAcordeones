@@ -1,0 +1,200 @@
+﻿/* FormularioProducto.css */
+.formulario-producto {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0.75rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Secciones */
+.seccion {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 3px solid #007bff;
+}
+
+.seccion h3 {
+  margin: 0 0 0.75rem 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Campos */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.campo:last-child {
+  margin-bottom: 0;
+}
+
+.campo label {
+  font-weight: 500;
+  color: #555;
+  font-size: 13px;
+}
+
+.campo input,
+.campo textarea,
+.campo select {
+  padding: 0.75rem;
+  border: 1px solid #e1e5e9;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.campo input.error,
+.campo textarea.error,
+.campo select.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+/* Filas */
+.fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Checkboxes */
+.campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.campo-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.campo-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #555;
+  margin: 0;
+}
+
+/* Errores */
+.error-texto {
+  color: #dc3545;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* DescripciÃ³n para campos JSON */
+.descripcion-json {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 8px 0;
+  font-style: italic;
+}
+
+.descripcion-json-small {
+  font-size: 12px;
+  color: #666;
+  margin: 2px 0 4px 0;
+  font-style: italic;
+}
+
+/* Campos JSON especiales */
+.campo-json {
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  background-color: #f8f9fa;
+  border: 2px solid #e1e5e9;
+  border-radius: 6px;
+  padding: 12px;
+  line-height: 1.4;
+}
+
+.campo-json:focus {
+  background-color: #fff;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Botones mejorados */
+.botones {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 2px solid #e1e5e9;
+  margin-top: 24px;
+}
+
+.boton-guardar {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  position: relative;
+}
+
+.boton-guardar:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.boton-guardar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Indicador de atajo de teclado */
+.atajo-teclado {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  z-index: 1000;
+  opacity: 0.7;

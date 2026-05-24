@@ -1,0 +1,210 @@
+﻿/* ===== HERO TEMU â€” POPUP GALERÃA Y RESPONSIVE ===== */
+
+/* ============================================
+   POPUP DE GALERÃA - ARREGLADO SIN SCROLL
+   ============================================ */
+.hero-temu-popup-galeria {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.90);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hero-temu-popup-aparecer 0.3s ease;
+  overflow: hidden; /* CRÃTICO: Sin scroll */
+}
+
+.hero-temu-popup-contenido {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+  overflow: hidden; /* CRÃTICO: Sin scroll */
+  box-shadow: none;
+}
+
+/* Ajuste para mÃ³vil - contenedor mÃ¡s arriba */
+@media (max-width: 800px) {
+  .hero-temu-popup-contenido {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+.hero-temu-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: transparent;
+  color: white;
+}
+
+.hero-temu-popup-contador {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.hero-temu-popup-botones {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.hero-temu-popup-compartir {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  /* TransiciÃ³n eliminada para cambio instantÃ¡neo */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-temu-popup-compartir:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-temu-popup-cerrar {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  /* TransiciÃ³n eliminada para cambio instantÃ¡neo */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-temu-popup-cerrar:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* IMAGEN PRINCIPAL CENTRADA PERFECTAMENTE */
+.hero-temu-popup-imagen-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 5px; /* Menos padding para mÃ¡s espacio */
+  min-height: 0;
+  overflow: hidden; /* CRÃTICO: Sin scroll */
+  max-height: calc(100vh - 160px); /* MÃ¡s espacio para la imagen */
+  width: 100%;
+}
+
+.hero-temu-popup-imagen {
+  width: auto;
+  height: auto;
+  max-width: 95%; /* Usar casi todo el ancho disponible */
+  max-height: 95%; /* Usar casi toda la altura disponible */
+  object-fit: contain; /* CRÃTICO: Mantener proporciones sin cortar */
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: block;
+  margin: auto; /* Centrado adicional */
+}
+
+/* CONTENEDOR IMAGEN MOBILE - CENTRADO PERFECTO */
+.hero-temu-popup-imagen-container-mobile {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 5px; /* Menos padding para mÃ¡s espacio */
+  min-height: 0;
+  overflow: hidden; /* CRÃTICO: Sin scroll */
+  max-height: calc(100vh - 180px); /* MÃ¡s espacio para imagen en mobile */
+  width: 100%;
+}
+
+.hero-temu-popup-imagen-container-mobile .hero-temu-popup-imagen {
+  max-width: 98%; /* Usar casi todo el ancho en mobile */
+  max-height: 98%; /* Usar casi toda la altura en mobile */
+}
+
+.hero-temu-popup-flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.hero-temu-popup-flecha:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.hero-temu-popup-flecha-izquierda { left: 20px; }
+.hero-temu-popup-flecha-derecha { right: 20px; }
+
+.hero-temu-popup-acciones {
+  padding: 16px 20px;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-temu-popup-boton-carrito {
+  background: #ff6b35; /* Color naranja */
+  color: white;
+  border: 2px solid #ff6b35; /* Borde naranja */
+  border-radius: 25px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* TransiciÃ³n eliminada para cambio instantÃ¡neo */
+  min-width: 200px;
+  justify-content: center;
+}
+
+.hero-temu-popup-boton-carrito:hover {
+  background: #e55a2b; /* Naranja mÃ¡s oscuro en hover */
+  border-color: #e55a2b;
+  /* Eliminado transform para cambio instantÃ¡neo */
+}
+
+@keyframes hero-temu-popup-aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
