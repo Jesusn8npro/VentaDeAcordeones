@@ -18,15 +18,40 @@ import CtaFinalInicio from './CtaFinalInicio/CtaFinalInicio'
 
 export default function PaginaInicio() {
   useEffect(() => {
-    const els = document.querySelectorAll<Element>('.reveal')
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
       }),
-      { threshold: 0.12 }
+      { threshold: 0.08, rootMargin: '0px 0px -4% 0px' }
     )
-    els.forEach((el) => io.observe(el))
-    return () => io.disconnect()
+
+    // Observa todos los .reveal existentes (y re-observa los que aún no aparecen).
+    let raf = 0
+    const observarPendientes = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() =>
+        document.querySelectorAll<Element>('.reveal:not(.in)').forEach((el) => io.observe(el))
+      )
+    }
+    observarPendientes()
+
+    // Las secciones que cargan datos (flash sale, destacados…) se renderizan
+    // DESPUÉS del montaje. Este MutationObserver las detecta y las observa,
+    // evitando que se queden invisibles (el bug de los "huecos negros").
+    const mo = new MutationObserver(observarPendientes)
+    mo.observe(document.body, { childList: true, subtree: true })
+
+    // Red de seguridad: nada debe quedar oculto permanentemente.
+    const safety = window.setTimeout(() => {
+      document.querySelectorAll<Element>('.reveal:not(.in)').forEach((el) => el.classList.add('in'))
+    }, 6000)
+
+    return () => {
+      io.disconnect()
+      mo.disconnect()
+      cancelAnimationFrame(raf)
+      clearTimeout(safety)
+    }
   }, [])
 
   return (
