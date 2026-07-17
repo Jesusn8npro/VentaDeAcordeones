@@ -54,7 +54,8 @@ export default function DashboardAdmin() {
   const { usuario, cargando, sesionInicializada, esAdmin } = useAuth()
 
   useEffect(() => {
-    if (!cargando) {
+    // Esperar al perfil real (rol) antes de decidir redirecciones
+    if (!cargando && !usuario?._parcial) {
       if (!sesionInicializada || !usuario) {
         router.push('/login')
         return

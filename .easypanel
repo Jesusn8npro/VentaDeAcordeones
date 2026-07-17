@@ -3,7 +3,7 @@
     "command": "npm run build"
   },
   "start": {
-    "command": "npm run preview"
+    "command": "npm run start"
   },
   "env": {
     "NODE_ENV": "production",

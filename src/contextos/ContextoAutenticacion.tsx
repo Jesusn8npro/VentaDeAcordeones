@@ -89,7 +89,9 @@ export const ProveedorAutenticacion = ({ children }: { children: React.ReactNode
             session.user.user_metadata?.nombre ||
             session.user.user_metadata?.full_name ||
             (session.user.email ? session.user.email.split('@')[0] : 'Usuario'),
-          rol: 'cliente'
+          rol: 'cliente',
+          // Perfil aún NO cargado desde la DB → los guards deben esperar el rol real
+          _parcial: true
         }
 
         // NAVEGACIÓN FLUIDA: Actualizar estado inmediatamente
@@ -106,7 +108,9 @@ export const ProveedorAutenticacion = ({ children }: { children: React.ReactNode
               ...datosUsuario,
               email: session.user.email,
               nombre: datosUsuario.nombre || prevUsuario.nombre,
-              rol: datosUsuario.rol || prevUsuario.rol
+              rol: datosUsuario.rol || prevUsuario.rol,
+              // Perfil real ya cargado → los guards pueden decidir
+              _parcial: false
             }))
             // Vincular sesión de chat con el usuario autenticado (fire-and-forget)
             try {
@@ -119,8 +123,13 @@ export const ProveedorAutenticacion = ({ children }: { children: React.ReactNode
                   .then(() => {})
               }
             } catch { /* ignore */ }
+          } else {
+            // No se pudo cargar el perfil: dejar de esperar (evita loader infinito)
+            setUsuario(prev => (prev ? { ...prev, _parcial: false } : prev))
           }
-        } catch { /* mantener usuario básico */ }
+        } catch {
+          setUsuario(prev => (prev ? { ...prev, _parcial: false } : prev))
+        }
       } catch {
         setUsuario(null)
         setCargando(false)

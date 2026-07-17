@@ -1,0 +1,148 @@
+/* ── Página de mantenimiento — "Estamos actualizando la plataforma" ───────── */
+.mant-wrap {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem 1.25rem;
+  background:
+    radial-gradient(120% 120% at 50% 0%, #16213e 0%, #0d1120 55%, #070a14 100%);
+  color: #f5f5f7;
+  font-family: var(--font-poppins), system-ui, sans-serif;
+  text-align: center;
+}
+
+/* halo dorado suave que respira */
+.mant-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(closest-side, rgba(212, 175, 55, 0.16), transparent 70%);
+  filter: blur(20px);
+  animation: mant-respira 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes mant-respira {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50%      { transform: scale(1.12); opacity: 1; }
+}
+
+.mant-card {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.mant-logo {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+  animation: mant-flota 4.5s ease-in-out infinite;
+}
+
+@keyframes mant-flota {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.mant-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.mant-punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4af37;
+  animation: mant-parpadeo 1.4s ease-in-out infinite;
+}
+
+@keyframes mant-parpadeo {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.7); }
+}
+
+.mant-titulo {
+  font-family: var(--font-bebas), var(--font-poppins), sans-serif;
+  font-size: clamp(2.3rem, 7vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+.mant-titulo span {
+  background: linear-gradient(90deg, #f6d365 0%, #d4af37 50%, #f6d365 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.mant-texto {
+  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  line-height: 1.6;
+  color: #b8bccb;
+  margin: 0;
+  max-width: 460px;
+}
+
+.mant-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 0.4rem;
+}
+
+.mant-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 14px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.mant-btn:hover { transform: translateY(-2px); }
+
+.mant-btn-wa {
+  color: #063d2f;
+  background: linear-gradient(135deg, #25d366, #128c4b);
+  box-shadow: 0 10px 26px rgba(37, 211, 102, 0.32);
+}
+.mant-btn-wa:hover { box-shadow: 0 14px 32px rgba(37, 211, 102, 0.45); }
+
+.mant-marca {
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b7186;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mant-wrap::before,
+  .mant-logo,
+  .mant-punto { animation: none; }
+}

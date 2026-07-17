@@ -17,6 +17,11 @@ NEXT_PUBLIC_EPAYCO_ENVIRONMENT = "production"
 NEXT_PUBLIC_EPAYCO_URL_RESPONSE = "https://ventadeacordeones.com/respuesta-epayco"
 NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION = "https://ventadeacordeones.com/confirmacion-epayco"
 
+# MODO MANTENIMIENTO (gate por login). "true" = el publico ve "Estamos
+# actualizando" y SOLO el admin logueado ve el sitio real. Para lanzar al
+# publico: cambiar a "false" y re-desplegar (es NEXT_PUBLIC → se fija en build).
+NEXT_PUBLIC_MODO_MANTENIMIENTO = "true"
+
 # nixpkgsArchive fija una revisión con nodejs_22 (evita "undefined variable 'nodejs_22'").
 # vips/pkg-config: necesarios si se reactiva la optimización de imágenes de Next.
 [phases.setup]

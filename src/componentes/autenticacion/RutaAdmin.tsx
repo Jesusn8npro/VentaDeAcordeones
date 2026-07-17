@@ -1,64 +1,37 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '../../contextos/ContextoAutenticacion'
 
-// Guard de ruta para área Admin: requiere sesión y rol admin
+// Guard de ruta para área Admin: requiere sesión y rol admin.
+// El gate `montado` garantiza que el servidor y el primer render del cliente
+// pinten lo mismo (loader) → sin mismatch de hidratación. La verificación real
+// de auth corre solo en el cliente, después de montar.
 export default function RutaAdmin({ children }) {
   const { sesionInicializada, esAdmin, cargando, usuario } = useAuth()
   const router = useRouter()
-  const hasShownInitialLoad = useRef(false)
+  const [montado, setMontado] = useState(false)
+
+  useEffect(() => {
+    setMontado(true)
+  }, [])
 
   const esUsuarioAdmin = typeof esAdmin === 'function' ? esAdmin() : false
 
-  // Redirigir si podemos navegar y el usuario no tiene acceso admin
+  // Redirigir cuando ya montó y la sesión terminó de resolverse.
+  // No decidir mientras el perfil siga `_parcial` (rol real aún cargando).
   useEffect(() => {
-    if (!canNavigateImmediately()) return
+    if (!montado || cargando || usuario?._parcial) return
     if (!sesionInicializada || !usuario) {
       router.replace('/login')
     } else if (!esUsuarioAdmin) {
       router.replace('/')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sesionInicializada, usuario, esUsuarioAdmin, router])
+  }, [montado, cargando, sesionInicializada, usuario, esUsuarioAdmin, router])
 
-  // OPTIMIZACIÓN: Solo mostrar carga en la primera verificación inicial
-  // No mostrar carga durante navegación entre páginas de admin
-  const shouldShowLoading = () => {
-    // Si ya hemos mostrado la carga inicial una vez, no volver a mostrarla
-    if (hasShownInitialLoad.current) {
-      return false
-    }
-
-    // Solo mostrar carga si realmente estamos en proceso inicial de autenticación
-    const isInitialAuth = cargando && !sesionInicializada && !usuario
-
-    if (isInitialAuth) {
-      hasShownInitialLoad.current = true
-      return true
-    }
-
-    return false
-  }
-
-  // NAVEGACIÓN FLUIDA: Si ya tenemos datos básicos, permitir navegación inmediata
-  const canNavigateImmediately = () => {
-    // Si tenemos sesión inicializada y usuario, permitir navegación
-    if (sesionInicializada && usuario) {
-      return true
-    }
-
-    // Si no estamos cargando y no hay sesión, también es claro
-    if (!cargando && !sesionInicializada) {
-      return true
-    }
-
-    return false
-  }
-
-  // Mostrar loader SOLO en la primera carga inicial
-  if (shouldShowLoading()) {
+  // Server + primer render de cliente, o perfil aún cargando → loader idéntico
+  if (!montado || cargando || (usuario && usuario._parcial)) {
     return (
       <div style={{
         position: 'fixed',
@@ -94,18 +67,11 @@ export default function RutaAdmin({ children }) {
     )
   }
 
-  // NAVEGACIÓN INMEDIATA: Si podemos navegar, proceder con las verificaciones
-  if (canNavigateImmediately()) {
-    // No logueado o sin rol admin: null mientras el useEffect redirige
-    if (!sesionInicializada || !usuario || !esUsuarioAdmin) {
-      return null
-    }
-
-    // Usuario admin verificado: mostrar contenido
-    return children
+  // Ya montado y sesión resuelta. Sin acceso → null mientras el useEffect redirige.
+  if (!sesionInicializada || !usuario || !esUsuarioAdmin) {
+    return null
   }
 
-  // FALLBACK: Si no podemos determinar el estado, mostrar contenido
-  // (esto evita bloqueos indefinidos)
+  // Usuario admin verificado
   return children
 }
