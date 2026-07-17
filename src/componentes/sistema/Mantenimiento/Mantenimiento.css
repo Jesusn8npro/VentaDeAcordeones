@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 2rem 1.25rem;
+  padding: 2.5rem 1.25rem;
   background:
     radial-gradient(120% 120% at 50% 0%, #16213e 0%, #0d1120 55%, #070a14 100%);
   color: #f5f5f7;
@@ -35,18 +35,19 @@
 .mant-card {
   position: relative;
   z-index: 1;
-  max-width: 560px;
+  max-width: 640px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.4rem;
+  gap: 1.3rem;
 }
 
 .mant-logo {
-  width: 92px;
-  height: 92px;
+  width: 128px;
+  height: 128px;
   object-fit: contain;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.55));
   animation: mant-flota 4.5s ease-in-out infinite;
 }
 
@@ -61,7 +62,7 @@
   gap: 0.5rem;
   padding: 0.4rem 0.95rem;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -85,7 +86,7 @@
 
 .mant-titulo {
   font-family: var(--font-bebas), var(--font-poppins), sans-serif;
-  font-size: clamp(2.3rem, 7vw, 3.6rem);
+  font-size: clamp(2.2rem, 6.5vw, 3.6rem);
   line-height: 1.02;
   letter-spacing: 0.5px;
   margin: 0;
@@ -98,13 +99,86 @@
 }
 
 .mant-texto {
-  font-size: clamp(1rem, 2.6vw, 1.15rem);
+  font-size: clamp(0.98rem, 2.4vw, 1.12rem);
   line-height: 1.6;
   color: #b8bccb;
   margin: 0;
-  max-width: 460px;
+  max-width: 500px;
 }
 
+/* ── Contador ── */
+.mant-contador {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.3rem;
+}
+
+.mant-cd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 74px;
+  padding: 0.85rem 0.6rem;
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.mant-cd-num {
+  font-family: var(--font-bebas), var(--font-poppins), sans-serif;
+  font-size: clamp(1.9rem, 6vw, 2.7rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, #ffe9a8, #d4af37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.mant-cd-lbl {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9aa0b4;
+}
+
+.mant-cd-nota {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: #8087a0;
+  margin: 0;
+}
+
+/* ── Qué viene ── */
+.mant-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 0.3rem;
+}
+
+.mant-feat {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #d7dae6;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  text-align: left;
+}
+.mant-feat span { font-size: 1.15rem; line-height: 1; }
+
+/* ── Acciones ── */
 .mant-acciones {
   display: flex;
   flex-wrap: wrap;
@@ -117,9 +191,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.85rem 1.5rem;
+  padding: 0.9rem 1.7rem;
   border-radius: 14px;
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
@@ -133,12 +207,25 @@
 }
 .mant-btn-wa:hover { box-shadow: 0 14px 32px rgba(37, 211, 102, 0.45); }
 
+.mant-marcas {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c9a94a;
+}
+
 .mant-marca {
-  margin-top: 0.6rem;
-  font-size: 0.82rem;
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #6b7186;
+}
+
+@media (max-width: 420px) {
+  .mant-cd-item { min-width: 64px; padding: 0.7rem 0.4rem; }
+  .mant-features { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
