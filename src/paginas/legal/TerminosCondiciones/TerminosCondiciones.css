@@ -1,10 +1,10 @@
 /* Términos y Condiciones — Estilo neutro y sobrio (prefijo termsNeutral) */
 .termsNeutral {
-  --terms-bg: #f8fafc;
-  --terms-card: #ffffff;
-  --terms-border: #e2e8f0;
-  --terms-text: #0f172a;
-  --terms-muted: #475569;
+  --terms-bg: var(--vda-fondo);
+  --terms-card: var(--vda-superficie);
+  --terms-border: var(--vda-linea);
+  --terms-text: var(--vda-tinta);
+  --terms-muted: var(--vda-tinta-dim);
 
   max-width: 1000px;
   margin: 0 auto;
@@ -31,14 +31,14 @@
   color: var(--terms-muted);
   border: 1px solid var(--terms-border);
   text-decoration: none;
-  background: #f9fafb;
+  background: var(--vda-superficie-2);
 }
-.terms-back:hover { background: #f1f5f9; color: #334155; }
+.terms-back:hover { background: var(--vda-superficie-3); color: var(--vda-tinta); }
 
 .terms-title-row { display: flex; align-items: center; gap: 0.75rem; }
 .terms-title { margin: 0; font-size: 2rem; font-weight: 700; color: var(--terms-text); }
 .terms-subtitle { margin: 0.5rem 0 0.75rem; color: var(--terms-muted); }
-.terms-date { display: inline-block; font-size: 0.875rem; color: #334155; background: #f1f5f9; border: 1px solid var(--terms-border); padding: 0.25rem 0.5rem; border-radius: 6px; }
+.terms-date { display: inline-block; font-size: 0.875rem; color: var(--vda-tinta); background: var(--vda-superficie-2); border: 1px solid var(--terms-border); padding: 0.25rem 0.5rem; border-radius: 6px; }
 
 .terms-content {
   background: var(--terms-card);
@@ -56,7 +56,7 @@
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--terms-border);
 }
-.terms-icon { width: 22px; height: 22px; color: #334155; }
+.terms-icon { width: 22px; height: 22px; color: var(--vda-tinta-dim); }
 .terms-section-title { margin: 0; font-size: 1.25rem; font-weight: 600; color: var(--terms-text); }
 .terms-section-body { color: var(--terms-muted); line-height: 1.7; font-size: 0.9875rem; }
 .terms-section-body p { margin: 0.75rem 0; }
@@ -65,7 +65,7 @@
 
 /* Bloques informativos, alerta y nota, con estética tenue */
 .terms-info {
-  background: #f9fafb;
+  background: var(--vda-superficie-2);
   border: 1px solid var(--terms-border);
   border-radius: 12px;
   padding: 0.875rem;
@@ -75,17 +75,17 @@
 .terms-info p { margin: 0.25rem 0; color: var(--terms-muted); }
 
 .terms-alert {
-  background: #fff5f5;
-  border: 1px solid #fecaca;
+  background: color-mix(in srgb, #ef4444 12%, var(--vda-superficie));
+  border: 1px solid color-mix(in srgb, #ef4444 40%, transparent);
   border-radius: 12px;
   padding: 0.875rem;
   margin: 0.75rem 0;
-  color: #374151;
+  color: var(--vda-tinta-dim);
 }
-.terms-alert strong { color: #b91c1c; }
+.terms-alert strong { color: var(--vda-peligro); }
 
 .terms-note {
-  background: #f8fafc;
+  background: var(--vda-superficie-2);
   border: 1px solid var(--terms-border);
   border-radius: 12px;
   padding: 0.875rem;
@@ -94,7 +94,7 @@
 .terms-note strong { color: var(--terms-text); }
 
 .terms-vehiculos {
-  background: #f9fafb;
+  background: var(--vda-superficie-2);
   border: 1px solid var(--terms-border);
   border-radius: 12px;
   padding: 0.875rem;

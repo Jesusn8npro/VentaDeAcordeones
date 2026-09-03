@@ -7,9 +7,9 @@
   z-index: 10000;
   max-width: 400px;
   min-width: 300px;
-  background: white;
+  background: var(--vda-superficie);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--vda-sombra-card);
   border-left: 4px solid;
   overflow: hidden;
   transform: translateX(0);
@@ -68,14 +68,14 @@
   margin: 0 0 4px 0;
   font-size: 16px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--vda-tinta);
   line-height: 1.3;
 }
 
 .notificacion-mensaje {
   margin: 0;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--vda-tinta-dim);
   line-height: 1.4;
 }
 
@@ -86,7 +86,7 @@
   padding: 4px;
   border-radius: 6px;
   cursor: pointer;
-  color: #9ca3af;
+  color: var(--vda-tinta-muted);
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -94,8 +94,8 @@
 }
 
 .notificacion-cerrar:hover {
-  background: #f3f4f6;
-  color: #6b7280;
+  background: var(--vda-superficie-2);
+  color: var(--vda-tinta-dim);
 }
 
 /* Barra de progreso */
@@ -105,7 +105,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(0, 0, 0, 0.1);
+  background: color-mix(in srgb, var(--vda-tinta) 10%, transparent);
   overflow: hidden;
 }
 
@@ -179,7 +179,7 @@
 
 /* Estados de hover para mejor UX */
 .notificacion-carrito:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--vda-sombra-card);
   transform: translateY(-2px);
 }
 
@@ -193,26 +193,5 @@
   .notificacion-progreso-barra {
     animation: none;
     transition: none;
-  }
-}
-
-/* Modo oscuro */
-@media (prefers-color-scheme: dark) {
-  .notificacion-carrito {
-    background: #1f2937;
-    border-left-color: #374151;
-  }
-  
-  .notificacion-titulo {
-    color: #f9fafb;
-  }
-  
-  .notificacion-mensaje {
-    color: #d1d5db;
-  }
-  
-  .notificacion-cerrar:hover {
-    background: #374151;
-    color: #d1d5db;
   }
 }

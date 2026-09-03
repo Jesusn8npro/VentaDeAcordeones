@@ -1,312 +1,279 @@
-﻿'use client'
+'use client'
 
-import React, { useState, useEffect } from 'react'
-import { useSearchParams, useParams, useRouter, usePathname } from 'next/navigation'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { LayoutGrid, List, SlidersHorizontal, X, ChevronDown, SearchX, RefreshCw } from 'lucide-react'
 import { useTituloPagina } from '../../../hooks/useTitulosPagina'
+import { clienteSupabase } from '../../../configuracion/supabase'
 import DisposicionTienda from '../../../componentes/tienda/DisposicionTienda'
 import PanelFiltros from '../../../componentes/tienda/PanelFiltros'
-import GridProductosVendedor from '../../../componentes/producto/GridProductosVendedor'
-import { ModalFiltrosMovil, ModalOrdenarMovil } from './ModalesTienda'
-import { Grid, List, SlidersHorizontal } from 'lucide-react'
-import { clienteSupabase } from '../../../configuracion/supabase'
+import TarjetaProductoLujo from '../../../componentes/producto/TarjetaProductoLujo'
+import TarjetaProductoCinema from '../../../componentes/producto/TarjetaProductoCinema'
+import Icono from '../../../componentes/ui/Icono'
 import SkeletonCards from './SkeletonCards'
-import EncabezadoTienda from './EncabezadoTienda'
+import { usarProductosTienda, PRODUCTOS_POR_PAGINA } from './usarProductosTienda'
+import {
+  FILTROS_VACIOS,
+  OPCIONES_ORDEN,
+  contarFiltrosActivos,
+  etiquetaMarca,
+  filtrosAParams,
+  formatearCOP,
+  leerFiltrosDeURL,
+  type FiltrosTienda,
+  type OrdenTienda,
+  type VistaTienda,
+} from './filtrosTienda'
 import './PaginaTienda.css'
 
-const PaginaTienda = () => {
-  useTituloPagina('Tienda de Acordeones')
-  const params = useParams() // Detectar slug de categorÃ­a
-  const slug = params.slug as string | undefined
+const WHATSAPP = 'https://wa.me/573144865310'
+
+/** descripcion puede venir como texto o como JSONB {contenido} */
+const textoDescripcion = (d: unknown): string => {
+  if (typeof d === 'string') return d
+  if (d && typeof d === 'object' && typeof (d as any).contenido === 'string') return (d as any).contenido
+  return ''
+}
+
+interface CategoriaActual { id: string; nombre: string; slug: string; descripcion: string; enOferta: number }
+
+export default function PaginaTienda() {
+  const params = useParams()
+  const slug = typeof params?.slug === 'string' ? params.slug : undefined
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const [categoriaActual, setCategoriaActual] = useState(null)
+
+  // La URL es la única fuente de verdad de filtros/orden/vista
+  const { filtros, orden, vista } = useMemo(
+    () => leerFiltrosDeURL(new URLSearchParams(searchParams.toString())),
+    [searchParams],
+  )
+
+  const [categoria, setCategoria] = useState<CategoriaActual | null>(null)
   const [cargandoCategoria, setCargandoCategoria] = useState(!!slug)
-  const [filtros, setFiltros] = useState({
-    busqueda: '',
-    categorias: [],
-    precioMin: 0,
-    precioMax: 10000000,
-    marcas: [],
-    rating: 0,
-    enStock: false
-  })
-  const [vista, setVista] = useState('grid') // 'grid' | 'lista'
-  const [ordenar, setOrdenar] = useState('nuevos')
-  const [totalProductos, setTotalProductos] = useState<number | null>(null)
-  const [gridCargando, setGridCargando] = useState(true)
-  
-  // Estados para modales mÃ³viles
-  const [modalFiltrosAbierto, setModalFiltrosAbierto] = useState(false)
-  const [modalOrdenarAbierto, setModalOrdenarAbierto] = useState(false)
+  const [drawerAbierto, setDrawerAbierto] = useState(false)
 
+  useTituloPagina(categoria?.nombre || 'Tienda de Acordeones')
+
+  // Categoría de la ruta /tienda/categoria/[slug]
   useEffect(() => {
-    const cargarCategoria = async () => {
-      if (!slug || slug === 'undefined') {
-        setCategoriaActual(null)
-        setCargandoCategoria(false)
-        return
-      }
-
+    if (!slug) { setCategoria(null); setCargandoCategoria(false); return }
+    let activo = true
+    setCargandoCategoria(true)
+    ;(async () => {
       try {
-        setCargandoCategoria(true)
-        const { data: categoria, error } = await clienteSupabase
+        const { data: cat } = await clienteSupabase
           .from('categorias')
-          .select('*')
+          .select('id, nombre, slug, descripcion')
           .eq('slug', slug)
           .maybeSingle()
-
-        if (error) throw error
-
-        if (!categoria) {
-          setCategoriaActual(null)
-          setCargandoCategoria(false)
-          return
-        }
-
-        // Contar productos y calcular stats en paralelo
-        const [{ count: totalProductos }, { data: productosConDescuento }] = await Promise.all([
-          clienteSupabase
-            .from('productos')
-            .select('*', { count: 'exact', head: true })
-            .eq('categoria_id', categoria.id),
-          clienteSupabase
-            .from('productos')
-            .select('precio, precio_original')
-            .eq('categoria_id', categoria.id)
-            .not('precio_original', 'is', null)
-        ])
-
-        const productosEnOferta = productosConDescuento?.length || 0
-        const descuentoPromedio = productosEnOferta > 0
-          ? Math.round(productosConDescuento.reduce((sum, p) => {
-              const descuento = ((p.precio_original - p.precio) / p.precio_original) * 100
-              return sum + descuento
-            }, 0) / productosEnOferta)
-          : 0
-
-        const categoriaConStats = {
-          ...categoria,
-          total_productos: totalProductos || 0,
-          productos_en_oferta: productosEnOferta,
-          descuento_promedio: descuentoPromedio
-        }
-
-        setCategoriaActual(categoriaConStats)
-
-        setFiltros({
-          busqueda: '',
-          categorias: [categoria.id],
-          precioMin: 0,
-          precioMax: 10000000,
-          marcas: [],
-          rating: 0,
-          enStock: false
-        })
-
-      } catch (error) {
-        setCategoriaActual(null)
+        if (!activo) return
+        if (!cat) { setCategoria(null); return }
+        const { count } = await clienteSupabase
+          .from('productos')
+          .select('id', { count: 'exact', head: true })
+          .eq('categoria_id', cat.id)
+          .eq('activo', true)
+          .gt('descuento', 0)
+        if (!activo) return
+        setCategoria({ id: cat.id, nombre: cat.nombre, slug: cat.slug, descripcion: textoDescripcion(cat.descripcion), enOferta: count || 0 })
+      } catch {
+        if (activo) setCategoria(null)
       } finally {
-        setCargandoCategoria(false)
+        if (activo) setCargandoCategoria(false)
       }
-    }
-
-    cargarCategoria()
+    })()
+    return () => { activo = false }
   }, [slug])
 
-  useEffect(() => {
-    if (slug) {
-      setVista(searchParams.get('vista') || 'grid')
-      setOrdenar(searchParams.get('ordenar') || 'relevancia')
-      return
+  const categoriaNoExiste = !!slug && !cargandoCategoria && !categoria
+
+  const { productos, total, cargando, cargandoMas, error, hayMas, cargarMas, reintentar } = usarProductosTienda({
+    filtros,
+    orden,
+    categoriaFija: categoria?.id ?? null,
+    listo: !slug || (!cargandoCategoria && !!categoria),
+  })
+
+  /* ── Navegación (escribe la URL; el estado se deriva de ella) ── */
+  const navegar = useCallback((f: FiltrosTienda, o: OrdenTienda, v: VistaTienda) => {
+    const qs = filtrosAParams(f, o, v).toString()
+    router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false })
+  }, [router, pathname])
+
+  const cambiarFiltros = useCallback((parcial: Partial<FiltrosTienda>) => navegar({ ...filtros, ...parcial }, orden, vista), [filtros, orden, vista, navegar])
+  const limpiar = useCallback(() => navegar(FILTROS_VACIOS, orden, vista), [orden, vista, navegar])
+  const cambiarOrden = (o: OrdenTienda) => navegar(filtros, o, vista)
+  const cambiarVista = (v: VistaTienda) => navegar(filtros, orden, v)
+
+  const nActivos = contarFiltrosActivos(filtros, !slug)
+
+  /* ── Chips de filtros activos ── */
+  const chips = useMemo(() => {
+    const lista: { clave: string; texto: string; quitar: () => void }[] = []
+    if (filtros.busqueda) lista.push({ clave: 'q', texto: `“${filtros.busqueda}”`, quitar: () => cambiarFiltros({ busqueda: '' }) })
+    if (filtros.precioMin != null || filtros.precioMax != null) {
+      const texto = filtros.precioMin != null && filtros.precioMax != null
+        ? `${formatearCOP(filtros.precioMin)} – ${formatearCOP(filtros.precioMax)}`
+        : filtros.precioMin != null ? `Desde ${formatearCOP(filtros.precioMin)}` : `Hasta ${formatearCOP(filtros.precioMax!)}`
+      lista.push({ clave: 'precio', texto, quitar: () => cambiarFiltros({ precioMin: null, precioMax: null }) })
     }
+    filtros.marcas.forEach(m => lista.push({ clave: `m-${m}`, texto: etiquetaMarca(m), quitar: () => cambiarFiltros({ marcas: filtros.marcas.filter(x => x !== m) }) }))
+    if (filtros.rating > 0) lista.push({ clave: 'rating', texto: `★ ${filtros.rating}+`, quitar: () => cambiarFiltros({ rating: 0 }) })
+    if (filtros.enStock) lista.push({ clave: 'stock', texto: 'Solo en stock', quitar: () => cambiarFiltros({ enStock: false }) })
+    if (filtros.conDescuento) lista.push({ clave: 'oferta', texto: 'Con descuento', quitar: () => cambiarFiltros({ conDescuento: false }) })
+    return lista
+  }, [filtros, cambiarFiltros])
 
-    setFiltros({
-      busqueda: searchParams.get('busqueda') || '',
-      categorias: searchParams.get('categorias')?.split(',').filter(Boolean) || [],
-      precioMin: parseInt(searchParams.get('precioMin')) || 0,
-      precioMax: parseInt(searchParams.get('precioMax')) || 10000000,
-      marcas: searchParams.get('marcas')?.split(',').filter(Boolean) || [],
-      rating: parseInt(searchParams.get('rating')) || 0,
-      enStock: searchParams.get('enStock') === 'true'
-    })
-    setVista(searchParams.get('vista') || 'grid')
-    setOrdenar(searchParams.get('ordenar') || 'relevancia')
-  }, [searchParams, slug])
-
-  const handleFiltrosChange = (nuevosFiltros) => {
-    setFiltros(nuevosFiltros)
-    const params = new URLSearchParams()
-    if (nuevosFiltros.busqueda) params.set('busqueda', nuevosFiltros.busqueda)
-    if (nuevosFiltros.categorias.length > 0) params.set('categorias', nuevosFiltros.categorias.join(','))
-    if (nuevosFiltros.precioMin > 0) params.set('precioMin', nuevosFiltros.precioMin.toString())
-    if (nuevosFiltros.precioMax < 10000000) params.set('precioMax', nuevosFiltros.precioMax.toString())
-    if (nuevosFiltros.marcas.length > 0) params.set('marcas', nuevosFiltros.marcas.join(','))
-    if (nuevosFiltros.rating > 0) params.set('rating', nuevosFiltros.rating.toString())
-    if (nuevosFiltros.enStock) params.set('enStock', 'true')
-    if (vista !== 'grid') params.set('vista', vista)
-    if (ordenar !== 'relevancia') params.set('ordenar', ordenar)
-    router.push(pathname + '?' + params.toString())
-  }
-
-  const handleVistaChange = (nuevaVista) => {
-    setVista(nuevaVista)
-    const params = new URLSearchParams(searchParams)
-    if (nuevaVista !== 'grid') {
-      params.set('vista', nuevaVista)
-    } else {
-      params.delete('vista')
-    }
-    router.push(pathname + '?' + params.toString())
-  }
-
-  const handleOrdenarChange = (nuevoOrdenar) => {
-    setOrdenar(nuevoOrdenar)
-    
-    const params = new URLSearchParams(searchParams)
-    if (nuevoOrdenar !== 'relevancia') {
-      params.set('ordenar', nuevoOrdenar)
-    } else {
-      params.delete('ordenar')
-    }
-    router.push(pathname + '?' + params.toString())
-  }
-
-  const contarFiltrosActivos = () => {
-    let count = 0
-    if (filtros.busqueda) count++
-    if (filtros.categorias.length > 0) count++
-    if (filtros.precioMin > 0 || filtros.precioMax < 10000000) count++
-    if (filtros.marcas.length > 0) count++
-    if (filtros.rating > 0) count++
-    if (filtros.enStock) count++
-    return count
-  }
-
-  const limpiarFiltros = () => {
-    const filtrosLimpios = {
-      busqueda: '',
-      categorias: slug && categoriaActual ? [categoriaActual.id] : [],
-      precioMin: 0,
-      precioMax: 10000000,
-      marcas: [],
-      rating: 0,
-      enStock: false
-    }
-    setFiltros(filtrosLimpios)
-    const params = new URLSearchParams()
-    if (ordenar !== 'relevancia') {
-      params.set('ordenar', ordenar)
-    }
-    if (vista !== 'grid') {
-      params.set('vista', vista)
-    }
-    router.push(pathname + '?' + params.toString())
-  }
-
-  const opcionesOrdenar = [
-    { value: 'relevancia', label: 'Por defecto' },
-    { value: 'popular', label: 'Popularidad' },
-    { value: 'rating', label: 'CalificaciÃ³n promedio' },
-    { value: 'nuevo', label: 'MÃ¡s recientes' },
-    { value: 'precio-menor', label: 'Precio: menor a mayor' },
-    { value: 'precio-mayor', label: 'Precio: mayor a menor' }
-  ]
+  const mostrandoSkeleton = cargando || (!!slug && cargandoCategoria)
+  const vacio = !mostrandoSkeleton && !error && total === 0
+  const totalTexto = total == null ? '' : `${total} ${total === 1 ? 'producto' : 'productos'}`
 
   return (
-    <>
-      <ModalFiltrosMovil
-        abierto={modalFiltrosAbierto}
-        filtros={filtros}
-        onCerrar={() => setModalFiltrosAbierto(false)}
-        onFiltrosChange={handleFiltrosChange}
-      />
-      <ModalOrdenarMovil
-        abierto={modalOrdenarAbierto}
-        ordenar={ordenar}
-        opciones={opcionesOrdenar}
-        onCerrar={() => setModalOrdenarAbierto(false)}
-        onOrdenarChange={handleOrdenarChange}
-      />
+    <DisposicionTienda
+      sidebar={<PanelFiltros filtros={filtros} onCambiar={cambiarFiltros} categoriaSlug={categoria?.slug ?? slug ?? null} />}
+      abierto={drawerAbierto}
+      onCerrar={() => setDrawerAbierto(false)}
+      filtrosActivos={nActivos}
+      onLimpiar={limpiar}
+      totalProductos={total}
+      cargando={mostrandoSkeleton}
+    >
+      {/* Cabecera editorial */}
+      <header className="tienda-cabecera">
+        <nav className="tienda-migas" aria-label="Ruta">
+          <Link href="/">Inicio</Link>
+          <span aria-hidden="true">/</span>
+          {categoria ? <Link href="/tienda">Tienda</Link> : <span aria-current="page">Tienda</span>}
+          {categoria && (<><span aria-hidden="true">/</span><span aria-current="page">{categoria.nombre}</span></>)}
+        </nav>
+        <p className="tienda-kicker">{categoria ? 'Categoría' : 'Catálogo completo'}</p>
+        <h1 className="tienda-titulo">{categoria ? categoria.nombre : 'Todos los productos'}</h1>
+        <p className="tienda-descripcion">
+          {categoria
+            ? (categoria.descripcion || `Explora nuestra selección de ${categoria.nombre.toLowerCase()} con envío a todo Colombia.`)
+            : 'Acordeones, audio profesional y accesorios seleccionados. Precios reales, envío a todo Colombia y asesoría directa.'}
+        </p>
+        {categoria && categoria.enOferta > 0 && (
+          <span className="tienda-pill-oferta">{categoria.enOferta} en oferta</span>
+        )}
+      </header>
 
-      <DisposicionTienda
-        titulo="Tienda"
-        sidebar={<PanelFiltros filtros={filtros} onFiltrosChange={handleFiltrosChange} />}
-      >
-      <div className="tienda-controles-movil">
-        <button 
-          className="btn-filtros-movil"
-          onClick={() => setModalFiltrosAbierto(true)}
-        >
-          <SlidersHorizontal size={20} />
-          <span>Filtros</span>
-        </button>
-        <button 
-          className="btn-ordenar-movil"
-          onClick={() => setModalOrdenarAbierto(true)}
-        >
-          <span>Ordenar por: {opcionesOrdenar.find(o => o.value === ordenar)?.label || 'Por defecto'}</span>
-        </button>
-      </div>
-
-      <div className="tienda-barra-resultados">
-        <div className="resultados-info">
-          <span>{totalProductos != null && totalProductos > 0 ? `1-${Math.min(12, totalProductos)} de ${totalProductos}` : totalProductos === 0 ? '0' : ''} Resultados</span>
-        </div>
-        <div className="vista-botones-movil">
-          <button
-            onClick={() => handleVistaChange('grid')}
-            className={`vista-btn-icono ${vista === 'grid' ? 'activo' : ''}`}
-            title="Vista en cuadrícula"
-          >
-            <Grid size={18} />
+      {/* Barra de resultados (sticky bajo el header) */}
+      <div className="tienda-toolbar" role="region" aria-label="Resultados y ordenamiento">
+        <div className="toolbar-izq">
+          <button type="button" className="btn-filtros-movil" onClick={() => setDrawerAbierto(true)}>
+            <SlidersHorizontal size={16} aria-hidden="true" />
+            Filtros
+            {nActivos > 0 && <span className="btn-filtros-badge">{nActivos}</span>}
           </button>
-          <button
-            onClick={() => handleVistaChange('lista')}
-            className={`vista-btn-icono ${vista === 'lista' ? 'activo' : ''}`}
-            title="Vista en lista"
-          >
-            <List size={18} />
-          </button>
+          <p className="toolbar-total" aria-live="polite">
+            {mostrandoSkeleton ? <span className="toolbar-total-skeleton" /> : <><strong>{total ?? 0}</strong> {total === 1 ? 'producto' : 'productos'}</>}
+          </p>
         </div>
-      </div>
 
-      <EncabezadoTienda
-        categoriaActual={categoriaActual}
-        filtrosActivos={contarFiltrosActivos()}
-        limpiarFiltros={limpiarFiltros}
-        ordenar={ordenar}
-        onOrdenarChange={handleOrdenarChange}
-        vista={vista}
-        onVistaChange={handleVistaChange}
-      />
+        <div className="toolbar-der">
+          <label className="toolbar-orden">
+            <span className="toolbar-etiqueta">Ordenar</span>
+            <span className="toolbar-select-caja">
+              <select value={orden} onChange={e => cambiarOrden(e.target.value as OrdenTienda)} aria-label="Ordenar productos">
+                {OPCIONES_ORDEN.map(o => <option key={o.valor} value={o.valor}>{o.etiqueta}</option>)}
+              </select>
+              <ChevronDown size={14} aria-hidden="true" />
+            </span>
+          </label>
 
-      {cargandoCategoria ? <SkeletonCards /> : <div className="tienda-productos">
-        {!gridCargando && totalProductos === 0 ? (
-          <div className="tienda-empty">
-            <div className="tienda-empty-icono">!</div>
-            <h3 className="tienda-empty-titulo">No encontramos productos</h3>
-            <p className="tienda-empty-desc">Ajusta los filtros o explora otras categorías</p>
-            <div className="tienda-empty-acciones">
-              <button className="btn-primario" onClick={() => router.push('/tienda')}>Ver todos los productos</button>
-              <button className="btn-secundario" onClick={() => setModalFiltrosAbierto(true)}>Abrir filtros</button>
-            </div>
+          <div className="toolbar-vista" role="group" aria-label="Tipo de vista">
+            <button type="button" className={vista === 'grid' ? 'activo' : ''} onClick={() => cambiarVista('grid')} aria-pressed={vista === 'grid'} title="Cuadrícula">
+              <LayoutGrid size={16} />
+            </button>
+            <button type="button" className={vista === 'lista' ? 'activo' : ''} onClick={() => cambiarVista('lista')} aria-pressed={vista === 'lista'} title="Lista">
+              <List size={16} />
+            </button>
           </div>
-        ) : null}
-        <GridProductosVendedor
-          filtrosExternos={filtros}
-          vistaActiva={vista}
-          ordenar={ordenar}
-          titulo=""
-          mostrarHeader={false}
-          mostrarFiltros={false}
-          onTotalChange={(total) => { setTotalProductos(total); setGridCargando(false) }}
-          mostrarEmpty={false}
-        />
-      </div>}
+        </div>
+      </div>
+
+      {chips.length > 0 && (
+        <div className="tienda-chips">
+          {chips.map(c => (
+            <button key={c.clave} type="button" className="tienda-chip" onClick={c.quitar} aria-label={`Quitar filtro ${c.texto}`}>
+              {c.texto}
+              <X size={12} aria-hidden="true" />
+            </button>
+          ))}
+          <button type="button" className="tienda-chip-limpiar" onClick={limpiar}>Limpiar todo</button>
+        </div>
+      )}
+
+      {/* Estados */}
+      {categoriaNoExiste ? (
+        <div className="tienda-vacio">
+          <div className="tienda-vacio-icono"><SearchX size={28} /></div>
+          <h2>Esta categoría no existe</h2>
+          <p>Puede que el enlace esté desactualizado. Explora el catálogo completo o escríbenos.</p>
+          <div className="tienda-vacio-acciones">
+            <Link href="/tienda" className="btn-oro">Ver toda la tienda</Link>
+            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="btn-contorno"><Icono nombre="whatsapp" tamaño={16} /> WhatsApp</a>
+          </div>
+        </div>
+      ) : error ? (
+        <div className="tienda-vacio">
+          <div className="tienda-vacio-icono"><RefreshCw size={28} /></div>
+          <h2>No pudimos cargar los productos</h2>
+          <p>{error}</p>
+          <div className="tienda-vacio-acciones">
+            <button type="button" className="btn-oro" onClick={reintentar}>Reintentar</button>
+            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="btn-contorno"><Icono nombre="whatsapp" tamaño={16} /> Escríbenos</a>
+          </div>
+        </div>
+      ) : vacio ? (
+        <div className="tienda-vacio">
+          <div className="tienda-vacio-icono"><SearchX size={28} /></div>
+          <h2>No encontramos productos con esos filtros</h2>
+          <p>Prueba quitando algún filtro o cuéntanos qué buscas: conseguimos instrumentos y repuestos bajo pedido.</p>
+          <div className="tienda-vacio-acciones">
+            {nActivos > 0 && <button type="button" className="btn-contorno" onClick={limpiar}>Limpiar filtros</button>}
+            <a href={`${WHATSAPP}?text=${encodeURIComponent('Hola, busco un producto que no encuentro en la tienda: ')}`} target="_blank" rel="noopener noreferrer" className="btn-oro">
+              <Icono nombre="whatsapp" tamaño={16} /> Preguntar por WhatsApp
+            </a>
+            <Link href="/accesorios" className="btn-contorno">Ver accesorios</Link>
+          </div>
+        </div>
+      ) : (
+        <>
+          <section className={`tienda-grid vista-${vista}`} aria-busy={mostrandoSkeleton || cargandoMas}>
+            {mostrandoSkeleton ? (
+              <SkeletonCards cantidad={PRODUCTOS_POR_PAGINA} />
+            ) : (
+              productos.map(p =>
+                p.plantilla_tarjeta === 'cinema'
+                  ? <TarjetaProductoCinema key={p.id} producto={p} />
+                  : <TarjetaProductoLujo key={p.id} producto={p} />
+              )
+            )}
+            {cargandoMas && <SkeletonCards cantidad={4} />}
+          </section>
+
+          {!mostrandoSkeleton && total != null && total > 0 && (
+            <div className="tienda-paginacion">
+              <p className="tienda-paginacion-info">
+                Mostrando <strong>{Math.min(productos.length, total)}</strong> de <strong>{totalTexto}</strong>
+              </p>
+              <div className="tienda-paginacion-barra" aria-hidden="true">
+                <span style={{ width: `${Math.min(100, (productos.length / total) * 100)}%` }} />
+              </div>
+              {hayMas && (
+                <button type="button" className="btn-oro btn-cargar-mas" onClick={cargarMas} disabled={cargandoMas}>
+                  {cargandoMas ? 'Cargando…' : `Cargar ${Math.min(PRODUCTOS_POR_PAGINA, total - productos.length)} más`}
+                </button>
+              )}
+            </div>
+          )}
+        </>
+      )}
     </DisposicionTienda>
-    </>
   )
 }
-
-export default PaginaTienda

@@ -10,18 +10,18 @@ const PoliticaPrivacidad = () => {
           max-width: 1000px;
           margin: 0 auto;
           padding: 2rem;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          background: var(--vda-fondo);
           min-height: 100vh;
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
         .politica-header {
-          background: rgba(255, 255, 255, 0.95);
+          background: var(--vda-superficie);
           backdrop-filter: blur(10px);
           border-radius: 20px;
           padding: 2rem;
           margin-bottom: 2rem;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          border: 1px solid rgba(226, 232, 240, 0.8);
+          box-shadow: var(--vda-sombra-card);
+          border: 1px solid var(--vda-linea);
         }
         .header-navegacion {
           margin-bottom: 1.5rem;
@@ -31,17 +31,17 @@ const PoliticaPrivacidad = () => {
           align-items: center;
           gap: 0.5rem;
           padding: 0.75rem 1rem;
-          background: #f1f5f9;
-          color: #475569;
+          background: var(--vda-superficie-2);
+          color: var(--vda-tinta-dim);
           text-decoration: none;
           border-radius: 8px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid var(--vda-linea);
           transition: all 0.2s ease;
           font-weight: 500;
         }
         .boton-volver:hover {
-          background: #e2e8f0;
-          color: #334155;
+          background: var(--vda-superficie-3);
+          color: var(--vda-tinta);
           transform: translateX(-2px);
         }
         .titulo-principal {
@@ -60,7 +60,7 @@ const PoliticaPrivacidad = () => {
           margin: 0;
         }
         .subtitulo {
-          color: #64748b;
+          color: var(--vda-tinta-muted);
           font-size: 1.1rem;
           margin-bottom: 1rem;
         }
@@ -74,12 +74,12 @@ const PoliticaPrivacidad = () => {
           display: inline-block;
         }
         .politica-content {
-          background: rgba(255, 255, 255, 0.95);
+          background: var(--vda-superficie);
           backdrop-filter: blur(10px);
           border-radius: 20px;
           padding: 2rem;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          border: 1px solid rgba(226, 232, 240, 0.8);
+          box-shadow: var(--vda-sombra-card);
+          border: 1px solid var(--vda-linea);
         }
         .seccion {
           margin-bottom: 2.5rem;
@@ -93,7 +93,7 @@ const PoliticaPrivacidad = () => {
           gap: 0.75rem;
           margin-bottom: 1rem;
           padding-bottom: 0.75rem;
-          border-bottom: 2px solid #e2e8f0;
+          border-bottom: 2px solid var(--vda-linea);
         }
         .seccion-icono {
           width: 24px;
@@ -103,11 +103,11 @@ const PoliticaPrivacidad = () => {
         .seccion-titulo {
           font-size: 1.5rem;
           font-weight: 600;
-          color: #1e293b;
+          color: var(--vda-tinta);
           margin: 0;
         }
         .seccion-contenido {
-          color: #475569;
+          color: var(--vda-tinta-dim);
           line-height: 1.7;
           font-size: 1rem;
         }
@@ -122,30 +122,32 @@ const PoliticaPrivacidad = () => {
           margin-bottom: 0.5rem;
         }
         .destacado {
-          background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+          background: color-mix(in srgb, #f59e0b 14%, var(--vda-superficie));
           border: 1px solid #f59e0b;
           border-radius: 12px;
           padding: 1rem;
           margin: 1rem 0;
         }
         .destacado strong {
-          color: #92400e;
+          color: #fbbf24;
         }
         .contacto-info {
-          background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+          background: color-mix(in srgb, #3b82f6 14%, var(--vda-superficie));
           border: 1px solid #3b82f6;
           border-radius: 12px;
           padding: 1.5rem;
           margin: 1rem 0;
         }
         .contacto-info h4 {
-          color: #1e40af;
+          color: #93c5fd;
           margin-bottom: 0.5rem;
         }
         .contacto-info p {
           margin: 0.25rem 0;
-          color: #1e40af;
+          color: #93c5fd;
         }
+        :global([data-theme="light"]) .destacado strong { color: #92400e; }
+        :global([data-theme="light"]) .contacto-info h4, :global([data-theme="light"]) .contacto-info p { color: #1e40af; }
         @media (max-width: 768px) {
           .politica-container {
             padding: 1rem;
@@ -289,7 +291,7 @@ const PoliticaPrivacidad = () => {
             <div className="contacto-info">
               <h4>Contacto para Consultas sobre Privacidad</h4>
               <p><strong>Email:</strong> privacidad@VentaDeAcordeones.com</p>
-              <p><strong>Teléfono:</strong> +57 320 849 2093</p>
+              <p><strong>Teléfono:</strong> +57 314 486 5310</p>
               <p><strong>Dirección:</strong> Cali, Colombia</p>
             </div>
           </div>

@@ -8,14 +8,14 @@ import { usarLandingData } from '../../../hooks/usarLandingData'
 import SelectorPlantilla from '../../../componentes/landing/SelectorPlantilla'
 
 /**
- * PaginaProducto - PÃ¡gina que detecta automÃ¡ticamente la plantilla del producto
+ * PaginaProducto - Página que detecta automáticamente la plantilla del producto
  * 
- * Esta pÃ¡gina ahora funciona como un router inteligente que:
+ * Esta página ahora funciona como un router inteligente que:
  * 1. Carga el producto
- * 2. Detecta quÃ© plantilla tiene asignada (landing_tipo)
- * 3. Renderiza automÃ¡ticamente la plantilla correcta
+ * 2. Detecta qué plantilla tiene asignada (landing_tipo)
+ * 3. Renderiza automáticamente la plantilla correcta
  * 
- * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automÃ¡ticamente
+ * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automáticamente
  */
 export default function PaginaProducto({ initialData: _initialData }: { initialData?: any }) {
   const params = useParams()
@@ -34,13 +34,13 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
     cargando: cargandoLanding 
   } = usarLandingData(producto?.id)
 
-  // âš¡ Efecto para detectar cuando ambas cargas estÃ¡n completas
+  // âš¡ Efecto para detectar cuando ambas cargas están completas
   useEffect(() => {
     if (!cargandoProducto && !cargandoLanding && producto) {
-      // PequeÃ±o delay para suavizar la transiciÃ³n (opcional)
+      // Pequeño delay para suavizar la transición (opcional)
       const timer = setTimeout(() => {
         setCargaCompleta(true)
-      }, 50) // 50ms para transiciÃ³n suave
+      }, 50) // 50ms para transición suave
       
       return () => clearTimeout(timer)
     }
@@ -62,14 +62,14 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
         <div style={{ 
           width: '32px', 
           height: '32px', 
-          border: '3px solid #f3f3f3',
+          border: '3px solid var(--vda-linea)',
           borderTop: '3px solid #ff6b35',
           borderRadius: '50%',
-          animation: 'ultraSpin 0.6s linear infinite' // âš¡ AnimaciÃ³n mÃ¡s rÃ¡pida
+          animation: 'ultraSpin 0.6s linear infinite' // âš¡ Animación más rápida
         }}></div>
         <p style={{ 
           fontSize: '14px', 
-          color: '#666',
+          color: 'var(--vda-tinta-dim)',
           fontWeight: '500'
         }}>
           Cargando...
@@ -91,7 +91,7 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
       }}>
         <AlertCircle size={48} color="#e74c3c" />
         <h2>Producto no encontrado</h2>
-        <p>{error || 'El producto que buscas no existe o no estÃ¡ disponible'}</p>
+        <p>{error || 'El producto que buscas no existe o no está disponible'}</p>
         <button 
           onClick={() => router.push('/')}
           style={{
@@ -122,7 +122,7 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
         notificaciones={notificaciones}
       />
 
-      {/* âš¡ Estilos optimizados para animaciÃ³n ultra rÃ¡pida */}
+      {/* âš¡ Estilos optimizados para animación ultra rápida */}
       <style>
         {`
           @keyframes ultraSpin {
@@ -130,7 +130,7 @@ export default function PaginaProducto({ initialData: _initialData }: { initialD
             100% { transform: rotate(360deg); }
           }
           
-          /* âš¡ OptimizaciÃ³n para transiciones suaves */
+          /* âš¡ Optimización para transiciones suaves */
           .pagina-producto-auto {
             animation: fadeIn 0.2s ease-in-out;
           }

@@ -17,7 +17,10 @@
     "@fullcalendar/react": "^6.1.19",
     "@fullcalendar/timegrid": "^6.1.19",
     "@radix-ui/react-select": "^2.2.6",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
     "@supabase/supabase-js": "^2.57.4",
+    "@types/three": "^0.184.1",
     "clsx": "^2.0.0",
     "compressorjs": "^1.2.1",
     "epayco-sdk-node": "^1.4.4",
@@ -29,7 +32,8 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
     "react-epayco": "^0.1.5",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",

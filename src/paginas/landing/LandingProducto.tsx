@@ -8,12 +8,12 @@ import SelectorPlantilla from '@/componentes/landing/SelectorPlantilla'
 import { AlertCircle, ArrowLeft } from 'lucide-react'
 
 /**
- * LandingProducto - PÃ¡gina que renderiza las landing pages de productos
+ * LandingProducto - Página que renderiza las landing pages de productos
  * 
- * Esta pÃ¡gina se accede mediante /landing/:slug
+ * Esta página se accede mediante /landing/:slug
  * Es diferente a /producto/:slug (que es la vista normal del producto)
  * 
- * AquÃ­ se renderizan las landing pages optimizadas para conversiÃ³n
+ * Aquí se renderizan las landing pages optimizadas para conversión
  */
 
 const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) => {
@@ -66,7 +66,7 @@ const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) =
       }}>
         <AlertCircle size={48} color="#e74c3c" />
         <h2>Landing page no encontrada</h2>
-        <p>{error || 'El producto que buscas no existe o no estÃ¡ disponible'}</p>
+        <p>{error || 'El producto que buscas no existe o no está disponible'}</p>
         <button 
           onClick={() => router.push('/')}
           style={{
@@ -99,7 +99,7 @@ const LandingProducto = ({ initialData: _initialData }: { initialData?: any }) =
         notificaciones={notificaciones}
       />
 
-      {/* Estilos para animaciÃ³n de carga */}
+      {/* Estilos para animación de carga */}
       <style>
         {`
           @keyframes spin {

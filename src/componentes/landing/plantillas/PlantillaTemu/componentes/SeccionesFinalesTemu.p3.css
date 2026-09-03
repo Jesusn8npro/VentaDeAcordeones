@@ -263,7 +263,7 @@
   background: #f8f9fa;
 }
 
-/* BotÃ³n especÃ­fico para productos vendidos */
+/* Botón específico para productos vendidos */
 .cta-final-temu-boton-vendido {
   background: linear-gradient(135deg, #6c757d, #495057) !important;
   color: white !important;
@@ -292,7 +292,7 @@
   transform: translateY(-1px) scale(1.01);
 }
 
-/* GARANTÃAS */
+/* GARANTÍAS */
 .cta-final-temu-garantias {
   display: flex;
   flex-direction: column;

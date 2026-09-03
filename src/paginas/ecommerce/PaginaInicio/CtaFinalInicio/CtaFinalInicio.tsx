@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
 
-const NUMERO_WA = '573208492093'
+const NUMERO_WA = '573144865310'
 
 export default function CtaFinalInicio() {
   return (

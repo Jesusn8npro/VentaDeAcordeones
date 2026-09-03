@@ -29,13 +29,13 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
   return (
     <>
       {producto.descripcion && (
-        <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid #dee2e6' }}>
-          <h3 style={{ color: '#2c3e50', marginBottom: '1rem' }}>
+        <div style={{ backgroundColor: 'var(--vda-superficie)', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid var(--vda-linea)' }}>
+          <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>
             {typeof producto.descripcion === 'object' && producto.descripcion?.titulo
               ? producto.descripcion.titulo
               : '📝 Descripción'}
           </h3>
-          <div style={{ lineHeight: '1.6', color: '#495057', whiteSpace: 'pre-wrap' }}>
+          <div style={{ lineHeight: '1.6', color: 'var(--vda-tinta-dim)', whiteSpace: 'pre-wrap' }}>
             {typeof producto.descripcion === 'object'
               ? (producto.descripcion.contenido || producto.descripcion.texto || producto.descripcion.titulo || '')
               : producto.descripcion}
@@ -45,8 +45,8 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '2rem' }}>
         {producto.ganchos && producto.ganchos.length > 0 && (
-          <div style={{ backgroundColor: '#fff0f5', padding: '1.5rem', borderRadius: '8px', border: '1px solid #ffc0cb' }}>
-            <h4 style={{ color: '#8b008b', marginBottom: '1rem' }}>🎯 Ganchos</h4>
+          <div style={{ backgroundColor: 'color-mix(in srgb, var(--vda-oro) 10%, var(--vda-superficie))', padding: '1.5rem', borderRadius: '8px', border: '1px solid color-mix(in srgb, var(--vda-oro) 30%, var(--vda-linea))' }}>
+            <h4 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>🎯 Ganchos</h4>
             <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
               {producto.ganchos.map((gancho, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{extraerTexto(gancho)}</li>)}
             </ul>
@@ -54,8 +54,8 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
         )}
 
         {beneficiosList.length > 0 && (
-          <div style={{ backgroundColor: '#f0fff0', padding: '1.5rem', borderRadius: '8px', border: '1px solid #90ee90' }}>
-            <h4 style={{ color: '#006400', marginBottom: '1rem' }}>✅ Beneficios</h4>
+          <div style={{ backgroundColor: 'color-mix(in srgb, var(--vda-exito) 10%, var(--vda-superficie))', padding: '1.5rem', borderRadius: '8px', border: '1px solid color-mix(in srgb, var(--vda-exito) 30%, var(--vda-linea))' }}>
+            <h4 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>✅ Beneficios</h4>
             <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
               {beneficiosList.map((beneficio, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{beneficio}</li>)}
             </ul>
@@ -63,8 +63,8 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
         )}
 
         {ventajasList.length > 0 && (
-          <div style={{ backgroundColor: '#f0f8ff', padding: '1.5rem', borderRadius: '8px', border: '1px solid #87ceeb' }}>
-            <h4 style={{ color: '#4682b4', marginBottom: '1rem' }}>⭐ Ventajas</h4>
+          <div style={{ backgroundColor: 'color-mix(in srgb, #3b82f6 10%, var(--vda-superficie))', padding: '1.5rem', borderRadius: '8px', border: '1px solid color-mix(in srgb, #3b82f6 30%, var(--vda-linea))' }}>
+            <h4 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>⭐ Ventajas</h4>
             <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
               {ventajasList.map((ventaja, index) => <li key={index} style={{ marginBottom: '0.5rem' }}>{ventaja}</li>)}
             </ul>
@@ -72,8 +72,8 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
         )}
       </div>
 
-      <div style={{ backgroundColor: '#f8f9fa', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid #dee2e6' }}>
-        <h3 style={{ color: '#2c3e50', marginBottom: '1.5rem' }}>🔧 Especificaciones Técnicas</h3>
+      <div style={{ backgroundColor: 'var(--vda-superficie-2)', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid var(--vda-linea)' }}>
+        <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1.5rem' }}>🔧 Especificaciones Técnicas</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
           {producto.marca && <div><strong>Marca:</strong> {producto.marca}</div>}
           {producto.modelo && <div><strong>Modelo:</strong> {producto.modelo}</div>}
@@ -87,15 +87,15 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
         {producto.dimensiones && (
           <div style={{ marginTop: '1rem' }}>
             <strong>Dimensiones:</strong>
-            <pre style={{ backgroundColor: '#e9ecef', padding: '0.5rem', borderRadius: '4px', marginTop: '0.5rem', fontSize: '0.875rem' }}>
+            <pre style={{ backgroundColor: 'var(--vda-superficie-3)', padding: '0.5rem', borderRadius: '4px', marginTop: '0.5rem', fontSize: '0.875rem' }}>
               {JSON.stringify(producto.dimensiones, null, 2)}
             </pre>
           </div>
         )}
       </div>
 
-      <div style={{ backgroundColor: '#e6f3ff', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid #b3d9ff' }}>
-        <h3 style={{ color: '#0066cc', marginBottom: '1.5rem' }}>
+      <div style={{ backgroundColor: 'color-mix(in srgb, #3b82f6 10%, var(--vda-superficie))', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', border: '1px solid color-mix(in srgb, #3b82f6 30%, var(--vda-linea))' }}>
+        <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1.5rem' }}>
           <Globe style={{ display: 'inline', marginRight: '0.5rem' }} />
           SEO y Metadatos
         </h3>
@@ -107,7 +107,7 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
               <strong>Palabras clave:</strong>
               <div style={{ marginTop: '0.5rem' }}>
                 {producto.palabras_clave.map((palabra, index) => (
-                  <span key={index} style={{ display: 'inline-block', margin: '0.25rem 0.5rem 0.25rem 0', padding: '0.25rem 0.75rem', backgroundColor: '#cce7ff', borderRadius: '20px', fontSize: '0.875rem' }}>
+                  <span key={index} style={{ display: 'inline-block', margin: '0.25rem 0.5rem 0.25rem 0', padding: '0.25rem 0.75rem', backgroundColor: 'color-mix(in srgb, #3b82f6 18%, var(--vda-superficie))', borderRadius: '20px', fontSize: '0.875rem' }}>
                     {extraerTexto(palabra)}
                   </span>
                 ))}
@@ -117,12 +117,12 @@ const PlantillaCatalogoDetalle = ({ producto }: Props) => {
         </div>
       </div>
 
-      <div style={{ backgroundColor: '#f5f5f5', padding: '1.5rem', borderRadius: '8px', border: '1px solid #ddd' }}>
-        <h3 style={{ color: '#666', marginBottom: '1rem' }}>
+      <div style={{ backgroundColor: 'var(--vda-superficie-2)', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--vda-linea)' }}>
+        <h3 style={{ color: 'var(--vda-tinta-dim)', marginBottom: '1rem' }}>
           <Calendar style={{ display: 'inline', marginRight: '0.5rem' }} />
           Información del Sistema
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.875rem', color: '#666' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', fontSize: '0.875rem', color: 'var(--vda-tinta-dim)' }}>
           <div><strong>Creado:</strong> {new Date(producto.creado_el).toLocaleString('es-ES')}</div>
           <div><strong>Actualizado:</strong> {new Date(producto.actualizado_el).toLocaleString('es-ES')}</div>
           {producto.creado_por && <div><strong>Creado por:</strong> {producto.creado_por}</div>}

@@ -15,7 +15,7 @@ const PoliticaEnvio = () => {
         </div>
         <div className="titulo-principal">
           <Truck className="icono" />
-          <h1 style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' }}>
+          <h1 style={{ backgroundImage: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)' }}>
             Política de Envío
           </h1>
         </div>
@@ -177,7 +177,7 @@ const PoliticaEnvio = () => {
             <div className="tiempo-box">
               <h4>Soporte de Envío</h4>
               <ul>
-                <li><strong>WhatsApp:</strong> +57 320 849 2093</li>
+                <li><strong>WhatsApp:</strong> +57 314 486 5310</li>
                 <li><strong>Email:</strong> acordeon91@gmail.com</li>
                 <li><strong>Horario:</strong> Lunes a Viernes 8:00 AM - 6:00 PM</li>
                 <li><strong>Sábados:</strong> 8:00 AM - 12:00 PM</li>

@@ -5,6 +5,7 @@
 //   • Body client-side (ssr:false), idéntico al SPA, lee el slug vía
 //     @/compat/router.useParams() (param `slug` = carpeta [slug]).
 import { cache } from 'react'
+import { serializarJsonLd } from '@/utilidades/jsonLd'
 import type { Metadata } from 'next'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
 import ArticuloCliente from './ArticuloCliente'
@@ -15,7 +16,7 @@ const getArticulo = cache(async (slug: string) => {
   const { data, error } = await supabaseServidor
     .from('articulos_web')
     .select(
-      'titulo, slug, resumen_breve, resumen_completo, portada_url, fecha_publicacion, autor'
+      'titulo, slug, resumen_breve, resumen_completo, portada_url, fecha_publicacion, actualizado_en, autor, secciones, meta_titulo, meta_descripcion'
     )
     .eq('slug', slug)
     .eq('estado_publicacion', 'publicado')
@@ -62,8 +63,11 @@ export async function generateMetadata({
     }
   }
 
-  const titulo = `${a.titulo} — VentaDeAcordeones.com`
+  // El layout raíz ya aplica la plantilla «%s | VentaDeAcordeones.com»: no se repite el sufijo aquí.
+  // meta_titulo / meta_descripcion (≤60 / ≤160) mandan si existen; si no, título y resumen.
+  const titulo = recortar(a.meta_titulo, 70) || a.titulo
   const descripcion =
+    recortar(a.meta_descripcion) ||
     recortar(a.resumen_breve || a.resumen_completo) ||
     'Guías y consejos de compra de acordeones y accesorios musicales en Colombia.'
   const canonical = `${SITIO}/blog/${a.slug}`
@@ -91,6 +95,36 @@ export async function generateMetadata({
   }
 }
 
+/** Nombre visible del autor: la columna `autor` puede traer un uuid en filas antiguas. */
+function nombreAutor(autor?: string | null): string {
+  if (!autor || /^[0-9a-f-]{36}$/i.test(autor)) return 'Jesús González'
+  return autor
+}
+
+/** FAQPage a partir de la sección tipo "faq" ({ tipo:'faq', preguntas:[{pregunta, respuesta}] }). */
+function faqJsonLd(secciones: unknown) {
+  const lista = typeof secciones === 'string' ? safeJson(secciones) : secciones
+  if (!Array.isArray(lista)) return null
+  const faq = lista.find((s: any) => s?.tipo === 'faq' && Array.isArray(s.preguntas) && s.preguntas.length)
+  if (!faq) return null
+  const limpiar = (t: unknown) =>
+    String(t ?? '').replace(/\*\*|\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim()
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: (faq as any).preguntas
+      .filter((p: any) => p?.pregunta && p?.respuesta)
+      .map((p: any) => ({
+        '@type': 'Question',
+        name: limpiar(p.pregunta),
+        acceptedAnswer: { '@type': 'Answer', text: limpiar(p.respuesta) },
+      })),
+  }
+}
+function safeJson(s: string) {
+  try { return JSON.parse(s) } catch { return null }
+}
+
 export default async function ArticuloBlogRoute({
   params,
 }: {
@@ -109,20 +143,33 @@ export default async function ArticuloBlogRoute({
         ...(a.fecha_publicacion
           ? { datePublished: a.fecha_publicacion }
           : {}),
-        author: { '@type': 'Person', name: a.autor || 'JESUS GONZALEZ' },
+        ...(a.actualizado_en ? { dateModified: a.actualizado_en } : {}),
+        author: { '@type': 'Person', name: nombreAutor(a.autor) },
+        publisher: {
+          '@type': 'Organization',
+          name: 'VentaDeAcordeones.com',
+          logo: { '@type': 'ImageObject', url: `${SITIO}/logo.svg` },
+        },
         mainEntityOfPage: {
           '@type': 'WebPage',
           '@id': `${SITIO}/blog/${a.slug}`,
         },
       }
     : null
+  const faqLd = a ? faqJsonLd(a.secciones) : null
 
   return (
     <>
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
+        />
+      )}
+      {faqLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializarJsonLd(faqLd) }}
         />
       )}
       <ArticuloCliente initialData={a} />

@@ -26,11 +26,11 @@ export const ProveedorTema = ({ children }) => {
   useEffect(() => {
     if (estaInicializado) {
       localStorage.setItem('tema', tema)
-      if (tema === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
+      // Dos ganchos a la vez: la clase .dark (variante dark: de Tailwind) y data-theme (tokens
+      // --vda-* de diseno.css, que son oscuros por defecto y cambian con [data-theme="light"]).
+      // Antes sólo se ponía la clase y los tokens nunca se enteraban del cambio de tema.
+      document.documentElement.classList.toggle('dark', tema === 'dark')
+      document.documentElement.setAttribute('data-theme', tema)
     }
   }, [tema, estaInicializado])
 

@@ -2,17 +2,17 @@ import type { Metadata } from 'next'
 import InicioCliente from './InicioCliente'
 
 export const metadata: Metadata = {
-  title: 'VentaDeAcordeones.com — Acordeones y Accesorios en Colombia',
+  title: { absolute: 'Acordeones Hohner en Colombia: Venta, Personalizados y Taller | VentaDeAcordeones.com' },
   description:
-    'La tienda online líder en acordeones de Colombia. Hohner, Gabbanelli, Guerrini y más. Envíos a toda Colombia con SERVIENTREGA. Asesoría gratis por WhatsApp.',
+    'Compra acordeones Hohner Rey Vallenato y Corona III, diseña el tuyo personalizado, consigue parrillas, fuelles, correas y audio, y repara en nuestro taller en Bogotá. Envíos a toda Colombia y 42 países.',
   alternates: { canonical: 'https://ventadeacordeones.com/' },
   openGraph: {
     type: 'website',
     url: 'https://ventadeacordeones.com/',
-    title: 'VentaDeAcordeones.com — Acordeones en Colombia',
+    title: 'Acordeones Hohner en Colombia: Venta, Personalizados y Taller',
     description:
-      'Tienda online de acordeones. Hohner, Gabbanelli, Guerrini. Envíos a toda Colombia. Garantía real.',
-    images: ['https://ventadeacordeones.com/logo.svg'],
+      'Acordeones Hohner, personalizados con tu nombre, accesorios, audio y taller de acordeones en Bogotá. Distribuidor autorizado.',
+    images: [{ url: 'https://ventadeacordeones.com/images/og/portada.jpg', width: 1200, height: 630, alt: 'Acordeones Hohner en VentaDeAcordeones.com' }],
     siteName: 'VentaDeAcordeones.com',
     locale: 'es_CO',
   },

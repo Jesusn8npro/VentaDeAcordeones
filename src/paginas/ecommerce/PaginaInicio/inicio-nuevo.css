@@ -66,25 +66,22 @@
 .btn-whatsapp:hover { background: var(--vda-oro); transform: translateY(-2px); }
 
 /* ============ HERO BANNER ============ */
-.hero-wrap {
-  padding: 0 var(--vda-pad-x) 24px;
-  max-width: var(--vda-contenedor);
-  margin: 0 auto;
-}
+/* Hero a sangre (full-bleed): el fondo ocupa todo el ancho y va pegado al marquee de abajo.
+   El contenido interior se alinea con el contenedor vía --hero-px. */
+.hero-wrap { padding: 0; margin: 0; }
 .hero-banner {
   position: relative;
   display: grid;
   grid-template-columns: 1.35fr 1fr;
   gap: 32px;
   align-items: center;
-  min-height: 560px;
-  padding: 80px 72px;
+  --hero-px: max(var(--vda-pad-x), calc((100% - var(--vda-contenedor)) / 2 + var(--vda-pad-x)));
+  min-height: min(78vh, 760px);
+  padding: 72px var(--hero-px) 64px;
   background:
     radial-gradient(ellipse 50% 60% at 78% 50%, var(--vda-oro-brillo), transparent 65%),
     radial-gradient(ellipse 80% 60% at 20% 100%, var(--vda-oro-brillo), transparent 70%),
     linear-gradient(135deg, var(--vda-superficie) 0%, var(--vda-superficie-profunda) 100%);
-  border: 1px solid var(--vda-linea);
-  border-radius: 6px;
   overflow: hidden;
 }
 .hero-banner::before {
@@ -124,6 +121,41 @@
   box-shadow: 0 0 12px var(--vda-oro);
 }
 .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+/* Slider: las 4 diapositivas viven apiladas en la misma celda (grid 1/1). El alto del bloque
+   es el de la más alta y el cambio es un crossfade (opacity + translateY) sin remount. */
+.hero-slides { display: grid; }
+.hero-slide {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.75s;
+}
+.hero-slide.is-active {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.hero-slide > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s cubic-bezier(.2,.7,.2,1), transform 0.45s cubic-bezier(.2,.7,.2,1);
+}
+.hero-slide.is-active > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: 0.75s, 0.75s;
+  transition-delay: var(--d, 0ms);
+}
+/* Primera carga (SSR): entrada animada por keyframes, sin depender de un cambio de estado. */
+.hero-slide.is-inicial > * {
+  animation: hero-entrada 0.85s cubic-bezier(.16,1.08,.4,1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes hero-entrada {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .hashtag {
   font-family: var(--vda-fuente-cuerpo);
   font-size: 13px;
@@ -150,11 +182,13 @@
   margin-left: 4px;
 }
 .hero-title {
-  font-size: clamp(54px, 7.6vw, 116px);
-  margin-bottom: 14px;
+  font-size: clamp(44px, 5.6vw, 88px);
+  /* Siempre 3 líneas (line-height 0.92): alto reservado para que nada salte entre diapositivas. */
+  min-height: 2.76em;
+  margin: 0 0 14px;
   letter-spacing: 0.005em;
 }
-.hero-title .row { display: block; }
+.hero-title .row { display: block; white-space: nowrap; }
 .hero-title .accent { color: var(--vda-oro); }
 .hero-title .italic {
   display: inline;
@@ -167,38 +201,75 @@
   line-height: 1.55;
   color: var(--vda-tinta-dim);
   max-width: 460px;
+  /* Alto reservado para 3 líneas: subtítulos de largo distinto no mueven los CTAs. */
+  min-height: 4.65em;
   margin: 22px 0 38px;
 }
 .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 38px; }
-.hero-dots { display: flex; align-items: center; gap: 10px; }
-.hero-dots button {
-  width: 8px; height: 8px;
-  border-radius: 50%;
+
+/* Segmentos de progreso: la barra activa se llena en los 7 s del autoplay (misma duración que
+   el temporizador JS) y se congela en hover junto con él (.is-pausado). */
+.hero-dots { display: flex; align-items: center; gap: 8px; }
+.hero-dots button[role="tab"] {
+  width: 26px; height: 3px;
+  border-radius: 2px;
   background: var(--vda-linea-fuerte);
-  transition: all 0.3s ease;
+  transition: width 0.4s cubic-bezier(.2,.7,.2,1), background 0.3s ease;
   position: relative;
   overflow: hidden;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
 }
-.hero-dots button.active {
-  width: 28px;
-  border-radius: 4px;
-  background: var(--vda-oro);
-  box-shadow: 0 0 12px rgba(255,195,0,0.5);
+.hero-dots button[role="tab"]::before {
+  /* Zona táctil generosa sin alterar el tamaño visual. */
+  content: '';
+  position: absolute;
+  inset: -12px 0;
 }
-.hero-dots button:hover { background: var(--vda-oro-suave); }
+.hero-dots button[role="tab"].active { width: 56px; }
+.hero-dots button[role="tab"]:hover { background: var(--vda-oro-suave); }
 .dot-fill {
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, var(--vda-oro) 0%, var(--vda-oro-suave) 100%);
+  box-shadow: 0 0 10px rgba(255,195,0,0.5);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation: hero-progreso 7s linear forwards;
+}
+.hero-banner.is-pausado .dot-fill { animation-play-state: paused; }
+@keyframes hero-progreso {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 .hero-counter {
-  margin-left: 16px;
+  margin-left: 12px;
   font-family: var(--vda-fuente-mono);
   font-size: 11px;
   letter-spacing: 0.2em;
   color: var(--vda-tinta-muted);
 }
 .hero-counter .now { color: var(--vda-oro); }
+.hero-arrows { display: inline-flex; gap: 6px; margin-left: auto; }
+.hero-arrow {
+  width: 34px; height: 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: transparent;
+  color: var(--vda-tinta-dim);
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+.hero-arrow:hover {
+  border-color: var(--vda-oro);
+  color: var(--vda-oro);
+  background: var(--vda-oro-tenue);
+  transform: translateY(-1px);
+}
+.hero-arrow:active { transform: translateY(0); }
 
 /* Hero visual */
 .hero-visual {
@@ -238,6 +309,14 @@
   display: grid;
   place-items: center;
 }
+.hero-img {
+  width: 82%;
+  height: auto;
+  max-height: 88%;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.55));
+  animation: acc-float 6s ease-in-out infinite;
+}
 .hero-accordion-fallback {
   position: absolute;
   inset: 0;
@@ -246,6 +325,18 @@
   z-index: 1;
   pointer-events: none;
 }
+/* Capas de imagen: las 4 montadas (precarga) y apiladas; la activa entra con leve escala. */
+.hero-img-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.8s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.hero-img-layer.is-active { opacity: 1; transform: scale(1); }
 .hero-circle {
   position: absolute;
   z-index: 3;
@@ -280,6 +371,28 @@
   transition: opacity 0.4s ease;
 }
 .hero-banner:hover .hero-glow { opacity: 1; }
+
+/* Hero: responsive propio del slider */
+@media (max-width: 1100px) {
+  .hero-title { font-size: clamp(44px, 7.4vw, 72px); }
+}
+@media (max-width: 760px) {
+  .hero-arrows { display: none; }
+}
+@media (max-width: 480px) {
+  .hero-sub { margin: 16px 0 28px; }
+  .hero-ctas { margin-bottom: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide, .hero-slide > *, .hero-img-layer {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    animation: none !important;
+  }
+  .hero-slide.is-active > * { opacity: 1; transform: none; }
+  .hero-img-layer { transform: none; }
+  .hero-img, .hero-circle { animation: none !important; }
+}
 
 /* ============ ACCORDION ART ============ */
 .acc {
@@ -394,7 +507,7 @@
   padding: 18px 0;
   overflow: hidden;
   background: var(--vda-superficie-profunda);
-  margin-top: 32px;
+  margin-top: 0;
 }
 .marquee-track {
   display: flex;
@@ -1580,7 +1693,7 @@
   .cat-icons-grid { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 1100px) {
-  .hero-banner { grid-template-columns: 1fr; min-height: 0; padding: 60px 40px; }
+  .hero-banner { grid-template-columns: 1fr; min-height: 0; --hero-px: 40px; padding: 48px var(--hero-px) 56px; }
   .hero-visual { height: 360px; order: -1; margin-bottom: 8px; }
   .hero-wrap { padding-top: 0; }
   .prod-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1621,7 +1734,7 @@
   .prod-info { padding: 14px; }
   .prod-add { padding: 8px 10px; font-size: 9px; }
   .prod-quick { display: none; }
-  .hero-banner { padding: 36px 20px 36px; }
+  .hero-banner { --hero-px: 20px; padding: 36px var(--hero-px); }
   .section-head .section-sub { text-align: left; }
   .tecnico-card { padding: 26px 22px 24px; }
 }
@@ -1632,7 +1745,7 @@
   .cat-ico-label { font-size: 12px; }
   .values-grid { grid-template-columns: repeat(2, 1fr); }
   .value { padding: 28px 18px; }
-  .hero-banner { padding: 28px 16px 32px; border-radius: 4px; }
+  .hero-banner { --hero-px: 16px; padding: 28px var(--hero-px) 32px; }
   .hero-title { font-size: clamp(34px, 11vw, 52px); }
   .hero-sub { font-size: 14px; }
   .hero-ctas .btn { padding: 13px 16px; font-size: 10px; flex: 1; justify-content: center; }
@@ -1649,4 +1762,11 @@
   .marquee-track { font-size: 18px; gap: 36px; }
   .stats-strip-inner { grid-template-columns: 1fr 1fr; }
   .otros-grid { grid-template-columns: 1fr; }
+}
+
+/* Fix móvil: tarjetas de "Hoy para ti" no pueden exceder su columna (min-content > 1fr desbordaba 11px) */
+@media (max-width: 760px) {
+  .prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .prod { min-width: 0; }
+  .prod-img img { max-width: 100%; height: auto; }
 }

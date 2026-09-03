@@ -1,14 +1,14 @@
 /* ItemCarrito.css — Premium cart item */
 
-:root {
-  --ec-primario: #1a1a2e;
-  --ec-acento: #e94560;
-  --ec-fondo: #ffffff;
-  --ec-fondo-secundario: #f8f9fa;
-  --ec-texto: #1a1a2e;
-  --ec-texto-secundario: #6c757d;
-  --ec-borde: #e9ecef;
-  --ec-sombra: 0 2px 12px rgba(0,0,0,0.08);
+.item-carrito {
+  --ec-primario: var(--vda-tinta);
+  --ec-acento: var(--vda-oro);
+  --ec-fondo: var(--vda-superficie);
+  --ec-fondo-secundario: var(--vda-superficie-2);
+  --ec-texto: var(--vda-tinta);
+  --ec-texto-secundario: var(--vda-tinta-dim);
+  --ec-borde: var(--vda-linea);
+  --ec-sombra: var(--vda-sombra-card);
   --ec-radio: 12px;
   --ec-radio-grande: 20px;
   --ec-exito: #10b981;
@@ -35,8 +35,8 @@
   animation: slideIn 0.25s ease-out;
 }
 .item-carrito:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  border-color: rgba(233,69,96,0.2);
+  box-shadow: var(--vda-sombra-card);
+  border-color: color-mix(in srgb, var(--vda-oro) 20%, transparent);
 }
 .item-carrito.compacto {
   padding: 14px;
@@ -79,7 +79,7 @@
   font-weight: 700;
   padding: 3px 7px;
   border-radius: 10px;
-  border: 2px solid #fff;
+  border: 2px solid var(--ec-fondo);
   z-index: 2;
 }
 .item-stock-bajo {
@@ -95,7 +95,7 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  border: 2px solid #fff;
+  border: 2px solid var(--ec-fondo);
   z-index: 2;
 }
 
@@ -145,13 +145,13 @@
   min-height: 36px;
 }
 .boton-favorito:hover {
-  background: #fef2f2;
+  background: color-mix(in srgb, var(--ec-acento) 12%, transparent);
   color: var(--ec-acento);
-  border-color: rgba(233,69,96,0.3);
+  border-color: color-mix(in srgb, var(--vda-oro) 30%, transparent);
 }
 .boton-eliminar:hover {
-  background: #fef2f2;
-  color: #dc2626;
+  background: color-mix(in srgb, var(--vda-peligro) 12%, transparent);
+  color: var(--vda-peligro);
   border-color: rgba(220,38,38,0.3);
 }
 
@@ -160,7 +160,7 @@
 .item-rating { display: flex; align-items: center; gap: 6px; }
 .estrellas { display: flex; gap: 2px; }
 .estrella-llena  { color: #fbbf24; fill: currentColor; }
-.estrella-vacia  { color: var(--ec-borde); }
+.estrella-vacia  { color: var(--vda-linea-fuerte); }
 .rating-numero   { font-size: 12px; color: var(--ec-texto-secundario); }
 
 /* ── FOOTER ── */
@@ -208,7 +208,7 @@
 }
 .boton-cantidad:hover:not(:disabled) {
   background: var(--ec-primario);
-  color: #fff;
+  color: var(--ec-fondo);
   border-color: var(--ec-primario);
 }
 .boton-cantidad:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -238,7 +238,7 @@
   gap: 4px;
 }
 .boton-accion-movil {
-  background: rgba(255,255,255,0.9);
+  background: color-mix(in srgb, var(--ec-fondo) 90%, transparent);
   border: 1px solid var(--ec-borde);
   width: 32px;
   height: 32px;
@@ -251,8 +251,8 @@
   transition: all 0.2s;
   backdrop-filter: blur(4px);
 }
-.boton-accion-movil:hover    { background: #fff; }
-.boton-accion-movil.eliminar:hover { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+.boton-accion-movil:hover    { background: var(--ec-fondo); }
+.boton-accion-movil.eliminar:hover { background: color-mix(in srgb, var(--vda-peligro) 12%, transparent); color: var(--vda-peligro); border-color: color-mix(in srgb, var(--vda-peligro) 35%, transparent); }
 
 /* ── MENSAJES ── */
 .mensaje-limite,
@@ -265,8 +265,8 @@
   align-items: center;
   gap: 4px;
 }
-.mensaje-limite { background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; }
-.mensaje-stock  { background: #fee2e2; color: #dc2626; border: 1px solid #f87171; }
+.mensaje-limite { background: color-mix(in srgb, #f59e0b 14%, transparent); color: #fbbf24; border: 1px solid color-mix(in srgb, #f59e0b 45%, transparent); }
+.mensaje-stock  { background: color-mix(in srgb, var(--vda-peligro) 12%, transparent); color: var(--vda-peligro); border: 1px solid color-mix(in srgb, var(--vda-peligro) 35%, transparent); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
@@ -291,3 +291,6 @@
   .item-carrito:hover { box-shadow: var(--ec-sombra); border-color: var(--ec-borde); }
   .boton-cantidad:hover:not(:disabled) { background: var(--ec-fondo); color: var(--ec-texto); }
 }
+
+/* ============ LIGHT THEME OVERRIDES ============ */
+[data-theme="light"] .mensaje-limite { background: #fef3c7; color: #92400e; border-color: #fbbf24; }

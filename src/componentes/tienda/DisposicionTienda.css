@@ -1,117 +1,105 @@
-﻿/* DisposicionTienda.css - Layout principal de la tienda */
+/* DisposicionTienda.css — layout de la tienda.
+   Escritorio: grid [sidebar 272px | productos], sidebar sticky puro bajo el header con scroll propio.
+   ≤1024px: el sidebar es un drawer lateral (cabecera + lista + botón fijo "Ver N productos").
+   Sin colores fijos: todo con tokens --vda-* (claro/oscuro automático). */
 
 .layout-tienda {
-  min-height: 100vh;
-  background: #f8f9fa;
+  /* Altura del header del sitio; DisposicionTienda.tsx la actualiza con la medida real */
+  --tienda-header-alto: 140px;
+  --tienda-sticky-gap: 16px;
+  --tienda-sticky-top: calc(var(--tienda-header-alto) + var(--tienda-sticky-gap));
+  background: var(--vda-fondo);
 }
 
-/* Header mÃ³vil - OCULTO (usamos los botones de PaginaTienda) */
-.layout-header-movil {
-  display: none !important; /* Siempre oculto */
-}
-
-.btn-toggle-sidebar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  background: #f8f9fa;
-  border-radius: 12px;
-  color: #495057;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-toggle-sidebar:hover {
-  background: #e9ecef;
-  color: #212529;
-}
-
-.titulo-tienda-movil {
-  font-size: 20px;
-  font-weight: 700;
-  color: #212529;
-  margin: 0;
-}
-
-/* Overlay para mÃ³vil */
-.sidebar-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  backdrop-filter: blur(2px);
-}
-
-/* Contenedor principal */
+/* Contenedor alineado con el header (1400px) */
 .layout-contenedor {
-  display: flex;
-  min-height: 100vh;
-  margin-top: calc(-1 * var(--header-height, 80px));
-  padding-top: var(--header-height, 80px);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 24px 72px;
+  display: grid;
+  grid-template-columns: 272px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start; /* imprescindible para que el sticky funcione en grid */
 }
 
-/* Sidebar */
+/* ── Sidebar (escritorio): sticky puro ── */
 .layout-sidebar {
-  width: 300px;
-  background: white;
-  border-right: 1px solid #e9ecef;
-  position: relative;
-  min-height: 100vh;
-  z-index: 1001;
-  transition: transform 0.3s ease;
-  overflow-x: hidden;
-  box-sizing: border-box;
+  position: sticky;
+  top: var(--tienda-sticky-top);
+  max-height: calc(100vh - var(--tienda-sticky-top) - 16px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  z-index: 5;
 }
 
-.layout-sidebar::-webkit-scrollbar {
-  width: 6px;
+.sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
+  border-radius: 14px;
+  box-shadow: var(--vda-sombra-card);
+  overflow: hidden;
 }
 
-.layout-sidebar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.layout-sidebar::-webkit-scrollbar-thumb {
-  background: #dee2e6;
-  border-radius: 3px;
-}
-
-.layout-sidebar::-webkit-scrollbar-thumb:hover {
-  background: #adb5bd;
-}
-
-/* Contenido completo del sidebar (incluye header) */
-.sidebar-contenido-completo {
-  padding: 0;
-  transition: none; /* Sin transiciones para evitar saltos */
-}
-
-/* Header interno del sidebar */
-.sidebar-header-interno {
+.sidebar-cabecera {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e9ecef;
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  gap: 10px;
+  padding: 12px 12px 12px 16px;
+  border-bottom: 1px solid var(--vda-linea);
+  background: var(--vda-superficie-2);
+  flex-shrink: 0;
 }
-
 .sidebar-titulo {
-  font-size: 18px;
-  font-weight: 700;
-  color: #212529;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
+  font-family: var(--vda-fuente-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--vda-tinta);
 }
-
+.sidebar-titulo-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--vda-oro);
+  color: #000;
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-cabecera-acciones { display: inline-flex; align-items: center; gap: 6px; }
+.btn-limpiar-sidebar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--vda-oro);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--vda-oro);
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-limpiar-sidebar:hover { background: var(--vda-oro); color: #000; }
 .btn-cerrar-sidebar {
   display: none;
   align-items: center;
@@ -119,204 +107,106 @@
   width: 32px;
   height: 32px;
   border: none;
-  background: #f8f9fa;
   border-radius: 8px;
-  color: #6c757d;
+  background: var(--vda-superficie-3);
+  color: var(--vda-tinta-dim);
   cursor: pointer;
-  transition: all 0.2s ease;
 }
+.btn-cerrar-sidebar:hover { color: var(--vda-tinta); }
 
-.btn-cerrar-sidebar:hover {
-  background: #e9ecef;
-  color: #495057;
-}
-
-/* Contenido de filtros */
-.sidebar-filtros-contenido {
-  padding: 20px 24px;
-  background: white;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
-
-/* Sidebar sticky activo */
-.sidebar-contenido-completo.sticky-activo {
-  background: white;
-  /* Sin border-radius ni box-shadow para evitar saltos visuales */
-}
-
-/* Scrollbar personalizada para sidebar sticky */
-.sidebar-contenido-completo.sticky-activo {
+/* Lista con scroll propio (el panel nunca crece más que el viewport) */
+.sidebar-cuerpo {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   scrollbar-width: thin;
-  scrollbar-color: #dee2e6 transparent;
+  scrollbar-color: var(--vda-linea-fuerte) transparent;
 }
+.sidebar-cuerpo::-webkit-scrollbar { width: 6px; }
+.sidebar-cuerpo::-webkit-scrollbar-thumb { background: var(--vda-linea-fuerte); border-radius: 3px; }
 
-.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar {
-  width: 6px;
+/* Pie con CTA: solo en el drawer */
+.sidebar-pie { display: none; }
+
+/* Columna de productos */
+.layout-contenido { min-width: 0; }
+
+/* Overlay del drawer */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--vda-overlay);
+  z-index: 10000; /* por encima del botón flotante de WhatsApp (9999) */
+  backdrop-filter: blur(2px);
+  animation: tienda-fade .2s ease;
 }
+@keyframes tienda-fade { from { opacity: 0; } to { opacity: 1; } }
 
-.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar-track {
-  background: transparent;
-}
+.btn-limpiar-sidebar:focus-visible,
+.btn-cerrar-sidebar:focus-visible,
+.btn-ver-productos:focus-visible { outline: 2px solid var(--vda-oro); outline-offset: 2px; }
 
-.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar-thumb {
-  background: #dee2e6;
-  border-radius: 3px;
-}
-
-.sidebar-contenido-completo.sticky-activo::-webkit-scrollbar-thumb:hover {
-  background: #adb5bd;
-}
-
-/* Contenido principal */
-.layout-contenido {
-  flex: 1;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-.layout-contenido.sin-sidebar {
-  padding: 24px 40px;
-}
-
-/* Estados responsivos */
-@media (max-width: 1200px) {
-  .layout-sidebar {
-    width: 280px;
-  }
-  
-  .sidebar-header-interno {
-    padding: 12px 16px;
-  }
-  
-  .sidebar-filtros-contenido {
-    padding: 12px 16px;
-  }
-}
-
-/* Tablet */
+/* ── Tablet y móvil: drawer lateral ── */
 @media (max-width: 1024px) {
-  /* Header mÃ³vil siempre oculto - usamos botones de PaginaTienda */
-  
+  .layout-contenedor {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px 16px 56px;
+    gap: 0;
+  }
   .layout-sidebar {
     position: fixed;
-    transform: translateX(-100%);
-    height: 100vh;
-    width: 300px;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100dvh;
+    max-height: none;
+    width: min(360px, 88vw);
+    z-index: 10001;
+    transform: translateX(-104%);
+    transition: transform .32s cubic-bezier(.4, 0, .2, 1);
+    visibility: hidden;
   }
-  
-  /* Desactivar sticky en tablet y mÃ³vil */
-  .sidebar-contenido-completo.sticky-activo {
-    position: static !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
+  .layout-sidebar.abierto { transform: translateX(0); visibility: visible; }
+  .sidebar-panel {
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    box-shadow: 24px 0 60px -20px rgba(0,0,0,.6);
   }
-  
-  .layout-sidebar.abierto {
-    transform: translateX(0);
+  .sidebar-cabecera { padding: 14px 12px 14px 18px; }
+  .btn-cerrar-sidebar { display: flex; }
+  .sidebar-pie {
+    display: block;
+    flex-shrink: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--vda-linea);
+    background: var(--vda-superficie);
   }
-  
-  .btn-cerrar-sidebar {
-    display: flex;
-  }
-  
-  .layout-contenido {
-    padding: 20px;
+  .btn-ver-productos {
     width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: var(--vda-oro);
+    color: #000;
+    font-family: var(--vda-fuente-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
   }
-  
-  .layout-contenido.sin-sidebar {
-    padding: 20px;
-  }
+  .btn-ver-productos:hover { background: var(--vda-oro-suave); }
+  .btn-ver-productos:active { transform: scale(.98); }
+  .btn-ver-productos:disabled { opacity: .6; cursor: progress; }
 }
 
-/* MÃ³vil */
-@media (max-width: 768px) {
-  .layout-header-movil {
-    padding: 12px 16px;
-  }
-  
-  .layout-sidebar {
-    width: 100%;
-    max-width: 320px;
-  }
-  
-  .layout-contenido {
-    padding: 0; /* Sin padding en mÃ³vil */
-  }
-  
-  .layout-contenido.sin-sidebar {
-    padding: 0;
-  }
-}
-
-/* MÃ³vil pequeÃ±o */
 @media (max-width: 480px) {
-  .sidebar-header-interno {
-    padding: 8px 12px;
-  }
-  
-  .sidebar-filtros-contenido {
-    padding: 8px 12px;
-  }
-  
-  .layout-contenido {
-    padding: 12px;
-  }
+  .layout-contenedor { padding: 10px 12px 48px; }
 }
 
-/* Animaciones suaves */
-@media (prefers-reduced-motion: no-preference) {
-  .layout-sidebar {
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .sidebar-overlay {
-    animation: fadeIn 0.2s ease;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Estados de focus para accesibilidad */
-.btn-toggle-sidebar:focus,
-.btn-cerrar-sidebar:focus {
-  outline: 2px solid #0d6efd;
-  outline-offset: 2px;
-}
-
-/* Mejoras para modo oscuro (futuro) */
-@media (prefers-color-scheme: dark) {
-  .layout-tienda {
-    background: #1a1a1a;
-  }
-  
-  .layout-header-movil,
-  .layout-sidebar,
-  .sidebar-header {
-    background: #2d2d2d;
-    border-color: #404040;
-  }
-  
-  .titulo-tienda-movil,
-  .sidebar-titulo {
-    color: #ffffff;
-  }
-  
-  .btn-toggle-sidebar,
-  .btn-cerrar-sidebar {
-    background: #404040;
-    color: #ffffff;
-  }
-  
-  .btn-toggle-sidebar:hover,
-  .btn-cerrar-sidebar:hover {
-    background: #4a4a4a;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .layout-sidebar, .sidebar-overlay { transition: none; animation: none; }
 }

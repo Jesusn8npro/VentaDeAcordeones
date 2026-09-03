@@ -15,6 +15,7 @@ import EstadisticasMarca from './EstadisticasMarca/EstadisticasMarca'
 import TestimoniosClientes from './TestimoniosClientes/TestimoniosClientes'
 import Boletin from './Boletin/Boletin'
 import CtaFinalInicio from './CtaFinalInicio/CtaFinalInicio'
+import ReelsInstagram from '@/componentes/social/ReelsInstagram'
 
 export default function PaginaInicio() {
   useEffect(() => {
@@ -67,6 +68,9 @@ export default function PaginaInicio() {
       <ValoresMarca />
       <EstadisticasMarca />
       <TestimoniosClientes />
+      <div className="section" style={{ paddingTop: 0 }}>
+        <ReelsInstagram limite={10} titulo="Acordeones en acción" />
+      </div>
       <Boletin />
       <CtaFinalInicio />
     </>

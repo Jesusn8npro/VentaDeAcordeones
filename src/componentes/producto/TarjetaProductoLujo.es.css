@@ -1,7 +1,7 @@
 /* TarjetaProductoLujo.es.css — Premium product card */
 
 :root {
-  --ec-acento: #e94560;
+  --ec-acento: var(--vda-oro);
   --ec-primario: #1a1a2e;
 }
 
@@ -10,16 +10,16 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.06);
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
   border-radius: 0;
-  box-shadow: 0 8px 24px rgba(20,20,20,0.06);
+  box-shadow: var(--vda-sombra-card);
   overflow: hidden;
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 .tarjeta-lujo:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 32px rgba(20,20,20,0.12);
+  box-shadow: var(--vda-sombra-card);
 }
 
 /* ── INSIGNIAS ── */
@@ -40,9 +40,9 @@
   font-size: 12px;
   font-weight: 600;
 }
-.insignia-descuento { background: #fff; color: #d84040; border: 1px solid #f4c4c4; }
+.insignia-descuento { background: var(--vda-superficie); color: #d84040; border: 1px solid #f4c4c4; }
 .insignia-destacado { background: #ffe7d6; color: #c05a00; border: 1px solid #ffd1a8; }
-.insignia-estado    { background: #eef1f7; color: #354052; border: 1px solid #d9dee7; }
+.insignia-estado    { background: var(--vda-superficie-2); color: var(--vda-tinta-dim); border: 1px solid var(--vda-linea); }
 
 /* ── IMAGEN ── */
 .zona-imagen-lujo {
@@ -50,22 +50,26 @@
   display: block;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  background: #f1f3f5;
+  /* Las imágenes de producto son recortes transparentes (webp): fondo con halo suave en vez de foto a sangre */
+  background:
+    radial-gradient(circle at 50% 58%, var(--vda-oro-brillo), transparent 68%),
+    var(--vda-superficie-2);
 }
 
 /* Reserva espacio 4:3 para contenedores genéricos (previene CLS) */
 .tarjeta-imagen-contenedor {
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #f1f3f5;
+  background: var(--vda-superficie-2);
 }
 .tarjeta-imagen-contenedor img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.imagen { width: 100%; height: 100%; object-fit: cover; display: block; }
-.imagen-placeholder { background: linear-gradient(135deg, #f1f3f5 0%, #e8eaed 50%, #f1f3f5 100%); background-size: 200% 200%; animation: shimmer-placeholder 1.5s ease-in-out infinite; }
+/* contain + margen: el recorte se ve completo (con cover se cortaban fuelle y esquinas) */
+.imagen { width: 100%; height: 100%; object-fit: contain; padding: 7%; box-sizing: border-box; display: block; filter: drop-shadow(0 14px 22px rgba(0,0,0,.28)); }
+.imagen-placeholder { background: linear-gradient(135deg, var(--vda-superficie-2) 0%, var(--vda-superficie-3) 50%, var(--vda-superficie-2) 100%); background-size: 200% 200%; animation: shimmer-placeholder 1.5s ease-in-out infinite; }
 @keyframes shimmer-placeholder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 .imagen-principal {
   position: absolute;
@@ -98,17 +102,17 @@
   border-radius: 999px;
   display: grid;
   place-items: center;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(0,0,0,0.06);
-  color: #333;
-  box-shadow: 0 4px 12px rgba(20,20,20,0.08);
+  background: color-mix(in srgb, var(--vda-superficie) 90%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vda-tinta) 6%, transparent);
+  color: var(--vda-tinta);
+  box-shadow: var(--vda-sombra-card);
   opacity: 0;
   transform: translateY(-6px);
   transition: all 180ms ease;
   cursor: pointer;
 }
 .tarjeta-lujo:hover .accion-flotante { opacity: 1; transform: translateY(0); }
-.accion-flotante:hover { background: #fff; }
+.accion-flotante:hover { background: var(--vda-superficie); }
 
 /* ── CONTENIDO ── */
 .contenido-lujo {
@@ -131,7 +135,7 @@
   flex: 1;
   font-size: 14px;
   font-weight: 700;
-  color: #1c1f26;
+  color: var(--vda-tinta);
   margin: 0;
   line-height: 1.3;
   display: -webkit-box;
@@ -169,7 +173,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
-  color: #54657e;
+  color: var(--vda-tinta-dim);
 }
 .calificacion {
   display: inline-flex;
@@ -180,7 +184,7 @@
 }
 .estrella         { color: #ff7a00; }
 .conteo-calificacion,
-.resenas-calificacion { color: #8b98a9; margin-left: 2px; }
+.resenas-calificacion { color: var(--vda-tinta-muted); margin-left: 2px; }
 .ventas           { color: #4f7d3a; font-weight: 600; }
 .ventas-en-linea  { display: none; }
 
@@ -199,11 +203,11 @@
   min-width: 0;
   white-space: nowrap;
 }
-.precio-actual  { color: #111; font-weight: 800; font-size: 18px; }
-.precio-original { color: #a0a8b3; text-decoration: line-through; font-size: 13px; }
+.precio-actual  { color: var(--vda-tinta); font-weight: 800; font-size: 18px; }
+.precio-original { color: var(--vda-tinta-muted); text-decoration: line-through; font-size: 13px; }
 .precio-actual.naranja { color: #ff7a00; }
-.precio-actual.negro   { color: #111; }
-.ventas-pie { margin-left: auto; font-size: 12px; color: #6c757d; font-weight: 600; }
+.precio-actual.negro   { color: var(--vda-tinta); }
+.ventas-pie { margin-left: auto; font-size: 12px; color: var(--vda-tinta-muted); font-weight: 600; }
 
 /* ── BOTÓN ACCIÓN ── */
 .btn-precio-accion {
@@ -212,10 +216,10 @@
   text-align: center;
   padding: 4px 8px;
   font-size: 11px;
-  border: 1px solid #d9dee7;
+  border: 1px solid var(--vda-linea-fuerte);
   border-radius: 999px;
-  background: #fff;
-  color: #333;
+  background: var(--vda-superficie);
+  color: var(--vda-tinta);
   line-height: 1;
   cursor: pointer;
 }
@@ -227,18 +231,18 @@
   align-items: center;
   justify-content: space-between;
   font-size: 11px;
-  color: #54657e;
+  color: var(--vda-tinta-dim);
   gap: 4px;
 }
 .ahorro { color: #1f8b4c; font-weight: 700; }
-.stock  { color: #6c757d; }
+.stock  { color: var(--vda-tinta-muted); }
 
 /* ── BLOQUE DINÁMICO ── */
 .info-dinamica {
   position: relative;
   overflow: hidden;
-  background: #fff;
-  color: #1c1f26;
+  background: var(--vda-superficie);
+  color: var(--vda-tinta);
   border-radius: 8px;
   padding: 2px 4px;
   margin-top: 4px;
@@ -261,7 +265,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.icono-informacion { color: #8b98a9; flex-shrink: 0; }
+.icono-informacion { color: var(--vda-tinta-muted); flex-shrink: 0; }
 .mas-comprados     { color: #1f8b4c; font-weight: 700; }
 
 @keyframes aparecer-suave {
@@ -292,7 +296,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #fff;
+  background: var(--vda-superficie);
   color: #ff7a00;
   padding: 1px 4px;
   border-left: 1px solid #ffd1a8;
@@ -324,13 +328,13 @@
   .estrella        { width: 15px; height: 15px; color: #ff7a00; }
   .conteo-calificacion,
   .resenas-calificacion { display: none; }
-  .ventas-en-linea { display: inline; margin-left: 6px; font-size: 10px; color: #6c757d; }
+  .ventas-en-linea { display: inline; margin-left: 6px; font-size: 10px; color: var(--vda-tinta-muted); }
   .ventas-pie      { display: none; }
   .insignia-ahorro { min-height: 14px; border-radius: 3px; line-height: 1; }
   .tarjeta-lujo .precio       { gap: 3px; }
   .tarjeta-lujo .precio-info  { gap: 2px; }
-  .tarjeta-lujo .precio .precio-actual   { font-size: 14px; color: #111; font-weight: 800; }
-  .tarjeta-lujo .precio .precio-original { font-size: 10px; color: #a0a8b3; text-decoration: line-through; }
+  .tarjeta-lujo .precio .precio-actual   { font-size: 14px; color: var(--vda-tinta); font-weight: 800; }
+  .tarjeta-lujo .precio .precio-original { font-size: 10px; color: var(--vda-tinta-muted); text-decoration: line-through; }
 }
 
 @media (max-width: 480px) {

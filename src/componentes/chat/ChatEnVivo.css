@@ -2,8 +2,8 @@
 :root {
     --academia-chat-primary: #ff6600;
     --academia-chat-gradient: linear-gradient(135deg, #ff6600 0%, #ff8533 100%);
-    --academia-chat-text: #1e293b;
-    --academia-chat-border: #e2e8f0;
+    --academia-chat-text: var(--vda-tinta);
+    --academia-chat-border: var(--vda-linea);
     --academia-chat-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --academia-chat-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     --academia-chat-shadow-hover: 0 6px 25px rgba(0, 0, 0, 0.15);
@@ -119,14 +119,14 @@
     width: 380px;
     height: 600px;
     max-height: 80vh;
-    background: white;
+    background: var(--vda-superficie);
     border-radius: 20px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     animation: academiaEntrada 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--vda-linea);
 }
 
 /* Header */
@@ -198,7 +198,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background: #f8fafc;
+    background: var(--vda-superficie-2);
     scroll-behavior: smooth;
 }
 
@@ -233,7 +233,7 @@
 }
 
 .academia-chat-msg.msg-bot .academia-msg-content {
-    background: white;
+    background: var(--vda-superficie);
     color: var(--academia-chat-text);
     border: 1px solid var(--academia-chat-border);
     border-top-left-radius: 4px;
@@ -245,7 +245,7 @@
     align-items: center;
     gap: 4px;
     padding: 12px 16px;
-    background: white;
+    background: var(--vda-superficie);
     border-radius: 16px;
     border-top-left-radius: 4px;
     border: 1px solid var(--academia-chat-border);
@@ -255,7 +255,7 @@
 .academia-typing-dot {
     width: 6px;
     height: 6px;
-    background: #cbd5e1;
+    background: var(--vda-tinta-muted);
     border-radius: 50%;
     animation: academiaTyping 1.4s infinite ease-in-out both;
 }
@@ -266,7 +266,7 @@
 /* Input Area */
 .academia-chat-form {
     padding: 0.8rem 1rem;
-    background: white;
+    background: var(--vda-superficie);
     border-top: 1px solid var(--academia-chat-border);
     display: flex;
     flex-direction: row !important;
@@ -279,17 +279,18 @@
     flex: 1;
     min-width: 0;
     padding: 12px 16px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--vda-linea);
     border-radius: 24px;
     font-size: 0.95rem;
     outline: none;
     transition: all 0.2s;
-    background: #f8fafc;
+    background: var(--vda-superficie-2);
+    color: var(--vda-tinta);
 }
 
 .academia-chat-input:focus {
     border-color: var(--academia-chat-primary);
-    background: white;
+    background: var(--vda-superficie);
     box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
 }
 
@@ -394,17 +395,17 @@
 }
 
 .academia-modal-content {
-    background: white;
+    background: var(--vda-superficie);
     padding: 2rem;
     border-radius: 24px;
     width: 90%;
     max-width: 420px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--vda-sombra-card);
 }
 
 .academia-modal-content h3 {
     margin-top: 0;
-    color: #1e293b;
+    color: var(--vda-tinta);
     text-align: center;
     font-size: 1.5rem;
 }
@@ -417,7 +418,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #475569;
+    color: var(--vda-tinta-dim);
     margin-bottom: 0.5rem;
 }
 
@@ -425,9 +426,11 @@
 .academia-input-group select {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--vda-linea-fuerte);
     border-radius: 12px;
     font-size: 1rem;
+    background: var(--vda-superficie-2);
+    color: var(--vda-tinta);
     transition: all 0.2s;
     box-sizing: border-box;
 }
@@ -457,8 +460,8 @@
 }
 
 .academia-btn-secondary {
-    background: #f1f5f9;
-    color: #475569;
+    background: var(--vda-superficie-3);
+    color: var(--vda-tinta-dim);
 }
 
 .academia-btn-primary {
@@ -572,7 +575,7 @@
         flex-shrink: 0;
         padding: 1rem;
         padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 20px));
-        background: white;
+        background: var(--vda-superficie);
         flex-direction: row !important;
     }
 
@@ -582,3 +585,7 @@
         background: rgba(0, 0, 0, 0.5);
     }
 }
+
+/* Placeholders (tema) */
+.academia-chat-input::placeholder,
+.academia-input-group input::placeholder { color: var(--vda-tinta-muted); }

@@ -82,7 +82,7 @@ export default function TabSeguridad({
             />
           </div>
           <div className="campo campo-col-2">
-            <div className="nota-seguridad" style={{ fontSize: '0.9rem', color: '#555' }}>
+            <div className="nota-seguridad" style={{ fontSize: '0.9rem', color: 'var(--vda-tinta-dim)' }}>
               Requisito: mínimo 6 caracteres y sin espacios.
             </div>
           </div>

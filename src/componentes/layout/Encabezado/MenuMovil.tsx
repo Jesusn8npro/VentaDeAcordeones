@@ -108,8 +108,14 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
             <span className="cond px-5 bg-gold text-black font-bold tracking-[0.16em] text-[12px] flex items-center">BUSCAR</span>
           </Link>
           <div className="mt-3 flex flex-wrap gap-2">
-            {['Hohner', 'Sol Do Fa', 'Vallenato', 'Fuelles', 'Estuche'].map((tag) => (
-              <span key={tag} className={`cond text-[11px] tracking-[0.16em] font-semibold px-2.5 py-1 rounded-full border ${t.chipBorder}`}>{tag.toUpperCase()}</span>
+            {[
+              { tag:'Rey Vallenato', href:'/tienda/categoria/acordeones-rey-vallenato' },
+              { tag:'Sol Do Fa',     href:'/tienda?busqueda=GCF' },
+              { tag:'Fuelles',       href:'/accesorios/fuelles-de-acordeon' },
+              { tag:'Estuches',      href:'/accesorios/estuches-de-acordeon' },
+              { tag:'Taller',        href:'/taller' },
+            ].map(({ tag, href }) => (
+              <Link key={tag} href={href} onClick={handleClose} className={`cond text-[11px] tracking-[0.16em] font-semibold px-2.5 py-1 rounded-full border transition-colors hover:border-gold hover:text-gold ${t.chipBorder}`}>{tag.toUpperCase()}</Link>
             ))}
           </div>
         </div>
@@ -122,18 +128,24 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
               const isOpen = openId === c.id
               return (
                 <li key={c.id} className={`border-b ${t.line}`}>
-                  <button
-                    onClick={() => setOpenId(isOpen ? null : c.id)}
-                    className={`w-full flex items-center gap-3 py-4 px-3 text-left transition-colors ${t.hover}`}
-                  >
-                    <span className={`h-10 w-10 rounded-md border flex items-center justify-center shrink-0 ${t.iconBox}`}>
-                      <Icon className="h-5 w-5 text-gold" />
-                    </span>
-                    <span className={`cond text-[16px] font-bold tracking-[0.1em] flex-1 flex items-center ${t.title}`}>
-                      {c.label.toUpperCase()} <Badge kind={c.badge} />
-                    </span>
-                    <I.Chevron className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180 text-gold' : (light ? 'text-ink-400' : 'text-white/50')}`} />
-                  </button>
+                  <div className={`flex items-stretch transition-colors ${t.hover}`}>
+                    <Link href={c.href} onClick={handleClose} className="flex-1 min-w-0 flex items-center gap-3 py-4 pl-3 pr-1 text-left">
+                      <span className={`h-10 w-10 rounded-md border flex items-center justify-center shrink-0 ${t.iconBox}`}>
+                        <Icon className="h-5 w-5 text-gold" />
+                      </span>
+                      <span className={`cond text-[16px] font-bold tracking-[0.1em] flex-1 flex items-center ${t.title}`}>
+                        {c.label.toUpperCase()} <Badge kind={c.badge} />
+                      </span>
+                    </Link>
+                    <button
+                      onClick={() => setOpenId(isOpen ? null : c.id)}
+                      className="w-14 shrink-0 flex items-center justify-center"
+                      aria-expanded={isOpen}
+                      aria-label={`${isOpen ? 'Cerrar' : 'Abrir'} ${c.label}`}
+                    >
+                      <I.Chevron className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180 text-gold' : (light ? 'text-ink-400' : 'text-white/50')}`} />
+                    </button>
+                  </div>
                   <div className={`acc-grid ${isOpen ? 'open' : ''}`}>
                     <div>
                       <div className="pb-4 pl-16 pr-4 grid gap-y-3">
@@ -142,8 +154,8 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
                             {col.title.toUpperCase()}
                           </div>,
                           ...col.items.map((it) => (
-                            <Link key={`${ci}-${it}`} href="/tienda" onClick={handleClose} className={`text-[14px] transition-colors ${light ? 'text-ink-700 hover:text-gold' : 'text-white/80 hover:text-gold'}`}>
-                              {it}
+                            <Link key={`${ci}-${it.label}`} href={it.href} onClick={handleClose} className={`text-[14px] transition-colors ${light ? 'text-ink-700 hover:text-gold' : 'text-white/80 hover:text-gold'}`}>
+                              {it.label}
                             </Link>
                           )),
                         ])}

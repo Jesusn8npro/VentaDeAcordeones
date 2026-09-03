@@ -68,7 +68,7 @@ export default function PaginaRestablecerContrasena() {
     <div className="contenido-reset" style={{ maxWidth: 520, margin: '2rem auto', padding: '1rem' }}>
       <h2>Restablecer contraseña</h2>
       <p>Ingresa tu nueva contraseña para completar el proceso.</p>
-      <div className="nota-seguridad" style={{ fontSize: '0.9rem', color: '#555' }}>
+      <div className="nota-seguridad" style={{ fontSize: '0.9rem', color: 'var(--vda-tinta-dim)' }}>
         Requisito: mínimo 6 caracteres y sin espacios.
       </div>
 
@@ -80,6 +80,7 @@ export default function PaginaRestablecerContrasena() {
             value={nuevaContrasena}
             onChange={(e) => setNuevaContrasena(e.target.value)}
             placeholder="••••••••"
+            style={{ background: 'var(--vda-superficie)', color: 'var(--vda-tinta)', border: '1px solid var(--vda-linea-fuerte)' }}
           />
         </div>
         <div className="campo">
@@ -89,6 +90,7 @@ export default function PaginaRestablecerContrasena() {
             value={confirmarContrasena}
             onChange={(e) => setConfirmarContrasena(e.target.value)}
             placeholder="••••••••"
+            style={{ background: 'var(--vda-superficie)', color: 'var(--vda-tinta)', border: '1px solid var(--vda-linea-fuerte)' }}
           />
         </div>
 
@@ -97,7 +99,7 @@ export default function PaginaRestablecerContrasena() {
         </button>
 
         {mensaje && (
-          <div className={`alerta ${mensaje.tipo === 'ok' ? 'ok' : 'error'}`} style={{ marginTop: '1rem' }}>
+          <div className={`alerta ${mensaje.tipo === 'ok' ? 'ok' : 'error'}`} style={{ marginTop: '1rem', color: mensaje.tipo === 'ok' ? 'var(--vda-exito)' : 'var(--vda-peligro)' }}>
             {mensaje.texto}
           </div>
         )}

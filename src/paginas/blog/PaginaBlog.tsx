@@ -175,7 +175,7 @@ export default function PaginaBlog() {
             )}
 
             {!cargando && error && (
-              <p style={{color:'#b91c1c'}}>Error: {error}</p>
+              <p style={{color:'var(--vda-peligro)'}}>Error: {error}</p>
             )}
 
             {!cargando && !error && articulos.length === 0 && (

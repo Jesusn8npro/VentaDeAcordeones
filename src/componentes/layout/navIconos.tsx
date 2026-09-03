@@ -41,4 +41,5 @@ export const I: Record<string, Icon> = {
   Quote:     (p) => <svg viewBox="0 0 24 24" fill="currentColor" {...p}><path d="M10 7H4v6a4 4 0 0 0 4 4v-4H6v-2h4V7zm10 0h-6v6a4 4 0 0 0 4 4v-4h-2v-2h4V7z"/></svg>,
   Trophy:    (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M8 4h8v4a4 4 0 0 1-8 0z"/><path d="M4 5h4v3a4 4 0 0 1-4-3zM20 5h-4v3a4 4 0 0 0 4-3z"/><path d="M9 14h6l-1 4h-4z"/><path d="M8 21h8"/></svg>,
   Clock:     (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>,
+  Speaker:   (p) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="14.5" r="3.5"/><circle cx="12" cy="6.5" r="1"/></svg>,
 }

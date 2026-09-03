@@ -1,0 +1,192 @@
+{
+  "meta": {
+    "title": "Venta de acordeones - Venta de acordeones HOHNER",
+    "description": null,
+    "dominio_original": "https://ventadeacordeones.com",
+    "cms": "WordPress + WooCommerce",
+    "agencia_diseno": "POWER MAX (marketing digital)",
+    "fecha_scraping": "2026-05-23"
+  },
+  "home": {
+    "h1": "Venta de acordeones",
+    "tagline_principal": "Tu Fuente Confiable para Todo en Acordeones",
+    "subtitulo": "Todo En Acordeones Y Accesorios: Un Mundo Musical A Tu Alcance",
+    "hero_texto": "En nuestra tienda, cada acordeón es una obra maestra, personalizada exclusivamente para ti.",
+    "secciones_h2": [
+      "Acordeones Personalizados",
+      "Accesorios Para Acordeon",
+      "Aprende A Tocar Acordeon Desde 0",
+      "TU MUSICA, NUESTROS ACORDEONES",
+      "ACORDEONES MAS VENDIDOS",
+      "Tus Dudas Resueltas Aquí"
+    ],
+    "ctas_principales": [
+      "Quiero Ver Mas",
+      "Empieza a Tocar Hoy",
+      "Leer más",
+      "Añadir al carrito"
+    ],
+    "precio_destacado": {
+      "original": "$5.900.000 COP",
+      "oferta": "$5.590.000 COP"
+    },
+    "faqs": [
+      "Personalización de instrumentos",
+      "Soporte post-venta",
+      "Forma de pago: 30% de anticipo",
+      "Recursos de aprendizaje incluidos"
+    ]
+  },
+  "nosotros": {
+    "h1": "TIENDA DE ACORDEONES",
+    "descripcion": "Somos una de las principales tiendas de acordeones en Colombia y en el mundo entero.",
+    "mensaje_principal": "Welcome to our accordion store. This is the ideal world for all accordion lovers!",
+    "paises_distribucion": ["Alemania", "Francia", "Estados Unidos", "Panamá", "Puerto Rico", "España", "Ecuador", "Perú", "Colombia"],
+    "valores": "Calidad y profesionalismo en cada uno de nuestros instrumentos.",
+    "motto": "Naciste para grandes cosas y por eso te mereces lo mejor.",
+    "garantias": [
+      "Atención personalizada al cliente",
+      "Entrega en 5 días hábiles",
+      "1 año de garantía por defectos de fabricación"
+    ]
+  },
+  "contacto": {
+    "email": "Contacto@ventadeacordeones.com",
+    "whatsapp": "(+57) 313 835 0318",
+    "whatsapp_link": "https://bit.ly/ContactoTiendaDeAcordeones",
+    "ciudad": "Bogotá, Colombia",
+    "envios": "Internacionales disponibles"
+  },
+  "redes_sociales": {
+    "facebook_tienda": "https://www.facebook.com/tiendadeacordeones",
+    "facebook_taller": "https://www.facebook.com/tallerdeacordeones1",
+    "instagram": "https://www.instagram.com/ventadeacordeones1/",
+    "youtube": "https://www.youtube.com/channel/UCxIjz1mxVyvAA-6ZgFz3KZQ"
+  },
+  "navegacion": {
+    "enlaces_principales": [
+      { "texto": "Acordeones Personalizados", "url": "https://ventadeacordeones.com/acordeones-personalizados/" },
+      { "texto": "Accesorios De Acordeon", "url": "https://ventadeacordeones.com/accesorios-de-acordeon/" },
+      { "texto": "Tienda", "url": "https://ventadeacordeones.com/tienda/" },
+      { "texto": "Blog", "url": "https://ventadeacordeones.com/blog/" },
+      { "texto": "Sobre Nosotros", "url": "https://ventadeacordeones.com/sobre-nosotros/" },
+      { "texto": "Contactos", "url": "https://ventadeacordeones.com/contactos/" },
+      { "texto": "Academia Vallenata Online", "url": "https://academiavallenataonline.com" }
+    ]
+  },
+  "tienda": {
+    "h1": "Mega Tienda De ACORDEONES",
+    "productos_acordeones": [
+      { "nombre": "Acordeon Hohner Azul personalizado", "precio_oferta": "$5.290.000", "precio_original": "$5.900.000" },
+      { "nombre": "Acordeón HOHNER personalizado de Dos Colores", "precio_oferta": "$5.490.000", "precio_original": "$5.600.000" },
+      { "nombre": "Acordeón HOHNER Blanco Tricolor", "precio_oferta": "$5.290.000", "precio_original": "$5.700.000" },
+      { "nombre": "Acordeón HOHNER Premium Dorado Elegancia Musical en Oro", "precio_oferta": "$5.390.000", "precio_original": "$5.700.000" },
+      { "nombre": "Acordeón HOHNER Verde XTREME", "precio_oferta": "$5.390.000", "precio_original": "$5.700.000" },
+      { "nombre": "Acordeon Hohner Azul de Lujo", "precio_oferta": "$5.290.000", "precio_original": "$5.490.000" },
+      { "nombre": "Acordeón HOHNER Xtreme Color Azul", "precio_oferta": "$5.390.000", "precio_original": "$5.900.000" },
+      { "nombre": "Acordeón HOHNER Xtreme Color Verde", "precio_oferta": "$5.290.000", "precio_original": "$5.490.000" },
+      { "nombre": "Acordeón HOHNER Blanco Total", "precio_oferta": "$5.290.000", "precio_original": "$5.700.000" },
+      { "nombre": "Acordeón HOHNER Premium Dorado", "precio_oferta": "$5.390.000", "precio_original": "$5.900.000" }
+    ],
+    "productos_accesorios": [
+      "Fuelle de acordeon",
+      "Correas de acordeon",
+      "Parrillas personalizadas de acordeon",
+      "Estuches de acordeon",
+      "Broches de Acordeón Elegantes y Funcionales",
+      "Parrilla de acordeon economica - Acero Inoxidable"
+    ],
+    "marcas": ["HOHNER", "Rey Vallenato"]
+  },
+  "acordeones_personalizados": {
+    "h1": "Los Mejores Acordeones Personalizados Del 2024",
+    "secciones_h2": [
+      "Acordeones Personalizados: Un Instrumento Único para Tu Música",
+      "Eleva Tu Musica: Acordeones con Diseños Exclusivos",
+      "Diseño Único: Acordeones a la Medida de Tu Estilo",
+      "Durabilidad Garantizada: Acordeones Hechos para Durar",
+      "Envios Internacionales Rapidos & Seguros",
+      "Que dicen De nuestros Acordeones Personalizados: Testimonios recientes",
+      "Despejando dudas Preguntas Frecuentes Sobre Nuestros Acordeones Personalizados"
+    ],
+    "caracteristicas": [
+      "Diseños exclusivos de la mas alta calidad",
+      "Opciones de personalización: colores, estilo de fuelle",
+      "Accesorios exclusivos incluidos (correas, estuches)",
+      "Materiales de calidad con durabilidad garantizada",
+      "Entrega en 5-10 días hábiles",
+      "Precios competitivos"
+    ],
+    "cta_link": "https://bit.ly/AcordeonesPersonalizados2024"
+  },
+  "accesorios": {
+    "h1": "Accesorios De Acordeon",
+    "secciones_h2": [
+      "Por Que TU Acordeón Se Lo Merece",
+      "Accesorios Para Tu Acordeón",
+      "Explora Nuestra Variedad de Accesorios de Acordeón",
+      "Parrillas De Acordeón",
+      "Fuelles Para Acordeon",
+      "Estuches Para Acordeón",
+      "Correas y broches de acordeon",
+      "Potencia Tu Talento: Accesorios Innovadores para Acordeón",
+      "ACCESORIOS MAS VENDIDOS",
+      "Tu Acordeón Se Lo Merece"
+    ],
+    "propuestas_valor": [
+      "Calidad Premium",
+      "Comodidad Superior",
+      "Protección Garantizada",
+      "Fácil Instalación",
+      "Mantenimiento Simple",
+      "Precios Competitivos",
+      "Satisfacción Garantizada"
+    ],
+    "mas_vendidos": [
+      "Broches de acordeon elegantes",
+      "Parrillas personalizadas",
+      "Fuelles de acordeon"
+    ]
+  },
+  "blog": {
+    "articulos": [
+      {
+        "titulo": "Personaliza tu Acordeón: Cómo Reflejar tu Estilo en tu Instrumento",
+        "url": "https://ventadeacordeones.com/personaliza-tu-acordeon-como-reflejar-tu-estilo-en-tu-instrumento/",
+        "fecha": "2024-01-22",
+        "resumen": "El acordeón representa más que una herramienta musical; funciona como vehículo de expresión creativa. La personalización permite una conexión profunda entre el intérprete y el instrumento."
+      },
+      {
+        "titulo": "Acordeones Vallenatos: Mitos y Verdades Desmentidas",
+        "url": "https://ventadeacordeones.com/acordeones-vallenatos-mitos-y-verdades-desmentidas/",
+        "fecha": "2024-01-22",
+        "resumen": "Explora los mitos sobre los acordeones vallenatos y revela que estos instrumentos son más versátiles de lo que comúnmente se cree."
+      }
+    ]
+  },
+  "urls_productos_sitemap": [
+    "https://ventadeacordeones.com/producto/acordeon-hohner-premium-dorado/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-blanco-total/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-xtreme-color-azul/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-azul-de-lujo/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-personalizado-de-dos-colores/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-xtreme-color-verde/",
+    "https://ventadeacordeones.com/producto/fuelle-de-acordeon/",
+    "https://ventadeacordeones.com/producto/correas-de-acordeon/",
+    "https://ventadeacordeones.com/producto/parrillas-de-acordeon-personalizadas/",
+    "https://ventadeacordeones.com/producto/estuches-de-acordeon/",
+    "https://ventadeacordeones.com/producto/broches-para-acordeon/",
+    "https://ventadeacordeones.com/producto/parrilla-de-acordeon-economica/",
+    "https://ventadeacordeones.com/producto/parrilla-original-de-acordeon/",
+    "https://ventadeacordeones.com/producto/fuelles-para-acordeon/",
+    "https://ventadeacordeones.com/producto/estuche-de-acordeon-original/",
+    "https://ventadeacordeones.com/producto/estuche-para-acordeon-hohner/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-corona-iii/",
+    "https://ventadeacordeones.com/producto/acordeon-rey-del-vallenato/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-corona-iii-besas/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-blanco-tricolor/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-azul-personalizado/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-verde-xtreme/",
+    "https://ventadeacordeones.com/producto/acordeon-hohner-premium-dorado-elegancia-musical-en-oro/"
+  ]
+}

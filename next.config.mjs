@@ -12,6 +12,11 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.supabase.co' },
       { protocol: 'https', hostname: 'ventadeacordeones.com' },
       { protocol: 'https', hostname: '*.ventadeacordeones.com' },
+      // 2026-09: todas las imágenes de producto viven ya en Supabase Storage (re-hospedadas por
+      // scripts/procesar-imagenes-productos.mjs e importar-miche.mjs). Sólo queda 1 hotlink a hohner.de.
+      // Lista cerrada de nuevo: con '**' cualquiera podía usar /_next/image como proxy/optimizador gratis.
+      { protocol: 'https', hostname: 'hohner.de' },
+      { protocol: 'https', hostname: 'cdn.shopify.com' },
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -37,10 +42,14 @@ const nextConfig = {
     const csp =
       `default-src 'self'; ${scriptSrc}; ` +
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-      "img-src 'self' data: https:; " +
+      "img-src 'self' data: blob: https:; " +
+      // blob: en img-src y worker-src: GLTFLoader carga las texturas embebidas del GLB como blob: y el
+      // decodificador Draco levanta un Worker desde blob: (landing 3D /landingdelujo).
+      "worker-src 'self' blob:; " +
       "font-src 'self' https://fonts.gstatic.com; " +
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co https://api.openai.com; " +
-      "frame-src https://*.epayco.co; object-src 'none'; base-uri 'self'; form-action 'self';"
+      "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co https://api.openai.com; " +
+      // instagram.com en frame-src: los reels de @ventadeacordeones1 se abren en un iframe /embed al hacer clic.
+      "frame-src https://*.epayco.co https://www.instagram.com; object-src 'none'; base-uri 'self'; form-action 'self';"
     return [
       {
         source: '/:path*',

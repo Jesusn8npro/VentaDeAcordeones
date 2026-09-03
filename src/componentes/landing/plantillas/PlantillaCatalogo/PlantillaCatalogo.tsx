@@ -58,7 +58,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
         gap: '1rem', 
         marginBottom: '2rem',
         paddingBottom: '1rem',
-        borderBottom: '1px solid #eee'
+        borderBottom: '1px solid var(--vda-linea)'
       }}>
         <button 
           onClick={() => router.back()}
@@ -67,8 +67,9 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
             alignItems: 'center',
             gap: '0.5rem',
             padding: '0.5rem 1rem',
-            backgroundColor: '#f8f9fa',
-            border: '1px solid #dee2e6',
+            backgroundColor: 'var(--vda-superficie-2)',
+            color: 'var(--vda-tinta)',
+            border: '1px solid var(--vda-linea)',
             borderRadius: '6px',
             cursor: 'pointer'
           }}
@@ -78,13 +79,13 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
         </button>
         
         <div>
-          <h1 style={{ margin: 0, fontSize: '2rem', color: '#2c3e50' }}>
+          <h1 style={{ margin: 0, fontSize: '2rem', color: 'var(--vda-tinta)' }}>
             {producto.nombre}
           </h1>
-          <p style={{ margin: '0.5rem 0 0 0', color: '#7f8c8d' }}>
+          <p style={{ margin: '0.5rem 0 0 0', color: 'var(--vda-tinta-dim)' }}>
             Slug: {producto.slug}
           </p>
-          <p style={{ margin: '0.25rem 0 0 0', color: '#95a5a6', fontSize: '0.9rem' }}>
+          <p style={{ margin: '0.25rem 0 0 0', color: 'var(--vda-tinta-muted)', fontSize: '0.9rem' }}>
             📋 Plantilla: Catálogo Estándar
           </p>
         </div>
@@ -95,7 +96,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
         
         {/* Columna izquierda - Imágenes */}
         <div>
-          <h3 style={{ color: '#2c3e50', marginBottom: '1rem' }}>
+          <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>
             <Eye style={{ display: 'inline', marginRight: '0.5rem' }} />
             Imágenes del Producto
           </h3>
@@ -111,7 +112,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
                   maxHeight: '400px', 
                   objectFit: 'cover',
                   borderRadius: '8px',
-                  border: '1px solid #dee2e6'
+                  border: '1px solid var(--vda-linea)'
                 }}
               />
               {/* Etiqueta VENDIDO */}
@@ -141,16 +142,16 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
             <div style={{ 
               width: '100%', 
               height: '400px', 
-              backgroundColor: '#f8f9fa',
+              backgroundColor: 'var(--vda-superficie-2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '8px',
-              border: '1px solid #dee2e6',
+              border: '1px solid var(--vda-linea)',
               marginBottom: '1rem',
               position: 'relative'
             }}>
-              <Package size={64} color="#6c757d" />
+              <Package size={64} color="var(--vda-tinta-muted)" />
               {/* Etiqueta VENDIDO para placeholder */}
               {producto?.estado === 'vendido' && (
                 <div style={{
@@ -191,7 +192,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
                       height: '100px', 
                       objectFit: 'cover',
                       borderRadius: '4px',
-                      border: '1px solid #dee2e6'
+                      border: '1px solid var(--vda-linea)'
                     }}
                   />
                 ))}
@@ -204,13 +205,13 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
         <div>
           {/* Información básica */}
           <div style={{ 
-            backgroundColor: '#f8f9fa', 
+            backgroundColor: 'var(--vda-superficie-2)', 
             padding: '1.5rem', 
             borderRadius: '8px',
             marginBottom: '2rem',
-            border: '1px solid #dee2e6'
+            border: '1px solid var(--vda-linea)'
           }}>
-            <h3 style={{ color: '#2c3e50', marginBottom: '1rem' }}>
+            <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>
               <Tag style={{ display: 'inline', marginRight: '0.5rem' }} />
               Información Básica
             </h3>
@@ -226,7 +227,7 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
                   <span style={{ 
                     marginLeft: '0.5rem',
                     padding: '0.25rem 0.75rem',
-                    backgroundColor: '#e3f2fd',
+                    backgroundColor: 'var(--vda-superficie-3)',
                     borderRadius: '20px',
                     fontSize: '0.875rem'
                   }}>
@@ -273,13 +274,13 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
 
           {/* Precios */}
           <div style={{ 
-            backgroundColor: '#fff3cd', 
+            backgroundColor: 'color-mix(in srgb, var(--vda-oro) 12%, var(--vda-superficie))', 
             padding: '1.5rem', 
             borderRadius: '8px',
             marginBottom: '2rem',
-            border: '1px solid #ffeaa7'
+            border: '1px solid color-mix(in srgb, var(--vda-oro) 35%, var(--vda-linea))'
           }}>
-            <h3 style={{ color: '#856404', marginBottom: '1rem' }}>
+            <h3 style={{ color: 'var(--vda-oro-suave)', marginBottom: '1rem' }}>
               💰 Precios
             </h3>
             
@@ -307,13 +308,13 @@ const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
 
           {/* Stock e inventario */}
           <div style={{ 
-            backgroundColor: '#e8f5e8', 
+            backgroundColor: 'color-mix(in srgb, var(--vda-exito) 10%, var(--vda-superficie))', 
             padding: '1.5rem', 
             borderRadius: '8px',
             marginBottom: '2rem',
-            border: '1px solid #c3e6c3'
+            border: '1px solid color-mix(in srgb, var(--vda-exito) 30%, var(--vda-linea))'
           }}>
-            <h3 style={{ color: '#2d5a2d', marginBottom: '1rem' }}>
+            <h3 style={{ color: 'var(--vda-exito)', marginBottom: '1rem' }}>
               <Package style={{ display: 'inline', marginRight: '0.5rem' }} />
               Inventario
             </h3>

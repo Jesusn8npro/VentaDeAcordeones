@@ -30,10 +30,10 @@ const PaginaLogin = () => {
             padding: '40px 20px'
         }}>
             <div style={{ textAlign: 'center' }}>
-                <h1 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#1a1a1a' }}>
+                <h1 style={{ fontSize: '2rem', marginBottom: '1rem', color: 'var(--vda-tinta)' }}>
                     Iniciar Sesión
                 </h1>
-                <p style={{ color: '#666', marginBottom: '2rem' }}>
+                <p style={{ color: 'var(--vda-tinta-dim)', marginBottom: '2rem' }}>
                     Por favor, utiliza el modal para ingresar a tu cuenta.
                 </p>
                 <button

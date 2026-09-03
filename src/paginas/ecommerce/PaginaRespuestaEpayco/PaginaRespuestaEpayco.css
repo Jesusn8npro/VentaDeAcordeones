@@ -1,7 +1,8 @@
 /* Página de Respuesta ePayco - Diseño Moderno y Atractivo */
 .pagina-respuesta-epayco {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--vda-fondo);
+  color: var(--vda-tinta);
   padding: 20px;
   display: flex;
   align-items: center;
@@ -12,9 +13,10 @@
 .contenedor-respuesta {
   max-width: 900px;
   width: 100%;
-  background: white;
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
   border-radius: 24px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--vda-sombra-card);
   overflow: hidden;
   position: relative;
 }
@@ -42,14 +44,14 @@
 .cargando .spinner {
   width: 48px;
   height: 48px;
-  border: 4px solid #f3f4f6;
+  border: 4px solid var(--vda-linea);
   border-top: 4px solid #3b82f6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .cargando p {
-  color: #6b7280;
+  color: var(--vda-tinta-dim);
   font-size: 1.2rem;
   font-weight: 500;
   margin: 0;
@@ -114,17 +116,17 @@
 
 /* Información de la Transacción */
 .info-transaccion {
-  background: #f8fafc;
+  background: var(--vda-superficie-2);
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 32px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--vda-linea);
 }
 
 .titulo-seccion {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--vda-tinta);
   margin: 0 0 24px;
   display: flex;
   align-items: center;
@@ -142,9 +144,9 @@
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background: white;
+  background: var(--vda-superficie);
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--vda-linea);
   transition: all 0.2s ease;
 }
 
@@ -156,7 +158,7 @@
 .icono-campo {
   width: 20px;
   height: 20px;
-  color: #6b7280;
+  color: var(--vda-tinta-dim);
   flex-shrink: 0;
 }
 
@@ -167,7 +169,7 @@
 .etiqueta-campo {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--vda-tinta-dim);
   margin: 0 0 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -176,7 +178,7 @@
 .valor-campo {
   font-size: 1rem;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--vda-tinta);
   margin: 0;
 }
 
@@ -187,11 +189,11 @@
 
 /* Resumen del Pedido */
 .resumen-pedido {
-  background: #f8fafc;
+  background: var(--vda-superficie-2);
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 32px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--vda-linea);
 }
 
 .lista-productos {
@@ -205,7 +207,7 @@
   align-items: center;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--vda-linea);
 }
 
 .item-producto:last-child {
@@ -217,7 +219,7 @@
   height: 60px;
   border-radius: 12px;
   object-fit: cover;
-  background: #f3f4f6;
+  background: var(--vda-superficie-3);
 }
 
 .info-producto {
@@ -226,13 +228,13 @@
 
 .nombre-producto {
   font-weight: 600;
-  color: #1f2937;
+  color: var(--vda-tinta);
   margin: 0 0 4px;
 }
 
 .cantidad-producto {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--vda-tinta-dim);
   margin: 0;
 }
 
@@ -248,14 +250,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px 0 0;
-  border-top: 2px solid #e5e7eb;
+  border-top: 2px solid var(--vda-linea-fuerte);
   margin-top: 16px;
 }
 
 .etiqueta-total {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1f2937;
+  color: var(--vda-tinta);
 }
 
 .valor-total {
@@ -271,7 +273,7 @@
   gap: 16px;
   justify-content: center;
   padding: 32px 40px 40px;
-  background: #f8fafc;
+  background: var(--vda-superficie-2);
 }
 
 .boton-accion {
@@ -302,9 +304,9 @@
 }
 
 .boton-secundario {
-  background: white;
-  color: #374151;
-  border: 2px solid #d1d5db;
+  background: var(--vda-superficie);
+  color: var(--vda-tinta);
+  border: 2px solid var(--vda-linea-fuerte);
 }
 
 .boton-secundario:hover {
@@ -326,21 +328,21 @@
 
 /* Información Adicional */
 .info-adicional {
-  background: #fffbeb;
-  border: 1px solid #fbbf24;
+  background: color-mix(in srgb, #f59e0b 14%, transparent);
+  border: 1px solid color-mix(in srgb, #f59e0b 45%, transparent);
   border-radius: 12px;
   padding: 20px;
   margin-top: 24px;
 }
 
 .info-adicional h4 {
-  color: #92400e;
+  color: #fbbf24;
   margin: 0 0 12px;
   font-weight: 600;
 }
 
 .info-adicional p {
-  color: #78350f;
+  color: var(--vda-tinta-dim);
   margin: 0;
   line-height: 1.6;
 }
@@ -437,3 +439,8 @@
 .campo-info:nth-child(2) { animation-delay: 0.2s; }
 .campo-info:nth-child(3) { animation-delay: 0.3s; }
 .campo-info:nth-child(4) { animation-delay: 0.4s; }
+
+/* ============ LIGHT THEME OVERRIDES ============ */
+[data-theme="light"] .info-adicional { background: #fffbeb; border-color: #fbbf24; }
+[data-theme="light"] .info-adicional h4 { color: #92400e; }
+[data-theme="light"] .info-adicional p { color: #78350f; }

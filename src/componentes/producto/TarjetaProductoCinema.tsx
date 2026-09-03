@@ -102,7 +102,7 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
           aria-label={favorito ? 'Quitar de favoritos' : 'Agregar a favoritos'}
           type="button"
         >
-          <Heart size={14} fill={favorito ? '#FFC300' : 'none'} color={favorito ? '#FFC300' : 'currentColor'} />
+          <Heart size={14} fill={favorito ? 'var(--vda-oro)' : 'none'} color={favorito ? 'var(--vda-oro)' : 'currentColor'} />
         </button>
 
         {srcPrincipal ? (
@@ -138,14 +138,12 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
             <ShoppingCart size={11} />
             Añadir
           </button>
-          <Link
-            href={href}
-            className="cinema-card__quick-btn"
-            onClick={(e) => e.stopPropagation()}
-          >
+          {/* Era un <Link> dentro del <Link> de la imagen: <a> anidado = error de hidratación.
+              El contenedor ya navega a la ficha, así que basta un span con el mismo estilo. */}
+          <span className="cinema-card__quick-btn">
             <Eye size={11} />
             Ver
-          </Link>
+          </span>
         </div>
       </Link>
 
@@ -185,8 +183,8 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
                 <Star
                   key={i}
                   size={10}
-                  fill={i < Math.round(scorePromedio) ? '#FFC300' : 'none'}
-                  color="#FFC300"
+                  fill={i < Math.round(scorePromedio) ? 'var(--vda-oro)' : 'none'}
+                  color="var(--vda-oro)"
                 />
               ))}
             </div>

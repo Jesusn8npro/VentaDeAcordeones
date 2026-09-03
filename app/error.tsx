@@ -29,10 +29,10 @@ export default function Error({
       textAlign: 'center',
     }}>
       <div style={{ fontSize: '4rem' }}>⚠️</div>
-      <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1a1a2e', margin: 0 }}>
+      <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--vda-tinta)', margin: 0 }}>
         Algo salió mal
       </h1>
-      <p style={{ color: '#666', maxWidth: '400px', margin: 0 }}>
+      <p style={{ color: 'var(--vda-tinta-dim)', maxWidth: '400px', margin: 0 }}>
         Ocurrió un error inesperado. Puedes intentar de nuevo o volver al inicio.
       </p>
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -56,8 +56,8 @@ export default function Error({
           style={{
             padding: '0.75rem 1.5rem',
             background: 'transparent',
-            color: '#1a1a2e',
-            border: '2px solid #1a1a2e',
+            color: 'var(--vda-tinta)',
+            border: '2px solid var(--vda-tinta)',
             borderRadius: '8px',
             fontWeight: 600,
             cursor: 'pointer',

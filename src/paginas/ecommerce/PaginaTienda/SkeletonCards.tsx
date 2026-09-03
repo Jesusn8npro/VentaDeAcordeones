@@ -2,26 +2,22 @@
 
 import React from 'react'
 
-export default function SkeletonCards() {
+/**
+ * SkeletonCards — placeholders de tarjeta mientras carga la tienda.
+ * Se renderizan como hijos directos del grid (.tienda-grid) para ocupar
+ * exactamente las celdas que ocuparán los productos (sin salto de layout).
+ */
+export default function SkeletonCards({ cantidad = 8 }: { cantidad?: number }) {
   return (
-    <div className="tienda-productos">
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.25rem' }}>
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} style={{
-            background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-            backgroundSize: '200% 100%',
-            animation: 'skeleton-shimmer 1.5s infinite',
-            borderRadius: '12px',
-            height: '320px'
-          }} />
-        ))}
-        <style>{`
-          @keyframes skeleton-shimmer {
-            0% { background-position: 200% 0 }
-            100% { background-position: -200% 0 }
-          }
-        `}</style>
-      </div>
-    </div>
+    <>
+      {Array.from({ length: cantidad }).map((_, i) => (
+        <div key={i} className="tienda-skeleton" aria-hidden="true">
+          <div className="tienda-skeleton-img" />
+          <div className="tienda-skeleton-linea" style={{ width: '82%' }} />
+          <div className="tienda-skeleton-linea" style={{ width: '48%' }} />
+          <div className="tienda-skeleton-linea tienda-skeleton-precio" style={{ width: '60%' }} />
+        </div>
+      ))}
+    </>
   )
 }

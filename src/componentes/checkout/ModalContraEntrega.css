@@ -1,12 +1,12 @@
 /* ContraEntregaModal.css — Cash-on-delivery modal */
 
-:root {
-  --ec-primario: #1a1a2e;
-  --ec-acento: #e94560;
-  --ec-fondo: #ffffff;
-  --ec-borde: #e5e7eb;
-  --ec-texto: #1f2937;
-  --ec-texto-secundario: #6b7280;
+.cod-modal-overlay {
+  --ec-primario: var(--vda-tinta);
+  --ec-acento: var(--vda-oro);
+  --ec-fondo: var(--vda-superficie);
+  --ec-borde: var(--vda-linea);
+  --ec-texto: var(--vda-tinta);
+  --ec-texto-secundario: var(--vda-tinta-dim);
   --ec-radio: 12px;
   --ec-exito: #22c55e;
   --ec-azul: #3b82f6;
@@ -23,7 +23,7 @@
 .cod-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: var(--vda-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,8 +36,9 @@
   max-width: 520px;
   max-height: 86vh;
   background: var(--ec-fondo);
+  color: var(--ec-texto);
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: var(--vda-sombra-card);
   position: relative;
   padding: 18px;
   overflow-y: auto;
@@ -54,7 +55,8 @@
   position: absolute;
   right: 12px;
   top: 12px;
-  background: #f5f5f5;
+  background: var(--vda-superficie-2);
+  color: var(--ec-texto);
   border: none;
   width: 36px;
   height: 36px;
@@ -108,7 +110,7 @@
 }
 .cod-cod-left  { display: flex; align-items: center; gap: 6px; }
 .cod-cod-right { font-size: 12px; opacity: 0.9; }
-.cod-cod-note  { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #334155; margin: 6px 2px 10px; }
+.cod-cod-note  { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ec-texto-secundario); margin: 6px 2px 10px; }
 
 /* ── OFERTAS ── */
 .cod-ofertas-titulo { margin: 0 0 12px; font-size: 16px; font-weight: 700; color: var(--ec-texto); }
@@ -120,7 +122,7 @@
   padding: 12px;
   border-radius: var(--ec-radio);
   border: 2px solid var(--ec-borde);
-  background: #f9fafb;
+  background: var(--vda-superficie-2);
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
@@ -128,7 +130,7 @@
 .cod-oferta:hover { border-color: var(--ec-azul); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59,130,246,0.15); }
 .cod-oferta.seleccionada {
   border-color: var(--ec-exito);
-  background: #f0fdf4;
+  background: color-mix(in srgb, #10b981 14%, transparent);
   box-shadow: 0 4px 12px rgba(34,197,94,0.2);
 }
 .cod-oferta.seleccionada::before {
@@ -174,7 +176,7 @@
   font-size: 11px;
   font-weight: 700;
 }
-.cod-oferta-seleccionada { border-color: var(--ec-exito) !important; background: #f0fdf4 !important; }
+.cod-oferta-seleccionada { border-color: var(--ec-exito) !important; background: color-mix(in srgb, #10b981 14%, transparent) !important; }
 .cod-oferta-info { flex: 1; }
 .cod-gratis { color: #16a34a; font-weight: 700; }
 
@@ -210,6 +212,8 @@
   padding: 0 12px;
   font-size: 14px;
   transition: border-color 0.2s;
+  background: var(--ec-fondo);
+  color: var(--ec-texto);
 }
 .cod-campo input:focus,
 .cod-campo select:focus {
@@ -218,15 +222,17 @@
   box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
 }
 .cod-form-grupo       { display: flex; flex-direction: column; gap: 6px; }
-.cod-form-grupo label { font-size: 13px; font-weight: 600; color: #374151; }
+.cod-form-grupo label { font-size: 13px; font-weight: 600; color: var(--ec-texto-secundario); }
 .cod-form-grupo input,
 .cod-form-grupo select {
   height: 44px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--vda-linea-fuerte);
   border-radius: 8px;
   padding: 0 12px;
   font-size: 14px;
   transition: border-color 0.2s;
+  background: var(--ec-fondo);
+  color: var(--ec-texto);
 }
 .cod-form-grupo input:focus,
 .cod-form-grupo select:focus { outline: none; border-color: var(--ec-azul); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
@@ -239,16 +245,16 @@
   font-size: 14px;
   text-align: center;
   padding: 8px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: color-mix(in srgb, var(--vda-peligro) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vda-peligro) 35%, transparent);
   border-radius: 8px;
 }
 
 /* ── BIENVENIDA ── */
 .cod-bienvenida {
-  background: #f0f9ff;
-  border: 1px solid #bae6fd;
-  color: #0c4a6e;
+  background: color-mix(in srgb, #0ea5e9 12%, transparent);
+  border: 1px solid color-mix(in srgb, #0ea5e9 40%, transparent);
+  color: #7dd3fc;
   border-radius: var(--ec-radio);
   padding: 10px 12px;
   font-size: 12px;
@@ -265,8 +271,8 @@
   padding: 12px;
 }
 .cod-confirmacion-header   { display: flex; align-items: center; gap: 8px; font-size: 14px; }
-.cod-confirmacion-mensaje  { font-size: 13px; color: #334155; }
-.cod-confirmacion-detalles { display: flex; flex-direction: column; gap: 4px; background: #f9fafb; border: 1px dashed var(--ec-borde); border-radius: var(--ec-radio); padding: 8px; }
+.cod-confirmacion-mensaje  { font-size: 13px; color: var(--ec-texto-secundario); }
+.cod-confirmacion-detalles { display: flex; flex-direction: column; gap: 4px; background: var(--vda-superficie-2); border: 1px dashed var(--ec-borde); border-radius: var(--ec-radio); padding: 8px; }
 .cod-confirmacion-acciones { display: flex; gap: 8px; align-items: center; }
 .cod-confirmacion-icono {
   display: flex;
@@ -352,18 +358,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
+  background: color-mix(in srgb, #f59e0b 14%, transparent);
+  border: 1px solid color-mix(in srgb, #f59e0b 45%, transparent);
   border-radius: var(--ec-radio);
   padding: 8px 10px;
 }
-.cod-upsell-badge { font-size: 12px; font-weight: 700; color: #b45309; }
+.cod-upsell-badge { font-size: 12px; font-weight: 700; color: #fbbf24; }
 
 /* ── SELLOS / LOGOS ── */
 .cod-sellos         { display: grid; place-items: center; padding: 12px 0 8px; }
 .cod-sellos-img     { width: 88%; max-width: 520px; }
 .cod-plataforma     { margin: 6px 0 4px; text-align: center; }
-.cod-plataforma-desc { font-size: 12px; color: #4b5563; margin: 8px 0; }
+.cod-plataforma-desc { font-size: 12px; color: var(--ec-texto-secundario); margin: 8px 0; }
 .cod-logos-pago-wrap { display: grid; place-items: center; }
 .cod-logos-pago     { width: 92%; max-width: 560px; border-radius: 8px; }
 
@@ -374,3 +380,10 @@
   .cod-sellos-img,
   .cod-logos-pago { width: 100%; }
 }
+
+/* ============ LIGHT THEME OVERRIDES ============ */
+[data-theme="light"] .cod-oferta.seleccionada,
+[data-theme="light"] .cod-oferta-seleccionada { background: #f0fdf4 !important; }
+[data-theme="light"] .cod-bienvenida { background: #f0f9ff; border-color: #bae6fd; color: #0c4a6e; }
+[data-theme="light"] .cod-upsell { background: #fff7ed; border-color: #fed7aa; }
+[data-theme="light"] .cod-upsell-badge { color: #b45309; }

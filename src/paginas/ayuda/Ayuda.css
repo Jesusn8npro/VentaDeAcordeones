@@ -1,7 +1,7 @@
 /* Estilos exclusivos para la página de Ayuda (prefijo helpLux) */
 .helpLux-container {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-  color: #1e293b;
+  color: var(--vda-tinta);
 }
 
 /* Hero */
@@ -40,30 +40,30 @@
 /* Categorías */
 .helpLux-categories { max-width: 1024px; margin: 0 auto; padding: 24px; }
 .helpLux-category-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-.helpLux-category-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-decoration: none; color: #0f172a; text-align: center; font-weight: 600; }
-.helpLux-category-card:hover { background: #eef2ff; border-color: #c7d2fe; }
+.helpLux-category-card { background: var(--vda-superficie-2); border: 1px solid var(--vda-linea); border-radius: 12px; padding: 14px; text-decoration: none; color: var(--vda-tinta); text-align: center; font-weight: 600; }
+.helpLux-category-card:hover { background: color-mix(in srgb, #6366f1 12%, var(--vda-superficie)); border-color: color-mix(in srgb, #6366f1 40%, transparent); }
 
 /* Guías */
 .helpLux-guides { max-width: 1024px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.helpLux-guide-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px; }
+.helpLux-guide-card { background: var(--vda-superficie); border: 1px solid var(--vda-linea); border-radius: 14px; padding: 16px; }
 .helpLux-guide-icon { color: #6366f1; }
 .helpLux-guide-title { font-weight: 700; margin: 8px 0; }
-.helpLux-guide-text { color: #475569; margin-bottom: 8px; }
+.helpLux-guide-text { color: var(--vda-tinta-dim); margin-bottom: 8px; }
 .helpLux-link { color: #0ea5e9; text-decoration: none; font-weight: 600; }
 
 /* Acceso rápido */
 .helpLux-quicklinks { max-width: 1024px; margin: 0 auto; padding: 24px; }
 .helpLux-quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.helpLux-quick-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; text-decoration: none; color: #0f172a; display: flex; gap: 10px; align-items: center; }
-.helpLux-quick-card:hover { background: #eef2ff; border-color: #c7d2fe; }
-.helpLux-quick-icon { color: #64748b; }
+.helpLux-quick-card { background: var(--vda-superficie-2); border: 1px solid var(--vda-linea); border-radius: 12px; padding: 14px; text-decoration: none; color: var(--vda-tinta); display: flex; gap: 10px; align-items: center; }
+.helpLux-quick-card:hover { background: color-mix(in srgb, #6366f1 12%, var(--vda-superficie)); border-color: color-mix(in srgb, #6366f1 40%, transparent); }
+.helpLux-quick-icon { color: var(--vda-tinta-muted); }
 
 /* Contacto */
 .helpLux-contact { max-width: 1024px; margin: 0 auto; padding: 24px; }
-.helpLux-contact-card { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 12px; }
+.helpLux-contact-card { background: color-mix(in srgb, #0ea5e9 12%, var(--vda-superficie)); border: 1px solid color-mix(in srgb, #0ea5e9 40%, transparent); border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 12px; }
 .helpLux-contact-icon { color: #0284c7; }
 .helpLux-contact-title { font-weight: 700; margin: 0; }
-.helpLux-contact-text { margin: 2px 0 0; color: #334155; }
+.helpLux-contact-text { margin: 2px 0 0; color: var(--vda-tinta-dim); }
 
 /* Responsive */
 @media (max-width: 900px) {

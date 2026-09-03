@@ -47,7 +47,7 @@ const SeleccionOfertas = ({ ofertas, ofertaSeleccionada, onSeleccionar, precioUn
           )}
         </label>
       )) : (
-        <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+        <div style={{ padding: '20px', textAlign: 'center', color: 'var(--vda-tinta-dim)' }}>
           Cargando ofertas...
         </div>
       )}

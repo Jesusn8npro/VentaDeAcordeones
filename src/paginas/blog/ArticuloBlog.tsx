@@ -8,44 +8,108 @@ import './ArticuloBlog.css';
 import SidebarBlog from './SidebarBlog';
 import { clienteSupabase } from '../../configuracion/supabase';
 
+const slugify = (text) => (text ?? '').toString().toLowerCase()
+  .replace(/\s+/g, '-')
+  .replace(/[^\w\-]+/g, '')
+  .replace(/--+/g, '-')
+  .replace(/^-+/, '')
+  .replace(/-+$/, '');
+
+// Markdown inline (**negrita**, *cursiva*, [texto](ruta)) → nodos React.
+// Sin dangerouslySetInnerHTML: el texto viene de la BD y nunca se inyecta como HTML.
+const INLINE_RE = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)\s]+\)|(?<![*\w])\*[^*\n]+\*(?![*\w]))/g;
+const esRutaSegura = (href) => /^(\/|#|https?:\/\/|mailto:|tel:)/i.test(href);
+
+const formatearInline = (texto) => {
+  if (typeof texto !== 'string' || !texto) return texto;
+  const partes = texto.split(INLINE_RE).filter(Boolean);
+  if (partes.length === 1 && !INLINE_RE.test(texto)) return texto;
+  return partes.map((p, i) => {
+    if (p.startsWith('**') && p.endsWith('**')) return <strong key={i}>{p.slice(2, -2)}</strong>;
+    const enlace = p.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+    if (enlace && esRutaSegura(enlace[2])) {
+      const [, label, href] = enlace;
+      const externo = /^https?:\/\//i.test(href);
+      return externo
+        ? <a key={i} href={href} target="_blank" rel="noopener noreferrer">{label}</a>
+        : <Link key={i} href={href}>{label}</Link>;
+    }
+    if (p.length > 2 && p.startsWith('*') && p.endsWith('*')) return <em key={i}>{p.slice(1, -1)}</em>;
+    return p;
+  });
+};
+
 // Componente para renderizar el contenido dinámico del artículo
 const RenderizadorContenido = ({ secciones }) => {
   if (!Array.isArray(secciones)) {
     return <p>El contenido del artículo no es válido.</p>;
   }
 
-  const slugify = (text) => text.toString().toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-
   return secciones.map((seccion, index) => {
-    const id = seccion.titulo ? slugify(seccion.titulo) : `seccion-${index}`;
+    // Los encabezados usan el mismo id que la tabla de contenidos (slugify(contenido)).
+    const id = seccion.tipo === 'encabezado' && seccion.contenido
+      ? slugify(seccion.contenido)
+      : `seccion-${index}`;
 
     switch (seccion.tipo) {
       case 'encabezado':
         const Nivel = `h${seccion.nivel || 2}`;
         return <Nivel key={id} id={id} className="bloque-titulo">{seccion.contenido}</Nivel>;
-      
+
       case 'parrafo':
-        return <p key={id} className="bloque-texto">{seccion.contenido}</p>;
-      
+        return <p key={id} className="bloque-texto">{formatearInline(seccion.contenido)}</p>;
+
       case 'imagen':
+        if (!seccion.url) return null;
         return (
           <figure key={id} className="imagen-inline">
             <img src={seccion.url} alt={seccion.alt || 'Imagen del artículo'} loading="lazy" decoding="async" />
             {seccion.caption && <figcaption>{seccion.caption}</figcaption>}
           </figure>
         );
-        
+
       case 'lista':
         const Lista = seccion.ordenada ? 'ol' : 'ul';
         return (
           <Lista key={id} className="bloque-texto">
-            {Array.isArray(seccion.items) && seccion.items.map((item, i) => <li key={i}>{item}</li>)}
+            {Array.isArray(seccion.items) && seccion.items.map((item, i) => <li key={i}>{formatearInline(item)}</li>)}
           </Lista>
+        );
+
+      case 'tabla':
+        if (!Array.isArray(seccion.filas)) return null;
+        return (
+          <div key={id} className="tabla-scroll">
+            <table className="tabla-articulo">
+              {Array.isArray(seccion.cabecera) && seccion.cabecera.length > 0 && (
+                <thead>
+                  <tr>{seccion.cabecera.map((c, i) => <th key={i} scope="col">{formatearInline(c)}</th>)}</tr>
+                </thead>
+              )}
+              <tbody>
+                {seccion.filas.map((fila, f) => (
+                  <tr key={f}>{Array.isArray(fila) && fila.map((c, i) => <td key={i}>{formatearInline(c)}</td>)}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+
+      case 'faq':
+        if (!Array.isArray(seccion.preguntas) || seccion.preguntas.length === 0) return null;
+        return (
+          <section key={id} id="preguntas-frecuentes" className="faq-articulo" aria-labelledby="faq-articulo-titulo">
+            <h2 id="faq-articulo-titulo" className="bloque-titulo">{seccion.titulo || 'Preguntas frecuentes'}</h2>
+            {seccion.preguntas.map((p, i) => (
+              <details key={i} className="faq-item" open={i === 0}>
+                <summary>
+                  <span>{p.pregunta}</span>
+                  <ChevronDown size={18} className="icono" aria-hidden="true" />
+                </summary>
+                <div className="faq-respuesta"><p>{formatearInline(p.respuesta)}</p></div>
+              </details>
+            ))}
+          </section>
         );
 
       default:
@@ -264,10 +328,12 @@ export default function ArticuloBlog({ initialData: _initialData }: { initialDat
     );
   }
 
+  // `autor` puede traer un uuid en filas antiguas: en ese caso se usa el nombre por defecto.
+  const autorValido = typeof articuloData.autor === 'string' && articuloData.autor && !/^[0-9a-f-]{36}$/i.test(articuloData.autor);
   const cabecera = {
     titulo: articuloData.titulo,
-    autor: "JESUS GONZALEZ",
-    autorIniciales: "JG",
+    autor: autorValido ? articuloData.autor : 'Jesús González',
+    autorIniciales: articuloData.autor_iniciales || 'JG',
     fecha: formatearFecha(articuloData.fecha_publicacion),
     lecturaMin: articuloData.lectura_min ?? 0,
     rating: articuloData.calificacion ?? 0,
@@ -277,21 +343,21 @@ export default function ArticuloBlog({ initialData: _initialData }: { initialDat
   const resumenBreveActual = articuloData.resumen_breve;
   const resumenCompletoActual = articuloData.resumen_completo;
   
-  const encabezados = Array.isArray(articuloData.secciones) 
-    ? articuloData.secciones.filter(s => s.tipo === 'encabezado')
-    : [];
+  const secciones = Array.isArray(articuloData.secciones) ? articuloData.secciones : [];
+  // La TOC solo lista H2 (los H3 son subapartados) y añade la FAQ si existe.
+  const encabezados = secciones.filter(s => s.tipo === 'encabezado' && (s.nivel || 2) <= 2);
+  const tieneFaq = secciones.some(s => s.tipo === 'faq' && Array.isArray(s.preguntas) && s.preguntas.length);
 
-  const slugify = (text) => text.toString().toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/--+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-
+  const textoPlano = (t) => (typeof t === 'string' ? t.replace(/\*\*|\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') : '');
   const textoParaHablar = [
     cabecera.titulo,
     resumenCompletoActual || resumenBreveActual,
-    ...(Array.isArray(articuloData.secciones) ? articuloData.secciones.map(s => s.contenido || (s.items ? s.items.join(', ') : '')).filter(Boolean) : [])
+    ...secciones.map(s => {
+      if (s.tipo === 'lista' && Array.isArray(s.items)) return s.items.map(textoPlano).join(', ');
+      if (s.tipo === 'faq' && Array.isArray(s.preguntas)) return s.preguntas.map(p => `${p.pregunta}. ${textoPlano(p.respuesta)}`).join('. ');
+      if (s.tipo === 'tabla') return '';
+      return textoPlano(s.contenido);
+    }).filter(Boolean)
   ].join('. ');
 
   return (
@@ -341,14 +407,15 @@ export default function ArticuloBlog({ initialData: _initialData }: { initialDat
                 <nav className="tabla-contenidos" aria-label="Tabla de contenidos">
                   <p className="toc-title">Contenido</p>
                   <ul>
-                    {encabezados.map(sec => (
-                      <li key={slugify(sec.contenido)}><a href={`#${slugify(sec.contenido)}`}>{sec.contenido}</a></li>
+                    {encabezados.map((sec, i) => (
+                      <li key={`${slugify(sec.contenido)}-${i}`}><a href={`#${slugify(sec.contenido)}`}>{sec.contenido}</a></li>
                     ))}
+                    {tieneFaq && <li key="faq"><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>}
                   </ul>
                 </nav>
               )}
 
-              <RenderizadorContenido secciones={articuloData.secciones} />
+              <RenderizadorContenido secciones={secciones} />
 
               {Array.isArray(articuloData.cta?.items) && articuloData.cta.items.length > 0 && (
                 <div className="cta-articulo" aria-label="Acciones recomendadas">

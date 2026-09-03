@@ -43,7 +43,7 @@ const StickyProductoEscritorio = ({
           key={i} 
           size={14} 
           fill={i < estrellasCompletas ? "#fbbf24" : "none"} 
-          color={i < estrellasCompletas ? "#fbbf24" : "#d1d5db"} 
+          color={i < estrellasCompletas ? "#fbbf24" : "var(--vda-linea-fuerte)"} 
         />
       );
     }
@@ -156,7 +156,7 @@ const StickyProductoEscritorio = ({
             <Heart 
               size={20} 
               fill={esFavorito(producto?.id) ? '#ef4444' : 'none'} 
-              color={esFavorito(producto?.id) ? '#ef4444' : '#6b7280'} 
+              color={esFavorito(producto?.id) ? '#ef4444' : 'var(--vda-tinta-muted)'} 
             />
           </button>
 

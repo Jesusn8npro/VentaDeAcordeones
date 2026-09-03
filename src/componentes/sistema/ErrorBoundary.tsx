@@ -19,14 +19,14 @@ export class ErrorBoundary extends Component<Props, State> {
           minHeight: '200px', gap: '12px'
         }}>
           <span style={{ fontSize: '48px' }}>⚠️</span>
-          <h3 style={{ color: '#1a1a2e', margin: 0, fontSize: '18px' }}>Algo salió mal</h3>
-          <p style={{ color: '#6c757d', margin: 0, fontSize: '14px' }}>
+          <h3 style={{ color: 'var(--vda-tinta)', margin: 0, fontSize: '18px' }}>Algo salió mal</h3>
+          <p style={{ color: 'var(--vda-tinta-dim)', margin: 0, fontSize: '14px' }}>
             {this.state.error?.message || 'Error inesperado. Recarga la página.'}
           </p>
           <button
             onClick={() => window.location.reload()}
             style={{
-              background: '#e94560', color: '#fff', border: 'none',
+              background: 'var(--vda-oro)', color: '#000', border: 'none',
               borderRadius: '8px', padding: '10px 20px', cursor: 'pointer',
               fontSize: '14px', fontWeight: 600
             }}

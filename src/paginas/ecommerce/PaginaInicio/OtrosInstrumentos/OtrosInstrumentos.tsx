@@ -3,13 +3,14 @@
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
 
+// Rutas reales (antes todas iban a /tienda) y cifras del catálogo importado de Miche (2026-09).
 const OTROS = [
-  { id: 'pianos',      icono: 'cat-piano' as const,    etiqueta: 'Pianos y Teclados',  meta: '32 modelos',   ruta: '/tienda' },
-  { id: 'guitarras',   icono: 'cat-guitarra' as const,  etiqueta: 'Guitarras',          meta: '48 modelos',   ruta: '/tienda' },
-  { id: 'bajos',       icono: 'cat-bajo' as const,      etiqueta: 'Bajos Eléctricos',   meta: '24 modelos',   ruta: '/tienda' },
-  { id: 'baterias',    icono: 'cat-bateria' as const,   etiqueta: 'Baterías',           meta: '18 sets',      ruta: '/tienda' },
-  { id: 'electronica', icono: 'cat-sonido' as const,    etiqueta: 'Sonido Pro',         meta: '120+ ítems',   ruta: '/tienda' },
-  { id: 'cursos',      icono: 'cat-cursos' as const,    etiqueta: 'Cursos',             meta: '12 módulos',   ruta: '/tienda' },
+  { id: 'cajas',       icono: 'cat-bateria' as const,   etiqueta: 'Cajas Vallenatas',     meta: 'Madera y acrílico',  ruta: '/instrumentos/cajas-vallenatas' },
+  { id: 'baterias',    icono: 'cat-bateria' as const,   etiqueta: 'Baterías',             meta: '11 sets',            ruta: '/instrumentos/baterias' },
+  { id: 'audifonos',   icono: 'cat-sonido' as const,    etiqueta: 'Audífonos KZ',         meta: '40 modelos',         ruta: '/audio/audifonos' },
+  { id: 'microfonos',  icono: 'cat-sonido' as const,    etiqueta: 'Micrófonos',           meta: '44 modelos',         ruta: '/audio/microfonos' },
+  { id: 'grabacion',   icono: 'cat-sonido' as const,    etiqueta: 'Grabación',            meta: 'Interfaces · monitores', ruta: '/audio/equipos-de-grabacion' },
+  { id: 'amplis',      icono: 'cat-guitarra' as const,  etiqueta: 'Amplificadores',       meta: 'Fender',             ruta: '/tienda/categoria/amplificadores' },
 ]
 
 export default function OtrosInstrumentos() {

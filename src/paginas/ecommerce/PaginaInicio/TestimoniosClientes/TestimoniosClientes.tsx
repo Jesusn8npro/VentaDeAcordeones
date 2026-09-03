@@ -1,8 +1,11 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
-const BASE = 'https://ventadeacordeones.com/storage/2021/11'
+// Fotos reales de clientes (W:\…\0.3 TESTIMONIOS → public/images/testimonios, webp 600px).
+// Las URLs anteriores del WordPress viejo devolvían 404.
+const BASE = '/images/testimonios'
 
 const TESTIMONIOS = [
   {
@@ -12,7 +15,7 @@ const TESTIMONIOS = [
     nombre: 'Camilo Restrepo',
     lugar: 'Medellín, COL',
     iniciales: 'CR',
-    foto: `${BASE}/Acordeon-vendido-Bogota.jpg`,
+    foto: `${BASE}/cliente-1.webp`,
   },
   {
     estrellas: 5,
@@ -20,7 +23,7 @@ const TESTIMONIOS = [
     nombre: 'Yulissa Mendoza',
     lugar: 'Miami, USA',
     iniciales: 'YM',
-    foto: `${BASE}/Cliente-satisfecho-instagram.jpg`,
+    foto: `${BASE}/cliente-4.webp`,
   },
   {
     estrellas: 5,
@@ -28,7 +31,7 @@ const TESTIMONIOS = [
     nombre: 'Luis Eduardo Mejía',
     lugar: 'Valledupar, COL',
     iniciales: 'LM',
-    foto: `${BASE}/Fredy-Burbano-Acordeon.jpg`,
+    foto: `${BASE}/cliente-3.webp`,
   },
 ]
 
@@ -79,6 +82,12 @@ export default function TestimoniosClientes() {
               </div>
             </div>
           ))}
+        </div>
+        {/* Enlace a la página completa de testimonios (/testimonios) */}
+        <div className="reveal" style={{ marginTop: 28, textAlign: 'center' }}>
+          <Link href="/testimonios" className="btn btn-ghost">
+            Ver todos los testimonios <span className="arrow">→</span>
+          </Link>
         </div>
       </section>
     </div>

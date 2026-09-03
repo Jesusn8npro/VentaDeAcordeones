@@ -45,3 +45,12 @@ supabase/.temp/
 # Evitar nombres reservados de Windows creados accidentalmente
 CON
 .claude/
+
+# analisis temporal / salidas crudas de Gemini
+.tmp-analisis/
+
+# Material de diseño y herramientas locales (no van al repo)
+Imagenes Efectos/
+guias_dise*/
+.blender-toolkit/
+*.skill

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import './Mantenimiento.css'
 
-const WHATSAPP = '3138350318'
+const WHATSAPP = '3144865310'
 const MENSAJE = encodeURIComponent(
   'Hola 👋 Quiero información sobre acordeones mientras actualizan la web.'
 )

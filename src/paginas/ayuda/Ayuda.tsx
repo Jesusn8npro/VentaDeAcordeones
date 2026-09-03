@@ -74,7 +74,7 @@ export default function Ayuda() {
           <p className="helpLux-guide-text">
             ¿Necesitas ayuda? Escríbenos por WhatsApp o revisa nuestras preguntas frecuentes.
           </p>
-          <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="helpLux-link">WhatsApp</a>
+          <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="helpLux-link">WhatsApp</a>
         </div>
       </section>
 
@@ -99,7 +99,7 @@ export default function Ayuda() {
             <h3 className="helpLux-contact-title">¿Necesitas ayuda inmediata?</h3>
             <p className="helpLux-contact-text">Escríbenos por WhatsApp y te ayudamos al instante.</p>
           </div>
-          <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="helpLux-btn-primary">Contactar ahora</a>
+          <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="helpLux-btn-primary">Contactar ahora</a>
         </div>
       </section>
     </div>

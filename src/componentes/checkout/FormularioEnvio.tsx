@@ -10,7 +10,7 @@ const DEPARTAMENTOS = [
   'Santander','Sucre','Tolima','Valle del Cauca','Vaupés','Vichada'
 ]
 
-const estiloError: React.CSSProperties = { color: '#dc2626', fontSize: '12px', marginTop: '2px', display: 'block' }
+const estiloError: React.CSSProperties = { color: 'var(--vda-peligro)', fontSize: '12px', marginTop: '2px', display: 'block' }
 
 export default function FormularioEnvio({ datosEnvio, manejarCambio }) {
   const [errores, setErrores] = useState<Record<string, string>>({})

@@ -1,16 +1,16 @@
 /* About - Lujo con clases únicas (prefijo luxAbout) */
 .luxAbout {
-  --about-bg: #f6f8fc;
-  --about-card: #ffffff;
-  --about-border: #e5e7eb;
-  --about-text: #0f172a;
-  --about-muted: #64748b;
-  --about-primary: #111827;
+  --about-bg: var(--vda-fondo);
+  --about-card: var(--vda-superficie);
+  --about-border: var(--vda-linea);
+  --about-text: var(--vda-tinta);
+  --about-muted: var(--vda-tinta-muted);
+  --about-primary: var(--vda-tinta);
   --about-accent: #0ea5e9;
   --about-success: #22c55e;
 
   min-height: 80vh;
-  background: radial-gradient(1200px circle at 10% 10%, #f8fafc 0, #eef2f7 35%, #e8edf3 70%, #e2e8f0 100%);
+  background: radial-gradient(1200px circle at 10% 10%, var(--vda-superficie) 0, var(--vda-fondo) 35%, var(--vda-fondo) 70%, var(--vda-superficie-2) 100%);
   padding: 2rem 1rem 4rem;
 }
 
@@ -32,7 +32,7 @@
   padding: 0.375rem 0.75rem;
   border-radius: 999px;
   font-size: 0.875rem;
-  background: #f1f5f9;
+  background: var(--vda-superficie-2);
   border: 1px solid var(--about-border);
   color: var(--about-text);
 }
@@ -45,7 +45,7 @@
 }
 
 .luxAbout-title span {
-  background: linear-gradient(90deg, #0f172a 0%, #334155 50%, #64748b 100%);
+  background: linear-gradient(90deg, var(--vda-tinta) 0%, var(--vda-tinta-dim) 50%, var(--vda-tinta-muted) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -76,10 +76,10 @@
   border: 1px solid transparent;
 }
 
-.luxAbout-btn-primary { background: var(--about-primary); color: #fff; }
-.luxAbout-btn-primary:hover { background: #1f2937; transform: translateY(-1px); }
-.luxAbout-btn-secondary { background: #fff; color: var(--about-text); border-color: var(--about-border); }
-.luxAbout-btn-secondary:hover { background: #f8fafc; }
+.luxAbout-btn-primary { background: var(--about-primary); color: var(--vda-fondo); }
+.luxAbout-btn-primary:hover { background: var(--vda-tinta-dim); transform: translateY(-1px); }
+.luxAbout-btn-secondary { background: var(--about-card); color: var(--about-text); border-color: var(--about-border); }
+.luxAbout-btn-secondary:hover { background: var(--vda-superficie-2); }
 
 /* Stats */
 .luxAbout-stats {

@@ -2,8 +2,8 @@
 
 .trabaja-minimal {
   min-height: 100vh;
-  background: #ffffff;
-  color: #1a1a1a;
+  background: var(--vda-fondo);
+  color: var(--vda-tinta);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -17,7 +17,7 @@
 .trabaja-hero {
   padding: 6rem 0 4rem;
   text-align: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: linear-gradient(135deg, var(--vda-superficie-2) 0%, var(--vda-fondo) 100%);
   margin-bottom: 4rem;
 }
 
@@ -39,7 +39,7 @@
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: #6b7280;
+  color: var(--vda-tinta-muted);
   max-width: 600px;
   margin: 0 auto;
   font-weight: 300;
@@ -61,7 +61,7 @@
 
 .section-subtitle {
   font-size: 1.1rem;
-  color: #6b7280;
+  color: var(--vda-tinta-muted);
   font-weight: 300;
   max-width: 500px;
   margin: 0 auto;
@@ -80,16 +80,16 @@
 }
 
 .oportunidad-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
   border-radius: 12px;
   padding: 2rem;
   transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--vda-tinta) 10%, transparent);
 }
 
 .oportunidad-card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--vda-sombra-card);
   transform: translateY(-2px);
   border-color: #2563eb;
 }
@@ -104,7 +104,7 @@
 .oportunidad-cargo {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--vda-tinta);
   margin: 0;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .oportunidad-descripcion {
-  color: #6b7280;
+  color: var(--vda-tinta-muted);
   line-height: 1.6;
   margin: 0;
 }
@@ -126,7 +126,7 @@
 /* Beneficios */
 .beneficios-section {
   padding: 4rem 0;
-  background: #f8f9fa;
+  background: var(--vda-superficie-2);
 }
 
 .beneficios-grid {
@@ -141,9 +141,9 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background: #ffffff;
+  background: var(--vda-superficie);
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--vda-linea);
 }
 
 .beneficio-icon {
@@ -152,7 +152,7 @@
 }
 
 .beneficio-text {
-  color: #374151;
+  color: var(--vda-tinta-dim);
   font-weight: 500;
 }
 
@@ -172,11 +172,11 @@
 }
 
 .trabaja-form {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
   border-radius: 12px;
   padding: 3rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--vda-tinta) 10%, transparent);
 }
 
 .form-grid {
@@ -194,18 +194,19 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--vda-tinta-dim);
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--vda-linea-fuerte);
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
-  background: #ffffff;
+  background: var(--vda-superficie);
+  color: var(--vda-tinta);
 }
 
 .form-input:focus,
@@ -276,40 +277,40 @@
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: var(--vda-tinta);
 }
 
 .mensaje-exito p {
-  color: #6b7280;
+  color: var(--vda-tinta-muted);
   font-size: 1.1rem;
 }
 
 /* Contacto */
 .contacto-section {
   padding: 4rem 0;
-  background: #f8f9fa;
+  background: var(--vda-superficie-2);
 }
 
 .contacto-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
   border-radius: 12px;
   padding: 3rem;
   text-align: center;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--vda-tinta) 10%, transparent);
 }
 
 .contacto-title {
   font-size: 2rem;
   font-weight: 300;
   margin-bottom: 1rem;
-  color: #1a1a1a;
+  color: var(--vda-tinta);
 }
 
 .contacto-text {
-  color: #6b7280;
+  color: var(--vda-tinta-muted);
   font-size: 1.1rem;
   margin-bottom: 2rem;
   line-height: 1.6;
@@ -327,7 +328,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  color: #374151;
+  color: var(--vda-tinta-dim);
   font-weight: 500;
 }
 

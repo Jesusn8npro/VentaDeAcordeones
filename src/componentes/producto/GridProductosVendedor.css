@@ -1,16 +1,16 @@
 /* GridProductosVendedor.css — Premium product grid */
 
 :root {
-  --ec-primario: #1a1a2e;
-  --ec-acento: #e94560;
-  --ec-acento-hover: #c73652;
-  --ec-fondo: #ffffff;
-  --ec-fondo-secundario: #f8f9fa;
-  --ec-texto: #1a1a2e;
-  --ec-texto-secundario: #6c757d;
-  --ec-borde: #e9ecef;
-  --ec-sombra: 0 2px 12px rgba(0,0,0,0.08);
-  --ec-sombra-hover: 0 8px 24px rgba(0,0,0,0.15);
+  --ec-primario: var(--vda-tinta);
+  --ec-acento: var(--vda-oro);
+  --ec-acento-hover: var(--vda-oro-suave);
+  --ec-fondo: var(--vda-superficie);
+  --ec-fondo-secundario: var(--vda-superficie-2);
+  --ec-texto: var(--vda-tinta);
+  --ec-texto-secundario: var(--vda-tinta-dim);
+  --ec-borde: var(--vda-linea);
+  --ec-sombra: 0 2px 12px color-mix(in srgb, var(--vda-tinta) 8%, transparent);
+  --ec-sombra-hover: 0 8px 24px color-mix(in srgb, var(--vda-tinta) 15%, transparent);
   --ec-radio: 12px;
   --ec-radio-grande: 20px;
 }
@@ -69,6 +69,7 @@
   border: 2px solid var(--ec-borde);
   border-radius: var(--ec-radio);
   background: var(--ec-fondo);
+  color: var(--ec-texto);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -79,7 +80,7 @@
 .select-ordenar:focus {
   outline: none;
   border-color: var(--ec-acento);
-  box-shadow: 0 0 0 3px rgba(233,69,96,0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vda-oro) 10%, transparent);
 }
 .vista-toggle {
   display: flex;
@@ -113,7 +114,7 @@
   width: 100%;
   padding: 12px 16px;
   background: var(--ec-primario);
-  color: #fff;
+  color: var(--vda-fondo);
   border: none;
   border-radius: var(--ec-radio);
   font-size: 14px;
@@ -126,7 +127,7 @@
   transition: background 0.2s;
   min-height: 44px;
 }
-.filtros-movil-toggle:hover { background: rgba(26,26,46,0.85); }
+.filtros-movil-toggle:hover { background: color-mix(in srgb, var(--ec-primario) 85%, transparent); }
 .filtros-movil-toggle .rotado { transform: rotate(180deg); }
 
 .filtros-container {
@@ -153,13 +154,14 @@
   font-size: 14px;
   transition: border-color 0.2s;
   background: var(--ec-fondo);
+  color: var(--ec-texto);
   min-height: 44px;
 }
 .filtro-select:focus,
 .filtro-input:focus {
   outline: none;
   border-color: var(--ec-acento);
-  box-shadow: 0 0 0 3px rgba(233,69,96,0.1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vda-oro) 10%, transparent);
 }
 .filtro-checkbox {
   display: flex !important;
@@ -189,7 +191,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff;
+  color: #000;
   font-size: 11px;
   font-weight: 700;
 }
@@ -291,7 +293,7 @@
 .btn-reintentar {
   padding: 12px 28px;
   background: var(--ec-acento);
-  color: #fff;
+  color: #000;
   border: none;
   border-radius: var(--ec-radio-grande);
   font-size: 14px;
@@ -311,7 +313,7 @@
   gap: 10px;
   padding: 14px 32px;
   background: var(--ec-primario);
-  color: #fff;
+  color: var(--vda-fondo);
   border: none;
   border-radius: var(--ec-radio-grande);
   font-size: 15px;
@@ -320,7 +322,7 @@
   transition: all 0.2s;
   min-height: 52px;
 }
-.btn-cargar-mas:hover:not(:disabled) { background: rgba(26,26,46,0.85); transform: translateY(-2px); }
+.btn-cargar-mas:hover:not(:disabled) { background: color-mix(in srgb, var(--ec-primario) 85%, transparent); transform: translateY(-2px); }
 .btn-cargar-mas:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ── PAGINACIÓN ── */
@@ -344,7 +346,7 @@
   transition: all 0.2s;
   min-height: 44px;
 }
-.btn-paginacion:hover:not(:disabled) { background: var(--ec-acento); color: #fff; }
+.btn-paginacion:hover:not(:disabled) { background: var(--ec-acento); color: #000; }
 .btn-paginacion:disabled { opacity: 0.4; cursor: not-allowed; }
 .info-paginacion { font-size: 14px; color: var(--ec-texto-secundario); }
 

@@ -19,16 +19,19 @@
   border: 1px solid rgba(255,195,0,.15);
 }
 
+/* Panel del mega menú: fondo 100% opaco (nunca se transparenta el hero), borde inferior y sombra */
 .mega-bg {
-  background: linear-gradient(180deg,rgba(10,10,11,.96) 0%,rgba(10,10,11,.92) 100%);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: #0a0a0b;
+  border-bottom: 1px solid rgba(255,195,0,.22);
+  box-shadow: 0 24px 48px -20px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.04) inset;
 }
 .mega-bg-light {
-  background: linear-gradient(180deg,rgba(255,255,255,.97) 0%,rgba(244,244,246,.95) 100%);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 24px 48px -24px rgba(0,0,0,.35);
 }
+.mega-feature-img { object-fit: cover; transition: transform .6s cubic-bezier(.22,1,.36,1); }
+.group:hover .mega-feature-img { transform: scale(1.04); }
 
 @keyframes megaIn {
   0%   { opacity: 0; transform: translateY(-8px); }

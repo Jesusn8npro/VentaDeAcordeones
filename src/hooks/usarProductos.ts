@@ -6,9 +6,14 @@ export function usarProductos(filtros = {}) {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
 
+  // Se compara por CONTENIDO y no por identidad: los llamadores construyen el objeto de filtros en
+  // cada render (spread / literal inline), y con [filtros] el efecto refetchaba en bucle infinito
+  // (la página de categoría se quedaba en "Cargando productos..." para siempre).
+  const claveFiltros = JSON.stringify(filtros)
   useEffect(() => {
     cargarProductos()
-  }, [filtros])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [claveFiltros])
 
   const cargarProductos = async () => {
     setCargando(true)

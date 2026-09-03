@@ -1,6 +1,6 @@
 export default function LoadingBlog() {
   const shimmer: React.CSSProperties = {
-    background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+    background: 'linear-gradient(90deg, var(--vda-superficie-2) 25%, var(--vda-superficie-3) 50%, var(--vda-superficie-2) 75%)',
     backgroundSize: '200% 100%',
     animation: 'shimmer 1.4s infinite',
     borderRadius: '8px',

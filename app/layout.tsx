@@ -72,13 +72,16 @@ const jsonLdSitio = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ventadeacordeones.com'),
-  title: 'VentaDeAcordeones.com — Acordeones y Accesorios en Colombia',
+  title: {
+    default: 'Acordeones Hohner en Colombia: Venta, Personalizados y Taller | VentaDeAcordeones.com',
+    template: '%s | VentaDeAcordeones.com',
+  },
   description:
-    'La tienda online líder en acordeones de Colombia. Hohner, Gabbanelli, Guerrini y más. Envíos a toda Colombia con SERVIENTREGA. Asesoría gratis por WhatsApp.',
+    'Acordeones Hohner Rey Vallenato y Corona III, personalizados con tu nombre, accesorios, audio y taller de acordeones en Bogotá. Distribuidor autorizado. Envíos a toda Colombia y 42 países.',
   keywords:
-    'acordeones, acordeones vallenato, comprar acordeon, acordeon hohner, acordeon Colombia, acordeones baratos',
+    'acordeones, acordeon hohner, acordeon rey vallenato, hohner corona iii, acordeones personalizados, taller de acordeones bogota, parrillas de acordeon, fuelles de acordeon, comprar acordeon colombia',
   authors: [{ name: 'VentaDeAcordeones.com' }],
-  robots: { index: true, follow: true },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   manifest: '/manifest.json',
   icons: {
     icon: { url: '/logo.svg', type: 'image/svg+xml' },
@@ -87,18 +90,19 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://ventadeacordeones.com/',
-    title: 'VentaDeAcordeones.com — Acordeones en Colombia',
+    title: 'Acordeones Hohner en Colombia: Venta, Personalizados y Taller',
     description:
-      'Tienda online de acordeones. Hohner, Gabbanelli, Guerrini. Envíos a toda Colombia. Garantía real.',
-    images: ['https://ventadeacordeones.com/logo.svg'],
+      'Acordeones Hohner, personalizados con tu nombre, accesorios, audio y taller en Bogotá. Distribuidor autorizado. Envíos a toda Colombia y el mundo.',
+    // 1200×630 real (antes era el logo SVG: WhatsApp/Facebook no lo mostraban).
+    images: [{ url: 'https://ventadeacordeones.com/images/og/portada.jpg', width: 1200, height: 630, alt: 'Acordeones Hohner en VentaDeAcordeones.com' }],
     locale: 'es_CO',
     siteName: 'VentaDeAcordeones.com',
   },
   twitter: {
-    card: 'summary',
-    title: 'VentaDeAcordeones.com',
-    description: 'Tienda online de acordeones en Colombia.',
-    images: ['https://ventadeacordeones.com/logo.svg'],
+    card: 'summary_large_image',
+    title: 'Acordeones Hohner en Colombia | VentaDeAcordeones.com',
+    description: 'Acordeones Hohner, personalizados, accesorios, audio y taller de acordeones en Bogotá.',
+    images: ['https://ventadeacordeones.com/images/og/portada.jpg'],
   },
 }
 

@@ -321,7 +321,7 @@ const TerminosCondiciones = () => {
             <div className="terms-info">
               <h4>📞 Contacto</h4>
               <p><strong>📧 Email:</strong> info@VentaDeAcordeones.com</p>
-              <p><strong>📱 Teléfono:</strong> +57 320 849 2093</p>
+              <p><strong>📱 Teléfono:</strong> +57 314 486 5310</p>
               <p><strong>🏢 Dirección:</strong> Cali, Colombia</p>
               <p><strong>🕒 Horario:</strong> Lunes a Viernes 8:00 AM - 12:30 PM y 2:00 PM - 5:30 PM</p>
             </div>

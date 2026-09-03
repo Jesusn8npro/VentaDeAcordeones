@@ -1,6 +1,6 @@
 export default function LoadingTienda() {
   const shimmer: React.CSSProperties = {
-    background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
+    background: 'linear-gradient(90deg, var(--vda-superficie-2) 25%, var(--vda-superficie-3) 50%, var(--vda-superficie-2) 75%)',
     backgroundSize: '200% 100%',
     animation: 'shimmer 1.4s infinite',
     borderRadius: '8px',
@@ -17,7 +17,7 @@ export default function LoadingTienda() {
           gap: '1.5rem',
         }}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} style={{ borderRadius: '12px', overflow: 'hidden', background: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+            <div key={i} style={{ borderRadius: '12px', overflow: 'hidden', background: 'var(--vda-superficie)', boxShadow: 'var(--vda-sombra-card)' }}>
               <div style={{ ...shimmer, height: '220px', borderRadius: 0 }} />
               <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <div style={{ ...shimmer, height: '1rem', width: '80%' }} />

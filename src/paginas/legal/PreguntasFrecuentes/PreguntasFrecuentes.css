@@ -4,15 +4,15 @@
 */
 
 :root {
-  --fondo: #ffffff;
-  --bg-suave: #f8fafc; /* gris muy claro */
-  --texto: #111827;     /* gris-900 */
-  --muted: #6b7280;     /* gris-500 */
-  --borde: #e5e7eb;     /* gris-200 */
+  --fondo: var(--vda-superficie);
+  --bg-suave: var(--vda-fondo); /* gris muy claro */
+  --texto: var(--vda-tinta);     /* gris-900 */
+  --muted: var(--vda-tinta-muted);     /* gris-500 */
+  --borde: var(--vda-linea);     /* gris-200 */
   --primario: #2563eb;  /* azul-600 */
   --primario-oscuro: #1e40af; /* azul-800 */
   --ok: #16a34a;        /* verde-600 */
-  --sombra: 0 6px 24px rgba(17, 24, 39, 0.08);
+  --sombra: var(--vda-sombra-card);
 }
 
 /* Utilidades */
@@ -99,9 +99,10 @@
   outline: none;
   font-size: 14px;
   background: transparent;
+  color: var(--texto);
 }
 
-.faq__buscador-input::placeholder { color: #9ca3af; }
+.faq__buscador-input::placeholder { color: var(--vda-tinta-muted); }
 
 /* Índice vertical */
 .faq__indice-vertical { margin-top: 16px; }
@@ -242,8 +243,8 @@
   font-size: 12px;
   font-weight: 700;
   color: var(--ok);
-  background: #dcfce7;
-  border: 1px solid #bbf7d0;
+  background: color-mix(in srgb, #22c55e 14%, var(--vda-superficie));
+  border: 1px solid color-mix(in srgb, #22c55e 40%, transparent);
   border-radius: 999px;
   padding: 4px 8px;
 }

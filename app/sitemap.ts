@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
+import { CLUSTERS } from '@/datos/clusters'
 
 const SITIO = 'https://ventadeacordeones.com'
 
@@ -13,7 +14,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '', '/tienda', '/contacto', '/quienes-somos', '/trabaja-con-nosotros',
     '/sobre-la-tienda', '/terminos-condiciones', '/politica-privacidad',
     '/preguntas-frecuentes', '/politica-envio', '/cambios-devoluciones',
-    '/blog', '/ayuda', '/acordeones-personalizados',
+    '/blog', '/ayuda', '/acordeones-personalizados', '/accesorios', '/instrumentos', '/audio',
+    '/taller', '/testimonios',
+    ...CLUSTERS.map((c) => `/${c.base}/${c.slug}`),
   ].map((p) => ({
     url: `${SITIO}${p || '/'}`,
     changeFrequency: 'weekly',

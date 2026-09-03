@@ -151,8 +151,8 @@ const ConfirmacionEpayco = () => {
   // Esta página es principalmente para webhooks, no para mostrar al usuario
   // Pero incluimos una respuesta básica por si acaso
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
+    <div className="min-h-screen bg-[var(--vda-fondo)] text-[var(--vda-tinta)] flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-[var(--vda-superficie)] border border-[var(--vda-linea)] rounded-lg shadow-[var(--vda-sombra-card)] p-8 text-center">
         <div className="mb-4">
           {estado === 'procesando' && (
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
@@ -168,15 +168,15 @@ const ConfirmacionEpayco = () => {
           )}
         </div>
         
-        <h1 className="text-xl font-bold text-gray-800 mb-4">
+        <h1 className="text-xl font-bold text-[var(--vda-tinta)] mb-4">
           Confirmación de Pago
         </h1>
         
-        <p className="text-gray-600 mb-6">
+        <p className="text-[var(--vda-tinta-dim)] mb-6">
           {mensaje}
         </p>
 
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-[var(--vda-tinta-muted)]">
           <p>Esta página procesa las confirmaciones automáticas de ePayco.</p>
           <p>Si ves esta página, la confirmación se está procesando correctamente.</p>
         </div>

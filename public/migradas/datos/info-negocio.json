@@ -1,0 +1,244 @@
+{
+  "dominio": "https://ventadeacordeones.com",
+  "meta": {
+    "title": "Venta de acordeones HOHNER",
+    "description": "Tu Fuente Confiable para Todo en Acordeones. Venta de acordeones HOHNER personalizados, accesorios y más. Envíos a Colombia y el mundo.",
+    "keywords": "venta de acordeones, acordeones HOHNER, acordeones personalizados, acordeon vallenato, accesorios acordeon, Colombia"
+  },
+  "contacto": {
+    "telefono": "",
+    "whatsapp": "+573138350318",
+    "email": "Contacto@ventadeacordeones.com",
+    "direccion": "",
+    "ciudad": "Bogotá",
+    "departamento": "Cundinamarca",
+    "pais": "Colombia",
+    "nota": "No se encontró dirección física ni teléfono fijo. El contacto principal es WhatsApp y email."
+  },
+  "redes_sociales": {
+    "facebook": "https://www.facebook.com/tiendadeacordeones",
+    "facebook_taller": "https://www.facebook.com/tallerdeacordeones1",
+    "instagram": "https://www.instagram.com/ventadeacordeones1/",
+    "youtube": "https://www.youtube.com/channel/UCxIjz1mxVyvAA-6ZgFz3KZQ",
+    "whatsapp": "https://wa.me/573138350318",
+    "tiktok": ""
+  },
+  "navegacion": [
+    "Inicio",
+    "Tienda",
+    "Acordeones Personalizados",
+    "Accesorios De Acordeón",
+    "Promociones 2024",
+    "Blog",
+    "Conocenos",
+    "Contactos",
+    "Mi Cuenta",
+    "Academia (academiavallenataonline.com)"
+  ],
+  "slogan": "TU MUSICA, NUESTROS ACORDEONES",
+  "slogan_alternativo": "Tu Fuente Confiable para Todo en Acordeones",
+  "propuesta_valor": "Una de las principales tiendas de acordeones de Colombia y el mundo. Acordeones HOHNER personalizados con envío en 5 días hábiles y garantía de 1 año. Más de 130 acordeones personalizados enviados mundialmente. Calidad y profesionalismo en cada instrumento.",
+  "lema_motivacional": "NACISTE PARA GRANDES COSAS Y POR ELLO TE MERECES LO MEJOR.",
+  "fundador": {
+    "nombre": "Jesús González",
+    "rol": "Acordeonista profesional y creador de Ventadeacordeones.com"
+  },
+  "historia": "Tienda de acordeones con sede en Bogotá, Colombia. Especializada en acordeones HOHNER personalizados y accesorios. Ha enviado productos a múltiples países: Alemania, Francia, Estados Unidos, Panamá, Puerto Rico, España, Ecuador, Perú y Colombia. Más de 130 acordeones personalizados entregados mundialmente.",
+  "paginas": [
+    {
+      "url": "https://ventadeacordeones.com/",
+      "titulo": "Inicio - Venta de acordeones HOHNER",
+      "contenido_clave": "Página principal con hero banner, categorías de productos, sección de acordeones personalizados, testimonios y contacto."
+    },
+    {
+      "url": "https://ventadeacordeones.com/tienda/",
+      "titulo": "Tienda - Venta de acordeones HOHNER",
+      "contenido_clave": "Catálogo completo de productos. Acordeones HOHNER entre $5.290.000 y $5.900.000 COP. Accesorios varios."
+    },
+    {
+      "url": "https://ventadeacordeones.com/sobre-nosotros/",
+      "titulo": "Sobre Nosotros - Venta de acordeones HOHNER",
+      "contenido_clave": "Historia de la empresa, misión, quiénes somos. Fundada por Jesús González. Presencia en Bogotá."
+    },
+    {
+      "url": "https://ventadeacordeones.com/contactos/",
+      "titulo": "Contactos - Venta de acordeones HOHNER",
+      "contenido_clave": "Formulario de contacto, WhatsApp (+57) 313 835 0318, email Contacto@ventadeacordeones.com"
+    },
+    {
+      "url": "https://ventadeacordeones.com/acordeones-personalizados/",
+      "titulo": "Acordeones Personalizados",
+      "contenido_clave": "Diseños exclusivos de la más alta calidad. Envío internacional 5-10 días hábiles. CTA: Cotizar Mi Acordeón Personalizado."
+    },
+    {
+      "url": "https://ventadeacordeones.com/accesorios-de-acordeon/",
+      "titulo": "Accesorios De Acordeon",
+      "contenido_clave": "Parrillas, fuelles, estuches, correas y broches para acordeón."
+    },
+    {
+      "url": "https://ventadeacordeones.com/parrillas-para-acordeon/",
+      "titulo": "Parrillas Para Acordeón",
+      "contenido_clave": "Parrillas personalizadas y económicas. Protección y elegancia."
+    },
+    {
+      "url": "https://ventadeacordeones.com/fuelles-para-acordeon/",
+      "titulo": "Fuelles Para Acordeón",
+      "contenido_clave": "Fuelles de durabilidad y flexibilidad para rendimiento musical expresivo."
+    },
+    {
+      "url": "https://ventadeacordeones.com/estuches-de-acordeon/",
+      "titulo": "Estuches De Acordeón",
+      "contenido_clave": "Estuches para transportar el acordeón con seguridad y estilo."
+    },
+    {
+      "url": "https://ventadeacordeones.com/terminos-y-condiciones/",
+      "titulo": "Términos y Condiciones",
+      "contenido_clave": "Garantía de 1 año por defectos de fabricación. Pago: 30% reserva + saldo. Sistema antifraude. No reembolsos en productos intangibles."
+    },
+    {
+      "url": "https://ventadeacordeones.com/politica-privacidad/",
+      "titulo": "Política de Privacidad",
+      "contenido_clave": "Empresa: VENTADEACORDEONES.COM. Protección de datos de usuarios."
+    },
+    {
+      "url": "https://ventadeacordeones.com/blog/",
+      "titulo": "Blog",
+      "contenido_clave": "Artículos sobre acordeones vallenatos, personalización, consejos musicales."
+    }
+  ],
+  "categorias_productos": [
+    "Acordeones HOHNER personalizados",
+    "Acordeones Hohner Corona III",
+    "Acordeones Rey del Vallenato",
+    "Acordeones Hohner Xtreme",
+    "Acordeones para principiantes (5 botones)",
+    "Parrillas de acordeón",
+    "Fuelles de acordeón",
+    "Estuches de acordeón",
+    "Correas y broches de acordeón",
+    "Accesorios de acordeón"
+  ],
+  "productos_destacados": [
+    {
+      "nombre": "Acordeón Hohner Corona III",
+      "url": "https://ventadeacordeones.com/producto/acordeon-hohner-corona-iii/",
+      "precio_cop": 5590000,
+      "precio_original_cop": 5900000,
+      "descripcion": "Sinfonía de calidad y estilo. Diseño ergonómico y teclas responsivas. Para principiantes y profesionales.",
+      "variantes": "Múltiples colores. Tonalidades: 5 letras, ADG"
+    },
+    {
+      "nombre": "Acordeón Hohner Rey Vallenato",
+      "url": "https://ventadeacordeones.com/producto/acordeon-rey-del-vallenato/",
+      "precio_cop": null,
+      "descripcion": "Perfecta armonía entre economía y calidad. Opción económica Hohner para estudiantes. Sonido idéntico al Corona III.",
+      "variantes": "Colores sólidos"
+    },
+    {
+      "nombre": "Acordeón Hohner Premium Dorado",
+      "url": "https://ventadeacordeones.com/producto/acordeon-hohner-premium-dorado/",
+      "descripcion": "Elegancia musical en oro."
+    },
+    {
+      "nombre": "Acordeón Hohner Blanco Total",
+      "url": "https://ventadeacordeones.com/producto/acordeon-hohner-blanco-total/",
+      "descripcion": "Personalización en color blanco total."
+    },
+    {
+      "nombre": "Acordeón Hohner Xtreme Color Azul",
+      "url": "https://ventadeacordeones.com/producto/acordeon-hohner-xtreme-color-azul/",
+      "descripcion": "Modelo Xtreme en azul."
+    },
+    {
+      "nombre": "Acordeón Hohner Personalizado de Dos Colores",
+      "url": "https://ventadeacordeones.com/producto/acordeon-hohner-personalizado-de-dos-colores/",
+      "descripcion": "Diseño bicolor personalizado."
+    }
+  ],
+  "rango_precios_cop": {
+    "acordeones": {
+      "minimo": 3500000,
+      "maximo": 6000000,
+      "nota": "Rango mencionado en blog. Precios de tienda: $5.290.000 - $5.900.000 COP con descuentos"
+    }
+  },
+  "blog_articulos": [
+    {
+      "titulo": "Acordeones Vallenatos: Mitos y Verdades Desmentidas",
+      "fecha": "2024-01-22",
+      "url": "https://ventadeacordeones.com/acordeones-vallenatos-mitos-y-verdades-desmentidas/",
+      "extracto": "El artículo desmiente 5 mitos sobre los acordeones vallenatos: variedad de modelos, accesibilidad para principiantes, mantenimiento no tan exigente, precios variados ($3.5M-$6M COP) y versatilidad musical más allá del vallenato.",
+      "autor": "Jesús González",
+      "imagen": "https://ventadeacordeones.com/wp-content/uploads/2024/01/Mitos-y-verdades-Acordeones-vallenatos.jpg"
+    },
+    {
+      "titulo": "Personaliza tu Acordeón: Cómo Reflejar tu Estilo en tu Instrumento",
+      "fecha": "2024-01-22",
+      "url": "https://ventadeacordeones.com/personaliza-tu-acordeon-como-reflejar-tu-estilo-en-tu-instrumento/",
+      "extracto": "Explora cómo el acordeón es un medio de expresión personal. Opciones de personalización: pintura y diseño, teclas y botones, sonido y tonalidad, tecnología (amplificadores). Más de 130 acordeones personalizados enviados mundialmente.",
+      "autor": "Jesús González",
+      "imagen": "https://ventadeacordeones.com/wp-content/uploads/2024/01/Foto-portada-articulo-acordeones-personalizados.jpg"
+    }
+  ],
+  "garantia": {
+    "duracion": "1 año",
+    "cobertura": "Defectos de fábrica únicamente",
+    "exclusiones": "Daños por uso indebido, condiciones ambientales inadecuadas, uso fuera de especificaciones técnicas",
+    "condicion_entrega": "5 días hábiles"
+  },
+  "politica_envios": {
+    "tiempo_entrega": "5 días hábiles (Colombia), 5-10 días hábiles (internacional)",
+    "cobertura": "Colombia e internacional",
+    "paises_con_historia": ["Alemania", "Francia", "Estados Unidos", "Panamá", "Puerto Rico", "España", "Ecuador", "Perú", "Colombia"],
+    "metodo_pago": "30% de reserva + saldo restante"
+  },
+  "sitemap_urls": [
+    "https://ventadeacordeones.com/post-sitemap.xml",
+    "https://ventadeacordeones.com/page-sitemap.xml",
+    "https://ventadeacordeones.com/product-sitemap.xml",
+    "https://ventadeacordeones.com/category-sitemap.xml",
+    "https://ventadeacordeones.com/product_cat-sitemap.xml",
+    "https://ventadeacordeones.com/author-sitemap.xml"
+  ],
+  "cms": "WordPress con WooCommerce y Yoast SEO",
+  "colores_marca": {
+    "primario": "#desconocido",
+    "secundario": "#desconocido",
+    "nota": "Los colores exactos no pudieron extraerse del HTML (imágenes cargadas dinámicamente). Revisar manualmente en el sitio o en las imágenes descargadas."
+  },
+  "fuentes_tipografia": [],
+  "imagenes_descargadas": {
+    "logo_principal": "public/migradas/datos/logo.png",
+    "logo_rectangular": "public/migradas/datos/logo-rectangular.png",
+    "logo_pequeno": "public/migradas/datos/logo-pequeno.png",
+    "favicon": "public/migradas/datos/favicon.png",
+    "hero_fondo": "public/migradas/datos/hero-fondo.webp",
+    "foto_inicio": "public/migradas/datos/foto-inicio.webp",
+    "fundador": "public/migradas/datos/fundador-jesus-gonzalez.jpg",
+    "logo_192x192": "public/migradas/datos/cropped-Logo-Venta-de-acordeones-1-1-192x192.png",
+    "logo_180x180": "public/migradas/datos/cropped-Logo-Venta-de-acordeones-1-1-180x180.png"
+  },
+  "imagenes_wp": {
+    "logo_512x512": "https://ventadeacordeones.com/wp-content/uploads/2021/11/cropped-Logo-Venta-de-acordeones-1-1.png",
+    "logo_rectangular": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Logo-Venta-de-acordeones-1.png",
+    "logo_pequeno_120x80": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Logo-Venta-de-acordeones.png",
+    "hero_fondo": "https://ventadeacordeones.com/wp-content/uploads/2024/04/Fondo-Venta-de-acordeones.webp",
+    "foto_inicio": "https://ventadeacordeones.com/wp-content/uploads/2024/04/fOTO-TEMPORAL-INICIO.webp",
+    "fondo_acordeon_background": "https://ventadeacordeones.com/wp-content/uploads/2024/04/Acordeon-Background.webp",
+    "acordeon_vendido_bogota": "https://ventadeacordeones.com/wp-content/uploads/2024/04/Acordeon-vendido-Bogota.webp",
+    "taller_acordeones": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Taller-de-acordeones.jpg",
+    "acordeones_personalizados": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Acordeones-Personalizados.jpg",
+    "accesorios_acordeon": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Accesorios-para-acordeon.jpg",
+    "fundador": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Jesus-Gonzalez-Tienda-de-acordeones.jpg",
+    "blog_mitos_acordeones": "https://ventadeacordeones.com/wp-content/uploads/2024/01/Mitos-y-verdades-Acordeones-vallenatos.jpg",
+    "blog_personalizacion": "https://ventadeacordeones.com/wp-content/uploads/2024/01/Foto-portada-articulo-acordeones-personalizados.jpg",
+    "acordeon_rey_vallenato": "https://ventadeacordeones.com/wp-content/uploads/2024/01/Acordeon-Rey-Del-Vallenato.jpg",
+    "acordeon_hohner_corona3": "https://ventadeacordeones.com/wp-content/uploads/2024/01/Acordeon-hohner-corona-3.jpg",
+    "parrilla_personalizada": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Parrilla-personalizada.jpg",
+    "estuche_acordeon": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Estuche-de-acordeon.jpg",
+    "cliente_satisfecho": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Cliente-satisfecho-instagram.jpg",
+    "acordeon_personalizado_ig": "https://ventadeacordeones.com/wp-content/uploads/2021/11/Acordeon-personalizado-Instagram.jpg"
+  },
+  "seo_yoast": true,
+  "fecha_extraccion": "2026-05-23"
+}

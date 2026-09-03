@@ -97,26 +97,26 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }: { abier
   if (!abierto || !mountNode) return null
 
   const sx = {
-    ov: { position: 'fixed', inset: 0, background: 'rgba(0,0,0,.7)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100003, padding: 20 },
-    bx: { width: '100%', maxWidth: 460, maxHeight: '92vh', background: '#fff', borderRadius: 22, boxShadow: '0 24px 60px rgba(0,0,0,.28)', overflowY: 'auto', overflowX: 'hidden', position: 'relative', fontFamily: 'Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif' },
-    cl: { position: 'absolute', top: 16, right: 16, width: 36, height: 36, borderRadius: '50%', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
+    ov: { position: 'fixed', inset: 0, background: 'var(--vda-overlay)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100003, padding: 20 },
+    bx: { width: '100%', maxWidth: 460, maxHeight: '92vh', background: 'var(--vda-superficie)', borderRadius: 22, boxShadow: 'var(--vda-sombra-card)', overflowY: 'auto', overflowX: 'hidden', position: 'relative', fontFamily: 'Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif' },
+    cl: { position: 'absolute', top: 16, right: 16, width: 36, height: 36, borderRadius: '50%', border: '1px solid var(--vda-linea)', background: 'var(--vda-superficie-2)', color: 'var(--vda-tinta-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' },
     br: { padding: '12px 16px 10px', background: 'linear-gradient(135deg,#ff6b35 0%,#ff8c42 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderTopLeftRadius: 22, borderTopRightRadius: 22 },
     ct: { padding: '26px 24px 28px' },
-    tt: { fontSize: 22, fontWeight: 800, color: '#1e293b', textAlign: 'center', margin: '0 0 8px' },
-    ds: { color: '#64748b', textAlign: 'center', fontSize: 14, margin: '0 0 18px' },
+    tt: { fontSize: 22, fontWeight: 800, color: 'var(--vda-tinta)', textAlign: 'center', margin: '0 0 8px' },
+    ds: { color: 'var(--vda-tinta-dim)', textAlign: 'center', fontSize: 14, margin: '0 0 18px' },
     fm: { display: 'flex', flexDirection: 'column', gap: 16 },
     rw: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 },
     fd: { display: 'flex', flexDirection: 'column', gap: 6 },
-    lb: { fontSize: 13, fontWeight: 600, color: '#475569' },
+    lb: { fontSize: 13, fontWeight: 600, color: 'var(--vda-tinta-dim)' },
     in: { position: 'relative', display: 'flex', alignItems: 'center' },
-    inp: { width: '100%', padding: '12px 42px 12px 14px', border: '1.5px solid #dbe2ea', borderRadius: 12, background: '#f8fafc', fontSize: 15, color: '#1e293b' },
+    inp: { width: '100%', padding: '12px 42px 12px 14px', border: '1.5px solid var(--vda-linea-fuerte)', borderRadius: 12, background: 'var(--vda-superficie-2)', fontSize: 15, color: 'var(--vda-tinta)' },
     bn: { width: '100%', padding: 14, border: 'none', borderRadius: 12, background: 'linear-gradient(135deg,#ff6b35 0%,#ff8c42 100%)', color: '#fff', fontSize: 15, fontWeight: 700, boxShadow: '0 8px 20px rgba(255,107,53,.28)', cursor: 'pointer' },
-    sp: { display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: 13, margin: '14px 0' },
-    gg: { width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, border: '1.5px solid #dbe2ea', borderRadius: 12, padding: 12, background: '#fff', cursor: 'pointer' },
+    sp: { display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--vda-tinta-muted)', fontSize: 13, margin: '14px 0' },
+    gg: { width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, border: '1.5px solid var(--vda-linea-fuerte)', borderRadius: 12, padding: 12, background: 'var(--vda-superficie)', color: 'var(--vda-tinta)', cursor: 'pointer' },
     ln: { display: 'flex', flexDirection: 'column', gap: 8, textAlign: 'center', marginTop: 10 },
-    lk: { background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: 14, padding: 6, borderRadius: 6 },
-    mgErr: { background: '#fef2f2', color: '#dc2626', border: '1px solid #fecaca', textAlign: 'center', fontSize: 14, borderRadius: 10, padding: 10 },
-    mgOk: { background: '#f0fdf4', color: '#16a34a', border: '1px solid #bbf7d0', textAlign: 'center', fontSize: 14, borderRadius: 10, padding: 10 }
+    lk: { background: 'none', border: 'none', color: 'var(--vda-tinta-dim)', cursor: 'pointer', fontSize: 14, padding: 6, borderRadius: 6 },
+    mgErr: { background: 'color-mix(in srgb, var(--vda-peligro) 12%, transparent)', color: 'var(--vda-peligro)', border: '1px solid color-mix(in srgb, var(--vda-peligro) 40%, transparent)', textAlign: 'center', fontSize: 14, borderRadius: 10, padding: 10 },
+    mgOk: { background: 'color-mix(in srgb, var(--vda-exito) 12%, transparent)', color: 'var(--vda-exito)', border: '1px solid color-mix(in srgb, var(--vda-exito) 40%, transparent)', textAlign: 'center', fontSize: 14, borderRadius: 10, padding: 10 }
   }
 
   return createPortal(
@@ -135,14 +135,14 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }: { abier
                 <label htmlFor="email" style={sx.lb}>Correo electrónico</label>
                 <div style={sx.in}>
                   <input id="email" ref={inputRef} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="ejemplo@correo.com" required style={sx.inp} />
-                  <Mail size={18} style={{ position: 'absolute', right: 12, color: '#94a3b8' }} />
+                  <Mail size={18} style={{ position: 'absolute', right: 12, color: 'var(--vda-tinta-muted)' }} />
                 </div>
               </div>
               <div style={sx.fd}>
                 <label htmlFor="pass" style={sx.lb}>Contraseña</label>
                 <div style={sx.in}>
                   <input id="pass" type={mostrarPass ? 'text' : 'password'} value={contrasena} onChange={(e) => setContrasena(e.target.value)} placeholder="Tu contraseña" required style={sx.inp} />
-                  <button type="button" onClick={() => setMostrarPass(!mostrarPass)} style={{ position: 'absolute', right: 8, background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 4, borderRadius: 6 }}>{mostrarPass ? <EyeOff size={18} /> : <Eye size={18} />}</button>
+                  <button type="button" onClick={() => setMostrarPass(!mostrarPass)} style={{ position: 'absolute', right: 8, background: 'none', border: 'none', color: 'var(--vda-tinta-muted)', cursor: 'pointer', padding: 4, borderRadius: 6 }}>{mostrarPass ? <EyeOff size={18} /> : <Eye size={18} />}</button>
                 </div>
               </div>
               {error && <div style={sx.mgErr}>{error}</div>}
@@ -169,14 +169,14 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }: { abier
                   <label htmlFor="nombre" style={sx.lb}>Nombre</label>
                   <div style={sx.in}>
                     <input id="nombre" ref={inputRef} type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Juan" required style={sx.inp} />
-                    <User size={18} style={{ position: 'absolute', right: 12, color: '#94a3b8' }} />
+                    <User size={18} style={{ position: 'absolute', right: 12, color: 'var(--vda-tinta-muted)' }} />
                   </div>
                 </div>
                 <div style={sx.fd}>
                   <label htmlFor="apellido" style={sx.lb}>Apellido</label>
                   <div style={sx.in}>
                     <input id="apellido" type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} placeholder="Pérez" required style={sx.inp} />
-                    <User size={18} style={{ position: 'absolute', right: 12, color: '#94a3b8' }} />
+                    <User size={18} style={{ position: 'absolute', right: 12, color: 'var(--vda-tinta-muted)' }} />
                   </div>
                 </div>
               </div>
@@ -184,14 +184,14 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }: { abier
                 <label htmlFor="emailReg" style={sx.lb}>Correo electrónico</label>
                 <div style={sx.in}>
                   <input id="emailReg" type="email" value={emailReg} onChange={(e) => setEmailReg(e.target.value)} placeholder="ejemplo@correo.com" required style={sx.inp} />
-                  <Mail size={18} style={{ position: 'absolute', right: 12, color: '#94a3b8' }} />
+                  <Mail size={18} style={{ position: 'absolute', right: 12, color: 'var(--vda-tinta-muted)' }} />
                 </div>
               </div>
               <div style={sx.fd}>
                 <label htmlFor="passReg" style={sx.lb}>Contraseña</label>
                 <div style={sx.in}>
                   <input id="passReg" type={mostrarPassReg ? 'text' : 'password'} value={passReg} onChange={(e) => setPassReg(e.target.value)} placeholder="Mínimo 6 caracteres" required style={sx.inp} />
-                  <button type="button" onClick={() => setMostrarPassReg(!mostrarPassReg)} style={{ position: 'absolute', right: 8, background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: 4, borderRadius: 6 }}>{mostrarPassReg ? <EyeOff size={18} /> : <Eye size={18} />}</button>
+                  <button type="button" onClick={() => setMostrarPassReg(!mostrarPassReg)} style={{ position: 'absolute', right: 8, background: 'none', border: 'none', color: 'var(--vda-tinta-muted)', cursor: 'pointer', padding: 4, borderRadius: 6 }}>{mostrarPassReg ? <EyeOff size={18} /> : <Eye size={18} />}</button>
                 </div>
               </div>
               {error && <div style={sx.mgErr}>{error}</div>}
@@ -211,7 +211,7 @@ export default function ModalAutenticacionIsolado({ abierto, onCerrar }: { abier
                 <label htmlFor="emailRec" style={sx.lb}>Correo electrónico</label>
                 <div style={sx.in}>
                   <input id="emailRec" ref={inputRef} type="email" value={emailRec} onChange={(e) => setEmailRec(e.target.value)} placeholder="ejemplo@correo.com" required style={sx.inp} />
-                  <Mail size={18} style={{ position: 'absolute', right: 12, color: '#94a3b8' }} />
+                  <Mail size={18} style={{ position: 'absolute', right: 12, color: 'var(--vda-tinta-muted)' }} />
                 </div>
               </div>
               {mensaje && <div style={mensaje.includes('Revisa') ? sx.mgOk : sx.mgErr}>{mensaje}</div>}

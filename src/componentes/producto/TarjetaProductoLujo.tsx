@@ -12,7 +12,6 @@ import EtiquetaVendido from './EtiquetaVendido'
 import { optimizarUrlSupabase } from '../ImagenOptimizada'
 import './TarjetaProductoLujo.es.css'
 
-const PLACEHOLDER_SVG = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f1f3f5'/%3E%3Ctext x='50%25' y='50%25' font-family='system-ui' font-size='14' fill='%23adb5bd' text-anchor='middle' dy='.3em'%3ESin imagen%3C%2Ftext%3E%3C%2Fsvg%3E`
 
 function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   if (!producto) return null
@@ -120,9 +119,11 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
     ? `Ahorro disponible: ${descuentoCalculado}%`
     : (destacado ? 'Vendedor estrella' : (estadoValido || 'Entrega rápida'))
 
-  const manejarErrorImagen = (e) => {
-    e.currentTarget.src = PLACEHOLDER_SVG
-  }
+  // Imagen rota → se pasa al placeholder por ESTADO. Antes se reasignaba e.currentTarget.src, pero
+  // next/image vuelve a poner la URL original en cada render → onError → bucle infinito de peticiones
+  // a /_next/image (la página de categoría nunca terminaba de cargar).
+  const [errPrincipal, setErrPrincipal] = React.useState(false)
+  const [errSecundaria, setErrSecundaria] = React.useState(false)
 
   const leerCampo = (candidatos) => {
     const v = candidatos.find((c) => c !== undefined && c !== null) ?? null
@@ -201,7 +202,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
           />
         )}
         
-        {srcPrincipal ? (
+        {srcPrincipal && !errPrincipal ? (
           <Image
             src={srcPrincipal}
             alt={nombre}
@@ -209,12 +210,12 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             loading="lazy"
             width={320}
             height={320}
-            onError={manejarErrorImagen}
+            onError={() => setErrPrincipal(true)}
           />
         ) : (
           <div className="imagen imagen-principal imagen-placeholder" aria-hidden="true" />
         )}
-        {srcSecundaria ? (
+        {srcSecundaria && !errSecundaria ? (
           <Image
             src={srcSecundaria}
             alt={`${nombre} alternativa`}
@@ -222,7 +223,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             loading="lazy"
             width={320}
             height={320}
-            onError={manejarErrorImagen}
+            onError={() => setErrSecundaria(true)}
           />
         ) : (
           <div className="imagen imagen-secundaria imagen-placeholder" aria-hidden="true" />

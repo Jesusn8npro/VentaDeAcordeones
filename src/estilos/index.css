@@ -64,3 +64,7 @@
     height: 100% !important;
   }
 }
+
+/* Controles nativos (select, scrollbars, date pickers) siguen el tema activo */
+[data-theme="dark"]  { color-scheme: dark; }
+[data-theme="light"] { color-scheme: light; }

@@ -36,7 +36,7 @@ function Logo({ light }: { light: boolean }) {
 // ── TopBar ────────────────────────────────────────────────────
 const TOP_MSGS = [
   { icon: 'Truck', text: 'Envío gratis en compras +$2M COP', short: 'Envío gratis +$2M' },
-  { icon: 'Phone', text: 'Soporte 24/7 · WhatsApp +57 320 849 2093', short: 'Soporte 24/7' },
+  { icon: 'Phone', text: 'Soporte 24/7 · WhatsApp +57 314 486 5310', short: 'Soporte 24/7' },
   { icon: 'App',   text: 'Descarga la App · 10% off tu primer pedido', short: 'Descarga la App' },
   { icon: 'Star',  text: '+12.000 acordeones entregados en LATAM', short: '+12K entregados' },
 ]

@@ -11,9 +11,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-  color: #374151;
+  border: 1px solid var(--vda-linea-fuerte);
+  background-color: var(--vda-superficie);
+  color: var(--vda-tinta-dim);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -28,7 +28,7 @@
 }
 
 .btn-pagina:hover {
-  background-color: #f3f4f6;
+  background-color: var(--vda-superficie-2);
   border-color: #a5b4fc;
 }
 
@@ -37,7 +37,7 @@
   color: white;
   border-color: #4f46e5;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--vda-tinta) 10%, transparent);
 }
 
 .btn-nav-pagina {
@@ -51,7 +51,7 @@
 }
 
 .btn-nav-pagina:hover:not(:disabled) {
-  background-color: #f3f4f6;
+  background-color: var(--vda-superficie-2);
   border-color: #a5b4fc;
 }
 

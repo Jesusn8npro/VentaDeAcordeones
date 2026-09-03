@@ -49,8 +49,8 @@ const Contacto = () => {
                 </div>
                 <div className="info-content">
                   <h3>WhatsApp</h3>
-                  <a href="https://wa.me/573208492093" className="info-link">
-                    +57 320 849 2093
+                  <a href="https://wa.me/573144865310" className="info-link">
+                    +57 314 486 5310
                   </a>
                   <p className="info-detail">Respuesta inmediata</p>
                 </div>
@@ -75,8 +75,8 @@ const Contacto = () => {
                 </div>
                 <div className="info-content">
                   <h3>Teléfono</h3>
-                  <a href="tel:+573208492093" className="info-link">
-                    +57 320 849 2093
+                  <a href="tel:+573144865310" className="info-link">
+                    +57 314 486 5310
                   </a>
                   <p className="info-detail">Lunes a viernes</p>
                 </div>
@@ -173,7 +173,7 @@ const Contacto = () => {
               <p>Escríbenos por WhatsApp para una respuesta instantánea</p>
             </div>
             <a 
-              href="https://wa.me/573208492093" 
+              href="https://wa.me/573144865310" 
               target="_blank" 
               rel="noopener noreferrer"
               className="whatsapp-button"

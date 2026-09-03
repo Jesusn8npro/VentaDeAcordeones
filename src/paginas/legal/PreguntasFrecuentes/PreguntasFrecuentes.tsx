@@ -61,7 +61,7 @@ export default function PreguntasFrecuentes() {
     { categoria: 'Envíos', pregunta: '¿Cuánto tarda el envío?', respuesta: 'Despachamos con SERVIENTREGA. Bogotá y ciudades principales: 1–2 días hábiles. Otras ciudades y municipios: 2–5 días hábiles. Recibes número de guía para rastrear.', icono: Truck },
     { categoria: 'Envíos', pregunta: '¿Cuánto cuesta el envío?', respuesta: 'El costo depende del destino y el peso del instrumento. Los acordeones tienen empaque especial reforzado. Consúltanos por WhatsApp para cotizar tu envío específico.', icono: Truck },
     { categoria: 'Envíos', pregunta: '¿Cómo empacan los acordeones?', respuesta: 'Con protección especial: espuma de alta densidad, plástico burbuja y caja reforzada. Garantizamos que tu instrumento llegue en perfectas condiciones.', icono: Truck },
-    { categoria: 'Devoluciones', pregunta: '¿Cómo pedir una devolución?', respuesta: 'Escríbenos por WhatsApp al +57 320 849 2093 dentro de los 15 días de recibido. Verificamos el estado, coordinamos la devolución y procesamos el reembolso en 5–10 días hábiles.', icono: RotateCcw },
+    { categoria: 'Devoluciones', pregunta: '¿Cómo pedir una devolución?', respuesta: 'Escríbenos por WhatsApp al +57 314 486 5310 dentro de los 15 días de recibido. Verificamos el estado, coordinamos la devolución y procesamos el reembolso en 5–10 días hábiles.', icono: RotateCcw },
     { categoria: 'Devoluciones', pregunta: '¿Qué garantía tienen los acordeones?', respuesta: '6 meses de garantía en acordeones nuevos contra defectos de fábrica. No aplica para daños por mal uso, caídas o humedad. Respaldamos cada instrumento que vendemos.', icono: RotateCcw },
     { categoria: 'Devoluciones', pregunta: '¿Cuánto tarda el reembolso?', respuesta: 'Tras recibir y verificar el producto, procesamos en 5–10 días hábiles. El abono en tu cuenta puede tomar 1–2 días adicionales del banco.', icono: RotateCcw },
     { categoria: 'Seguridad', pregunta: '¿Es seguro comprar aquí?', respuesta: 'Sí. Llevamos más de 10 años vendiendo acordeones en Colombia. Cientos de clientes satisfechos, pagos seguros con ePayco y respaldo post-venta real por WhatsApp.', icono: Shield },
@@ -208,7 +208,7 @@ export default function PreguntasFrecuentes() {
           <h2 className="faq__seccion-titulo">¿No encuentras tu respuesta?</h2>
           <p className="faq__seccion-subtitulo">Estamos listos para ayudarte al instante.</p>
           <div className="faq__contacto-grid">
-            <a href="https://wa.me/573208492093" className="faq__contacto-card whatsapp">
+            <a href="https://wa.me/573144865310" className="faq__contacto-card whatsapp">
               <MessageSquare className="faq__contacto-icono" />
               <h3>WhatsApp</h3>
               <p>Respuesta inmediata 24/7</p>

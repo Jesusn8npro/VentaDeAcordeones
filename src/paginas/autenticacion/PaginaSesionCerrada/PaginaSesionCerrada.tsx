@@ -16,13 +16,15 @@ export default function PaginaSesionCerrada() {
   return (
     <div style={{ maxWidth: 900, margin: '40px auto', padding: '20px' }}>
       <div style={{
-        background: '#fff',
+        background: 'var(--vda-superficie)',
+        border: '1px solid var(--vda-linea)',
+        color: 'var(--vda-tinta)',
         borderRadius: 12,
-        boxShadow: '0 6px 20px rgba(0,0,0,0.08)',
+        boxShadow: 'var(--vda-sombra-card)',
         padding: '32px'
       }}>
         <h1 style={{ margin: 0, fontSize: 28 }}>Sesión cerrada</h1>
-        <p style={{ color: '#555', marginTop: 8 }}>
+        <p style={{ color: 'var(--vda-tinta-dim)', marginTop: 8 }}>
           Has cerrado sesión correctamente. Por seguridad, algunas secciones no estarán disponibles.
         </p>
 
@@ -43,8 +45,8 @@ export default function PaginaSesionCerrada() {
           <button
             onClick={() => router.push('/')}
             style={{
-              background: '#f2f2f2',
-              color: '#333',
+              background: 'var(--vda-superficie-3)',
+              color: 'var(--vda-tinta)',
               border: 'none',
               borderRadius: 8,
               padding: '10px 16px',
@@ -55,7 +57,7 @@ export default function PaginaSesionCerrada() {
           </button>
         </div>
 
-        <div style={{ marginTop: 24, fontSize: 14, color: '#777' }}>
+        <div style={{ marginTop: 24, fontSize: 14, color: 'var(--vda-tinta-muted)' }}>
           Serás redirigido automáticamente al inicio en unos segundos.
         </div>
       </div>

@@ -12,9 +12,9 @@ import Mantenimiento from '@/componentes/sistema/Mantenimiento/Mantenimiento'
 import Encabezado from '@/componentes/layout/Encabezado/Encabezado'
 import PieDePagina from '@/componentes/layout/PieDePagina/PieDePagina'
 
-const RUTAS_SIN_LAYOUT   = ['/landing/', '/admin', '/inicio-3d', '/mantenimiento']
-const RUTAS_SIN_FLOTANTES = ['/landing/', '/admin', '/inicio-3d', '/mantenimiento']
-const RUTAS_SIN_WRAP      = ['/landing/', '/admin', '/acordeones-personalizados', '/inicio-3d', '/mantenimiento']
+const RUTAS_SIN_LAYOUT   = ['/landing/', '/landingdelujo', '/admin', '/inicio-3d', '/mantenimiento']
+const RUTAS_SIN_FLOTANTES = ['/landing/', '/landingdelujo', '/admin', '/inicio-3d', '/mantenimiento']
+const RUTAS_SIN_WRAP      = ['/landing/', '/landingdelujo', '/admin', '/acordeones-personalizados', '/inicio-3d', '/mantenimiento']
 
 // ── MODO MANTENIMIENTO ───────────────────────────────────────────────────────
 // NEXT_PUBLIC_MODO_MANTENIMIENTO = 'true'  → el público ve "Estamos actualizando"

@@ -250,7 +250,7 @@ export default function TrabajaConNosotros() {
             <div className="contacto-info">
               <div className="contacto-item">
                 <Phone size={20} />
-                <span>WhatsApp: +57 320 849 2093</span>
+                <span>WhatsApp: +57 314 486 5310</span>
               </div>
               <div className="contacto-item">
                 <Mail size={20} />
@@ -262,7 +262,7 @@ export default function TrabajaConNosotros() {
               </div>
             </div>
             <a 
-              href="https://wa.me/573208492093" 
+              href="https://wa.me/573144865310" 
               className="whatsapp-button"
               target="_blank"
               rel="noopener noreferrer"

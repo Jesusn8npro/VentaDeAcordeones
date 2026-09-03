@@ -2,17 +2,17 @@
 
 .cinema-card {
   position: relative;
-  background: #050505;
-  border: 1px solid #1f1f1f;
+  background: var(--vda-superficie-profunda);
+  border: 1px solid var(--vda-linea);
   display: flex;
   flex-direction: column;
   cursor: pointer;
   transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
 }
 .cinema-card:hover {
-  border-color: #FFC300;
+  border-color: var(--vda-oro);
   transform: translateY(-4px);
-  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,195,0,0.18);
+  box-shadow: var(--vda-sombra-card), 0 0 0 1px var(--vda-oro-brillo);
 }
 
 /* ── IMAGEN ── */
@@ -21,8 +21,8 @@
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 60%, rgba(255,195,0,0.1), transparent 60%),
-    linear-gradient(160deg, #141414, #000);
+    radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--vda-oro) 10%, transparent), transparent 60%),
+    linear-gradient(160deg, var(--vda-superficie-2), var(--vda-fondo));
   display: grid;
   place-items: center;
 }
@@ -41,18 +41,18 @@
 .cinema-card:hover .img-principal,
 .cinema-card:hover .img-secundaria { transform: scale(1.04); }
 
-.img-placeholder { background: linear-gradient(135deg, #111 0%, #1a1a1a 50%, #111 100%); background-size: 200% 200%; animation: cinema-shimmer 1.5s ease-in-out infinite; }
+.img-placeholder { background: linear-gradient(135deg, var(--vda-superficie-2) 0%, var(--vda-superficie-3) 50%, var(--vda-superficie-2) 100%); background-size: 200% 200%; animation: cinema-shimmer 1.5s ease-in-out infinite; }
 @keyframes cinema-shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
 /* placeholder cuando no hay imagen */
 .cinema-card__img-placeholder {
   width: 60%;
   aspect-ratio: 1;
-  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  border: 1px solid #2a2a2a;
+  background: linear-gradient(135deg, var(--vda-superficie-3) 0%, var(--vda-superficie) 100%);
+  border: 1px solid var(--vda-linea-fuerte);
   display: grid;
   place-items: center;
-  color: #3a3a3a;
+  color: var(--vda-tinta-muted);
   font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
   font-size: 13px;
   letter-spacing: 0.2em;
@@ -67,22 +67,22 @@
   font-size: 8px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  background: rgba(0,0,0,0.75);
-  border: 1px solid #FFC300;
-  color: #FFC300;
+  background: var(--vda-overlay-fuerte);
+  border: 1px solid var(--vda-oro);
+  color: var(--vda-oro);
   padding: 4px 9px;
   z-index: 3;
   backdrop-filter: blur(4px);
 }
 .cinema-card__tag--new {
-  background: #FFC300;
+  background: var(--vda-oro);
   color: #000;
-  border-color: #FFC300;
+  border-color: var(--vda-oro);
 }
 .cinema-card__tag--sale {
-  background: #ff3b3b;
+  background: var(--vda-peligro);
   color: #fff;
-  border-color: #ff3b3b;
+  border-color: var(--vda-peligro);
 }
 
 /* ── FAVORITO ── */
@@ -95,18 +95,18 @@
   height: 32px;
   display: grid;
   place-items: center;
-  background: rgba(0,0,0,0.6);
-  border: 1px solid #2a2a2a;
+  background: var(--vda-overlay);
+  border: 1px solid var(--vda-linea-fuerte);
   border-radius: 50%;
-  color: #7a7a7a;
+  color: var(--vda-tinta-muted);
   transition: all 0.25s;
   backdrop-filter: blur(4px);
 }
-.cinema-card__fav:hover { color: #FFC300; border-color: #FFC300; }
+.cinema-card__fav:hover { color: var(--vda-oro); border-color: var(--vda-oro); }
 .cinema-card__fav--activo {
-  color: #FFC300;
-  background: rgba(255,195,0,0.12);
-  border-color: #FFC300;
+  color: var(--vda-oro);
+  background: var(--vda-oro-brillo);
+  border-color: var(--vda-oro);
 }
 
 /* ── ACCIONES HOVER (carrito + vista rápida) ── */
@@ -134,8 +134,8 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
-  background: rgba(0,0,0,0.78);
-  border: 1px solid #2a2a2a;
+  background: var(--vda-overlay-fuerte);
+  border: 1px solid var(--vda-linea-fuerte);
   color: #fff;
   backdrop-filter: blur(6px);
   transition: all 0.22s;
@@ -146,15 +146,15 @@
   gap: 5px;
 }
 .cinema-card__quick-btn:hover {
-  background: #FFC300;
+  background: var(--vda-oro);
   color: #000;
-  border-color: #FFC300;
+  border-color: var(--vda-oro);
 }
 
 /* ── INFO ── */
 .cinema-card__info {
   padding: 16px 16px 14px;
-  border-top: 1px solid #1f1f1f;
+  border-top: 1px solid var(--vda-linea);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -164,7 +164,7 @@
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #7a7a7a;
+  color: var(--vda-tinta-muted);
   margin-bottom: 5px;
 }
 .cinema-card__name {
@@ -173,7 +173,7 @@
   line-height: 1.05;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--vda-tinta);
   margin-bottom: 12px;
   min-height: 36px;
 }
@@ -194,14 +194,14 @@
 .cinema-card__price-now {
   font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
   font-size: 21px;
-  color: #FFC300;
+  color: var(--vda-oro);
   letter-spacing: 0.02em;
   line-height: 1;
 }
 .cinema-card__price-was {
   font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
   font-size: 9px;
-  color: #7a7a7a;
+  color: var(--vda-tinta-muted);
   text-decoration: line-through;
   letter-spacing: 0.1em;
 }
@@ -216,23 +216,23 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   font-weight: 600;
-  border: 1px solid #2a2a2a;
-  color: #fff;
+  border: 1px solid var(--vda-linea-fuerte);
+  color: var(--vda-tinta);
   background: transparent;
   cursor: pointer;
   transition: all 0.28s;
   white-space: nowrap;
 }
 .cinema-card__add:hover {
-  background: #FFC300;
+  background: var(--vda-oro);
   color: #000;
-  border-color: #FFC300;
-  box-shadow: 0 0 0 1px #FFC300, 0 8px 24px -8px rgba(255,195,0,0.5);
+  border-color: var(--vda-oro);
+  box-shadow: 0 0 0 1px var(--vda-oro), 0 8px 24px -8px color-mix(in srgb, var(--vda-oro) 50%, transparent);
 }
 .cinema-card__add--added {
-  background: #FFC300;
+  background: var(--vda-oro);
   color: #000;
-  border-color: #FFC300;
+  border-color: var(--vda-oro);
 }
 
 /* ── CALIFICACIÓN ── */
@@ -243,13 +243,13 @@
   margin-top: 10px;
   font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
   font-size: 9px;
-  color: #7a7a7a;
+  color: var(--vda-tinta-muted);
   letter-spacing: 0.08em;
 }
 .cinema-card__stars {
   display: flex;
   gap: 2px;
-  color: #FFC300;
+  color: var(--vda-oro);
 }
 
 /* ── ESTADO VENDIDO ── */
@@ -259,7 +259,7 @@
   z-index: 4;
   display: grid;
   place-items: center;
-  background: rgba(0,0,0,0.65);
+  background: var(--vda-overlay);
   backdrop-filter: blur(2px);
   font-family: var(--font-bebas, sans-serif);
   font-size: 28px;
@@ -267,3 +267,11 @@
   color: #fff;
   pointer-events: none;
 }
+
+/* ============ LIGHT THEME OVERRIDES ============ */
+[data-theme="light"] .cinema-card__tag { background: rgba(255,255,255,0.88); }
+[data-theme="light"] .cinema-card__tag--new { background: var(--vda-oro); }
+[data-theme="light"] .cinema-card__tag--sale { background: var(--vda-peligro); }
+[data-theme="light"] .cinema-card__fav { background: rgba(255,255,255,0.8); }
+[data-theme="light"] .cinema-card__quick-btn { background: rgba(255,255,255,0.85); color: var(--vda-tinta); }
+[data-theme="light"] .cinema-card__quick-btn:hover { background: var(--vda-oro); color: #000; }

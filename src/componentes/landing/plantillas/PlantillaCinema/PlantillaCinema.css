@@ -1,25 +1,25 @@
 /* PlantillaCinema.css — copia exacta del diseño guias_diseños/Venta de Acordeones - Standalone.html */
 
 .cinema-pdp {
-  --gold:           #FFC300;
-  --gold-soft:      rgba(255, 195, 0, 0.35);
-  --gold-glow:      rgba(255, 195, 0, 0.12);
-  --bg:             #000;
-  --surface:        #0d0d0d;
-  --surface-2:      #131313;
-  --surface-deep:   #080808;
-  --surface-deeper: #050505;
-  --line:           #1c1c1c;
-  --line-strong:    #262626;
-  --ink:            #f0f0f0;
-  --ink-dim:        #999;
-  --ink-muted:      #555;
+  --gold:           var(--vda-oro);
+  --gold-soft:      color-mix(in srgb, var(--vda-oro) 35%, transparent);
+  --gold-glow:      color-mix(in srgb, var(--vda-oro) 12%, transparent);
+  --bg:             var(--vda-fondo);
+  --surface:        var(--vda-superficie);
+  --surface-2:      var(--vda-superficie-2);
+  --surface-deep:   var(--vda-superficie-profunda);
+  --surface-deeper: var(--vda-superficie-mas-profunda);
+  --line:           var(--vda-linea);
+  --line-strong:    var(--vda-linea-fuerte);
+  --ink:            var(--vda-tinta);
+  --ink-dim:        var(--vda-tinta-dim);
+  --ink-muted:      var(--vda-tinta-muted);
   --font-display:   'Bebas Neue', 'Arial Black', sans-serif;
   --font-mono:      'JetBrains Mono', 'Courier New', monospace;
   --font-body:      system-ui, -apple-system, sans-serif;
   --container:      1400px;
   --pad-x:          40px;
-  --success:        #22c55e;
+  --success:        var(--vda-exito);
 
   background: var(--bg);
   color: var(--ink);
@@ -263,7 +263,7 @@
   background: var(--surface-2);
   border-style: solid;
   border-color: var(--gold);
-  box-shadow: 0 0 0 1px var(--gold), 0 8px 20px -10px rgba(255, 195, 0, 0.4);
+  box-shadow: 0 0 0 1px var(--gold), 0 8px 20px -10px color-mix(in srgb, var(--vda-oro) 40%, transparent);
 }
 .cinema-pdp .pdp-mode-pop {
   position: absolute;
@@ -379,10 +379,11 @@
   transition: all 0.25s ease;
 }
 .cinema-pdp .pdp-cta:hover {
-  background: #fff;
-  border-color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
   transform: translateY(-2px);
-  box-shadow: 0 0 0 1px var(--gold), 0 12px 30px -8px rgba(255, 195, 0, 0.5);
+  box-shadow: 0 0 0 1px var(--gold), 0 12px 30px -8px color-mix(in srgb, var(--vda-oro) 50%, transparent);
 }
 .cinema-pdp .pdp-cta.added {
   background: var(--success);
@@ -642,7 +643,7 @@
   cursor: pointer;
   transition: all 0.25s;
 }
-.cinema-pdp .pdp-btn-primary:hover { background: #fff; border-color: #fff; }
+.cinema-pdp .pdp-btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 1100px) {

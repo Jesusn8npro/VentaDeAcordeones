@@ -4,13 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
 
-const NUMERO_WA = '573208492093'
-const BASE = 'https://ventadeacordeones.com/storage'
-
+const NUMERO_WA = '573144865310'
+// Recortes transparentes locales (scripts/procesar-imagenes-productos.mjs). Antes: URLs del
+// WordPress viejo (404) o JPG con fondo blanco que se veía como un cuadro pegado.
 const IMGS_CUSTOM = [
-  `${BASE}/2023/08/Acordeon-de-botones-de-dos-colores-600x600.jpg`,
-  `${BASE}/2023/08/Acordeon-Blanco-HOHNER-ORIGINAL-600x600.jpg`,
-  `${BASE}/2021/11/Acordeon-personalizado-Instagram.jpg`,
+  '/images/productos/acordeon-hohner-personalizado-de-dos-colores.webp',
+  '/images/hero/blanco-tricolor.webp',
+  '/images/hero/azul-tricolor.webp',
 ]
 
 export default function SeccionPersonalizados() {

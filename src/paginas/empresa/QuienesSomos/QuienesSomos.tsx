@@ -45,7 +45,7 @@ export default function QuienesSomos() {
             <Link href="/tienda" className="luxAbout-btn luxAbout-btn-primary">
               <ShoppingBag size={18} /> Ver Tienda
             </Link>
-            <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="luxAbout-btn luxAbout-btn-secondary">
+            <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="luxAbout-btn luxAbout-btn-secondary">
               <Phone size={18} /> WhatsApp
             </a>
           </div>
@@ -129,12 +129,12 @@ export default function QuienesSomos() {
             <h2>¿Listo para comenzar?</h2>
             <p>Estamos aquí para ayudarte. Escríbenos antes de comprar.</p>
             <div className="luxAbout-contact-info">
-              <div className="luxAbout-contact-item"><Phone size={18} /> +57 320 849 2093</div>
+              <div className="luxAbout-contact-item"><Phone size={18} /> +57 314 486 5310</div>
               <div className="luxAbout-contact-item"><Mail size={18} /> acordeon91@gmail.com</div>
               <div className="luxAbout-contact-item"><MapPin size={18} /> Colombia — envíos nacionales</div>
             </div>
             <div className="luxAbout-contact-actions">
-              <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="luxAbout-btn luxAbout-btn-primary">
+              <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="luxAbout-btn luxAbout-btn-primary">
                 <Phone size={18} /> WhatsApp
               </a>
               <Link href="/tienda" className="luxAbout-btn luxAbout-btn-secondary">

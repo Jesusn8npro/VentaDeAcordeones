@@ -17,7 +17,7 @@ export default function SobreLaTienda() {
           <p className="slt-hero-sub">Somos la tienda online líder en acordeones de Colombia.<br />Desde principiantes hasta profesionales, tenemos el instrumento ideal para ti.</p>
           <div className="slt-hero-actions">
             <Link href="/tienda" className="slt-btn slt-btn-primary">Ver catálogo</Link>
-            <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="slt-btn slt-btn-ghost">
+            <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="slt-btn slt-btn-ghost">
               <MessageCircle size={18} /> WhatsApp
             </a>
           </div>
@@ -136,9 +136,9 @@ export default function SobreLaTienda() {
             <h2>Escríbenos antes de comprar</h2>
             <p>Te asesoramos sin compromiso. Nuestro equipo conoce cada instrumento que vendemos.</p>
             <div className="slt-contacto-datos">
-              <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="slt-contacto-item">
+              <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="slt-contacto-item">
                 <MessageCircle size={20} />
-                <span>+57 320 849 2093</span>
+                <span>+57 314 486 5310</span>
               </a>
               <a href="mailto:acordeon91@gmail.com" className="slt-contacto-item">
                 <Mail size={20} />
@@ -154,7 +154,7 @@ export default function SobreLaTienda() {
               </div>
             </div>
             <div className="slt-contacto-actions">
-              <a href="https://wa.me/573208492093" target="_blank" rel="noopener noreferrer" className="slt-btn slt-btn-primary">
+              <a href="https://wa.me/573144865310" target="_blank" rel="noopener noreferrer" className="slt-btn slt-btn-primary">
                 <Phone size={18} /> Contactar por WhatsApp
               </a>
               <Link href="/tienda" className="slt-btn slt-btn-outline">Ver tienda</Link>

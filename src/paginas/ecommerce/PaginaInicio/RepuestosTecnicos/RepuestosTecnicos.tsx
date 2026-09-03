@@ -2,69 +2,49 @@
 
 import Link from 'next/link'
 import Icono from '@/componentes/ui/Icono'
+import { CLUSTERS } from '@/datos/clusters'
 
-const TECNICOS = [
-  {
-    id: 'lenguetas',
-    icono: 'acc-lengueta' as const,
-    etiqueta: 'Lengüetas',
-    meta: 'Hohner, Voci Armoniche',
-    desc: 'Lengüetas a mano y máquina para todos los modelos.',
-  },
-  {
-    id: 'resortes',
-    icono: 'acc-resorte' as const,
-    etiqueta: 'Resortes',
-    meta: 'Acero templado',
-    desc: 'Resortes de teclado, bajos y registro. Calidad europea.',
-  },
-  {
-    id: 'celuloide',
-    icono: 'acc-celuloide' as const,
-    etiqueta: 'Celuloide',
-    meta: 'Hojas decorativas',
-    desc: 'Hojas de celuloide nácar, negro, rojo, perla y colores especiales.',
-  },
-  {
-    id: 'herramientas',
-    icono: 'acc-herramientas' as const,
-    etiqueta: 'Herramientas',
-    meta: 'Llaves, alicates',
-    desc: 'Set completo de herramientas profesionales para afinación y reparación.',
-  },
-]
+// Cada tarjeta lleva a su landing SEO (/accesorios/<cluster>). Antes eran repuestos genéricos
+// (lengüetas, resortes…) que enlazaban a /tienda sin producto detrás.
+const META: Record<string, string> = {
+  'parrillas-de-acordeon': 'Original · inox · personalizada',
+  'fuelles-de-acordeon': '18 y 19 pliegues · colores',
+  'correas-de-acordeon': 'Acolchadas · Hohner · bordadas',
+  'estuches-de-acordeon': 'Rígidos · morral · con tu nombre',
+  'broches-de-acordeon': 'Cromados · dorados',
+}
 
 export default function RepuestosTecnicos() {
   return (
-    <section className="section" id="tecnicos">
+    <section className="section" id="accesorios">
       <div className="section-head">
         <div className="left reveal">
-          <div className="eyebrow">— PARA AFINADORES Y TÉCNICOS</div>
+          <div className="eyebrow">— ACCESORIOS Y REPUESTOS</div>
           <h2 className="display section-title">
-            Repuestos <em className="italic">de</em><br />
-            <span className="accent">Calidad Profesional</span>
+            Todo lo que <em className="italic">tu acordeón</em><br />
+            <span className="accent">necesita</span>
           </h2>
         </div>
         <p className="section-sub reveal" data-delay="1">
-          Surtimos talleres de afinación en toda Latinoamérica. Despacho directo desde Valledupar con factura y garantía.
+          Parrillas, fuelles, correas, estuches y broches para Hohner Corona, Rey Vallenato y Compadre. Despacho desde Valledupar con factura y garantía.
         </p>
       </div>
       <div className="tecnicos-grid">
-        {TECNICOS.map((t, i) => (
+        {CLUSTERS.filter((c) => c.base === 'accesorios').map((c, i) => (
           <Link
-            key={t.id}
-            href="/tienda"
+            key={c.slug}
+            href={`/${c.base}/${c.slug}`}
             className="tecnico-card reveal"
             data-delay={i}
           >
             <div className="tecnico-icon">
-              <Icono nombre={t.icono} tamaño={26} />
+              <Icono nombre={c.icono as any} tamaño={26} />
             </div>
-            <div className="tecnico-meta">// {String(i + 1).padStart(2, '0')} · {t.meta}</div>
-            <h3 className="tecnico-title">{t.etiqueta}</h3>
-            <p className="tecnico-desc">{t.desc}</p>
+            <div className="tecnico-meta">// {String(i + 1).padStart(2, '0')} · {META[c.slug]}</div>
+            <h3 className="tecnico-title">{c.nombre}</h3>
+            <p className="tecnico-desc">{c.intro.split('.')[0]}.</p>
             <span className="tecnico-cta">
-              Ver catálogo <Icono nombre="flecha" tamaño={12} />
+              Ver {c.nombre.toLowerCase()} <Icono nombre="flecha" tamaño={12} />
             </span>
           </Link>
         ))}

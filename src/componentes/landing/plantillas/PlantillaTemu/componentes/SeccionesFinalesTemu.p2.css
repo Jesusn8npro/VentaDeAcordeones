@@ -1,5 +1,5 @@
 ﻿/* ================================================================
-   GARANTÃAS TEMU - SECCIÃ“N SIMPLE Y CONFIABLE
+   GARANTÍAS TEMU - SECCIÃ“N SIMPLE Y CONFIABLE
    ================================================================ */
 
 /* SECCIÃ“N PRINCIPAL */
@@ -65,7 +65,7 @@
   50% { transform: translateY(-8px); }
 }
 
-/* GRID DE GARANTÃAS */
+/* GRID DE GARANTÍAS */
 .garantias-temu-grid {
   max-width: 1200px;
   margin: 0 auto;
@@ -75,7 +75,7 @@
   gap: 30px;
 }
 
-/* ITEM DE GARANTÃA */
+/* ITEM DE GARANTÍA */
 .garantias-temu-item {
   background: #f8fafc;
   padding: 30px 25px;

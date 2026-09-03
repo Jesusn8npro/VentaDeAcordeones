@@ -15,7 +15,7 @@ const CambiosDevoluciones = () => {
         </div>
         <div className="titulo-principal">
           <RefreshCw className="icono" />
-          <h1 style={{ background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' }}>
+          <h1 style={{ backgroundImage: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)' }}>
             Política de Cambios y Devoluciones
           </h1>
         </div>
@@ -39,7 +39,7 @@ const CambiosDevoluciones = () => {
             <div className="destacado">
               <strong>Tiempo límite:</strong> En un plazo de cinco (5) días calendario desde la fecha de recepción del paquete puedes solicitar el cambio.
             </div>
-            <p>Para solicitar un cambio, debes escribir al correo <strong>acordeon91@gmail.com</strong> o por WhatsApp al número <strong>+57 320 849 2093</strong> especificando la siguiente información:</p>
+            <p>Para solicitar un cambio, debes escribir al correo <strong>acordeon91@gmail.com</strong> o por WhatsApp al número <strong>+57 314 486 5310</strong> especificando la siguiente información:</p>
             <div className="formato-solicitud">
               <h4>Información Requerida para el Cambio:</h4>
               <ul>
@@ -169,7 +169,7 @@ const CambiosDevoluciones = () => {
             <div className="contacto-info">
               <h4>Contacto para Cambios y Devoluciones</h4>
               <p><strong>Email:</strong> acordeon91@gmail.com</p>
-              <p><strong>WhatsApp:</strong> +57 320 849 2093</p>
+              <p><strong>WhatsApp:</strong> +57 314 486 5310</p>
               <p><strong>Dirección:</strong> Cali, Colombia</p>
               <p><strong>Horario:</strong> Lunes a Viernes 8:00 AM - 12:30 PM y 2:00 PM - 5:30 PM</p>
             </div>
