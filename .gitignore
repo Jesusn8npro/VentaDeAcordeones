@@ -54,3 +54,6 @@ Imagenes Efectos/
 guias_dise*/
 .blender-toolkit/
 *.skill
+
+# Recortes locales del catálogo (la web usa las copias en Supabase Storage)
+public/images/catalogo/
