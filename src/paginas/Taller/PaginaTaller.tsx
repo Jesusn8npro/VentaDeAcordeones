@@ -267,6 +267,31 @@ export default function PaginaTaller() {
         </div>
       </section>
 
+      {/* ── Zonas de servicio (SEO local) ── */}
+      <section className="tl-seccion" id="zonas">
+        <div className="tl-cabecera">
+          <div>
+            <div className="eyebrow">— Taller de acordeones en Bogotá y para toda Colombia</div>
+            <h2 className="display tl-h2">Atendemos <span className="accent">en Bogotá y por envío</span></h2>
+          </div>
+          <p className="tl-sub">Entrega en mano en Bogotá con cita previa. Desde cualquier otra ciudad, tu acordeón viaja asegurado y vuelve afinado.</p>
+        </div>
+        <div className="tl-zonas">
+          <div className="tl-zona">
+            <h3>Bogotá y alrededores</h3>
+            <p>Chapinero, Suba, Engativá, Kennedy, Usaquén, Fontibón, Bosa, Teusaquillo, Soacha, Chía, Cajicá, Zipaquirá, Mosquera, Madrid y Funza. Recogida y entrega a domicilio con cita.</p>
+          </div>
+          <div className="tl-zona">
+            <h3>Resto de Colombia</h3>
+            <p>Valledupar, Barranquilla, Cartagena, Santa Marta, Montería, Sincelejo, Medellín, Cali, Bucaramanga, Cúcuta, Pereira, Ibagué, Villavicencio y Neiva. Envío por Servientrega o Interrapidísimo con seguro; 1 a 3 días por trayecto.</p>
+          </div>
+          <div className="tl-zona">
+            <h3>Fuera del país</h3>
+            <p>Estados Unidos, México, Chile, Ecuador, Panamá, Canadá y España. Coordinamos DHL con embalaje rígido y seguro de tránsito. Muchos clientes aprovechan un viaje a Colombia para dejar el acordeón en el taller.</p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Reels ── */}
       <section className="tl-seccion">
         <ReelsInstagram limite={8} titulo="El taller en acción" filtro={['taller', 'afina', 'pito', 'fuelle', 'repar']} />

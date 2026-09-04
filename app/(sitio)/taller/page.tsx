@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     locale: 'es_CO',
   },
   twitter: { card: 'summary_large_image', title: TITULO, description: DESCRIPCION, images: [IMAGEN] },
-  keywords: ['taller de acordeones Bogotá', 'afinación de acordeón', 'cambio de pitos acordeón', 'mantenimiento de acordeón', 'reparación de acordeón Hohner', 'cambio de fuelle acordeón'],
+  keywords: ['taller de acordeones Bogotá', 'taller de acordeones', 'reparación de acordeones Bogotá', 'afinación de acordeón Bogotá', 'afinación de acordeón', 'cambio de pitos acordeón', 'cambio de pitos acordeón Bogotá', 'cambio de voces acordeón', 'mantenimiento de acordeón', 'reparación de acordeón Hohner', 'cambio de fuelle acordeón', 'restauración de acordeones', 'arreglo de acordeón Bogotá', 'dónde reparar acordeón en Bogotá', 'afinador de acordeones Colombia'],
 }
 
 const PROVEEDOR = {

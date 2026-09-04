@@ -224,3 +224,10 @@
 .tl .btn-primary:hover { box-shadow: 0 0 0 1px var(--vda-oro), 0 12px 40px -8px rgba(255,195,0,.55); transform: translateY(-2px); }
 .tl .btn-ghost { background: transparent; color: var(--vda-tinta); border-color: var(--vda-linea-fuerte); }
 .tl .btn-ghost:hover { border-color: var(--vda-oro); color: var(--vda-oro); transform: translateY(-2px); }
+
+/* Zonas de servicio (SEO local) */
+.tl-zonas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.tl-zona { background: var(--vda-superficie); border: 1px solid var(--vda-linea); border-radius: 14px; padding: 24px; }
+.tl-zona h3 { margin: 0 0 10px; font-size: 18px; color: var(--vda-tinta); }
+.tl-zona p { margin: 0; color: var(--vda-tinta-dim); line-height: 1.6; font-size: 14.5px; }
+@media (max-width: 900px) { .tl-zonas { grid-template-columns: 1fr; } }
