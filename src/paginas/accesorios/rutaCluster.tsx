@@ -39,6 +39,11 @@ export function crearRutaCluster(base: BaseCluster) {
     return {
       title: c.titulo,
       description: c.descripcion,
+      // Palabras clave: familia + variantes + intención local ("… en Bogotá / Colombia / precio")
+      keywords: [
+        c.nombre.toLowerCase(), `${c.nombre.toLowerCase()} de acordeón`, ...c.palabras, ...c.chips.map((ch) => ch.toLowerCase()),
+        `${c.nombre.toLowerCase()} bogotá`, `${c.nombre.toLowerCase()} colombia`, `comprar ${c.nombre.toLowerCase()}`, `${c.nombre.toLowerCase()} precio`,
+      ],
       alternates: { canonical: url },
       openGraph: { type: 'website', url, title: c.titulo, description: c.descripcion, images: [img], siteName: 'VentaDeAcordeones.com', locale: 'es_CO' },
       twitter: { card: 'summary_large_image', title: c.titulo, description: c.descripcion, images: [img] },

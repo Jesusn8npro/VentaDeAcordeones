@@ -239,7 +239,7 @@ export default function PaginaTestimonios() {
         <div className="tm-reveal">
           <div className="tm-eyebrow">— El siguiente puedes ser tú</div>
           <h2 className="tm-display tm-h2">Diseña el tuyo <span className="tm-oro">o elige uno listo</span></h2>
-          <p>Personalizamos Hohner nuevos pieza por pieza en Valledupar y los enviamos afinados a cualquier ciudad del mundo. Escríbenos y te asesoramos con fotos reales.</p>
+          <p>Personalizamos Hohner nuevos pieza por pieza en nuestro taller de Bogotá y los enviamos afinados a cualquier ciudad del mundo. Escríbenos y te asesoramos con fotos reales.</p>
           <div className="tm-ctas">
             <Link href="/acordeones-personalizados" className="tm-btn tm-btn-oro"><Icono nombre="destello" tamaño={15} /> Acordeones personalizados</Link>
             <a href={wa('Hola, quiero asesoría para comprar mi acordeón')} target="_blank" rel="noopener noreferrer" className="tm-btn tm-btn-ghost"><Icono nombre="whatsapp" tamaño={15} /> Escribir por WhatsApp</a>

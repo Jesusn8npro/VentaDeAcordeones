@@ -33,7 +33,7 @@ const OPCIONES = [
   { icono: 'acc-parrilla',  titulo: 'Parrilla grabada',     texto: 'Corte láser con tu nombre, el de tu agrupación, escudo, virgen o bandera. Cromada, dorada o negra.' },
   { icono: 'acc-broche',    titulo: 'Botones y herrajes',   texto: 'Botones nacarados, negros, blancos o de colores. Herrajes, broches y correas a juego.' },
   { icono: 'estrella',      titulo: 'Corona y firma',       texto: 'Tu nombre, una fecha o una dedicatoria grabada en el cuerpo. La huella permanente del dueño.' },
-  { icono: 'herramienta',   titulo: 'Afinación a medida',   texto: 'Tonalidad (GCF, ADG, FBbEb…), tremolo y afinación calibrada por nuestros maestros en Valledupar.' },
+  { icono: 'herramienta',   titulo: 'Afinación a medida',   texto: 'Tonalidad (GCF, ADG, FBbEb…), tremolo y afinación calibrada por nuestros maestros formados en Valledupar.' },
 ]
 
 const PROCESO = [
@@ -46,7 +46,7 @@ const PROCESO = [
 const FAQ = [
   { p: '¿Cuánto cuesta un acordeón personalizado?', r: 'Depende del acordeón base (Corona II, Corona III, Rey Vallenato) y del nivel de personalización. Te cotizamos en minutos por WhatsApp con el diseño exacto que quieres.' },
   { p: '¿Cuánto tarda?', r: 'Entre 6 y 8 semanas desde la aprobación del diseño. Los trabajos sencillos (parrilla + fuelle) pueden estar en 2 semanas.' },
-  { p: '¿Puedo personalizar mi propio acordeón?', r: 'Sí. Recibimos tu acordeón en Valledupar, lo transformamos y lo devolvemos afinado. Muchos clientes renuevan su Hohner de años.' },
+  { p: '¿Puedo personalizar mi propio acordeón?', r: 'Sí. Recibimos tu acordeón en Bogotá (o por envío desde cualquier ciudad), lo transformamos y lo devolvemos afinado. Muchos clientes renuevan su Hohner de años.' },
   { p: '¿Envían fuera de Colombia?', r: 'Sí. Hemos entregado en Estados Unidos, México, Chile, Ecuador, Panamá, Canadá y España, con embalaje rígido y seguro de tránsito.' },
   { p: '¿Cómo se paga?', r: 'Abono para iniciar el trabajo y saldo contra entrega o antes del despacho. Pagos por PSE, Nequi, tarjeta o transferencia.' },
 ]
@@ -58,7 +58,7 @@ export default function AcordeonesPersonalizados() {
       <header className="ap-hero">
         <div className="ap-hero-inner">
           <div className="ap-hero-texto">
-            <div className="ap-eyebrow">— Edición a la medida · Taller Valledupar</div>
+            <div className="ap-eyebrow">— Edición a la medida · Taller en Bogotá · Maestros de Valledupar</div>
             <h1 className="ap-display ap-h1">Tu acordeón,<br /><span className="ap-oro">diseñado contigo</span></h1>
             <p className="ap-lead">
               Elige color, nácar, fuelle, parrilla grabada, botones y afinación. Nosotros lo hacemos realidad sobre un

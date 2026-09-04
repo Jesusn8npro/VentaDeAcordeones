@@ -282,7 +282,7 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
             <div className="pdp-trust-item">
               <MapPin size={20} />
               <div>
-                <strong>Hecho en Valledupar</strong>
+                <strong>Hecho en Colombia</strong>
                 <span>Taller propio</span>
               </div>
             </div>

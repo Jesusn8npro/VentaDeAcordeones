@@ -29,11 +29,11 @@ export const CATS: Cat[] = [
           { label:'Para niños',                 href:'/tienda/categoria/acordeones-para-ninos' },
           { label:'Nuevos',                     href:'/tienda/categoria/acordeones-nuevos' },
         ] },
-        { title:'Por tonalidad', items:[
-          { label:'GCF · Sol / Do / Fa',   href:'/tienda?busqueda=GCF' },
-          { label:'ADG · La / Re / Sol',   href:'/tienda?busqueda=ADG' },
-          { label:'FBbEb · Fa / Sib / Mib', href:'/tienda?busqueda=FBbEb' },
-          { label:'Do / Fa / Sib',         href:'/tienda?busqueda=Do%20Fa%20Sib' },
+        { title:'Tonalidades', items:[
+          { label:'GCF · 5 letras · de fábrica',   href:'/tienda?busqueda=GCF' },
+          { label:'ADG · de fábrica',   href:'/tienda?busqueda=ADG' },
+          { label:'FBbEb · por encargo', href:'/tienda?busqueda=FBbEb' },
+          { label:'Do/Fa/Sib · por encargo',         href:'/tienda?busqueda=Do%20Fa%20Sib' },
         ] },
         { title:'Servicios', items:[
           { label:'Personalizar mi acordeón', href: PERSONALIZADOS },

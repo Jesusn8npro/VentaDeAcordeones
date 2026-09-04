@@ -51,7 +51,7 @@ export default function PaginaCluster({ cluster: c, productos }: Props) {
               <ul className="cl-garantias">
                 <li><Icono nombre="camion" tamaño={14} /> Envío a toda Colombia</li>
                 <li><Icono nombre="escudo" tamaño={14} /> Garantía real</li>
-                <li><Icono nombre="herramienta" tamaño={14} /> Taller en Valledupar</li>
+                <li><Icono nombre="herramienta" tamaño={14} /> Taller en Bogotá · envíos al mundo</li>
               </ul>
             </div>
             <div className="cl-hero-visual">

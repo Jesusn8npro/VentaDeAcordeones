@@ -24,7 +24,7 @@ const DIAPOSITIVAS = [
   {
     hashtag: 'NuestroOficio',
     titulo: ['Acordeones', 'y todo para', 'tu música'],
-    sub: 'Guitarras, bajos, baterías y sonido. Los acordeones vallenatos son nuestra firma, afinados a mano en Valledupar.',
+    sub: 'Guitarras, bajos, baterías y sonido. Los acordeones vallenatos son nuestra firma, afinados a mano en nuestro taller de Bogotá.',
     cta1: { texto: 'Ver Acordeones', href: '/tienda' },
     cta2: { texto: 'Otros Instrumentos', tipo: 'wa' },
     tag: 'TIENDA OFICIAL · DESDE 1998',
@@ -60,7 +60,7 @@ const DIAPOSITIVAS = [
     hashtag: 'ReyVallenato',
     titulo: ['El acordeón', 'que habla', 'por ti'],
     acento: 2,
-    sub: 'Afinado a tu voz por nuestros maestros lutieres en Valledupar. Tradición vallenata, sonido único.',
+    sub: 'Afinado a tu voz en nuestro taller de Bogotá por maestros formados en Valledupar. Tradición vallenata, sonido único.',
     cta1: { texto: 'Catálogo Maestro', href: '/tienda' },
     cta2: { texto: 'Hablar con un Maestro', tipo: 'wa' },
     tag: 'TALLER VALLEDUPAR',

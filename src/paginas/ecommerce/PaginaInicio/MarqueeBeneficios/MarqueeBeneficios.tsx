@@ -3,7 +3,7 @@
 import Icono from '@/componentes/ui/Icono'
 
 const ITEMS = [
-  { icono: 'herramienta',  texto: 'Taller en Valledupar' },
+  { icono: 'herramienta',  texto: 'Taller en Bogotá · envíos al mundo' },
   { icono: 'globo',        texto: 'Envíos a 42 países' },
   { icono: 'estrella',     texto: 'Hohner Oficial' },
   { icono: 'cat-guitarra', texto: 'Guitarras Profesionales' },

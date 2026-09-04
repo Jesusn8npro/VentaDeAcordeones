@@ -6,7 +6,7 @@ const VALORES = [
   {
     n: '01', icono: 'herramienta' as const,
     titulo: 'Taller Propio',
-    desc: 'Cada acordeón pasa por las manos de nuestros maestros lutieres en Valledupar antes de salir.',
+    desc: 'Cada acordeón pasa por las manos de nuestros maestros lutieres en Bogotá, formados en Valledupar antes de salir.',
   },
   {
     n: '02', icono: 'globo' as const,
