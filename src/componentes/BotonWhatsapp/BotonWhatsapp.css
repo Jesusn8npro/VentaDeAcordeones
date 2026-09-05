@@ -270,3 +270,13 @@
     transform: scale(1) rotate(0deg);
   }
 }
+/* 2026-09: un solo flotante. Sin badge ni mensaje promocional; más pequeño en móvil y sin tapar los CTAs
+   (los drawers/modales van por encima: z-index 60 del header móvil y 1000 del carrito). */
+.boton-whatsapp { z-index: 45; }
+.boton-whatsapp.animacion-activa { animation: none; }
+.boton-whatsapp:hover { animation: none; transform: scale(1.08); }
+@media (max-width: 768px) {
+  .boton-whatsapp { left: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); width: 54px; height: 54px; }
+  .boton-whatsapp .icono-whatsapp svg { width: 24px; height: 24px; }
+  .ondas-whatsapp { display: none; }
+}

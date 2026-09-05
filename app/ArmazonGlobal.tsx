@@ -3,7 +3,8 @@
 import { Suspense } from 'react'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/contextos/ContextoAutenticacion'
-import ChatEnVivo from '@/componentes/chat/ChatEnVivo'
+// Un solo flotante de contacto (WhatsApp, abajo a la izquierda). El chat en vivo (burbuja naranja a la
+// derecha) se retiró: duplicaba el canal, tapaba CTAs en móvil y consumía conexión Realtime a Supabase.
 import BotonWhatsapp from '@/componentes/BotonWhatsapp/BotonWhatsapp'
 import NotificacionCarritoWrapper from '@/componentes/ui/NotificacionCarritoWrapper'
 import ErrorBoundary from '@/componentes/sistema/ErrorBoundary'
@@ -50,7 +51,6 @@ export default function ArmazonGlobal({ children }: { children: React.ReactNode 
   return (
     <div className="app">
       {!sinLayout && <Encabezado />}
-      {!sinFlotantes && <ChatEnVivo />}
       {!sinFlotantes && <BotonWhatsapp />}
       <ErrorBoundary>
         <Suspense fallback={<CargandoPagina />}>
