@@ -138,3 +138,14 @@
   .gestion-estadisticas { grid-template-columns: 1fr; }
   .gestion-contenido { padding: 1rem; }
 }
+
+/* Miniatura con todas las imágenes del producto: rota al pasar el mouse */
+.gestion-imagen { position: relative; width: 64px; height: 64px; flex-shrink: 0; border-radius: 10px; overflow: hidden; background: radial-gradient(circle at 50% 60%, rgba(255,195,0,.18), transparent 70%), var(--color-gris-100); border: 1px solid var(--color-borde); cursor: zoom-in; }
+.gestion-imagen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 4px; opacity: 0; transition: opacity .25s ease; }
+.gestion-imagen img.visible { opacity: 1; }
+.gestion-imagen-conteo { position: absolute; right: 3px; bottom: 3px; font-size: 10px; line-height: 1; padding: 3px 5px; border-radius: 999px; background: rgba(17,24,39,.8); color: #fff; font-weight: 600; }
+.gestion-imagen-puntos { position: absolute; left: 0; right: 0; bottom: 3px; display: flex; justify-content: center; gap: 3px; pointer-events: none; }
+.gestion-imagen-puntos i { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.55); }
+.gestion-imagen-puntos i.activo { background: #ffc300; }
+.gestion-miniatura-grande { position: fixed; z-index: 2000; width: 320px; height: 320px; border-radius: 16px; background: #fff; box-shadow: 0 24px 60px -20px rgba(0,0,0,.5); border: 1px solid var(--color-borde); padding: 12px; display: grid; place-items: center; pointer-events: none; }
+.gestion-miniatura-grande img { max-width: 100%; max-height: 100%; object-fit: contain; }

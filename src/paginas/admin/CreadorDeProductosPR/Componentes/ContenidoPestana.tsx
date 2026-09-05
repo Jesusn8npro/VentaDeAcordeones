@@ -91,36 +91,38 @@ const ContenidoPestana: React.FC<ContenidoPestanaProps> = ({
         />
       )
 
-    case 'vistaPrevia':
+    case 'vistaPrevia': {
+      // Vista previa REAL: la ficha pública del producto (/producto/<slug>) dentro de un iframe, con
+      // botón para abrirla en pestaña nueva. Antes era una tarjeta simulada que no reflejaba la tienda.
+      const slugPrevia = (datosProducto.slug || '').trim()
+      const urlPrevia = slugPrevia ? `/producto/${slugPrevia}` : ''
       return (
         <div className="contenido-pestana">
           <div className="seccion-informacion">
             <div className="icono-seccion">👁️</div>
             <h3>Vista Previa</h3>
-            <p>Revisa cómo se verá tu producto antes de publicarlo.</p>
+            <p>Así se ve la ficha del producto en la tienda, con los datos guardados.</p>
           </div>
-
-          <div className="zona-vista-previa">
-            <div className="icono-preview">🔍</div>
-            <h4>Vista Previa del Producto</h4>
-            <p>Aquí podrás ver una simulación de cómo se verá tu producto en la tienda</p>
-            <div className="placeholder-preview">
-              <div className="preview-card">
-                <h5>{datosProducto.nombre || 'Nombre del producto'}</h5>
-                <p>{datosProducto.descripcion || 'Descripción del producto'}</p>
-                <div className="preview-price">
-                  ${datosProducto.precio || '0'} COP
+          {urlPrevia ? (
+            <div className="vista-previa-real">
+              <div className="vista-previa-barra">
+                <span className="ruta">{urlPrevia}</span>
+                <div className="vista-previa-acciones">
+                  <button type="button" onClick={() => { const f = document.getElementById('iframe-vista-previa') as HTMLIFrameElement | null; if (f) f.src = urlPrevia + '?t=' + Date.now() }}>↻ Recargar</button>
+                  <a className="primario" href={urlPrevia} target="_blank" rel="noopener noreferrer">Abrir en pestaña nueva ↗</a>
                 </div>
-                {datosProducto.imagenes && datosProducto.imagenes.length > 0 && (
-                  <div className="preview-images">
-                    <p>Imágenes: {datosProducto.imagenes.length}</p>
-                  </div>
-                )}
               </div>
+              <iframe id="iframe-vista-previa" className="vista-previa-marco" src={urlPrevia} title={`Vista previa de ${datosProducto.nombre || 'producto'}`} loading="lazy" />
+              {modo === 'editar' && <p className="vista-previa-aviso" style={{ padding: 12 }}>Si acabas de editar, guarda (Ctrl+Enter) y pulsa Recargar para ver los cambios.</p>}
             </div>
-          </div>
+          ) : (
+            <div className="vista-previa-aviso">
+              <p>Guarda el producto (necesita un slug) para ver la ficha real aquí.</p>
+            </div>
+          )}
         </div>
       )
+    }
 
     default:
       return (

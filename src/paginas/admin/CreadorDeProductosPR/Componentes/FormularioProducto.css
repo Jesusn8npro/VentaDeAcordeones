@@ -54,6 +54,9 @@
 .campo input,
 .campo textarea,
 .campo select {
+  color: #1f2937;
+  background: #ffffff;
+  color-scheme: light;
   padding: 0.75rem;
   border: 1px solid #e1e5e9;
   border-radius: 4px;
@@ -450,3 +453,13 @@
     font-size: 12px;
   }
 }
+
+/* Vista previa real de la ficha (iframe) */
+.vista-previa-real { display: grid; gap: 12px; }
+.vista-previa-barra { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.vista-previa-barra .ruta { font-family: ui-monospace, monospace; font-size: 12px; color: #6b7280; word-break: break-all; }
+.vista-previa-acciones { display: flex; gap: 8px; }
+.vista-previa-acciones button, .vista-previa-acciones a { border: 1px solid #e1e5e9; background: #fff; color: #1f2937; border-radius: 8px; padding: 8px 12px; font-size: 13px; cursor: pointer; text-decoration: none; }
+.vista-previa-acciones .primario { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+.vista-previa-marco { width: 100%; height: min(78vh, 900px); border: 1px solid #e1e5e9; border-radius: 12px; background: #fff; }
+.vista-previa-aviso { border: 1px dashed #e1e5e9; border-radius: 12px; padding: 28px; text-align: center; color: #6b7280; }

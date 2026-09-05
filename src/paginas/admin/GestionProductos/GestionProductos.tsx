@@ -83,7 +83,7 @@ const GestionProductos = () => {
       ] = await Promise.all([
         clienteSupabase
           .from('productos')
-          .select('*', { count: 'exact' })
+          .select('*, producto_imagenes(imagen_principal, imagen_secundaria_1, imagen_secundaria_2, imagen_secundaria_3, imagen_secundaria_4)', { count: 'exact' })
           .order('creado_el', { ascending: false })
           .range(offset, offset + productosPorPagina - 1),
         clienteSupabase

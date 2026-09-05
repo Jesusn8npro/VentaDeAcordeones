@@ -2,7 +2,8 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Edit, Trash2, Eye, Package } from 'lucide-react'
+import { Edit, Trash2, Eye } from 'lucide-react'
+import MiniaturaProducto from './MiniaturaProducto'
 
 interface Props {
   producto: any
@@ -23,13 +24,7 @@ export default function FilaProducto({ producto, seleccionado, formatearPrecio, 
       </td>
       <td>
         <div className="gestion-producto">
-          <div className="gestion-imagen">
-            {producto.fotos_principales?.[0] ? (
-              <img src={producto.fotos_principales[0]} alt={producto.nombre} className="gestion-miniatura" />
-            ) : (
-              <div className="gestion-placeholder"><Package /></div>
-            )}
-          </div>
+          <MiniaturaProducto producto={producto} />
           <div className="gestion-detalles">
             <h4 className="gestion-nombre">{producto.nombre}</h4>
             <p className="gestion-id">ID: {producto.id}</p>

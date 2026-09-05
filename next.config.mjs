@@ -58,7 +58,8 @@ const nextConfig = {
       "font-src 'self' https://fonts.gstatic.com; " +
       "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co https://api.openai.com; " +
       // instagram.com en frame-src: los reels de @ventadeacordeones1 se abren en un iframe /embed al hacer clic.
-      "frame-src https://*.epayco.co https://checkout.epayco.co https://www.instagram.com; " +
+      // 'self' en frame-src: la pestaña "Vista previa" del admin muestra la ficha /producto/<slug> en un iframe.
+      "frame-src 'self' https://*.epayco.co https://checkout.epayco.co https://www.instagram.com; " +
       "manifest-src 'self'; object-src 'none'; base-uri 'self'; " +
       // frame-ancestors = equivalente moderno de X-Frame-Options: DENY (nadie puede embeber el sitio).
       "frame-ancestors 'none'; form-action 'self' https://*.epayco.co https://checkout.epayco.co; " +
