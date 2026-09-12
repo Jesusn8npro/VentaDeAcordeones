@@ -1,7 +1,25 @@
 # Puesta en producción — VentaDeAcordeones.com
 
 Todo lo que hay que hacer **fuera del código** para que la tienda quede publicada y cobrando.
-Orden recomendado: 1 → 2 → 3 → 4. Los pasos 1 y 2 son obligatorios antes de recibir el primer pago.
+Orden recomendado: 0 → 1 → 2 → 3 → 4. Los pasos 0, 1 y 2 son obligatorios antes de recibir el primer pago.
+
+---
+
+## 0. Desplegar en EasyPanel — obligatorio y es lo primero
+
+**El sitio publicado está varios meses por detrás del repositorio.** A fecha de hoy,
+`https://ventadeacordeones.com` sirve una versión anterior al relanzamiento comercial: se ve la
+pantalla "Estamos renovando tu tienda de acordeones" y el título viejo. Todos los cambios están
+subidos a GitHub, pero **EasyPanel no está desplegando solo**: hay que entrar y pulsar *Deploy*.
+
+Comprueba que funcionó: el título de la pestaña debe decir *"Acordeones Hohner en Colombia"*, no
+*"Acordeones y Accesorios en Colombia"*.
+
+Sobre la pantalla de mantenimiento: la variable que la activaba (`NEXT_PUBLIC_MODO_MANTENIMIENTO`)
+se quedó en `"true"` en el panel de EasyPanel, y ese valor gana al del repositorio porque las
+variables `NEXT_PUBLIC_` se fijan durante la compilación. Por eso el gate ahora lee
+**`NEXT_PUBLIC_MANTENIMIENTO_ACTIVO`**, un nombre que no existe en el panel: el valor antiguo ya
+no puede volver a cerrar la tienda. Puedes borrar la variable vieja del panel cuando quieras.
 
 ---
 
@@ -44,7 +62,7 @@ Comprueba que estas ya están (son las que mueven el dinero):
 - `EPAYCO_P_KEY` (o `EPAYCO_PRIVATE_KEY`) — sin ella no se valida ninguna firma.
 - `RESEND_API_KEY` — correos de confirmación.
 
-`nixpacks.toml` ya trae `NEXT_PUBLIC_MODO_MANTENIMIENTO = "false"`: al desplegar, el sitio
+`nixpacks.toml` ya trae `NEXT_PUBLIC_MANTENIMIENTO_ACTIVO = "false"`: al desplegar, el sitio
 queda abierto al público. Si quieres volver a cerrarlo, cámbialo a `"true"` y vuelve a desplegar.
 
 ---
@@ -99,8 +117,11 @@ La primera debe dar `200`, la segunda `404` (no `200`), y la tercera debe listar
 ## Qué quedó pendiente y depende de ti
 
 - **Precios**: revisar los productos importados de Miche y la cinta para fuelles ($60.000 es orientativo).
+- **Fechas del negocio**: la portada dice "oficio desde 1998" y la página de quiénes somos "tienda
+  online desde 2014". La franja de cifras anuncia 27 años de oficio, 3.400 instrumentos entregados
+  y 42 países atendidos. Dime cuáles son ciertos.
+- **Descuento automático**: el carrito rebaja un 10% en compras sobre $100.000. Ya aparece con su
+  nombre en el resumen, pero no se anuncia en ninguna parte del sitio. O se promociona, o se quita.
 - **Testimonios**: sustituir los textos genéricos por frases reales de clientes y poner el enlace
   real de Google Maps.
-- **Marcas con erratas en la base de datos**: PIONNER, PROPIPE, Hoffner.
-- **Dos productos** tienen imágenes que apuntan al WordPress viejo y no cargan.
 - **Un producto sin foto**: `acorde-n-hohner-corona-ii-gcf` (Corona II GCF).
