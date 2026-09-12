@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import CategoriasCliente from './CategoriasCliente'
 
 export const metadata: Metadata = {
-  title: 'Categorías — Admin · VentaDeAcordeones.com',
+  title: 'Categorías — Admin',
   robots: { index: false, follow: false },
 }
 

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import FeedMetaCliente from './FeedMetaCliente'
 
 export const metadata: Metadata = {
-  title: 'Feed Meta — Admin · VentaDeAcordeones.com',
+  title: 'Feed Meta — Admin',
   robots: { index: false, follow: false },
 }
 

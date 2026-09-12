@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import TableroTareasCliente from './TableroTareasCliente'
 
 export const metadata: Metadata = {
-  title: 'Tablero de tareas — Admin · VentaDeAcordeones.com',
+  title: 'Tablero de tareas — Admin',
   robots: { index: false, follow: false },
 }
 

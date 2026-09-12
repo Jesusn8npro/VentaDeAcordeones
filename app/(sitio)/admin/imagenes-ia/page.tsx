@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ImagenesIACliente from './ImagenesIACliente'
 
 export const metadata: Metadata = {
-  title: 'Imágenes IA — Admin · VentaDeAcordeones.com',
+  title: 'Imágenes IA — Admin',
   robots: { index: false, follow: false },
 }
 

@@ -65,7 +65,7 @@ export async function generateMetadata({
   // Aquí NO se lanza notFound(): sólo metadata noindex. El 404 real lo emite la página.
   if (!a) {
     return {
-      title: 'Artículo no encontrado — VentaDeAcordeones.com',
+      title: 'Artículo no encontrado',
       robots: { index: false, follow: true },
     }
   }

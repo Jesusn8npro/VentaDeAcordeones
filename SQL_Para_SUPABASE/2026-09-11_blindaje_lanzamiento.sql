@@ -260,6 +260,21 @@ select tablename as tabla, policyname as politica, cmd as operacion
    and tablename not in ('leadschat')
  order by tablename;
 
+-- c2) Políticas de Storage. OJO: este script solo reemplaza las políticas que crea él
+--     mismo (<bucket>_lectura_publica y <bucket>_escritura_admin). Si aquí aparece alguna
+--     OTRA política con cmd distinto de SELECT y condición abierta, viene del panel de
+--     Supabase y hay que borrarla a mano en Storage → Policies: mientras exista, cualquiera
+--     puede seguir subiendo archivos.
+select policyname as politica, cmd as operacion, roles, qual as condicion
+  from pg_policies
+ where schemaname = 'storage' and tablename = 'objects'
+ order by policyname;
+
+-- c3) Límites por bucket (deben quedar en 10 MB y solo imagen/vídeo)
+select id as bucket, public as lectura_publica, file_size_limit, allowed_mime_types
+  from storage.buckets
+ order by id;
+
 -- d) El trigger del rol está puesto
 select tgname as trigger, tgenabled as estado
   from pg_trigger

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import BlogCliente from './BlogCliente'
 
 export const metadata: Metadata = {
-  title: 'Blog — Admin · VentaDeAcordeones.com',
+  title: 'Blog — Admin',
   robots: { index: false, follow: false },
 }
 

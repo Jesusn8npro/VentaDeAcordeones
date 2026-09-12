@@ -34,12 +34,12 @@ export const cargarSdkEpayco = () => {
     const script = existente || document.createElement('script')
     const alCargar = () => {
       if (window.ePayco && window.ePayco.checkout) resolve(window.ePayco)
-      else reject(new Error('El sistema de pagos no respondio. Revisa tu conexion.'))
+      else reject(new Error('El sistema de pagos no respondió. Revisa tu conexión.'))
     }
     script.addEventListener('load', alCargar)
     script.addEventListener('error', () => {
       promesaSdk = null
-      reject(new Error('No se pudo cargar el sistema de pagos. Revisa tu conexion e intenta de nuevo.'))
+      reject(new Error('No se pudo cargar el sistema de pagos. Revisa tu conexión e intenta de nuevo.'))
     })
     if (!existente) {
       script.src = URL_SDK_EPAYCO
@@ -114,7 +114,7 @@ export const usarEpayco = () => {
       await cargarSdkEpayco();
 
       if (typeof window.ePayco === 'undefined' || typeof window.ePayco.checkout === 'undefined') {
-        throw new Error('No se pudo abrir el sistema de pagos. Revisa tu conexion e intenta nuevamente.');
+        throw new Error('No se pudo abrir el sistema de pagos. Revisa tu conexión e intenta nuevamente.');
       }
 
       // Verificar que configure esté disponible

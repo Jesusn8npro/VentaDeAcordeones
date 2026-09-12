@@ -240,7 +240,7 @@ Deno.serve(async (req: Request) => {
     // otra persona y sobrescribir sus datos de contacto en la tabla leadschat.
     if (!ES_UUID.test(String(chat_id))) {
       return new Response(
-        JSON.stringify({ error: "chat_id no valido" }),
+        JSON.stringify({ error: "chat_id no válido" }),
         { status: 400, headers: { ...CORS, "Content-Type": "application/json" } },
       )
     }
@@ -262,7 +262,7 @@ Deno.serve(async (req: Request) => {
 
     if (!dentroDelLimite(String(chat_id))) {
       return new Response(
-        JSON.stringify({ error: "Demasiados mensajes seguidos. Espera unos minutos o escribenos por WhatsApp." }),
+        JSON.stringify({ error: "Demasiados mensajes seguidos. Espera unos minutos o escríbenos por WhatsApp." }),
         { status: 429, headers: { ...CORS, "Content-Type": "application/json" } },
       )
     }

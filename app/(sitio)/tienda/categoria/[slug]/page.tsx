@@ -56,12 +56,14 @@ export async function generateMetadata({
   // Aquí NO se lanza notFound(): sólo metadata noindex. El 404 real lo emite la página.
   if (!c) {
     return {
-      title: 'Categoría no encontrada — VentaDeAcordeones.com',
+      title: 'Categoría no encontrada',
       robots: { index: false, follow: true },
     }
   }
 
-  const titulo = `${c.nombre} — VentaDeAcordeones.com`
+  // El layout ya añade "| VentaDeAcordeones.com" con title.template: aquí solo va el nombre
+  // de la categoría, con una cola que aporta keyword sin repetir la marca.
+  const titulo = `${c.nombre} en Colombia`
   const descripcion =
     recortar(c.descripcion) ||
     `Explora nuestra selección de ${c.nombre.toLowerCase()}. Acordeones y accesorios en Colombia con envíos a todo el país.`

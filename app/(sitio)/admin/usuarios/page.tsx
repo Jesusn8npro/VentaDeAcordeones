@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import UsuariosCliente from './UsuariosCliente'
 
 export const metadata: Metadata = {
-  title: 'Usuarios — Admin · VentaDeAcordeones.com',
+  title: 'Usuarios — Admin',
   robots: { index: false, follow: false },
 }
 

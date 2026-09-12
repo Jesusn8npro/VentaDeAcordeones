@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import ChatsCliente from './ChatsCliente'
 
 export const metadata: Metadata = {
-  title: 'Chats — Admin · VentaDeAcordeones.com',
+  title: 'Chats — Admin',
   robots: { index: false, follow: false },
 }
 

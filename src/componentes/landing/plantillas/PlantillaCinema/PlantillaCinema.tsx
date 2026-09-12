@@ -15,7 +15,9 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
   const [imgActiva, setImgActiva] = useState(0)
   const [qty, setQty] = useState(1)
   const [agregado, setAgregado] = useState(false)
-  const [purchaseMode, setPurchaseMode] = useState<'once' | 'subscribe'>('once')
+  // Antes había un modo "CUOTAS / MES · -15% pago anual" que no existe como oferta real y que,
+  // además, metía el producto al carrito a `precio * 0.85`: cualquiera podía pagar un 15% menos
+  // con un clic. Se retiró el modo y el precio mostrado es siempre el de catálogo.
   const [accsAbiertos, setAccsAbiertos] = useState<Record<string, boolean>>({ specs: true })
 
   if (!producto) return null
@@ -24,9 +26,9 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
   const marca: string = producto.marca || ''
   const precioBase: number = producto.precio || 0
   const precioOriginal: number | null = producto.precio_original || null
-  const subscribePrice = Math.round(precioBase * 0.85 / 1000) * 1000
-  const displayPrice = purchaseMode === 'subscribe' ? subscribePrice : precioBase
-  const cuotaMensual = Math.round(subscribePrice / 12 / 1000) * 1000
+  const displayPrice = precioBase
+  const ahorro = precioOriginal && precioOriginal > precioBase ? precioOriginal - precioBase : 0
+  const descuentoPct = ahorro > 0 ? Math.round((ahorro / (precioOriginal as number)) * 100) : 0
 
   const descripcion: string = (() => {
     const d = producto.descripcion
@@ -126,7 +128,9 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
       title: 'Envíos y aduanas',
       content: (
         <div className="pdp-acc-body">
-          <p><strong>Colombia:</strong> 3–5 días hábiles. {enviGratis ? 'Envío gratis incluido.' : 'Envío gratis en compras superiores a $1.500.000.'} Aseguramos el 100% del valor declarado.</p>
+          {/* La cifra sale de la regla real del carrito (carritoReducer.ts: envío gratis desde
+              $50.000). Antes decía $1.500.000, que no corresponde a nada del código. */}
+          <p><strong>Colombia:</strong> 3–5 días hábiles. {enviGratis ? 'Envío gratis incluido.' : 'Envío gratis en compras desde $50.000.'} Aseguramos el 100% del valor declarado.</p>
           <p><strong>Latinoamérica y EE.UU.:</strong> 7–12 días hábiles. Despacho con DHL/FedEx y seguimiento en línea.</p>
           <p><strong>Europa y resto del mundo:</strong> 10–15 días. Incluye declaración aduanera y factura comercial bilingüe.</p>
           <p>Aduanas e impuestos del país destino corren por cuenta del comprador. Cotizamos previamente sin compromiso.</p>
@@ -139,7 +143,9 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
       content: (
         <div className="pdp-acc-body">
           <p><strong>{garantiaMeses > 0 ? `${garantiaMeses} meses de garantía` : 'Garantía incluida'}</strong> contra defectos de fabricación y problemas en uso normal.</p>
-          <p><strong>30 días de devolución</strong> sin preguntas si el producto no es lo que esperabas. Te reembolsamos el 100% incluyendo el envío.</p>
+          {/* Antes prometía "30 días sin preguntas, reembolso del 100% incluyendo el envío", que
+              contradice la política publicada en /cambios-devoluciones. Ahora se cita esa política. */}
+          <p><strong>Derecho de retracto: 5 días hábiles</strong> desde la entrega (art. 47, Ley 1480 de 2011). El producto debe volver sin uso y con su empaque original; el transporte de la devolución corre por cuenta del comprador y el reembolso se hace en máximo 30 días calendario. Los acordeones personalizados quedan excluidos por fabricarse a tu medida.</p>
           <p><strong>Soporte técnico</strong> disponible por WhatsApp y correo electrónico.</p>
         </div>
       ),
@@ -197,7 +203,9 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
             ) : (
               <div className="pdp-main-fallback"><span>SIN IMAGEN</span></div>
             )}
-            <span className="pdp-badge">★ Bestseller · {marca || 'VDA'}</span>
+            {/* Antes cada ficha se autoproclamaba "Bestseller". Ahora la insignia solo dice la
+                marca, que es un dato de la base. */}
+            <span className="pdp-badge">★ {marca || 'Venta de Acordeones'}</span>
             <button className="pdp-zoom" aria-label="Zoom"><Search size={16} /></button>
           </div>
         </div>
@@ -225,7 +233,7 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
                 /* Sin ventas registradas se muestra un dato cierto y util: hay existencias. */
                 <div className="pdp-trust-meta">
                   <span className="trust-dot"></span>
-                  <strong>Disponible</strong> · envio a toda Colombia
+                  <strong>Disponible</strong> · envío a toda Colombia
                 </div>
               ) : null}
             </div>
@@ -233,33 +241,34 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
 
           {descripcion && <p className="pdp-desc">{descripcion}</p>}
 
-          {/* Purchase mode */}
+          {/* Precio. Dos tarjetas informativas, no selectores: la segunda muestra la rebaja real
+              cuando el producto tiene precio_original, y si no, la regla de envío del carrito. */}
           <div className="pdp-pricing">
-            <button
-              className={`pdp-mode ${purchaseMode === 'subscribe' ? 'active' : ''}`}
-              onClick={() => setPurchaseMode('subscribe')}
-            >
-              {purchaseMode === 'subscribe' && (
-                <span className="pdp-mode-pop">MÁS POPULAR · -15%</span>
-              )}
-              <div className="pdp-mode-label">CUOTAS / MES</div>
-              <div className="pdp-mode-price">{fmtCOP(cuotaMensual)}</div>
-              <div className="pdp-mode-sub">12 cuotas sin interés · -15% pago anual</div>
-            </button>
-            <button
-              className={`pdp-mode ${purchaseMode === 'once' ? 'active' : ''}`}
-              onClick={() => setPurchaseMode('once')}
-            >
-              <div className="pdp-mode-label">PAGO ÚNICO</div>
+            <div className="pdp-mode active">
+              <div className="pdp-mode-label">PRECIO</div>
               <div className="pdp-mode-price">{fmtCOP(precioBase)}</div>
-              <div className="pdp-mode-sub">Entrega inmediata</div>
-            </button>
+              <div className="pdp-mode-sub">Pago único · entrega inmediata</div>
+            </div>
+            {ahorro > 0 ? (
+              <div className="pdp-mode">
+                <span className="pdp-mode-pop">-{descuentoPct}%</span>
+                <div className="pdp-mode-label">ANTES</div>
+                <div className="pdp-mode-price"><s>{fmtCOP(precioOriginal as number)}</s></div>
+                <div className="pdp-mode-sub">Ahorras {fmtCOP(ahorro)}</div>
+              </div>
+            ) : (
+              <div className="pdp-mode">
+                <div className="pdp-mode-label">ENVÍO</div>
+                <div className="pdp-mode-price">Gratis</div>
+                <div className="pdp-mode-sub">En compras desde $50.000</div>
+              </div>
+            )}
           </div>
 
           {/* Perks */}
           <ul className="pdp-perks">
-            <li><Check size={14} /> {enviGratis ? 'Envío gratis a toda Colombia · 3-5 días hábiles' : 'Envío gratis en compras +$1.500.000'}</li>
-            <li><Check size={14} /> Cancelación sin penalidad · 30 días</li>
+            <li><Check size={14} /> {enviGratis ? 'Envío gratis a toda Colombia · 3-5 días hábiles' : 'Envío gratis en compras desde $50.000'}</li>
+            <li><Check size={14} /> Derecho de retracto · 5 días hábiles</li>
             <li><Check size={14} /> Afinación al recibo incluida sin costo</li>
             {garantiaMeses > 0 ? (
               <li><Check size={14} /> Garantía de {garantiaMeses} meses incluida</li>
@@ -293,7 +302,7 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
               <Truck size={20} />
               <div>
                 <strong>Envío Gratis</strong>
-                <span>Compras +$1.500.000</span>
+                <span>Compras desde $50.000</span>
               </div>
             </div>
             <div className="pdp-trust-item">
@@ -359,42 +368,26 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
           </div>
         </div>
 
-        <div className="pdp-tst-grid">
-          {reseñasData.length > 0 ? reseñasData.map((r: any, i: number) => (
-            <div key={i} className="pdp-tst">
-              <div className="pdp-tst-stars">{'★'.repeat(r.calificacion || r.rating || 5)}</div>
-              <p className="pdp-tst-text">"{r.comentario || r.texto || r.comment || ''}"</p>
-              <div className="pdp-tst-person">
-                <div className="pdp-tst-avatar"><span>{(r.nombre || r.name || 'U').charAt(0).toUpperCase()}</span></div>
-                <div>
-                  <div className="pdp-tst-name">{r.nombre || r.name || 'Cliente'}</div>
-                  <div className="pdp-tst-loc">{r.ciudad || r.location || 'Colombia'}</div>
+        {/* Solo reseñas reales. Antes, si no llegaba ninguna, se pintaban tres testimonios
+            escritos a mano ("Camilo R. · Medellín", "Yulissa M. · Miami"…) firmados por personas
+            que no existen. Sin reseñas la rejilla simplemente no se renderiza. */}
+        {reseñasData.length > 0 && (
+          <div className="pdp-tst-grid">
+            {reseñasData.map((r: any, i: number) => (
+              <div key={i} className="pdp-tst">
+                <div className="pdp-tst-stars">{'★'.repeat(r.calificacion || r.rating || 5)}</div>
+                <p className="pdp-tst-text">"{r.comentario || r.texto || r.comment || ''}"</p>
+                <div className="pdp-tst-person">
+                  <div className="pdp-tst-avatar"><span>{(r.nombre || r.name || 'U').charAt(0).toUpperCase()}</span></div>
+                  <div>
+                    <div className="pdp-tst-name">{r.nombre || r.name || 'Cliente'}</div>
+                    <div className="pdp-tst-loc">{r.ciudad || r.location || 'Colombia'}</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          )) : [
-            { i: 'CR', name: 'Camilo R.', loc: 'Medellín, COL', text: 'Calidad impresionante. Llegó perfectamente afinado y empacado. El estuche es robusto y la correa de cuero un detalle hermoso. Cinco estrellas.', stars: 5 },
-            { i: 'YM', name: 'Yulissa M.', loc: 'Miami, USA', text: 'Pedí desde Miami y en 8 días estaba en casa. Aduanas sin problemas, todo declarado correctamente. El sonido es de otro nivel.', stars: 5 },
-            { i: 'LM', name: 'Luis E. M.', loc: 'Valledupar, COL', text: 'Conozco a estos maestros desde hace años. El acordeón vino con afinación personalizada para mi voz, tal como pedí.', stars: 5 },
-          ].map((r, i) => (
-            <div key={i} className="pdp-tst">
-              <div className="pdp-tst-stars">{'★'.repeat(r.stars)}</div>
-              <p className="pdp-tst-text">"{r.text}"</p>
-              <div className="pdp-tst-person">
-                <div className="pdp-tst-avatar"><span>{r.i}</span></div>
-                <div>
-                  <div className="pdp-tst-name">{r.name}</div>
-                  <div className="pdp-tst-loc">{r.loc}</div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="pdp-rev-actions">
-          <button className="pdp-btn-ghost">Ver todas las reseñas</button>
-          <button className="pdp-btn-primary">Escribir reseña</button>
-        </div>
+            ))}
+          </div>
+        )}
       </section>
       )}
     </div>

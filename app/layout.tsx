@@ -69,21 +69,21 @@ const jsonLdSitio = {
       },
       image: 'https://ventadeacordeones.com/images/og/portada.jpg',
       description:
-        'Venta de acordeones Hohner, acordeones personalizados, accesorios, audio y taller de reparacion de acordeones en Bogota. Envios a toda Colombia y al mundo.',
+        'Venta de acordeones Hohner, acordeones personalizados, accesorios, audio y taller de reparación de acordeones en Bogotá. Envíos a toda Colombia y al mundo.',
       telephone: '+573144865310',
       email: 'acordeon91@gmail.com',
       priceRange: '$$-$$$',
       currenciesAccepted: 'COP',
-      paymentAccepted: 'Tarjeta de credito, PSE, efectivo, contra entrega',
+      paymentAccepted: 'Tarjeta de crédito, PSE, efectivo, contra entrega',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Bogota',
+        addressLocality: 'Bogotá',
         addressRegion: 'Cundinamarca',
         addressCountry: 'CO',
       },
       areaServed: [
         { '@type': 'Country', name: 'Colombia' },
-        { '@type': 'Place', name: 'Envios internacionales' },
+        { '@type': 'Place', name: 'Envíos internacionales' },
       ],
       openingHoursSpecification: [
         {

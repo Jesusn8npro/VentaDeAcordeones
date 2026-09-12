@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import VideosCliente from './VideosCliente'
 
 export const metadata: Metadata = {
-  title: 'Videos IA — Admin · VentaDeAcordeones.com',
+  title: 'Videos IA — Admin',
   robots: { index: false, follow: false },
 }
 
