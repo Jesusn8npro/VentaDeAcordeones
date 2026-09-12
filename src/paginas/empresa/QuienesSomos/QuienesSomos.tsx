@@ -17,9 +17,12 @@ export default function QuienesSomos() {
   ]
 
   const stats = [
+    // Etiquetas precisas: la portada anuncia "27+ años de oficio" y aquí salía
+    // "10+ años de experiencia". No se contradicen si cada una dice a qué se refiere,
+    // el oficio por un lado y la tienda online (2014) por otro.
     { label: 'Acordeones vendidos', value: '500+' },
-    { label: 'Años de experiencia', value: '10+' },
-    { label: 'Satisfacción garantizada', value: '100%' },
+    { label: 'Años vendiendo online', value: '10+' },
+    { label: 'Garantía en acordeones nuevos', value: '6 meses' },
     { label: 'Envíos a toda Colombia', value: '✓' },
   ]
 
