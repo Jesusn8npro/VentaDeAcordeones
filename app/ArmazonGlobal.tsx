@@ -19,11 +19,16 @@ const RUTAS_SIN_FLOTANTES = ['/landing/', '/landingdelujo', '/admin', '/inicio-3
 const RUTAS_SIN_WRAP      = ['/landing/', '/landingdelujo', '/admin', '/acordeones-personalizados', '/inicio-3d', '/mantenimiento']
 
 // ── MODO MANTENIMIENTO ───────────────────────────────────────────────────────
-// NEXT_PUBLIC_MODO_MANTENIMIENTO = 'true'  → el público ve "Estamos actualizando"
-//                                            y SOLO el admin logueado ve el sitio.
-// NEXT_PUBLIC_MODO_MANTENIMIENTO = 'false' → sitio 100% abierto para todos.
-// (Es NEXT_PUBLIC → se fija en el BUILD; para cambiarlo hay que re-desplegar.)
-const MODO_MANTENIMIENTO = process.env.NEXT_PUBLIC_MODO_MANTENIMIENTO === 'true'
+// NEXT_PUBLIC_MANTENIMIENTO_ACTIVO = 'true' → el público ve "Estamos actualizando"
+//                                             y SOLO el admin logueado ve el sitio.
+// Cualquier otro valor (o sin definir) → tienda abierta.
+//
+// Se cambió el nombre a propósito: la variable anterior (NEXT_PUBLIC_MODO_MANTENIMIENTO)
+// quedó en 'true' en el panel de despliegue y mantenía la tienda cerrada aunque el
+// repositorio dijera lo contrario. Con un nombre nuevo, el valor viejo ya no puede
+// volver a cerrar la tienda por descuido. Es NEXT_PUBLIC: se fija en el BUILD, así que
+// para activarlo o desactivarlo hay que volver a desplegar.
+const MODO_MANTENIMIENTO = process.env.NEXT_PUBLIC_MANTENIMIENTO_ACTIVO === 'true'
 // Rutas que el público SÍ puede ver aunque haya mantenimiento (para poder loguearte).
 const RUTAS_LIBRES_MANT = ['/login', '/mantenimiento', '/restablecer-contrasena']
 

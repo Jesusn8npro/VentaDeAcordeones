@@ -148,32 +148,25 @@ const EncabezadoAdmin = () => {
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M8.33333 15.8333C8.33333 16.7538 9.07952 17.5 10 17.5C10.9205 17.5 11.6667 16.7538 11.6667 15.8333M15 6.66667C15 5.34058 14.4732 4.06881 13.5355 3.13115C12.5979 2.19348 11.3261 1.66667 10 1.66667C8.67392 1.66667 7.40215 2.19348 6.46447 3.13115C5.52678 4.06881 5 5.34058 5 6.66667C5 12.5 2.5 14.1667 2.5 14.1667H17.5C17.5 14.1667 15 12.5 15 6.66667Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                <span className="encabezado-insignia-notificacion">3</span>
+                {/* El "3" estaba escrito a mano en el código: siempre marcaba tres avisos
+                    nuevos aunque no hubiera ninguno. Sin panel de notificaciones real, no se
+                    pinta ninguna insignia. */}
               </button>
 
               {notificacionesAbiertas && (
                 <div className="encabezado-desplegable">
                   <div className="encabezado-desplegable-encabezado">
                     <h3>Notificaciones</h3>
-                    <span className="encabezado-contador-notificaciones">3 nuevas</span>
                   </div>
                   <div className="encabezado-desplegable-contenido">
+                    {/* Antes había tres avisos de ejemplo ("Nuevo pedido recibido", "Usuario
+                        registrado", "Producto agotado") que no venían de ninguna consulta: se
+                        mostraban siempre, con las mismas horas. Mejor un vacío honesto que
+                        avisos que nunca cambian. */}
                     <div className="encabezado-item-notificacion">
                       <div className="encabezado-contenido-notificacion">
-                        <p>Nuevo pedido recibido</p>
-                        <span>Hace 5 minutos</span>
-                      </div>
-                    </div>
-                    <div className="encabezado-item-notificacion">
-                      <div className="encabezado-contenido-notificacion">
-                        <p>Usuario registrado</p>
-                        <span>Hace 1 hora</span>
-                      </div>
-                    </div>
-                    <div className="encabezado-item-notificacion">
-                      <div className="encabezado-contenido-notificacion">
-                        <p>Producto agotado</p>
-                        <span>Hace 2 horas</span>
+                        <p>No hay avisos nuevos</p>
+                        <span>Los pedidos se ven en la sección Pedidos</span>
                       </div>
                     </div>
                   </div>

@@ -742,25 +742,6 @@
   text-transform: uppercase;
   margin-top: 6px;
 }
-.flash-countdown { display: flex; align-items: center; gap: 8px; }
-.flash-cd-box {
-  width: 56px; height: 56px;
-  display: grid;
-  place-items: center;
-  background: var(--vda-fondo);
-  border: 1px solid var(--vda-oro);
-  font-family: var(--vda-fuente-display);
-  font-size: 26px;
-  color: var(--vda-oro);
-  letter-spacing: 0.05em;
-  box-shadow: inset 0 -10px 20px -10px rgba(255,195,0,0.25);
-}
-.flash-cd-sep {
-  font-family: var(--vda-fuente-display);
-  font-size: 30px;
-  color: var(--vda-oro);
-  line-height: 1;
-}
 .flash-nav { display: flex; gap: 8px; margin-left: auto; }
 .flash-nav button {
   width: 44px; height: 44px;
@@ -1753,8 +1734,6 @@
   .section-title { font-size: clamp(28px, 8vw, 40px); }
   .section-head { margin-bottom: 24px; }
   .flash { padding: 22px 16px 26px; }
-  .flash-cd-box { width: 38px; height: 38px; font-size: 16px; }
-  .flash-cd-sep { font-size: 22px; }
   .flash-name { font-size: 28px; }
   .flash-bolt { width: 44px; height: 44px; }
   .today-tabs { padding: 3px; }

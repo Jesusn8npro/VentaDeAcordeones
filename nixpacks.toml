@@ -20,10 +20,13 @@ NEXT_PUBLIC_EPAYCO_URL_RESPONSE = "https://ventadeacordeones.com/respuesta-epayc
 # nunca llegó a ejecutarse desde el servidor de ePayco → ningún pago se confirmaba.
 NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION = "https://ventadeacordeones.com/api/epayco/confirmar"
 
-# MODO MANTENIMIENTO (gate por login). "true" = el publico ve "Estamos
-# actualizando" y SOLO el admin logueado ve el sitio real. Para lanzar al
-# publico: cambiar a "false" y re-desplegar (es NEXT_PUBLIC → se fija en build).
-NEXT_PUBLIC_MODO_MANTENIMIENTO = "false"
+# MODO MANTENIMIENTO (gate por login). "true" = el publico ve "Estamos actualizando"
+# y SOLO el admin logueado ve la tienda. Cualquier otro valor = tienda abierta.
+#
+# La variable se llama distinto desde el 2026-09-11: NEXT_PUBLIC_MODO_MANTENIMIENTO se
+# quedo en "true" en el panel de EasyPanel y mantenia la tienda cerrada aunque aqui
+# dijera "false". Si la vieja sigue definida en el panel, ya no hace nada.
+NEXT_PUBLIC_MANTENIMIENTO_ACTIVO = "false"
 
 # nixpkgsArchive fija una revisión con nodejs_22 (evita "undefined variable 'nodejs_22'").
 # vips/pkg-config: necesarios si se reactiva la optimización de imágenes de Next.
