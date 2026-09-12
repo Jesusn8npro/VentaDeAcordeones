@@ -50,7 +50,29 @@ const PaginaRespuestaEpayco = () => {
         const estado = x_response || searchParams.get('estado')
         const respuesta = x_response_reason_text || searchParams.get('respuesta')
 
+        // ePayco no siempre devuelve sus parametros en la URL de retorno (depende del medio
+        // de pago y del checkout). En ese caso usamos nuestro propio numero de pedido, que
+        // viaja en `ref`, y le preguntamos al servidor como quedo: asi el cliente siempre ve
+        // el estado real de su compra en vez de "no se encontraron datos".
         if (!ref_payco) {
+          const numeroPedido = searchParams.get('ref')
+          if (numeroPedido) {
+            try {
+              const r = await fetch(`/api/pedidos/estado?ref=${encodeURIComponent(numeroPedido)}`)
+              if (r.ok) {
+                const pedido = await r.json()
+                setDatosTransaccion({
+                  ref_payco: pedido.numero_pedido,
+                  estado: pedido.estado === 'pagado' ? 'Aceptada' : 'Pendiente',
+                  cod_respuesta: pedido.estado === 'pagado' ? '1' : '3',
+                  valor: pedido.total,
+                  moneda: 'COP',
+                  numero_pedido: pedido.numero_pedido,
+                  productos: pedido.productos,
+                })
+              }
+            } catch (_) { /* se muestra el estado neutro de abajo */ }
+          }
           setCargando(false)
           return
         }

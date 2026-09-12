@@ -64,6 +64,10 @@ const texto = (v: unknown, max: number): string =>
 
 const emailValido = (v: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)
 
+// El id de usuario llega del navegador: si no tiene forma de UUID se ignora, para que
+// el pedido quede como compra de invitado en vez de fallar el insert con basura dentro.
+const ES_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 function generarNumeroPedido(): string {
   return `VDA-${Date.now()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`
 }
@@ -193,7 +197,8 @@ export async function POST(req: Request) {
     let descuentoCupon = 0
     let cuponCodigo: string | null = null
     const codigoPedido = texto(body.cupon, 40).toUpperCase()
-    const usuarioId = texto(body.usuario_id, 64) || null
+    const usuarioIdCrudo = texto(body.usuario_id, 64)
+    const usuarioId = ES_UUID.test(usuarioIdCrudo) ? usuarioIdCrudo : null
 
     if (codigoPedido) {
       const { data: resultado, error: errorCupon } = await supabase.rpc('validar_cupon', {
