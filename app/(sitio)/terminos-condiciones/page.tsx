@@ -6,14 +6,14 @@ const SITIO = 'https://ventadeacordeones.com'
 const canonical = `${SITIO}/terminos-condiciones`
 
 export const metadata: Metadata = {
-  title: 'Términos y Condiciones — VentaDeAcordeones.com',
+  title: 'Términos y Condiciones de Compra',
   description:
     'Términos y condiciones de uso de VentaDeAcordeones.com: condiciones de compra, pagos, envíos y responsabilidades.',
   alternates: { canonical },
   openGraph: {
     type: 'website',
     url: canonical,
-    title: 'Términos y Condiciones — VentaDeAcordeones.com',
+    title: 'Términos y Condiciones de Compra',
     description:
       'Términos y condiciones de uso de VentaDeAcordeones.com: condiciones de compra, pagos, envíos y responsabilidades.',
     siteName: 'VentaDeAcordeones.com',

@@ -152,55 +152,43 @@ const ModalContraEntrega = ({
         usuarioId = resultadoRegistro.data.user.id
       }
 
-      const precioConDescuento = precioUnitario * (1 - (ofertaSeleccionada?.descuento || 0) / 100)
-      const subtotal = precioConDescuento * (ofertaSeleccionada?.cantidad || 1)
-      const upsellTotal = agregarUpsell ? PRECIO_UPSELL : 0
-      const total = subtotal + upsellTotal
       const nombreString = asegurarString(form.nombre)
       const apellidoString = asegurarString(form.apellido)
 
-      const payload = {
-        usuario_id: usuarioId,
-        numero_pedido: `COD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        nombre_cliente: `${nombreString} ${apellidoString}`.trim(),
-        email_cliente: form.email,
-        telefono_cliente: asegurarString(form.telefono),
-        direccion_envio: { direccion: form.direccion, apto: form.apto, barrio: form.barrio, ciudad: form.ciudad, departamento: form.departamento },
-        productos: [{
-          id: producto.id,
-          nombre: producto.nombre,
-          cantidad: ofertaSeleccionada?.cantidad || 1,
-          precio_unitario: precioUnitario,
-          descuento_porcentaje: ofertaSeleccionada?.descuento || 0,
-          precio_con_descuento: precioConDescuento,
-          oferta: { id: ofertaSeleccionada?.id, titulo: ofertaSeleccionada?.titulo, cantidad: ofertaSeleccionada?.cantidad, descuento: ofertaSeleccionada?.descuento },
-          upsell_agregado: agregarUpsell,
-          upsell_precio: agregarUpsell ? PRECIO_UPSELL : 0
-        }],
-        subtotal,
-        descuento_aplicado: (precioUnitario * (ofertaSeleccionada?.cantidad || 1)) - subtotal,
-        costo_envio: 0,
-        total,
-        estado: 'pendiente',
-        metodo_pago: 'contra_entrega'
-      }
+      // El pedido lo crea el SERVIDOR (app/api/pedidos/crear): precio, descuento por
+      // volumen y extra salen de la base de datos. Antes este modal insertaba
+      // directamente en `pedidos` con el total calculado en el navegador.
+      const respuesta = await fetch('/api/pedidos/crear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          metodo_pago: 'contra_entrega',
+          usuario_id: usuarioId,
+          items: [{ producto_id: producto.id, cantidad: ofertaSeleccionada?.cantidad || 1 }],
+          upsell: agregarUpsell === true,
+          cliente: {
+            nombre: nombreString,
+            apellido: apellidoString,
+            email: form.email,
+            telefono: asegurarString(form.telefono),
+            direccion: [asegurarString(form.direccion), asegurarString(form.apto), asegurarString(form.barrio)].filter(Boolean).join(', '),
+            ciudad: asegurarString(form.ciudad),
+            departamento: asegurarString(form.departamento),
+          },
+        }),
+      })
 
-      const { data, error } = await clienteSupabase
-        .from('pedidos')
-        .insert([payload])
-        .select()
-
-      if (error) {
-        // Error al guardar pedido
-        setErrores({ general: 'Error al procesar el pedido' })
+      const data = await respuesta.json().catch(() => ({}))
+      if (!respuesta.ok) {
+        setErrores({ general: data?.error || 'Error al procesar el pedido' })
         return
       }
 
       // Sincronizar datos del pedido con la tabla usuarios
       await sincronizarDatosUsuario(form, usuarioId)
 
-      setCompraConfirmada(data[0])
-      if (onConfirmar) onConfirmar(data[0])
+      setCompraConfirmada(data)
+      if (onConfirmar) onConfirmar(data)
 
     } catch (error) {
       // Error en manejarConfirmar

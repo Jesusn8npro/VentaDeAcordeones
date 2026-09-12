@@ -56,13 +56,15 @@ const nextConfig = {
       // decodificador Draco levanta un Worker desde blob: (landing 3D /landingdelujo).
       "worker-src 'self' blob:; " +
       "font-src 'self' https://fonts.gstatic.com; " +
-      "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co https://api.openai.com; " +
+      "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co; " +
       // instagram.com en frame-src: los reels de @ventadeacordeones1 se abren en un iframe /embed al hacer clic.
       // 'self' en frame-src: la pestaña "Vista previa" del admin muestra la ficha /producto/<slug> en un iframe.
       "frame-src 'self' https://*.epayco.co https://checkout.epayco.co https://www.instagram.com; " +
       "manifest-src 'self'; object-src 'none'; base-uri 'self'; " +
-      // frame-ancestors = equivalente moderno de X-Frame-Options: DENY (nadie puede embeber el sitio).
-      "frame-ancestors 'none'; form-action 'self' https://*.epayco.co https://checkout.epayco.co; " +
+      // frame-ancestors 'self': nadie de FUERA puede embeber el sitio, pero la pestaña
+      // "Vista previa" del admin sí puede mostrar /producto/<slug> en un iframe propio
+      // (con 'none' el navegador la bloqueaba aunque frame-src lo permitiera).
+      "frame-ancestors 'self'; form-action 'self' https://*.epayco.co https://checkout.epayco.co; " +
       // Cualquier http:// colado (imagen vieja pegada en un artículo) se pide por https: sin aviso de contenido mixto.
       'upgrade-insecure-requests;'
     return [
@@ -87,7 +89,7 @@ const nextConfig = {
         source: '/:path*',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },

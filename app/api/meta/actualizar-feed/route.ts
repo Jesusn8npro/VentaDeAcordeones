@@ -5,9 +5,11 @@ import { ipDe, permitir } from '../../_lib/rateLimit'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-// PORT de POST /api/meta/actualizar-feed (server.js). Auth admin idéntica:
-// si ADMIN_API_KEY está definida, exige Authorization: Bearer <key>;
-// si no está definida, permite (entorno dev) — igual que autenticarAdmin().
+// POST /api/meta/actualizar-feed — endpoint de administración.
+// Exige Authorization: Bearer <ADMIN_API_KEY>. Si la variable NO está definida
+// responde 401 en vez de dejar pasar: antes se abría al no estar configurada, y
+// este endpoint ejecuta tareas con service role (incluida la creación de buckets
+// públicos), así que "abierto por falta de configuración" es un fallo grave.
 export async function POST(req: Request) {
   if (!permitir(ipDe(req), 60)) {
     return NextResponse.json(
@@ -17,11 +19,13 @@ export async function POST(req: Request) {
   }
 
   const apiKey = process.env.ADMIN_API_KEY
-  if (apiKey) {
-    const authHeader = req.headers.get('authorization') || ''
-    if (authHeader !== `Bearer ${apiKey}`) {
-      return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
-    }
+  if (!apiKey) {
+    console.error('[meta/actualizar-feed] ADMIN_API_KEY no configurada: endpoint cerrado')
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+  }
+  const authHeader = req.headers.get('authorization') || ''
+  if (authHeader !== `Bearer ${apiKey}`) {
+    return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
 
   try {

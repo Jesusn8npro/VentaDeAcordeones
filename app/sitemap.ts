@@ -10,6 +10,10 @@ const SITIO = 'https://ventadeacordeones.com'
 export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Las estáticas no tienen fecha propia en BD: se sella la de la regeneración (cada hora)
+  // para que Google no las vea como <url> sin <lastmod>, que es lo que hace que las ignore.
+  const ahora = new Date()
+
   const estaticas: MetadataRoute.Sitemap = [
     '', '/tienda', '/contacto', '/quienes-somos', '/trabaja-con-nosotros',
     '/sobre-la-tienda', '/terminos-condiciones', '/politica-privacidad',
@@ -19,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...CLUSTERS.map((c) => `/${c.base}/${c.slug}`),
   ].map((p) => ({
     url: `${SITIO}${p || '/'}`,
+    lastModified: ahora,
     changeFrequency: 'weekly',
     priority: p === '' ? 1 : 0.7,
   }))
@@ -38,10 +43,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     }))
 
+  // URL oficial de categoría: /tienda/categoria/<slug>. /categoria/<slug> sólo queda como
+  // redirect 301, y una redirección dentro del sitemap es un error de rastreo.
   const categorias: MetadataRoute.Sitemap = (cat.data || [])
     .filter((c: any) => c.slug)
     .map((c: any) => ({
-      url: `${SITIO}/categoria/${c.slug}`,
+      url: `${SITIO}/tienda/categoria/${c.slug}`,
+      lastModified: ahora,
       changeFrequency: 'weekly',
       priority: 0.8,
     }))

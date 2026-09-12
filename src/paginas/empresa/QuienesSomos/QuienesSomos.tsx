@@ -1,10 +1,8 @@
 ﻿import Link from 'next/link'
 import { Phone, Mail, MapPin, Users, Award, Heart, Star, ShieldCheck, ShoppingBag } from 'lucide-react'
-import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './QuienesSomos.css'
 
 export default function QuienesSomos() {
-  useTituloPagina('Quiénes Somos')
   const valores = [
     { icono: Award, titulo: 'Experiencia musical', descripcion: 'Conocemos cada instrumento que vendemos. Somos músicos y apasionados por el acordeón.' },
     { icono: Users, titulo: 'Asesoría experta', descripcion: 'Te guiamos en tu elección por WhatsApp antes de comprar, sin compromiso.' },

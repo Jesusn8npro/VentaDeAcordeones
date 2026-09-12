@@ -229,12 +229,24 @@ const ReproductorAudio = ({ texto }) => {
 
 
 // Página de detalle de artículo con contenido completo y tabla de contenidos
-export default function ArticuloBlog({ initialData: _initialData }: { initialData?: any }) {
+// `initialData` lo manda el Server Component ya consultado: con el articulo en la mano
+// no se muestra ningun spinner y el texto completo viaja en el HTML (antes el articulo
+// se pedia otra vez desde el navegador y los buscadores solo veian "Cargando...").
+const normalizarArticulo = (data: any) => {
+  if (!data) return null;
+  const secciones = typeof data.secciones === 'string' ? JSON.parse(data.secciones) : data.secciones;
+  const cta = typeof data.cta === 'string' ? JSON.parse(data.cta) : data.cta;
+  return { ...data, secciones, cta };
+};
+
+export default function ArticuloBlog({ initialData }: { initialData?: any }) {
   const params = useParams();
   const slug = params.slug as string;
   const [resumenExpandido, setResumenExpandido] = useState(false);
-  const [articuloData, setArticuloData] = useState(null);
-  const [cargando, setCargando] = useState(true);
+  const [articuloData, setArticuloData] = useState(() => {
+    try { return normalizarArticulo(initialData); } catch { return null; }
+  });
+  const [cargando, setCargando] = useState(!initialData);
   const [error, setError] = useState(null);
 
   const formatearFecha = (iso) => {
@@ -247,6 +259,8 @@ export default function ArticuloBlog({ initialData: _initialData }: { initialDat
 
   useEffect(() => {
     let activo = true;
+    // Con el articulo ya pintado desde el servidor no se repite la consulta.
+    if (initialData) return () => { activo = false; window.speechSynthesis.cancel(); };
     async function cargar() {
       if (!slug) {
         setCargando(false);
@@ -271,9 +285,7 @@ export default function ArticuloBlog({ initialData: _initialData }: { initialDat
 
         if (activo) {
           if (data) {
-            const secciones = typeof data.secciones === 'string' ? JSON.parse(data.secciones) : data.secciones;
-            const cta = typeof data.cta === 'string' ? JSON.parse(data.cta) : data.cta;
-            setArticuloData({ ...data, secciones, cta });
+            setArticuloData(normalizarArticulo(data));
           } else {
             setArticuloData(null);
           }

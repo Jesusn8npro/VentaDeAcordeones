@@ -17,16 +17,18 @@ import SelectorPlantilla from '../../../componentes/landing/SelectorPlantilla'
  * 
  * Ya NO necesitas hacer clic en "Ver Landing Page", se detecta automáticamente
  */
-export default function PaginaProducto({ initialData: _initialData }: { initialData?: any }) {
+export default function PaginaProducto({ initialData }: { initialData?: any }) {
   const params = useParams()
   const slug = params.slug as string
   const router = useRouter()
 
-  // âš¡ Estado de carga paralela optimizada
-  const [cargaCompleta, setCargaCompleta] = useState(false)
+  // Si el servidor ya mandó la ficha (initialData), no hay nada que esperar: se pinta
+  // directamente. Antes esta página siempre arrancaba en "cargando" y el HTML que recibían
+  // Google y el usuario era un spinner.
+  const [cargaCompleta, setCargaCompleta] = useState(Boolean(initialData))
 
   // Usar los hooks para cargar datos EN PARALELO
-  const { producto, cargando: cargandoProducto, error } = usarProducto(slug)
+  const { producto, cargando: cargandoProducto, error } = usarProducto(slug, initialData)
   const { 
     landingConfig, 
     reviews, 

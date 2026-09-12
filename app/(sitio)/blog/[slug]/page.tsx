@@ -7,17 +7,23 @@
 import { cache } from 'react'
 import { serializarJsonLd } from '@/utilidades/jsonLd'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
 import ArticuloCliente from './ArticuloCliente'
 
 const SITIO = 'https://ventadeacordeones.com'
 
+// Sin esto el artículo quedaba cacheado hasta el siguiente deploy: las ediciones y
+// el dateModified del JSON-LD no llegaban a Google.
+export const revalidate = 900
+
 const getArticulo = cache(async (slug: string) => {
   const { data, error } = await supabaseServidor
     .from('articulos_web')
-    .select(
-      'titulo, slug, resumen_breve, resumen_completo, portada_url, fecha_publicacion, actualizado_en, autor, secciones, meta_titulo, meta_descripcion'
-    )
+    // Select completo: este mismo registro es el que pinta el articulo en el servidor
+    // (antes solo servia para la metadata y el cuerpo se pedia otra vez desde el navegador,
+    // asi que Google recibia un "Cargando...").
+    .select('*')
     .eq('slug', slug)
     .eq('estado_publicacion', 'publicado')
     .limit(1)
@@ -56,6 +62,7 @@ export async function generateMetadata({
   const { slug } = await params
   const a = await getArticulo(slug)
 
+  // Aquí NO se lanza notFound(): sólo metadata noindex. El 404 real lo emite la página.
   if (!a) {
     return {
       title: 'Artículo no encontrado — VentaDeAcordeones.com',
@@ -133,39 +140,37 @@ export default async function ArticuloBlogRoute({
   const { slug } = await params
   const a = await getArticulo(slug)
 
-  const jsonLd = a
-    ? {
-        '@context': 'https://schema.org/',
-        '@type': 'Article',
-        headline: a.titulo,
-        description: recortar(a.resumen_breve || a.resumen_completo, 500),
-        image: imagenAbsoluta(a.portada_url),
-        ...(a.fecha_publicacion
-          ? { datePublished: a.fecha_publicacion }
-          : {}),
-        ...(a.actualizado_en ? { dateModified: a.actualizado_en } : {}),
-        author: { '@type': 'Person', name: nombreAutor(a.autor) },
-        publisher: {
-          '@type': 'Organization',
-          name: 'VentaDeAcordeones.com',
-          logo: { '@type': 'ImageObject', url: `${SITIO}/logo.svg` },
-        },
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': `${SITIO}/blog/${a.slug}`,
-        },
-      }
-    : null
-  const faqLd = a ? faqJsonLd(a.secciones) : null
+  // Antes un slug inexistente devolvía 200 con noindex: Google lo trataba como soft-404.
+  if (!a) notFound()
+
+  // Tras notFound() el artículo existe seguro: se eliminan los ternarios `a ? … : null`.
+  const jsonLd = {
+    '@context': 'https://schema.org/',
+    '@type': 'Article',
+    headline: a.titulo,
+    description: recortar(a.resumen_breve || a.resumen_completo, 500),
+    image: imagenAbsoluta(a.portada_url),
+    ...(a.fecha_publicacion ? { datePublished: a.fecha_publicacion } : {}),
+    ...(a.actualizado_en ? { dateModified: a.actualizado_en } : {}),
+    author: { '@type': 'Person', name: nombreAutor(a.autor) },
+    publisher: {
+      '@type': 'Organization',
+      name: 'VentaDeAcordeones.com',
+      logo: { '@type': 'ImageObject', url: `${SITIO}/logo.svg` },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${SITIO}/blog/${a.slug}`,
+    },
+  }
+  const faqLd = faqJsonLd(a.secciones)
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
+      />
       {faqLd && (
         <script
           type="application/ld+json"

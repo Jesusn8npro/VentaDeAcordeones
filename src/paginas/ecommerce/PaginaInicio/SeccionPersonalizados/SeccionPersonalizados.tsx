@@ -24,6 +24,8 @@ export default function SeccionPersonalizados() {
             alt="Acordeón personalizado de dos colores"
             width={420}
             height={420}
+            // Ocupa el 60% del panel visual; sin `sizes` se servía el candidato más grande.
+            sizes="(max-width: 900px) 60vw, 420px"
             style={{
               width: '60%',
               height: 'auto',
@@ -32,7 +34,9 @@ export default function SeccionPersonalizados() {
               position: 'relative',
               zIndex: 2,
             }}
-            priority
+            // Sin `priority`: esta sección va muy por debajo del pliegue y su precarga competía
+            // con el LCP real (la imagen del hero). Lazy = el navegador la pide al acercarse.
+            loading="lazy"
           />
           <span className="custom-spec s1">NÁCAR BLANCO MADREPERLA</span>
           <span className="custom-spec s2">GRABADO LÁSER · TU NOMBRE</span>

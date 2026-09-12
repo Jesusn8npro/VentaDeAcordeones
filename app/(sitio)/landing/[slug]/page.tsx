@@ -1,13 +1,14 @@
 // ───────────────────────────────────────────────────────────────────────────
-// Landing de producto (/landing/[slug]) — réplica del patrón canónico
-// (app/(sitio)/producto/[slug]). page.tsx = SERVER component:
-//   - generateMetadata({ params }) → await params (Next 16), fetch server-side
-//     a Supabase → title/description/canonical/OG REALES por producto.
-//   - JSON-LD Product+Offer (precio/stock/COP) renderizado en HTML server.
-// El body (LandingProducto) es Client Component ssr:false (idéntico al SPA).
+// Landing de producto (/landing/[slug]) — MISMO producto que /producto/[slug].
+// Eran dos URLs compitiendo por la misma ficha (contenido duplicado), así que:
+//   - canonical apunta a /producto/[slug] (la ficha real),
+//   - robots noindex/follow (la landing se usa para campañas, no para orgánico),
+//   - SIN JSON-LD Product: el único Product válido vive en /producto/[slug].
+// El body (LandingProducto) sigue siendo Client Component idéntico al SPA.
 // ───────────────────────────────────────────────────────────────────────────
 import { cache } from 'react'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
 import LandingCliente from './LandingCliente'
 
@@ -67,13 +68,15 @@ export async function generateMetadata({
   const descripcion =
     recortar(p.meta_description || p.descripcion) ||
     'Acordeones y accesorios en Colombia. Envíos a todo el país.'
-  const canonical = `${SITIO}/landing/${p.slug}`
+  // La URL canónica es SIEMPRE la ficha de producto: la landing no debe competir con ella.
+  const canonical = `${SITIO}/producto/${p.slug}`
   const img = imagenAbsoluta(p.producto_imagenes?.[0]?.imagen_principal)
 
   return {
     title: titulo,
     description: descripcion,
     alternates: { canonical },
+    robots: { index: false, follow: true },
     openGraph: {
       type: 'website',
       url: canonical,
@@ -100,37 +103,8 @@ export default async function PaginaLandingRoute({
   const { slug } = await params
   const p = await getProducto(slug)
 
-  const jsonLd = p
-    ? {
-        '@context': 'https://schema.org/',
-        '@type': 'Product',
-        name: p.nombre,
-        description: recortar(p.meta_description || p.descripcion, 500),
-        image: imagenAbsoluta(p.producto_imagenes?.[0]?.imagen_principal),
-        ...(p.marca ? { brand: { '@type': 'Brand', name: p.marca } } : {}),
-        sku: p.slug,
-        offers: {
-          '@type': 'Offer',
-          url: `${SITIO}/landing/${p.slug}`,
-          priceCurrency: 'COP',
-          price: Number(p.precio) || 0,
-          availability:
-            Number(p.stock) > 0
-              ? 'https://schema.org/InStock'
-              : 'https://schema.org/OutOfStock',
-        },
-      }
-    : null
+  // Antes un slug inexistente devolvía 200 con noindex: Google lo trataba como soft-404.
+  if (!p) notFound()
 
-  return (
-    <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
-      <LandingCliente initialData={p} />
-    </>
-  )
+  return <LandingCliente initialData={p} />
 }

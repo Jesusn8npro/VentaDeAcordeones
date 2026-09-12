@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { BookOpen, Users, Star, Clock } from 'lucide-react'
 import { useTituloPagina } from '../../hooks/useTitulosPagina'
 import './PaginaBlog.css'
@@ -6,6 +7,25 @@ import SidebarBlog from './SidebarBlog'
 import { clienteSupabase } from '../../configuracion/supabase'
 
 import Paginacion from './Paginacion';
+
+// Antes las portadas ausentes (y el skeleton de carga) se pedían a https://picsum.photos: una
+// petición a un tercero en producción por cada tarjeta, lenta y fuera de nuestro control. Ahora
+// el fallback es un asset local que ya se sirve con caché inmutable.
+const PORTADA_FALLBACK = '/images/og/portada.jpg'
+
+// next/image rompe el render si el host no está en images.remotePatterns (next.config.mjs), y las
+// portadas vienen de la base de datos. Si la URL es absoluta y de un host no permitido, se cae al
+// asset local en vez de tumbar toda la página del blog.
+const HOSTS_PERMITIDOS = /(^|\.)(supabase\.co|ventadeacordeones\.com)$/
+const portadaSegura = (url) => {
+  if (!url) return PORTADA_FALLBACK
+  if (!/^https?:\/\//i.test(url)) return url
+  try {
+    return HOSTS_PERMITIDOS.test(new URL(url).hostname) ? url : PORTADA_FALLBACK
+  } catch {
+    return PORTADA_FALLBACK
+  }
+}
 
 /**
  * PaginaBlog - Página principal del Blog
@@ -162,7 +182,11 @@ export default function PaginaBlog() {
               Array.from({ length: articulosPorPagina }).map((_, i) => (
                 <article className="tarjeta-articulo" key={`skeleton-${i}`} aria-busy="true">
                   <div className="tarjeta-media">
-                    <img src={`https://picsum.photos/seed/blog-skeleton-${i}/480/270`} alt="Cargando artículo" width="480" height="270" />
+                    {/* Placeholder sin red: reserva el mismo 16:9 que la portada real (sin saltos de layout). */}
+                    <div
+                      aria-hidden="true"
+                      style={{ width: '100%', aspectRatio: '480 / 270', background: 'var(--vda-superficie-2)' }}
+                    />
                   </div>
                   <div className="tarjeta-cuerpo">
                     <span className="badge">General</span>
@@ -185,7 +209,14 @@ export default function PaginaBlog() {
             {!cargando && !error && articulos.map((a) => (
               <article className="tarjeta-articulo" key={a.slug}>
                 <div className="tarjeta-media">
-                  <img src={a.portada_url || `https://picsum.photos/seed/${a.slug}/480/270`} alt={a.titulo} loading="lazy" decoding="async" width="480" height="270" />
+                  <Image
+                    src={portadaSegura(a.portada_url)}
+                    alt={a.titulo}
+                    width={480}
+                    height={270}
+                    sizes="(max-width: 991px) 100vw, (max-width: 1400px) 40vw, 400px"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="tarjeta-cuerpo">
                   <span className="badge">General</span>

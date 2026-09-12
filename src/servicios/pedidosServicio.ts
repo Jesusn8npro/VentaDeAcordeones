@@ -11,91 +11,49 @@ class PedidosServicio {
    * @returns {Promise<Object>} - Pedido creado con su ID
    */
   async crearPedido(datosPedido) {
-    try {
-      // Validar datos requeridos
-      if (!datosPedido.numero_pedido) {
-        throw new Error('Número de pedido es requerido')
-      }
-      if (!datosPedido.nombre_cliente) {
-        throw new Error('Nombre del cliente es requerido')
-      }
-      if (!datosPedido.email_cliente) {
-        throw new Error('Email del cliente es requerido')
-      }
-      if (!datosPedido.productos || !Array.isArray(datosPedido.productos)) {
-        throw new Error('Productos son requeridos y deben ser un array')
-      }
-      if (!datosPedido.total || datosPedido.total <= 0) {
-        throw new Error('Total del pedido debe ser mayor a 0')
-      }
-
-      // Preparar datos para inserción
-      const pedidoParaInsertar = {
-        numero_pedido: datosPedido.numero_pedido,
-        usuario_id: datosPedido.usuario_id || null,
-        nombre_cliente: datosPedido.nombre_cliente,
-        email_cliente: datosPedido.email_cliente,
-        telefono_cliente: datosPedido.telefono_cliente || '',
-        direccion_envio: datosPedido.direccion_envio || {},
-        productos: datosPedido.productos,
-        subtotal: datosPedido.subtotal || 0,
-        descuento_aplicado: datosPedido.descuento_aplicado || 0,
-        costo_envio: datosPedido.costo_envio || 0,
-        total: datosPedido.total,
-        estado: datosPedido.estado || 'pendiente',
-        metodo_pago: datosPedido.metodo_pago || 'epayco',
-        referencia_pago: datosPedido.referencia_pago || null,
-        notas_cliente: datosPedido.notas_cliente || null,
-        notas_admin: datosPedido.notas_admin || null,
-        // Campos de ePayco (inicialmente null, se actualizarán después del pago)
-        epayco_ref_payco: datosPedido.epayco_ref_payco || null,
-        epayco_transaction_id: null,
-        epayco_cod_response: null,
-        epayco_signature: null,
-        epayco_approval_code: null,
-        epayco_fecha_transaccion: null,
-        epayco_franchise: null,
-        epayco_bank_name: null,
-        epayco_test_request: datosPedido.epayco_test_request || false,
-        epayco_extra_data: null,
-        epayco_response_raw: null
-      }
-
-      // Insertar en Supabase
-      const { data, error } = await clienteSupabase
-        .from('pedidos')
-        .insert([pedidoParaInsertar])
-        .select()
-        .single()
-
-      if (error) {
-        throw new Error(`Error al crear pedido: ${error.message}`)
-      }
-
-      // Decrementar stock por cada producto del pedido
-      for (const item of datosPedido.productos) {
-        const productoId = item.producto_id || item.id
-        const cantidad = item.cantidad || item.quantity || 1
-        if (!productoId) continue
-        const { data: prod } = await clienteSupabase
-          .from('productos')
-          .select('stock')
-          .eq('id', productoId)
-          .maybeSingle()
-        if (prod && typeof prod.stock === 'number') {
-          await clienteSupabase
-            .from('productos')
-            .update({ stock: Math.max(0, prod.stock - cantidad) })
-            .eq('id', productoId)
-        }
-      }
-
-      return data
-
-    } catch (error) {
-      // Error silencioso para producción
-      throw error;
+    // El pedido se crea EN EL SERVIDOR (app/api/pedidos/crear). Aquí solo se manda
+    // qué se quiere comprar y a dónde enviarlo: precio, descuento, envío y total
+    // los recalcula el servidor contra la BD. Antes esta función insertaba en
+    // Supabase con el total que venía del navegador (y descontaba stock), así que
+    // cualquiera podía pagar $1.000 por un acordeón de varios millones.
+    const productos = Array.isArray(datosPedido?.productos) ? datosPedido.productos : []
+    if (productos.length === 0) {
+      throw new Error('El carrito está vacío')
     }
+
+    const envio = datosPedido.direccion_envio || {}
+    const respuesta = await fetch('/api/pedidos/crear', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: productos.map((p) => ({
+          producto_id: p.producto_id || p.id,
+          cantidad: p.cantidad || 1,
+        })),
+        cliente: {
+          nombre: envio.nombre,
+          apellido: envio.apellido,
+          email: envio.email || datosPedido.email_cliente,
+          telefono: envio.telefono || datosPedido.telefono_cliente,
+          direccion: envio.direccion,
+          ciudad: envio.ciudad,
+          departamento: envio.departamento,
+          codigoPostal: envio.codigoPostal,
+          instrucciones: envio.instrucciones,
+          tipoDocumento: envio.tipoDocumento,
+          numeroDocumento: envio.numeroDocumento,
+        },
+        cupon: datosPedido.cupon || null,
+        usuario_id: datosPedido.usuario_id || null,
+        notas: datosPedido.notas_cliente || null,
+      }),
+    })
+
+    const datos = await respuesta.json().catch(() => ({}))
+    if (!respuesta.ok) {
+      throw new Error(datos?.error || 'No pudimos registrar el pedido')
+    }
+    return datos
   }
 
   /**
@@ -105,49 +63,17 @@ class PedidosServicio {
    * @returns {Promise<Object>} - Pedido actualizado
    */
   async actualizarPedidoConEpayco(pedidoId, datosEpayco) {
-    try {
-      const datosActualizacion = {
-        epayco_ref_payco: datosEpayco.x_ref_payco || null,
-        epayco_transaction_id: datosEpayco.x_transaction_id || null,
-        epayco_cod_response: datosEpayco.x_cod_response || null,
-        epayco_signature: datosEpayco.x_signature || null,
-        epayco_approval_code: datosEpayco.x_approval_code || null,
-        epayco_fecha_transaccion: datosEpayco.x_fecha_transaccion ? new Date(datosEpayco.x_fecha_transaccion) : null,
-        epayco_franchise: datosEpayco.x_franchise || null,
-        epayco_bank_name: datosEpayco.x_bank_name || null,
-        epayco_test_request: datosEpayco.x_test_request === 'TRUE' || datosEpayco.x_test_request === true,
-        epayco_extra_data: datosEpayco.x_extra1 ? { 
-          extra1: datosEpayco.x_extra1, 
-          extra2: datosEpayco.x_extra2, 
-          extra3: datosEpayco.x_extra3 
-        } : null,
-        epayco_response_raw: datosEpayco,
-        estado: this.determinarEstadoPedido(datosEpayco.x_cod_response),
-        actualizado_el: new Date().toISOString()
-      }
-
-      const { data, error } = await clienteSupabase
-        .from('pedidos')
-        .update(datosActualizacion)
-        .eq('id', pedidoId)
-        .select()
-        .single()
-
-      if (error) {
-        throw new Error(`Error al actualizar pedido: ${error.message}`)
-      }
-
-      // Enviar email de confirmación cuando el pago es aprobado
-      if (data?.estado === 'pagado') {
-        clienteSupabase.functions.invoke('email-confirmacion', { body: { pedido_id: pedidoId } })
-          .catch(() => {/* no bloquear si falla el email */})
-      }
-
-      return data
-
-    } catch (error) {
-      // Error silencioso para producción
-      throw error
+    // El navegador YA NO marca pedidos como pagados. La única fuente de verdad es
+    // la confirmación servidor-a-servidor de ePayco (app/api/epayco/confirmar),
+    // que valida la firma y que el monto coincide con el total del pedido antes de
+    // tocar el estado o el stock. Antes bastaba con un postMessage falsificado.
+    // Esta función se mantiene para la UI: devuelve el estado que corresponde a la
+    // respuesta recibida, sin escribir nada en la base de datos.
+    return {
+      id: pedidoId,
+      estado: this.determinarEstadoPedido(datosEpayco?.x_cod_response),
+      epayco_ref_payco: datosEpayco?.x_ref_payco || null,
+      epayco_transaction_id: datosEpayco?.x_transaction_id || null,
     }
   }
 
@@ -312,10 +238,13 @@ class PedidosServicio {
       }
 
       // Si no se encuentra, buscar en todos los pedidos que contengan la referencia
+      // Antes esto interpolaba la referencia dentro de un filtro .or(): un valor con
+      // comas o paréntesis (viene de la URL) podía reescribir la consulta. Con .in()
+      // el valor viaja como parámetro y no como sintaxis de filtro.
       ({ data, error } = await clienteSupabase
         .from('pedidos')
         .select('*')
-        .or(`numero_pedido.eq.${referencia},referencia_pago.eq.${referencia}`)
+        .in('numero_pedido', [referencia])
         .limit(1))
 
       if (data && data.length > 0) {

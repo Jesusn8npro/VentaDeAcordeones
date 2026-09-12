@@ -2,10 +2,15 @@
 // Reutiliza PaginaTienda (igual que el App.tsx original mapeaba esta ruta).
 import { cache } from 'react'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { serializarJsonLd } from '@/utilidades/jsonLd'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
 import TiendaCategoriaCliente from './TiendaCategoriaCliente'
 
 const SITIO = 'https://ventadeacordeones.com'
+
+// Sin esto la ruta quedaba cacheada hasta el siguiente deploy y servía datos viejos.
+export const revalidate = 900
 
 const getCategoria = cache(async (slug: string) => {
   const { data, error } = await supabaseServidor
@@ -48,6 +53,7 @@ export async function generateMetadata({
   const { slug } = await params
   const c = await getCategoria(slug)
 
+  // Aquí NO se lanza notFound(): sólo metadata noindex. El 404 real lo emite la página.
   if (!c) {
     return {
       title: 'Categoría no encontrada — VentaDeAcordeones.com',
@@ -92,31 +98,31 @@ export default async function PaginaTiendaCategoriaRoute({
   const { slug } = await params
   const c = await getCategoria(slug)
 
-  const jsonLd = c
-    ? {
-        '@context': 'https://schema.org/',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITIO },
-          { '@type': 'ListItem', position: 2, name: 'Tienda', item: `${SITIO}/tienda` },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: c.nombre,
-            item: `${SITIO}/tienda/categoria/${c.slug}`,
-          },
-        ],
-      }
-    : null
+  // Antes una categoría inexistente devolvía 200 con noindex: Google lo trataba como soft-404.
+  if (!c) notFound()
+
+  const jsonLd = {
+    '@context': 'https://schema.org/',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITIO },
+      { '@type': 'ListItem', position: 2, name: 'Tienda', item: `${SITIO}/tienda` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: c.nombre,
+        item: `${SITIO}/tienda/categoria/${c.slug}`,
+      },
+    ],
+  }
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      {/* serializarJsonLd escapa < > & : un nombre/descripción de BD con "</script>" ya no rompe ni inyecta. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
+      />
       <TiendaCategoriaCliente />
     </>
   )

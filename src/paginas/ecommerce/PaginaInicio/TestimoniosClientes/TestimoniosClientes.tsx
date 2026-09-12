@@ -69,6 +69,8 @@ export default function TestimoniosClientes() {
                       alt={t.nombre}
                       width={48}
                       height={48}
+                      sizes="48px"
+                      loading="lazy"
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   ) : (

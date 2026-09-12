@@ -15,12 +15,15 @@ NEXT_PUBLIC_EPAYCO_PUBLIC_KEY = "a04d60e2e678d5bd89a58d26f3413fdb"
 NEXT_PUBLIC_EPAYCO_TEST_MODE = "false"
 NEXT_PUBLIC_EPAYCO_ENVIRONMENT = "production"
 NEXT_PUBLIC_EPAYCO_URL_RESPONSE = "https://ventadeacordeones.com/respuesta-epayco"
-NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION = "https://ventadeacordeones.com/confirmacion-epayco"
+# Confirmación servidor-a-servidor: ePayco hace POST a esta URL y es lo ÚNICO que marca
+# un pedido como pagado. Antes apuntaba a /confirmacion-epayco, una página de React que
+# nunca llegó a ejecutarse desde el servidor de ePayco → ningún pago se confirmaba.
+NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION = "https://ventadeacordeones.com/api/epayco/confirmar"
 
 # MODO MANTENIMIENTO (gate por login). "true" = el publico ve "Estamos
 # actualizando" y SOLO el admin logueado ve el sitio real. Para lanzar al
 # publico: cambiar a "false" y re-desplegar (es NEXT_PUBLIC → se fija en build).
-NEXT_PUBLIC_MODO_MANTENIMIENTO = "true"
+NEXT_PUBLIC_MODO_MANTENIMIENTO = "false"
 
 # nixpkgsArchive fija una revisión con nodejs_22 (evita "undefined variable 'nodejs_22'").
 # vips/pkg-config: necesarios si se reactiva la optimización de imágenes de Next.

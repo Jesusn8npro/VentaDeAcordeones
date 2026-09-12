@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
-import { Suspense } from 'react'
 import { Inter, Poppins, Bebas_Neue, Cormorant_Garamond, JetBrains_Mono, Barlow_Condensed } from 'next/font/google'
 import Providers from './providers'
-import CargandoPagina from '@/componentes/sistema/CargandoPagina'
+import { serializarJsonLd } from '@/utilidades/jsonLd'
 import '@/estilos/index.css'
 
 const inter = Inter({
@@ -12,9 +11,11 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
+// Pesos recortados (antes 4 por familia): cada peso extra es un woff2 mas que descarga
+// el navegador en la primera visita. Los que faltan los sintetiza a partir del mas cercano.
 const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600'],
   display: 'swap',
   variable: '--font-poppins',
 })
@@ -28,7 +29,7 @@ const bebasNeue = Bebas_Neue({
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['300', '400'],
+  weight: ['400'],
   style: ['italic', 'normal'],
   display: 'swap',
   variable: '--font-cormorant',
@@ -36,28 +37,74 @@ const cormorant = Cormorant_Garamond({
 
 const barlowCondensed = Barlow_Condensed({
   subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
+  weight: ['600', '800'],
   display: 'swap',
   variable: '--font-barlow',
 })
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '700'],
   display: 'swap',
   variable: '--font-jetbrains',
 })
 
-// JSON-LD site-wide (Organization + WebSite) — recomendado en el layout.
+// JSON-LD del sitio. `Store` en vez de un Organization pelado: con telefono, direccion,
+// horario y redes es lo que Google necesita para las busquedas locales ("acordeones Bogota")
+// y para el panel de conocimiento. El @id se reutiliza como `seller` en cada ficha.
 const jsonLdSitio = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Organization',
+      '@type': ['Store', 'Organization'],
       '@id': 'https://ventadeacordeones.com/#organization',
       name: 'VentaDeAcordeones.com',
+      alternateName: 'Venta de Acordeones',
       url: 'https://ventadeacordeones.com/',
-      logo: 'https://ventadeacordeones.com/logo.svg',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://ventadeacordeones.com/icons/icon-512.png',
+        width: 512,
+        height: 512,
+      },
+      image: 'https://ventadeacordeones.com/images/og/portada.jpg',
+      description:
+        'Venta de acordeones Hohner, acordeones personalizados, accesorios, audio y taller de reparacion de acordeones en Bogota. Envios a toda Colombia y al mundo.',
+      telephone: '+573144865310',
+      email: 'acordeon91@gmail.com',
+      priceRange: '$$-$$$',
+      currenciesAccepted: 'COP',
+      paymentAccepted: 'Tarjeta de credito, PSE, efectivo, contra entrega',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Bogota',
+        addressRegion: 'Cundinamarca',
+        addressCountry: 'CO',
+      },
+      areaServed: [
+        { '@type': 'Country', name: 'Colombia' },
+        { '@type': 'Place', name: 'Envios internacionales' },
+      ],
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          opens: '08:00',
+          closes: '18:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Saturday'],
+          opens: '09:00',
+          closes: '14:00',
+        },
+      ],
+      sameAs: [
+        'https://www.instagram.com/ventadeacordeones1/',
+        'https://www.facebook.com/ventadeacordeones',
+        'https://www.tiktok.com/@ventadeacordeones',
+        'https://www.youtube.com/@ventadeacordeones',
+      ],
     },
     {
       '@type': 'WebSite',
@@ -66,6 +113,14 @@ const jsonLdSitio = {
       name: 'VentaDeAcordeones.com',
       publisher: { '@id': 'https://ventadeacordeones.com/#organization' },
       inLanguage: 'es-CO',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://ventadeacordeones.com/tienda?q={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
     },
   ],
 }
@@ -84,8 +139,14 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   manifest: '/manifest.json',
   icons: {
-    icon: { url: '/logo.svg', type: 'image/svg+xml' },
-    apple: '/logo.svg',
+    icon: [
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+      { url: '/icons/icon-32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/icons/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/logo.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+    shortcut: '/favicon.ico',
   },
   openGraph: {
     type: 'website',
@@ -109,8 +170,23 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  // Sin zoom por pellizco/doble-tap en móvil (misma política que AcademiaNext): el pinch-zoom
+  // rompía el mega menú, los drawers y el slider. Android lo respeta con esto; iOS lo ignora y
+  // se corta con antiZoomScript (eventos gesture*).
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
   themeColor: '#1a1a2e',
 }
+
+// Anti pinch-zoom para iOS Safari (ignora user-scalable=no pero respeta preventDefault en gesture*).
+// Solo frena el zoom del NAVEGADOR: scroll, taps y swipes siguen intactos (no tocamos touchend).
+const antiZoomScript = `(function(){try{var s=function(e){e.preventDefault()};document.addEventListener('gesturestart',s,{passive:false});document.addEventListener('gesturechange',s,{passive:false});document.addEventListener('gestureend',s,{passive:false});}catch(e){}})();`
+
+// Tema aplicado ANTES del primer pintado. Sin esto ContextoTema lo pone al hidratar y quien
+// tiene el modo oscuro guardado ve un destello blanco en cada carga. El valor por defecto es
+// 'light', el mismo que usa ContextoTema.tsx: si no coincidieran, el flash seguiria existiendo.
+const temaScript = `(function(){try{var t=localStorage.getItem('tema');if(t!=='light'&&t!=='dark'){t='light'}var e=document.documentElement;e.setAttribute('data-theme',t);e.classList.toggle('dark',t==='dark')}catch(e){}})();`
 
 export default function RootLayout({
   children,
@@ -118,7 +194,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${barlowCondensed.variable}`}>
+    <html lang="es-CO" className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${barlowCondensed.variable}`}>
       <head>
         {/* Performance: preconnect a recursos externos críticos */}
         <link
@@ -133,31 +209,26 @@ export default function RootLayout({
           as="image"
           type="image/svg+xml"
         />
+        <script dangerouslySetInnerHTML={{ __html: temaScript }} />
+        <script dangerouslySetInnerHTML={{ __html: antiZoomScript }} />
       </head>
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSitio) }}
+          dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLdSitio) }}
         />
-        <Suspense fallback={<CargandoPagina />}>
-          <Providers>{children}</Providers>
-        </Suspense>
+        {/* Sin <Suspense> aqui: al hacer flush del shell, Next ya habia enviado un 200 y las
+            paginas que llaman notFound() o redirect() nunca podian responder 404 / 308. */}
+        <Providers>{children}</Providers>
 
         {/* Protección básica: deshabilitar arrastre de imágenes */}
         <Script id="anti-dragstart" strategy="afterInteractive">
           {`(function(){try{document.addEventListener('dragstart',function(e){e.preventDefault();},{passive:false});}catch(_){}})();`}
         </Script>
 
-        {/* Advertencia estilo Facebook (solo producción) */}
-        <Script id="anti-fraude-consola" strategy="afterInteractive">
-          {`(function(){try{var host=window.location.hostname;var esLocal=host==='localhost'||host==='127.0.0.1'||host==='::1';if(esLocal)return;console.clear();var t='color:#d93025;font-size:48px;font-weight:700;font-family:system-ui;';var b='color:#222;font-size:16px;font-family:system-ui;';console.log('%c¡Detente!',t);console.log('%cEsta función es para desarrolladores. Si alguien te pidió copiar algo aquí, es un intento de fraude.',b);}catch(e){}})();`}
-        </Script>
 
-        {/* ePayco: checkout externo (se carga tras hidratar, no bloquea render) */}
-        <Script
-          src="https://checkout.epayco.co/checkout.js"
-          strategy="afterInteractive"
-        />
+        {/* El SDK de ePayco ya no se carga en todas las paginas: lo pide el hook usarEpayco
+            justo antes de abrir el checkout (src/hooks/usarEpayco.ts). */}
       </body>
     </html>
   )

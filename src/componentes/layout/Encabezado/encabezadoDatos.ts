@@ -1,6 +1,6 @@
 // Datos del mega menú del header. Todo ítem lleva un href real.
 // Accesorios/instrumentos/audio apuntan a sus landings SEO (/<base>/<cluster>), ver src/datos/clusters.ts.
-// Las tonalidades usan ?busqueda= porque PaginaTienda lee ese query param (searchParams.get('busqueda')).
+// Las tonalidades usan ?q= porque es el query param que lee la tienda (leerFiltrosDeURL en filtrosTienda.ts).
 
 export interface ItemMega { label: string; href: string }
 export interface ColumnaMega { title: string; items: ItemMega[] }
@@ -30,10 +30,10 @@ export const CATS: Cat[] = [
           { label:'Nuevos',                     href:'/tienda/categoria/acordeones-nuevos' },
         ] },
         { title:'Tonalidades', items:[
-          { label:'GCF · 5 letras · de fábrica',   href:'/tienda?busqueda=GCF' },
-          { label:'ADG · de fábrica',   href:'/tienda?busqueda=ADG' },
-          { label:'FBbEb · por encargo', href:'/tienda?busqueda=FBbEb' },
-          { label:'Do/Fa/Sib · por encargo',         href:'/tienda?busqueda=Do%20Fa%20Sib' },
+          { label:'GCF · 5 letras · de fábrica',   href:'/tienda?q=GCF' },
+          { label:'ADG · de fábrica',   href:'/tienda?q=ADG' },
+          { label:'FBbEb · por encargo', href:'/tienda?q=FBbEb' },
+          { label:'Do/Fa/Sib · por encargo',         href:'/tienda?q=Do%20Fa%20Sib' },
         ] },
         { title:'Servicios', items:[
           { label:'Personalizar mi acordeón', href: PERSONALIZADOS },
@@ -107,8 +107,9 @@ export const CATS: Cat[] = [
     mega: {
       columns: [
         { title:'Percusión', items:[
-          { label:'Cajas vallenatas', href:'/instrumentos/cajas-vallenatas' },
-          { label:'Baterías',         href:'/instrumentos/baterias' },
+          { label:'Cajas vallenatas',       href:'/instrumentos/cajas-vallenatas' },
+          { label:'Baterías',               href:'/instrumentos/baterias' },
+          { label:'Todos los instrumentos', href:'/instrumentos' },
         ] },
         { title:'Audio', items:[
           { label:'Audífonos KZ',         href:'/audio/audifonos' },

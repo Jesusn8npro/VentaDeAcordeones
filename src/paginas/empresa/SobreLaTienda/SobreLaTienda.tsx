@@ -1,10 +1,8 @@
 import Link from 'next/link'
 import { Phone, Mail, Clock, Truck, MessageCircle, ShieldCheck, CreditCard, Music, Package, Wrench } from 'lucide-react'
-import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './SobreLaTienda.css'
 
 export default function SobreLaTienda() {
-  useTituloPagina('Sobre la Tienda')
   return (
     <div className="slt">
 

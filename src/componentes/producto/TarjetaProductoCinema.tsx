@@ -112,6 +112,7 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
             className="img-principal"
             width={400}
             height={400}
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
             loading="lazy"
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
           />
@@ -125,6 +126,7 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
             className="img-secundaria"
             width={400}
             height={400}
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
             loading="lazy"
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
           />

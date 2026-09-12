@@ -95,7 +95,7 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
         {/* Search */}
         <div className={`px-5 py-4 border-b ${t.line}`}>
           <Link
-            href="/buscar"
+            href="/tienda"
             onClick={handleClose}
             className={`w-full search-shell flex items-stretch h-12 rounded-md overflow-hidden border transition-colors ${
               light ? 'bg-ink-50 border-ink-200 hover:border-gold/50' : 'bg-ink-800 border-white/10 hover:border-gold/50'
@@ -110,7 +110,7 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
           <div className="mt-3 flex flex-wrap gap-2">
             {[
               { tag:'Rey Vallenato', href:'/tienda/categoria/acordeones-rey-vallenato' },
-              { tag:'Sol Do Fa',     href:'/tienda?busqueda=GCF' },
+              { tag:'Sol Do Fa',     href:'/tienda?q=GCF' },
               { tag:'Fuelles',       href:'/accesorios/fuelles-de-acordeon' },
               { tag:'Estuches',      href:'/accesorios/estuches-de-acordeon' },
               { tag:'Taller',        href:'/taller' },

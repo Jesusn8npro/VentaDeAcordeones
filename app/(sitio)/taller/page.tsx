@@ -6,7 +6,7 @@ import { serializarJsonLd } from '@/utilidades/jsonLd'
 import PaginaTaller, { FAQ_TALLER, SERVICIOS_TALLER } from '@/paginas/Taller/PaginaTaller'
 import { NUMERO_WA, SITIO } from '@/datos/clusters'
 
-const TITULO = 'Taller de Acordeones en Bogotá: Afinación, Cambio de Pitos y Mantenimiento | VentaDeAcordeones.com'
+const TITULO = 'Taller de Acordeones en Bogotá: Afinación y Pitos'
 const DESCRIPCION =
   'Taller de acordeones en Bogotá: afinación, cambio de pitos Hohner, fuelles, parrillas y mantenimiento. Maestros de Valledupar. Recibimos envíos de todo el país.'
 const CANONICAL = `${SITIO}/taller`
@@ -14,7 +14,7 @@ const IMAGEN = `${SITIO}/images/hero/rojo-xtreme.webp`
 const TELEFONO = `+${NUMERO_WA}`
 
 export const metadata: Metadata = {
-  title: { absolute: TITULO },
+  title: TITULO,
   description: DESCRIPCION,
   alternates: { canonical: CANONICAL },
   openGraph: {

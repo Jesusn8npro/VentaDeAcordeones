@@ -45,7 +45,21 @@
     box-sizing: border-box;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    /* Sin doble-tap zoom en iOS (sin romper taps ni scroll) y sin auto-agrandado de texto al rotar. */
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Anti-copia de imágenes: sin arrastrar, sin "guardar imagen" con pulsación larga en iOS,
+     sin selección accidental. No afecta al texto (los clientes pueden copiar precios/nombres). */
+  img, picture, video, canvas, svg {
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
 
   body {
     overflow-x: hidden !important;

@@ -13,7 +13,7 @@ const UMBRAL_SWIPE = 48
 // Imágenes 100% locales (public/images/hero y public/migradas). Antes el hero consultaba Supabase
 // al montar y luego cargaba hotlinks externos (hohner.de, konradmusic…) o URLs del WordPress viejo
 // que devolvían 404: el visual quedaba vacío varios segundos. Ahora las 4 imágenes van montadas
-// desde el inicio (la primera con priority, las demás eager/low) y hacen crossfade entre sí.
+// desde el inicio (la primera con priority, las demás lazy/low) y hacen crossfade entre sí.
 // Los recortes se generan con scripts/recortar-gemini.mjs a partir de fotos reales.
 const HERO = '/images/hero'
 const PROD = '/migradas/productos'
@@ -247,7 +247,10 @@ export default function HeroInicio() {
                       width={900}
                       height={900}
                       priority={idx === 0}
-                      loading={idx === 0 ? undefined : 'eager'}
+                      // Solo el slide 0 es el LCP. Los demás iban en `eager` y peleaban ancho de
+                      // banda con él en el primer paint; en `lazy` el navegador los baja justo
+                      // después (están dentro del viewport, así que llegan a tiempo al crossfade).
+                      loading={idx === 0 ? undefined : 'lazy'}
                       fetchPriority={idx === 0 ? undefined : 'low'}
                       sizes="(max-width: 1100px) 70vw, 38vw"
                       className="hero-img"

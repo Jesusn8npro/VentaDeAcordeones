@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Heart, Eye, ShoppingCart, Star, BadgePercent, Flame, Clock, CircleDollarSign, AlertCircle, Zap, TrendingUp, Info } from 'lucide-react'
-import { clienteSupabase } from '../../configuracion/supabase'
 import { useFavoritos } from '../../contextos/FavoritosContext'
 import { useCarrito } from '../../contextos/CarritoContext'
 import EtiquetaVendido from './EtiquetaVendido'
@@ -20,7 +19,6 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   const { esFavorito, alternarFavorito } = useFavoritos()
   const { agregarAlCarrito } = useCarrito()
   const [tiempoRestante, setTiempoRestante] = React.useState(null)
-  const [stockActual, setStockActual] = React.useState(producto?.stock ?? null)
   const [infoIndex, setInfoIndex] = React.useState(0)
 
   const nombre = producto?.nombre || 'Producto'
@@ -81,18 +79,10 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
 
   const dos = (n) => String(n).padStart(2, '0')
 
-  // Suscripción en tiempo real al stock del producto (Supabase)
-  React.useEffect(() => {
-    if (!producto?.id) return
-    const canal = clienteSupabase.channel(`stock-producto-${producto.id}`)
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'productos', filter: `id=eq.${producto.id}` }, (payload) => {
-        if (typeof payload?.new?.stock === 'number') {
-          setStockActual(payload.new.stock)
-        }
-      })
-      .subscribe()
-    return () => clienteSupabase.removeChannel(canal)
-  }, [producto?.id])
+  // Sin canal Realtime aquí: cada tarjeta abría un websocket `stock-producto-{id}`, así que un
+  // listado de 12+ productos consumía 12+ conexiones del plan Supabase y JS en cada render.
+  // El stock de un listado no necesita ser en vivo; llega por props y la ficha de producto
+  // (donde sí importa el stock exacto antes de comprar) es la que mantiene el tiempo real.
 
   // Rotación de mensajes en contenedor dinámico (desincronizada por tarjeta)
   React.useEffect(() => {
@@ -175,9 +165,9 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
     if (modoAccion === 'agregar' || modoAccion === 'ver') return modoAccion
     const preferida = producto?.accion_preferida
     if (preferida === 'agregar' || preferida === 'ver') return preferida
-    const enStock = (stockActual ?? stock ?? 0) > 0
+    const enStock = (stock ?? 0) > 0
     return enStock ? 'agregar' : 'ver'
-  }, [modoAccion, producto?.accion_preferida, stockActual, stock])
+  }, [modoAccion, producto?.accion_preferida, stock])
 
   return (
     <article className="tarjeta-lujo" aria-label={`Tarjeta de ${nombre}`}>
@@ -210,6 +200,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             loading="lazy"
             width={320}
             height={320}
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
             onError={() => setErrPrincipal(true)}
           />
         ) : (
@@ -223,6 +214,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             loading="lazy"
             width={320}
             height={320}
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
             onError={() => setErrSecundaria(true)}
           />
         ) : (
@@ -336,7 +328,7 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
           {infoIndex === 0 && (
             <div className="item-informacion aparecer" key={`info-${infoIndex}`}>
               <Zap size={12} className="icono-informacion" />
-              <span>Unidades disponibles: {stockActual ?? stock ?? '—'}</span>
+              <span>Unidades disponibles: {stock ?? '—'}</span>
             </div>
           )}
           {infoIndex === 1 && (

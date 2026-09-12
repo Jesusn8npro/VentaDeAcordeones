@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { I } from '../navIconos'
 
 const QUICK = [
@@ -14,6 +15,7 @@ const QUICK = [
 export default function BuscadorOverlay({ open, onClose, light }: { open: boolean; onClose: () => void; light: boolean }) {
   const [query, setQuery] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
     if (open) {
@@ -26,11 +28,13 @@ export default function BuscadorOverlay({ open, onClose, light }: { open: boolea
     return () => { document.body.style.overflow = '' }
   }, [open])
 
+  // /buscar no existe: la tienda es el buscador real y lee el filtro desde ?q= (filtrosTienda.ts).
+  // router.push en vez de window.location.href para no recargar toda la app (SPA, sin perder el carrito en memoria).
   const doSearch = useCallback(() => {
     if (!query.trim()) return
-    window.location.href = `/buscar?q=${encodeURIComponent(query.trim())}`
+    router.push(`/tienda?q=${encodeURIComponent(query.trim())}`)
     onClose()
-  }, [query, onClose])
+  }, [query, onClose, router])
 
   if (!open) return null
   return (

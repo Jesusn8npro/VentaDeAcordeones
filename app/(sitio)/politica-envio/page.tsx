@@ -6,14 +6,14 @@ const SITIO = 'https://ventadeacordeones.com'
 const canonical = `${SITIO}/politica-envio`
 
 export const metadata: Metadata = {
-  title: 'Política de Envío — VentaDeAcordeones.com',
+  title: 'Política de Envío: tiempos, cobertura y costos',
   description:
     'Conoce los tiempos de entrega, cobertura, costos y condiciones de envío de acordeones en VentaDeAcordeones.com.',
   alternates: { canonical },
   openGraph: {
     type: 'website',
     url: canonical,
-    title: 'Política de Envío — VentaDeAcordeones.com',
+    title: 'Política de Envío: tiempos, cobertura y costos',
     description:
       'Conoce los tiempos de entrega, cobertura, costos y condiciones de envío de acordeones en VentaDeAcordeones.com.',
     siteName: 'VentaDeAcordeones.com',

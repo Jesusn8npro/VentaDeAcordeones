@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Icono from '@/componentes/ui/Icono'
 import ReelsInstagram from '@/componentes/social/ReelsInstagram'
+import { FAQ_PERSONALIZADOS } from './faqPersonalizados'
 import './AcordeonesPersonalizados.css'
 
 // Landing de acordeones personalizados. Antes era un scrollytelling con 5 "etapas" en sticky que
@@ -41,14 +42,6 @@ const PROCESO = [
   { n: '02', titulo: 'Diseño y aprobación', texto: 'Te enviamos el boceto o render 3D. Ajustamos hasta que sea exactamente lo que quieres.' },
   { n: '03', titulo: 'Taller',              texto: 'Un Hohner nuevo se desarma, se nacara, se graba y se ensambla pieza por pieza. 6 a 8 semanas.' },
   { n: '04', titulo: 'Afinación y entrega', texto: 'Se afina a mano, se prueba y viaja en estuche rígido con certificado. A cualquier ciudad o país.' },
-]
-
-const FAQ = [
-  { p: '¿Cuánto cuesta un acordeón personalizado?', r: 'Depende del acordeón base (Corona II, Corona III, Rey Vallenato) y del nivel de personalización. Te cotizamos en minutos por WhatsApp con el diseño exacto que quieres.' },
-  { p: '¿Cuánto tarda?', r: 'Entre 6 y 8 semanas desde la aprobación del diseño. Los trabajos sencillos (parrilla + fuelle) pueden estar en 2 semanas.' },
-  { p: '¿Puedo personalizar mi propio acordeón?', r: 'Sí. Recibimos tu acordeón en Bogotá (o por envío desde cualquier ciudad), lo transformamos y lo devolvemos afinado. Muchos clientes renuevan su Hohner de años.' },
-  { p: '¿Envían fuera de Colombia?', r: 'Sí. Hemos entregado en Estados Unidos, México, Chile, Ecuador, Panamá, Canadá y España, con embalaje rígido y seguro de tránsito.' },
-  { p: '¿Cómo se paga?', r: 'Abono para iniciar el trabajo y saldo contra entrega o antes del despacho. Pagos por PSE, Nequi, tarjeta o transferencia.' },
 ]
 
 export default function AcordeonesPersonalizados() {
@@ -163,7 +156,7 @@ export default function AcordeonesPersonalizados() {
           </div>
         </div>
         <div className="ap-faq">
-          {FAQ.map((f) => (
+          {FAQ_PERSONALIZADOS.map((f) => (
             <details key={f.p} className="ap-faq-item">
               <summary>{f.p}<Icono nombre="chevron-abajo" tamaño={16} /></summary>
               <p>{f.r}</p>

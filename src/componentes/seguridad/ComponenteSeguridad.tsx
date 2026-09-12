@@ -47,17 +47,10 @@ export const ComponenteSeguridad = ({ children }) => {
       window.location.href = '/error?tipo=rate_limit';
     }
 
-    // Limpiar datos sensibles del almacenamiento al cerrar sesión
-    const manejarCierreSesion = () => {
-      sessionStorage.clear();
-      localStorage.removeItem('sb-*'); // Limpiar datos de Supabase
-    };
-
-    window.addEventListener('beforeunload', manejarCierreSesion);
-    
-    return () => {
-      window.removeEventListener('beforeunload', manejarCierreSesion);
-    };
+    // Se eliminó el handler `beforeunload` que "limpiaba" el almacenamiento: no borraba nada de
+    // Supabase (`sb-*` era un literal, no un patrón) y el `sessionStorage.clear()` corría en CADA
+    // salida de página, borrando el identificador de rate limit creado arriba y bloqueando además
+    // el bfcache del navegador (volver atrás obligaba a reconstruir la página entera).
   }, []);
 
   return children;

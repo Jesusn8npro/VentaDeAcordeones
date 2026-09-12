@@ -6,14 +6,14 @@ const SITIO = 'https://ventadeacordeones.com'
 const canonical = `${SITIO}/politica-privacidad`
 
 export const metadata: Metadata = {
-  title: 'Política de Privacidad — VentaDeAcordeones.com',
+  title: 'Política de Privacidad y Tratamiento de Datos',
   description:
     'Política de privacidad y tratamiento de datos personales de VentaDeAcordeones.com conforme a la normativa colombiana.',
   alternates: { canonical },
   openGraph: {
     type: 'website',
     url: canonical,
-    title: 'Política de Privacidad — VentaDeAcordeones.com',
+    title: 'Política de Privacidad y Tratamiento de Datos',
     description:
       'Política de privacidad y tratamiento de datos personales de VentaDeAcordeones.com conforme a la normativa colombiana.',
     siteName: 'VentaDeAcordeones.com',

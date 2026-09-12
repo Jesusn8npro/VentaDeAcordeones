@@ -15,8 +15,8 @@ import PaginaTestimonios from '@/paginas/Testimonios/PaginaTestimonios'
 const SITIO = 'https://ventadeacordeones.com'
 
 // El layout raíz aplica template '%s | VentaDeAcordeones.com' → el <title> final queda exactamente
-// "Testimonios de clientes: acordeones Hohner entregados en Colombia y el mundo | VentaDeAcordeones.com".
-const TITULO = 'Testimonios de clientes: acordeones Hohner entregados en Colombia y el mundo'
+// "Testimonios de clientes: acordeones Hohner entregados | VentaDeAcordeones.com" (74 caracteres).
+const TITULO = 'Testimonios de clientes: acordeones Hohner entregados'
 const TITULO_COMPLETO = `${TITULO} | VentaDeAcordeones.com`
 const DESCRIPCION =
   'Fotos y videos reales de clientes con su acordeón Hohner en Colombia, Chile, USA, México y más. 4.9/5 en más de 1.200 reseñas verificadas y envíos a 42 países.'

@@ -15,6 +15,43 @@ import { EPAYCO_CONFIG } from '../configuracion/constantes';
 import servicioEpayco from '../servicios/epayco/servicioEpayco';
 import pedidosServicio from '../servicios/pedidosServicio';
 
+
+/**
+ * Carga el SDK de ePayco solo cuando hace falta (al abrir el checkout).
+ * Antes vivia en app/layout.tsx, asi que CADA pagina del sitio descargaba el script
+ * de la pasarela aunque la visita no llegara nunca a pagar.
+ */
+const URL_SDK_EPAYCO = 'https://checkout.epayco.co/checkout.js'
+let promesaSdk = null
+
+export const cargarSdkEpayco = () => {
+  if (typeof window === 'undefined') return Promise.reject(new Error('Sin navegador'))
+  if (window.ePayco && window.ePayco.checkout) return Promise.resolve(window.ePayco)
+  if (promesaSdk) return promesaSdk
+
+  promesaSdk = new Promise((resolve, reject) => {
+    const existente = document.querySelector('script[src="' + URL_SDK_EPAYCO + '"]')
+    const script = existente || document.createElement('script')
+    const alCargar = () => {
+      if (window.ePayco && window.ePayco.checkout) resolve(window.ePayco)
+      else reject(new Error('El sistema de pagos no respondio. Revisa tu conexion.'))
+    }
+    script.addEventListener('load', alCargar)
+    script.addEventListener('error', () => {
+      promesaSdk = null
+      reject(new Error('No se pudo cargar el sistema de pagos. Revisa tu conexion e intenta de nuevo.'))
+    })
+    if (!existente) {
+      script.src = URL_SDK_EPAYCO
+      script.async = true
+      document.body.appendChild(script)
+    } else if (window.ePayco && window.ePayco.checkout) {
+      alCargar()
+    }
+  })
+  return promesaSdk
+}
+
 export const usarEpayco = () => {
   // Estados del hook
   const [cargando, setCargando] = useState(false);
@@ -22,27 +59,10 @@ export const usarEpayco = () => {
   const [transaccionActual, setTransaccionActual] = useState(null);
   const [servicioListo, setServicioListo] = useState(false);
 
-  // Verificar si ePayco está disponible globalmente
+  // El SDK ya no se descarga en todas las paginas: no hay nada que esperar aqui.
+  // El script se pide al pulsar "Pagar" (cargarSdkEpayco).
   useEffect(() => {
-    let intentos = 0;
-    const maxIntentos = 50; // 5 segundos máximo
-    
-    const verificarEpayco = () => {
-      intentos++;
-      
-      if (typeof window.ePayco !== 'undefined') {
-        setServicioListo(true);
-        setError(null);
-      } else if (intentos < maxIntentos) {
-        // Reintentar después de un breve delay
-        setTimeout(verificarEpayco, 100);
-      } else {
-        setError('No se pudo cargar el sistema de pagos. Por favor, recarga la página.');
-        setServicioListo(false);
-      }
-    };
-    
-    verificarEpayco();
+    setServicioListo(true);
   }, []);
 
   /**
@@ -90,14 +110,11 @@ export const usarEpayco = () => {
         throw new Error('Datos de pago incompletos. Verifica la información del cliente y pedido.');
       }
 
-      // Verificar que ePayco esté disponible globalmente
-      if (typeof window.ePayco === 'undefined') {
-        throw new Error('ePayco SDK no está cargado. Por favor, recarga la página e intenta nuevamente.');
-      }
+      // Descarga del SDK bajo demanda (solo en el momento de pagar).
+      await cargarSdkEpayco();
 
-      // Verificar que el checkout esté disponible
-      if (typeof window.ePayco.checkout === 'undefined') {
-        throw new Error('ePayco checkout no está disponible. Verifica la conexión a internet.');
+      if (typeof window.ePayco === 'undefined' || typeof window.ePayco.checkout === 'undefined') {
+        throw new Error('No se pudo abrir el sistema de pagos. Revisa tu conexion e intenta nuevamente.');
       }
 
       // Verificar que configure esté disponible

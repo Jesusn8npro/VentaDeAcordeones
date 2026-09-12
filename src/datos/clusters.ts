@@ -8,7 +8,7 @@ export type BaseCluster = 'accesorios' | 'instrumentos' | 'audio'
 export const BASES: Record<BaseCluster, { nombre: string; titulo: string; descripcion: string; h1: [string, string]; intro: string; wa: string }> = {
   accesorios: {
     nombre: 'Accesorios',
-    titulo: 'Accesorios para Acordeón: Parrillas, Fuelles, Correas, Estuches y Broches | VentaDeAcordeones.com',
+    titulo: 'Accesorios para Acordeón: Parrillas, Fuelles y Correas',
     descripcion: 'Accesorios y repuestos para acordeón Hohner Corona, Rey Vallenato y Compadre: parrillas, fuelles, correas, estuches y broches. Originales y personalizados. Envío a toda Colombia.',
     h1: ['Todo lo que tu acordeón', 'necesita para sonar y lucir'],
     intro: 'Parrillas, fuelles, correas, estuches y broches para Hohner Corona II, Corona III, Rey Vallenato y Compadre. Originales, económicos y personalizados con tu nombre, fabricados o instalados en nuestro taller de Bogotá.',
@@ -16,7 +16,7 @@ export const BASES: Record<BaseCluster, { nombre: string; titulo: string; descri
   },
   instrumentos: {
     nombre: 'Instrumentos',
-    titulo: 'Cajas Vallenatas Profesionales, Baterías y Percusión en Bogotá | VentaDeAcordeones.com',
+    titulo: 'Cajas Vallenatas, Baterías y Percusión en Bogotá',
     descripcion: 'Cajas vallenatas profesionales y económicas Miche, estuches, baterías MPRO y Ludwig y percusión para tu conjunto. Tienda en Bogotá, envío a toda Colombia y el mundo.',
     h1: ['El conjunto completo', 'caja, guacharaca y batería'],
     intro: 'Cajas vallenatas profesionales (la línea de los cajeros de Silvestre, Peter Manjarrés y Elder Dayán), cajas económicas Miche, estuches, baterías junior y profesionales y percusión menor. Tienda en Bogotá con precio de mayorista y envío asegurado a Colombia y al mundo.',
@@ -24,7 +24,7 @@ export const BASES: Record<BaseCluster, { nombre: string; titulo: string; descri
   },
   audio: {
     nombre: 'Audio y grabación',
-    titulo: 'Equipos de Grabación, Micrófonos y Audífonos para Músicos | VentaDeAcordeones.com',
+    titulo: 'Equipos de Grabación, Micrófonos y Audífonos para Músicos',
     descripcion: 'Interfaces de audio, monitores, mezcladores, micrófonos Shure y Takstar y audífonos KZ para grabar y monitorear tu acordeón y tu voz. Distribuidor autorizado en Colombia.',
     h1: ['Graba y suena', 'como en el disco'],
     intro: 'Todo para tu home studio y tu tarima: interfaces de audio, monitores de estudio, mezcladores, micrófonos alámbricos e inalámbricos y audífonos in-ear KZ. Te armamos el combo según tu presupuesto.',
@@ -61,7 +61,7 @@ export const CLUSTERS: Cluster[] = [
     base: 'accesorios',
     nombre: 'Parrillas',
     h1: ['Parrillas de acordeón', 'originales, económicas y personalizadas'],
-    titulo: 'Parrillas de Acordeón Hohner: Originales, Económicas y Personalizadas | VentaDeAcordeones.com',
+    titulo: 'Parrillas de Acordeón Hohner Originales y Personalizadas',
     descripcion:
       'Parrillas (rejillas) para acordeón Hohner Corona, Rey Vallenato y Compadre. Originales, en acero inoxidable económicas y personalizadas con tu nombre. Envío a toda Colombia.',
     eyebrow: 'Accesorios · Parrillas',
@@ -98,7 +98,7 @@ export const CLUSTERS: Cluster[] = [
     base: 'accesorios',
     nombre: 'Fuelles',
     h1: ['Fuelles para acordeón', 'nuevos, de colores y a medida'],
-    titulo: 'Fuelles para Acordeón Hohner: Nuevos, de Colores y a Medida | VentaDeAcordeones.com',
+    titulo: 'Fuelles para Acordeón Hohner: Nuevos, de Colores y a Medida',
     descripcion:
       'Fuelles de acordeón nuevos para Hohner Corona, Rey Vallenato y Compadre. Cartón prensado, esquineros metálicos y cinta de colores. Cambio de fuelle en taller. Envío a Colombia.',
     eyebrow: 'Accesorios · Fuelles',
@@ -134,7 +134,7 @@ export const CLUSTERS: Cluster[] = [
     base: 'accesorios',
     nombre: 'Correas',
     h1: ['Correas de acordeón', 'acolchadas, Hohner y bordadas con tu nombre'],
-    titulo: 'Correas de Acordeón Acolchadas y Personalizadas con tu Nombre | VentaDeAcordeones.com',
+    titulo: 'Correas de Acordeón Acolchadas y Personalizadas con Nombre',
     descripcion:
       'Correas para acordeón acolchadas en cuero sintético, juegos Hohner con broches y correas bordadas con tu nombre. Ajustables, cómodas para tocar horas. Envío a toda Colombia.',
     eyebrow: 'Accesorios · Correas',
@@ -170,7 +170,7 @@ export const CLUSTERS: Cluster[] = [
     base: 'accesorios',
     nombre: 'Estuches',
     h1: ['Estuches para acordeón', 'rígidos, acolchados y tipo morral'],
-    titulo: 'Estuches para Acordeón Hohner: Rígidos, Acolchados y Tipo Morral | VentaDeAcordeones.com',
+    titulo: 'Estuches para Acordeón Hohner: Rígidos y Tipo Morral',
     descripcion:
       'Estuches y morrales para acordeón Hohner Corona, Rey Vallenato y Compadre. Rígidos, semirrígidos acolchados y personalizados con tu nombre. Protección real para viajar. Envío a Colombia.',
     eyebrow: 'Accesorios · Estuches',
@@ -206,7 +206,7 @@ export const CLUSTERS: Cluster[] = [
     base: 'accesorios',
     nombre: 'Broches',
     h1: ['Broches de acordeón', 'cromados y dorados para tus correas'],
-    titulo: 'Broches de Acordeón Cromados y Dorados para Correas | VentaDeAcordeones.com',
+    titulo: 'Broches de Acordeón Cromados y Dorados para Correas',
     descripcion:
       'Broches de acordeón metálicos cromados y dorados para fijar correas en Hohner Corona, Rey Vallenato y Compadre. Elegantes, firmes y fáciles de instalar. Envío a toda Colombia.',
     eyebrow: 'Accesorios · Broches',
@@ -242,7 +242,7 @@ export const CLUSTERS: Cluster[] = [
     categoriaSlug: 'cajas-vallenatas',
     nombre: 'Cajas vallenatas',
     h1: ['Cajas vallenatas', 'profesionales, económicas y con estuche'],
-    titulo: 'Cajas Vallenatas Profesionales y Miche en Bogotá | Envío a Colombia | VentaDeAcordeones.com',
+    titulo: 'Cajas Vallenatas Profesionales y Miche: Envío a Colombia',
     descripcion:
       'Cajas vallenatas profesionales desde $750.000 (la línea de los cajeros de Silvestre y Peter Manjarrés), cajas Miche económicas y estuche acolchado. Tienda en Bogotá, envío a toda Colombia y el mundo.',
     eyebrow: 'Instrumentos · Cajas vallenatas',
@@ -280,7 +280,7 @@ export const CLUSTERS: Cluster[] = [
     categoriaSlug: 'baterias',
     nombre: 'Baterías',
     h1: ['Baterías acústicas y electrónicas', 'junior, intermedias y profesionales'],
-    titulo: 'Baterías Acústicas y Electrónicas MPRO, Ludwig y Carlsbro | VentaDeAcordeones.com',
+    titulo: 'Baterías Acústicas y Electrónicas MPRO, Ludwig y Carlsbro',
     descripcion:
       'Baterías MPRO Junior de 3 y 5 piezas, Ludwig Accent y Vistalite, baterías electrónicas Carlsbro y Steren. Distribuidor autorizado en Colombia con envío nacional.',
     eyebrow: 'Instrumentos · Baterías',
@@ -319,7 +319,7 @@ export const CLUSTERS: Cluster[] = [
     categoriaSlug: 'audifonos',
     nombre: 'Audífonos',
     h1: ['Audífonos in-ear KZ', 'para monitoreo, estudio y escenario'],
-    titulo: 'Audífonos In-Ear KZ para Músicos: Monitoreo y Estudio | VentaDeAcordeones.com',
+    titulo: 'Audífonos In-Ear KZ para Músicos: Monitoreo y Estudio',
     descripcion:
       'Audífonos KZ ZS10 Pro, ZSN Pro, ZST X, EDX y adaptadores Bluetooth. Sonido de alta fidelidad para monitoreo en tarima, práctica y grabación. Distribuidor autorizado en Colombia.',
     eyebrow: 'Audio · Audífonos',
@@ -356,7 +356,7 @@ export const CLUSTERS: Cluster[] = [
     categoriaSlug: 'equipos-de-grabacion',
     nombre: 'Grabación',
     h1: ['Equipos de grabación', 'interfaces, monitores y mezcladores'],
-    titulo: 'Equipos de Grabación: Interfaces de Audio, Monitores y Mezcladores | VentaDeAcordeones.com',
+    titulo: 'Equipos de Grabación: Interfaces, Monitores y Mezcladores',
     descripcion:
       'Arma tu home studio: interfaces de audio USB, monitores de estudio y mezcladores para grabar acordeón, voz y guacharaca con calidad profesional. Asesoría y envío a toda Colombia.',
     eyebrow: 'Audio · Grabación',
@@ -393,7 +393,7 @@ export const CLUSTERS: Cluster[] = [
     categoriaSlug: 'microfonos-y-audio',
     nombre: 'Micrófonos',
     h1: ['Micrófonos', 'alámbricos, inalámbricos, diadema y solapa'],
-    titulo: 'Micrófonos Shure, Takstar y Miche: Alámbricos, Inalámbricos y Diadema | VentaDeAcordeones.com',
+    titulo: 'Micrófonos Shure, Takstar y Miche: Inalámbricos y Diadema',
     descripcion:
       'Micrófonos para acordeoneros y cantantes: Shure, Takstar y Miche. Alámbricos, inalámbricos, de diadema, solapa y condensador para grabación. Distribuidor autorizado en Colombia.',
     eyebrow: 'Audio · Micrófonos',

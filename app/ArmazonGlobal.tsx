@@ -3,6 +3,7 @@
 import { Suspense } from 'react'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/contextos/ContextoAutenticacion'
+import { useSeguridadConsola } from '@/hooks/useSeguridadConsola'
 // Un solo flotante de contacto (WhatsApp, abajo a la izquierda). El chat en vivo (burbuja naranja a la
 // derecha) se retiró: duplicaba el canal, tapaba CTAs en móvil y consumía conexión Realtime a Supabase.
 import BotonWhatsapp from '@/componentes/BotonWhatsapp/BotonWhatsapp'
@@ -29,6 +30,8 @@ const RUTAS_LIBRES_MANT = ['/login', '/mantenimiento', '/restablecer-contrasena'
 export default function ArmazonGlobal({ children }: { children: React.ReactNode }) {
   const ruta = usePathname() || '/'
   const { usuario, sesionInicializada } = useAuth()
+  // Blindaje anti-copia/DevTools (solo producción; el admin logueado conserva la consola).
+  useSeguridadConsola()
 
   // Gate de mantenimiento: se evalúa antes de pintar cualquier cosa.
   if (MODO_MANTENIMIENTO && !RUTAS_LIBRES_MANT.some((r) => ruta.startsWith(r))) {
@@ -52,10 +55,11 @@ export default function ArmazonGlobal({ children }: { children: React.ReactNode 
     <div className="app">
       {!sinLayout && <Encabezado />}
       {!sinFlotantes && <BotonWhatsapp />}
+      {/* Sin <Suspense> alrededor de las paginas: cualquier boundary por encima hace que Next
+          envie el shell con 200 antes de que la pagina pueda responder 404 o 308. Cada ruta que
+          necesite carga progresiva pone su propio Suspense dentro. */}
       <ErrorBoundary>
-        <Suspense fallback={<CargandoPagina />}>
-          {sinWrap ? children : <main className="contenido-principal">{children}</main>}
-        </Suspense>
+        {sinWrap ? children : <main className="contenido-principal">{children}</main>}
       </ErrorBoundary>
       {!sinLayout && <PieDePagina />}
       <NotificacionCarritoWrapper />

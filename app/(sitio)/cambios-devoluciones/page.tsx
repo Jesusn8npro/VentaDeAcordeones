@@ -6,14 +6,14 @@ const SITIO = 'https://ventadeacordeones.com'
 const canonical = `${SITIO}/cambios-devoluciones`
 
 export const metadata: Metadata = {
-  title: 'Cambios y Devoluciones — VentaDeAcordeones.com',
+  title: 'Cambios, Devoluciones y Garantía',
   description:
     'Política de cambios, devoluciones y garantía de acordeones en VentaDeAcordeones.com: requisitos, plazos y procedimiento.',
   alternates: { canonical },
   openGraph: {
     type: 'website',
     url: canonical,
-    title: 'Cambios y Devoluciones — VentaDeAcordeones.com',
+    title: 'Cambios, Devoluciones y Garantía',
     description:
       'Política de cambios, devoluciones y garantía de acordeones en VentaDeAcordeones.com: requisitos, plazos y procedimiento.',
     siteName: 'VentaDeAcordeones.com',

@@ -1,10 +1,8 @@
 ﻿import React, { useState } from 'react'
 import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react'
-import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import './Contacto.css'
 
 const Contacto = () => {
-  useTituloPagina('Contacto')
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',

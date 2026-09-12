@@ -73,6 +73,8 @@ function TarjetaProducto({ producto }: { producto: any }) {
             alt={producto.nombre || 'Producto'}
             width={400}
             height={400}
+            // La tarjeta mide ~260px en escritorio: sin `sizes` Next servía el candidato de 1080px+.
+            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
             style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '14px' }}
             loading="lazy"
           />

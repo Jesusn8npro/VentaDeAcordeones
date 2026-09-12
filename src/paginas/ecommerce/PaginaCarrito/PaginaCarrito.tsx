@@ -9,7 +9,6 @@ import { useAuth } from '../../../contextos/ContextoAutenticacion'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import { usarCupones } from '../../../hooks/usarCupones'
 import { usarEpayco } from '../../../hooks/usarEpayco'
-import { generarNumeroFactura } from '../../../servicios/epayco'
 import { pedidosServicio } from '../../../servicios/pedidosServicio'
 import ItemCarrito from '../../../componentes/carrito/ItemCarrito'
 import FormularioEnvio from '../../../componentes/checkout/FormularioEnvio'
@@ -85,25 +84,17 @@ export default function PaginaCarrito() {
       return
     }
     try {
-      const totalFinal  = total - (descuentoCupon || 0)
-      const numeroPedido = generarNumeroFactura('VDA')
+      // El servidor crea el pedido y devuelve el total REAL (precios, descuentos y
+      // envío recalculados contra la BD). Ese total, y no el del navegador, es el
+      // que se le cobra al cliente en ePayco.
       const pedido = await pedidosServicio.crearPedido({
-        numero_pedido:    numeroPedido,
-        usuario_id:       usuario?.id || null,
-        nombre_cliente:   `${nombre} ${apellido}`,
-        email_cliente:    email,
-        telefono_cliente: telefono,
-        direccion_envio:  datosEnvio,
-        productos:        items.map(i => ({ id: i.id, nombre: i.nombre, cantidad: i.cantidad, precio: i.precio, subtotal: i.cantidad * i.precio })),
-        subtotal,
-        descuento_aplicado: descuentos + (descuentoCupon || 0),
-        costo_envio:      envio,
-        total:            totalFinal,
-        estado:           'pendiente',
-        metodo_pago:      'epayco',
-        referencia_pago:  numeroPedido,
-        epayco_test_request: process.env.NEXT_PUBLIC_EPAYCO_TEST_MODE === 'true'
+        usuario_id:      usuario?.id || null,
+        direccion_envio: datosEnvio,
+        productos:       items.map(i => ({ producto_id: i.producto_id || i.id, cantidad: i.cantidad })),
+        cupon:           cuponAplicado?.codigo || null,
       })
+      const totalFinal  = pedido.total
+      const numeroPedido = pedido.numero_pedido
       await procesarPagoOnPage({
         cliente: datosEnvio,
         pedido: {
@@ -112,13 +103,18 @@ export default function PaginaCarrito() {
           descripcion: `${items.length} producto(s) - VentaDeAcordeones.com`,
           valor:       totalFinal,
           moneda:      'COP',
-          items:       items.map(i => ({ nombre: i.productos?.nombre || i.nombre, cantidad: i.cantidad, precio: i.precio_unitario || i.productos?.precio || 0 })),
-          subtotal, descuentos: descuentos + (descuentoCupon || 0), envio,
-          cuponAplicado: cuponAplicado?.codigo || null
+          items:       (pedido.productos || []).map(i => ({ nombre: i.nombre, cantidad: i.cantidad, precio: i.precio })),
+          subtotal:    pedido.subtotal,
+          descuentos:  pedido.descuento_aplicado,
+          envio:       pedido.costo_envio,
+          cuponAplicado: pedido.cupon || null
         },
         urls: {
           respuesta:    `${window.location.origin}/respuesta-epayco`,
-          confirmacion: `${window.location.origin}/confirmacion-epayco`
+          // Confirmación servidor-a-servidor: ePayco hace POST aquí y es lo único que
+          // marca el pedido como pagado. Antes apuntaba a /confirmacion-epayco, que es
+          // una página de React y no ejecutaba nada.
+          confirmacion: `${window.location.origin}/api/epayco/confirmar`
         }
       })
       if (cuponAplicado) {

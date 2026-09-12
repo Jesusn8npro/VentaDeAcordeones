@@ -1,6 +1,5 @@
 
 import { createClient } from '@supabase/supabase-js'
-import { manejarError, getSecurityHeaders } from './seguridad/utilidades'
 
 // Fallback = valores PÚBLICOS reales (no un placeholder inerte). La anon key es
 // pública por diseño (protegida por RLS; viaja al navegador igual). Esto hace
@@ -78,8 +77,9 @@ export const obtenerClienteConSesion = () => {
     },
     global: {
       headers: {
-        'x-session-id': sessionId,
-        ...getSecurityHeaders()
+        // Sin getSecurityHeaders(): son cabeceras de RESPUESTA (CSP, X-Frame-Options...). Mandarlas
+        // como cabeceras de PETICIÓN a Supabase no protege nada y sólo engorda cada request.
+        'x-session-id': sessionId
       }
     }
   })
