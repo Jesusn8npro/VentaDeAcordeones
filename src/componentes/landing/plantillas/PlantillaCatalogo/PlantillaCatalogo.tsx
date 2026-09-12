@@ -1,377 +1,402 @@
 'use client'
 
-import React from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useMemo, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+  AlertCircle,
+  ArrowLeft,
+  Check,
+  ImageOff,
+  MapPin,
+  MessageCircle,
+  Minus,
+  Plus,
+  RotateCcw,
+  ShieldCheck,
+  ShoppingCart,
+  Truck,
+} from 'lucide-react'
+import { useCarrito } from '../../../../contextos/CarritoContext'
 import { formatearPrecioCOP } from '../../../../utilidades/formatoPrecio'
-import { ArrowLeft, Package, AlertCircle, Eye, Tag } from 'lucide-react'
-import PlantillaCatalogoDetalle from './PlantillaCatalogoDetalle'
 import SeccionResenas from './SeccionResenas'
+import './PlantillaCatalogo.css'
 
-const PlantillaCatalogo = ({ producto, config, reviews, notificaciones }) => {
-  const router = useRouter()
+/**
+ * PlantillaCatalogo — ficha para TODO lo que no es un instrumento de alto valor:
+ * correas, fuelles, parrillas, micrófonos, audífonos, cajas, baterías, repuestos.
+ *
+ * POR QUÉ EXISTE ASÍ: antes esta plantilla era un volcado de administración
+ * (mostraba el ID, el slug, "Plantilla: Catálogo Estándar", las fechas de creación,
+ * el meta title y las palabras clave del SEO) y los 174 productos se pintaban con
+ * PlantillaCinema, una ficha de varios metros pensada para un acordeón de 5 millones.
+ * Para una correa de $120.000 esa ficha exagera y promete cosas que no lleva.
+ *
+ * REGLA DE CONTENIDO: aquí no se inventa NADA. Sin reseñas falsas, sin contadores
+ * de urgencia, sin "bestseller", sin prometer estuche ni correa. Si un dato no está
+ * en la base, su sección no se pinta. Las cifras de envío, garantía y retracto salen
+ * del código y de las páginas legales reales del sitio:
+ *   · envío gratis desde $50.000  → src/contextos/carritoReducer.ts
+ *   · retracto 5 días hábiles     → /cambios-devoluciones (art. 47, Ley 1480 de 2011)
+ */
+
+const WHATSAPP = '573144865310' // +57 314 486 5310
+const ENVIO_GRATIS_DESDE = 50000 // misma regla que aplica el carrito al cobrar el envío
+const SITIO = 'https://ventadeacordeones.com'
+
+/**
+ * El importador dejó literales "No especificado" en material, talla, dimensiones y
+ * origen. Para la ficha eso es exactamente igual de vacío que un NULL.
+ */
+const util = (valor: unknown): string => {
+  const s = String(valor ?? '').replace(/\s+/g, ' ').trim()
+  if (!s || /^no\s+especificad/i.test(s) || s === '-') return ''
+  return s
+}
+
+/** `descripcion` es JSONB: puede llegar como string o como {titulo, contenido}. */
+const textoDescripcion = (d: any): string => {
+  if (!d) return ''
+  if (typeof d === 'string') return d
+  return String(d.contenido || d.texto || d.titulo || '')
+}
+
+export default function PlantillaCatalogo({ producto, reviews }: { producto?: any; reviews?: any[] }) {
+  const { agregarAlCarrito, mostrarNotificacion } = useCarrito()
+  const [imgActiva, setImgActiva] = useState(0)
+  const [cantidad, setCantidad] = useState(1)
+  const [agregado, setAgregado] = useState(false)
+  const [errorCarrito, setErrorCarrito] = useState('')
+
+  // Las fotos ya llegan aplanadas por src/servicios/consultaProducto.ts (mismo
+  // normalizador en servidor y navegador), así que no hay que volver a mirar
+  // dentro de producto_imagenes.
+  const fotos: string[] = useMemo(() => {
+    const p = producto || {}
+    return [...(p.fotos_principales || []), ...(p.fotos_secundarias || [])].filter(Boolean)
+  }, [producto])
+
+  const parrafos: string[] = useMemo(
+    () =>
+      textoDescripcion(producto?.descripcion)
+        .split(/\n+/)
+        .map((t) => t.trim())
+        .filter(Boolean),
+    [producto]
+  )
 
   if (!producto) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '50vh',
-        flexDirection: 'column',
-        gap: '1rem'
-      }}>
-        <AlertCircle size={48} color="#e74c3c" />
-        <h2>Producto no encontrado</h2>
-        <p>El producto que buscas no existe o no está disponible</p>
-        <button 
-          onClick={() => router.push('/')}
-          style={{
-            padding: '0.75rem 1.5rem',
-            backgroundColor: '#3498db',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}
-        >
-          <ArrowLeft size={20} />
-          Volver al inicio
-        </button>
+      <div className="pcat">
+        <div className="pcat-vacio">
+          <AlertCircle size={44} color="var(--vda-peligro)" />
+          <h2>Producto no encontrado</h2>
+          <p>El producto que buscas no existe o ya no está disponible.</p>
+          <Link href="/tienda" className="pcat-btn pcat-btn--oro">
+            <ArrowLeft size={16} /> Ver el catálogo
+          </Link>
+        </div>
       </div>
     )
   }
 
+  const nombre = util(producto.nombre) || 'Producto'
+  const marca = util(producto.marca)
+  const categoria = producto.categorias?.nombre || ''
+  const categoriaSlug = producto.categorias?.slug || ''
+  const garantiaMeses = Number(producto.garantia_meses) || 0
+
+  const precio = Number(producto.precio) || 0
+  const precioAntes = Number(producto.precio_original) || 0
+  // El porcentaje se calcula con los dos precios REALES: la columna `descuento` de la
+  // base viene a 0 o desfasada en varios productos y no se puede publicar como rebaja.
+  const hayRebaja = precioAntes > precio && precio > 0
+  const rebajaPct = hayRebaja ? Math.round(((precioAntes - precio) / precioAntes) * 100) : 0
+
+  const stock = Number(producto.stock) || 0
+  const retirado = producto.estado === 'vendido' || producto.estado === 'agotado'
+  const disponible = stock > 0 && !retirado && producto.activo !== false
+  const pocasUnidades = disponible && stock <= 3
+  // El carrito rechaza más de 10 unidades por producto (CarritoContext), así que el
+  // selector no deja pedir algo que va a fallar al pulsar.
+  const maximo = Math.min(stock, 10)
+
+  const condicion = ['nuevo', 'usado'].includes(String(producto.estado)) ? String(producto.estado) : ''
+
+  const mensajeWa = encodeURIComponent(
+    `Hola, me interesa ${nombre}${precio > 0 ? ` (${formatearPrecioCOP(precio)})` : ''}. ` +
+      `${SITIO}/producto/${producto.slug}`
+  )
+  const enlaceWa = `https://wa.me/${WHATSAPP}?text=${mensajeWa}`
+
+  const especificaciones = [
+    ['Marca', marca],
+    ['Modelo', util(producto.modelo)],
+    ['Color', util(producto.color)],
+    ['Material', util(producto.material)],
+    ['Talla', util(producto.talla)],
+    ['Peso', Number(producto.peso) > 0 ? `${producto.peso} kg` : ''],
+    ['Garantía', garantiaMeses > 0 ? `${garantiaMeses} meses` : ''],
+    ['Condición', condicion ? condicion[0].toUpperCase() + condicion.slice(1) : ''],
+    ['Categoría', categoria],
+  ].filter(([, valor]) => Boolean(valor)) as [string, string][]
+  // `origen_pais` no se publica: la base dice "Colombia" en 168 de 174 productos,
+  // también en los Hohner y los Takstar. Publicarlo sería afirmar algo falso.
+
+  const añadir = async () => {
+    setErrorCarrito('')
+    // Una sola llamada con la cantidad: el contexto ya valida stock y máximos. Antes
+    // (en la otra plantilla) se llamaba N veces en un bucle, una petición por unidad.
+    const res = await agregarAlCarrito(producto, cantidad)
+    if (res?.success === false) {
+      setErrorCarrito(res.message || 'No se pudo añadir al carrito')
+      mostrarNotificacion?.('error', 'No se pudo añadir', res.message || 'Inténtalo de nuevo')
+      return
+    }
+    setAgregado(true)
+    setTimeout(() => setAgregado(false), 2200)
+  }
+
   return (
-    <div style={{ 
-      maxWidth: '1200px', 
-      margin: '0 auto', 
-      padding: '2rem',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      {/* Header con navegación */}
-      <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        gap: '1rem', 
-        marginBottom: '2rem',
-        paddingBottom: '1rem',
-        borderBottom: '1px solid var(--vda-linea)'
-      }}>
-        <button 
-          onClick={() => router.back()}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.5rem 1rem',
-            backgroundColor: 'var(--vda-superficie-2)',
-            color: 'var(--vda-tinta)',
-            border: '1px solid var(--vda-linea)',
-            borderRadius: '6px',
-            cursor: 'pointer'
-          }}
-        >
-          <ArrowLeft size={20} />
-          Volver
-        </button>
-        
-        <div>
-          <h1 style={{ margin: 0, fontSize: '2rem', color: 'var(--vda-tinta)' }}>
-            {producto.nombre}
-          </h1>
-          <p style={{ margin: '0.5rem 0 0 0', color: 'var(--vda-tinta-dim)' }}>
-            Slug: {producto.slug}
-          </p>
-          <p style={{ margin: '0.25rem 0 0 0', color: 'var(--vda-tinta-muted)', fontSize: '0.9rem' }}>
-            📋 Plantilla: Catálogo Estándar
-          </p>
+    <div className="pcat">
+      {/* Migas: mismo camino que el BreadcrumbList del JSON-LD del servidor. */}
+      <nav className="pcat-camino" aria-label="Ruta de navegación">
+        <Link href="/">Inicio</Link>
+        <span className="pcat-camino-sep">›</span>
+        <Link href="/tienda">Tienda</Link>
+        {categoria && (
+          <>
+            <span className="pcat-camino-sep">›</span>
+            {categoriaSlug ? (
+              <Link href={`/tienda/categoria/${categoriaSlug}`}>{categoria}</Link>
+            ) : (
+              <span>{categoria}</span>
+            )}
+          </>
+        )}
+        <span className="pcat-camino-sep">›</span>
+        <span className="pcat-camino-actual" aria-current="page">{nombre}</span>
+      </nav>
+
+      <div className="pcat-principal">
+        {/* ── Galería ─────────────────────────────────────────────── */}
+        <div className="pcat-galeria pcat-anim">
+          <figure className="pcat-foto">
+            <div className="pcat-insignias">
+              {hayRebaja && <span className="pcat-insignia">−{rebajaPct}%</span>}
+              {retirado && <span className="pcat-insignia pcat-insignia--agotado">{producto.estado === 'vendido' ? 'VENDIDO' : 'AGOTADO'}</span>}
+            </div>
+            {fotos[imgActiva] ? (
+              <Image
+                key={fotos[imgActiva]}
+                src={fotos[imgActiva]}
+                alt={`${nombre}${marca ? ` ${marca}` : ''}`}
+                width={760}
+                height={760}
+                sizes="(max-width: 900px) 92vw, 46vw"
+                priority
+              />
+            ) : (
+              <div className="pcat-foto-vacia">
+                <ImageOff size={34} />
+                <span>Sin imagen</span>
+              </div>
+            )}
+          </figure>
+
+          {/* Las miniaturas sólo aparecen si de verdad hay más de una foto:
+              dos de cada tres productos tienen únicamente la principal. */}
+          {fotos.length > 1 && (
+            <div className="pcat-miniaturas" role="tablist" aria-label="Fotos del producto">
+              {fotos.map((foto, i) => (
+                <button
+                  key={foto}
+                  type="button"
+                  role="tab"
+                  aria-selected={imgActiva === i}
+                  aria-label={`Ver foto ${i + 1} de ${fotos.length}`}
+                  className={`pcat-miniatura ${imgActiva === i ? 'activa' : ''}`}
+                  onClick={() => setImgActiva(i)}
+                >
+                  <Image src={foto} alt="" width={72} height={72} sizes="72px" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ── Compra ──────────────────────────────────────────────── */}
+        <div className="pcat-compra pcat-anim pcat-anim-2">
+          {categoria &&
+            (categoriaSlug ? (
+              <Link href={`/tienda/categoria/${categoriaSlug}`} className="pcat-eyebrow">— {categoria}</Link>
+            ) : (
+              <span className="pcat-eyebrow">— {categoria}</span>
+            ))}
+
+          <h1 className="pcat-titulo">{nombre}</h1>
+
+          {marca && <span className="pcat-marca">{marca}</span>}
+
+          <div className="pcat-precios">
+            <strong className="pcat-precio">{formatearPrecioCOP(precio)}</strong>
+            {hayRebaja && (
+              <>
+                <s className="pcat-precio-antes">{formatearPrecioCOP(precioAntes)}</s>
+                <span className="pcat-rebaja">Ahorras {formatearPrecioCOP(precioAntes - precio)}</span>
+              </>
+            )}
+          </div>
+          <p className="pcat-precio-nota">Precio en pesos colombianos, IVA incluido.</p>
+
+          <div className={`pcat-stock ${!disponible ? 'pcat-stock--sin' : pocasUnidades ? 'pcat-stock--bajo' : ''}`}>
+            <span className="pcat-punto" aria-hidden="true" />
+            {/* Disponibilidad real: sale del stock de la base, no de un contador de urgencia. */}
+            {!disponible
+              ? producto.estado === 'vendido'
+                ? 'Vendido · escríbenos y te conseguimos otro'
+                : 'Agotado por ahora · escríbenos y te avisamos'
+              : pocasUnidades
+                ? `Últimas ${stock} ${stock === 1 ? 'unidad' : 'unidades'} disponibles`
+                : `Disponible · ${stock} unidades en bodega`}
+          </div>
+
+          <div className="pcat-acciones">
+            <div className="pcat-cantidad">
+              <button type="button" onClick={() => setCantidad((c) => Math.max(1, c - 1))} disabled={!disponible || cantidad <= 1} aria-label="Quitar una unidad">
+                <Minus size={15} />
+              </button>
+              <span aria-live="polite">{cantidad}</span>
+              <button type="button" onClick={() => setCantidad((c) => Math.min(maximo, c + 1))} disabled={!disponible || cantidad >= maximo} aria-label="Añadir una unidad">
+                <Plus size={15} />
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className={`pcat-btn ${agregado ? 'pcat-btn--hecho' : 'pcat-btn--oro'}`}
+              onClick={añadir}
+              disabled={!disponible}
+            >
+              {!disponible ? (
+                <>No disponible</>
+              ) : agregado ? (
+                <><Check size={16} /> Añadido al carrito</>
+              ) : (
+                <>Añadir al carrito <ShoppingCart size={16} className="pcat-btn-icono" /></>
+              )}
+            </button>
+          </div>
+
+          {errorCarrito && (
+            <p className="pcat-error"><AlertCircle size={15} /> {errorCarrito}</p>
+          )}
+
+          <a className="pcat-btn pcat-btn--fantasma" href={enlaceWa} target="_blank" rel="noopener noreferrer">
+            <MessageCircle size={16} /> Preguntar por WhatsApp
+          </a>
+
+          <div className="pcat-confianza">
+            <div className="pcat-confianza-item">
+              <Truck size={19} />
+              <div>
+                <strong>Envío gratis</strong>
+                <span>Desde {formatearPrecioCOP(ENVIO_GRATIS_DESDE)}</span>
+              </div>
+            </div>
+            {garantiaMeses > 0 && (
+              <div className="pcat-confianza-item">
+                <ShieldCheck size={19} />
+                <div>
+                  <strong>Garantía {garantiaMeses} meses</strong>
+                  <span>Defectos de fábrica</span>
+                </div>
+              </div>
+            )}
+            <div className="pcat-confianza-item">
+              <MapPin size={19} />
+              <div>
+                <strong>Taller en Bogotá</strong>
+                <span>Despacho propio</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Primer párrafo como resumen; el resto va abajo, sin repetir texto. */}
+          {parrafos[0] && <p className="pcat-resumen">{parrafos[0]}</p>}
         </div>
       </div>
 
-      {/* Contenido principal */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
-        
-        {/* Columna izquierda - Imágenes */}
-        <div>
-          <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>
-            <Eye style={{ display: 'inline', marginRight: '0.5rem' }} />
-            Imágenes del Producto
-          </h3>
-          
-          {/* Imagen principal */}
-          {producto.fotos_principales && producto.fotos_principales.length > 0 ? (
-            <div style={{ marginBottom: '1rem', position: 'relative' }}>
-              <img 
-                src={producto.fotos_principales[0]} 
-                alt={producto.nombre}
-                style={{ 
-                  width: '100%', 
-                  maxHeight: '400px', 
-                  objectFit: 'cover',
-                  borderRadius: '8px',
-                  border: '1px solid var(--vda-linea)'
-                }}
-              />
-              {/* Etiqueta VENDIDO */}
-              {producto?.estado === 'vendido' && (
-                <div style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
-                  color: 'white',
-                  padding: '15px 30px',
-                  borderRadius: '8px',
-                  fontWeight: '900',
-                  fontSize: '20px',
-                  textAlign: 'center',
-                  boxShadow: '0 8px 24px rgba(231, 76, 60, 0.6)',
-                  zIndex: 10,
-                  border: '3px solid white',
-                  letterSpacing: '2px'
-                }}>
-                  VENDIDO
-                </div>
-              )}
-            </div>
-          ) : (
-            <div style={{ 
-              width: '100%', 
-              height: '400px', 
-              backgroundColor: 'var(--vda-superficie-2)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '8px',
-              border: '1px solid var(--vda-linea)',
-              marginBottom: '1rem',
-              position: 'relative'
-            }}>
-              <Package size={64} color="var(--vda-tinta-muted)" />
-              {/* Etiqueta VENDIDO para placeholder */}
-              {producto?.estado === 'vendido' && (
-                <div style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
-                  color: 'white',
-                  padding: '15px 30px',
-                  borderRadius: '8px',
-                  fontWeight: '900',
-                  fontSize: '20px',
-                  textAlign: 'center',
-                  boxShadow: '0 8px 24px rgba(231, 76, 60, 0.6)',
-                  zIndex: 10,
-                  border: '3px solid white',
-                  letterSpacing: '2px'
-                }}>
-                  VENDIDO
-                </div>
-              )}
-            </div>
+      {/* ── Detalle ───────────────────────────────────────────────── */}
+      <div className="pcat-detalle pcat-anim pcat-anim-3">
+        <div className="pcat-columna">
+          {parrafos.length > 1 && (
+            <section className="pcat-bloque">
+              <h2>Sobre este producto</h2>
+              {parrafos.slice(1).map((p, i) => <p key={i}>{p}</p>)}
+            </section>
           )}
 
-          {/* Galería de imágenes secundarias */}
-          {producto.fotos_secundarias && producto.fotos_secundarias.length > 0 && (
-            <div>
-              <h4>Más imágenes:</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '0.5rem' }}>
-                {producto.fotos_secundarias.map((foto, index) => (
-                  <img 
-                    key={index}
-                    src={foto} 
-                    alt={`${producto.nombre} - ${index + 1}`}
-                    style={{ 
-                      width: '100%', 
-                      height: '100px', 
-                      objectFit: 'cover',
-                      borderRadius: '4px',
-                      border: '1px solid var(--vda-linea)'
-                    }}
-                  />
+          <section className="pcat-bloque">
+            <h2>Envíos y devoluciones</h2>
+            <p>
+              Despachamos desde nuestro taller en Bogotá con Servientrega. Ciudades principales:
+              1–2 días hábiles. Otras ciudades y municipios: 2–5 días hábiles. Recibes número de
+              guía para rastrear el pedido.
+            </p>
+            <p>
+              El envío es <strong>gratis en compras desde {formatearPrecioCOP(ENVIO_GRATIS_DESDE)}</strong>;
+              por debajo de ese monto el carrito cobra {formatearPrecioCOP(5000)}.{' '}
+              <Link href="/politica-envio">Ver política de envíos</Link>.
+            </p>
+            <p>
+              Tienes <strong>5 días hábiles de retracto</strong> desde la entrega (art. 47, Ley 1480
+              de 2011): el producto debe volver sin uso y con su empaque original.{' '}
+              <Link href="/cambios-devoluciones">Ver cambios y devoluciones</Link>.
+            </p>
+            {garantiaMeses > 0 && (
+              <p>
+                Este producto incluye <strong>{garantiaMeses} meses de garantía</strong> contra
+                defectos de fabricación en uso normal.
+              </p>
+            )}
+          </section>
+        </div>
+
+        <div className="pcat-columna">
+          {especificaciones.length > 0 && (
+            <section className="pcat-bloque">
+              <h2>Especificaciones</h2>
+              <div className="pcat-specs">
+                {especificaciones.map(([etiqueta, valor]) => (
+                  <div key={etiqueta} className="pcat-spec">
+                    <span>{etiqueta}</span>
+                    <strong>{valor}</strong>
+                  </div>
                 ))}
               </div>
-            </div>
+            </section>
           )}
-        </div>
 
-        {/* Columna derecha - Información */}
-        <div>
-          {/* Información básica */}
-          <div style={{ 
-            backgroundColor: 'var(--vda-superficie-2)', 
-            padding: '1.5rem', 
-            borderRadius: '8px',
-            marginBottom: '2rem',
-            border: '1px solid var(--vda-linea)'
-          }}>
-            <h3 style={{ color: 'var(--vda-tinta)', marginBottom: '1rem' }}>
-              <Tag style={{ display: 'inline', marginRight: '0.5rem' }} />
-              Información Básica
-            </h3>
-            
-            <div style={{ display: 'grid', gap: '0.75rem' }}>
-              <div><strong>ID:</strong> {producto.id}</div>
-              <div><strong>Nombre:</strong> {producto.nombre}</div>
-              <div><strong>Slug:</strong> {producto.slug}</div>
-              
-              {producto.categorias && (
-                <div>
-                  <strong>Categoría:</strong> 
-                  <span style={{ 
-                    marginLeft: '0.5rem',
-                    padding: '0.25rem 0.75rem',
-                    backgroundColor: 'var(--vda-superficie-3)',
-                    borderRadius: '20px',
-                    fontSize: '0.875rem'
-                  }}>
-                    {producto.categorias.icono} {producto.categorias.nombre}
-                  </span>
-                </div>
-              )}
-              
-              <div>
-                <strong>Estado:</strong> 
-                {producto?.estado === 'vendido' ? (
-                  <span style={{ 
-                    marginLeft: '0.5rem',
-                    padding: '0.5rem 1rem',
-                    background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
-                    color: 'white',
-                    borderRadius: '20px',
-                    fontSize: '0.875rem',
-                    fontWeight: 'bold',
-                    letterSpacing: '1px',
-                    boxShadow: '0 2px 8px rgba(231, 76, 60, 0.3)'
-                  }}>
-                    🚫 VENDIDO
-                  </span>
-                ) : (
-                  <span style={{ 
-                    marginLeft: '0.5rem',
-                    padding: '0.25rem 0.75rem',
-                    backgroundColor: producto.activo ? '#d4edda' : '#f8d7da',
-                    color: producto.activo ? '#155724' : '#721c24',
-                    borderRadius: '20px',
-                    fontSize: '0.875rem'
-                  }}>
-                    {producto.activo ? '✅ Activo' : '❌ Inactivo'}
-                  </span>
-                )}
-              </div>
-              
-              <div>
-                <strong>Destacado:</strong> {producto.destacado ? '⭐ Sí' : 'No'}
-              </div>
-            </div>
-          </div>
-
-          {/* Precios */}
-          <div style={{ 
-            backgroundColor: 'color-mix(in srgb, var(--vda-oro) 12%, var(--vda-superficie))', 
-            padding: '1.5rem', 
-            borderRadius: '8px',
-            marginBottom: '2rem',
-            border: '1px solid color-mix(in srgb, var(--vda-oro) 35%, var(--vda-linea))'
-          }}>
-            <h3 style={{ color: 'var(--vda-oro-suave)', marginBottom: '1rem' }}>
-              💰 Precios
-            </h3>
-            
-            <div style={{ display: 'grid', gap: '0.75rem' }}>
-              <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#27ae60' }}>
-                <strong>Precio actual:</strong> {formatearPrecioCOP(producto.precio)}
-              </div>
-              
-              {producto.precio_original && producto.precio_original !== producto.precio && (
-                <div>
-                  <strong>Precio original:</strong> 
-                  <span style={{ textDecoration: 'line-through', color: '#e74c3c', marginLeft: '0.5rem' }}>
-                    {formatearPrecioCOP(producto.precio_original)}
-                  </span>
-                </div>
-              )}
-              
-              {producto.descuento && (
-                <div style={{ color: '#e74c3c', fontWeight: 'bold' }}>
-                  <strong>Descuento:</strong> {producto.descuento}%
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Stock e inventario */}
-          <div style={{ 
-            backgroundColor: 'color-mix(in srgb, var(--vda-exito) 10%, var(--vda-superficie))', 
-            padding: '1.5rem', 
-            borderRadius: '8px',
-            marginBottom: '2rem',
-            border: '1px solid color-mix(in srgb, var(--vda-exito) 30%, var(--vda-linea))'
-          }}>
-            <h3 style={{ color: 'var(--vda-exito)', marginBottom: '1rem' }}>
-              <Package style={{ display: 'inline', marginRight: '0.5rem' }} />
-              Inventario
-            </h3>
-            
-            <div style={{ display: 'grid', gap: '0.75rem' }}>
-              <div>
-                <strong>Stock disponible:</strong> 
-                <span style={{ 
-                  marginLeft: '0.5rem',
-                  fontSize: '1.25rem',
-                  fontWeight: 'bold',
-                  color: producto.stock > 10 ? '#27ae60' : producto.stock > 0 ? '#f39c12' : '#e74c3c'
-                }}>
-                  {producto.stock || 0} unidades
-                </span>
-              </div>
-              
-              <div><strong>Stock mínimo:</strong> {producto.stock_minimo || 0} unidades</div>
-              
-              <div>
-                <strong>Estado del stock:</strong>
-                <span style={{ 
-                  marginLeft: '0.5rem',
-                  padding: '0.25rem 0.75rem',
-                  backgroundColor: producto.stock > 10 ? '#d4edda' : producto.stock > 0 ? '#fff3cd' : '#f8d7da',
-                  color: producto.stock > 10 ? '#155724' : producto.stock > 0 ? '#856404' : '#721c24',
-                  borderRadius: '20px',
-                  fontSize: '0.875rem'
-                }}>
-                  {producto.stock > 10 ? '✅ En stock' : producto.stock > 0 ? '⚠️ Poco stock' : '❌ Agotado'}
-                </span>
-              </div>
-            </div>
-          </div>
+          <section className="pcat-bloque">
+            <h2>Compra con respaldo</h2>
+            <ul className="pcat-lista">
+              <li>Factura a tu nombre en cada pedido.</li>
+              <li>Pago con tarjeta, PSE, Nequi o contra entrega.</li>
+              <li>Asesoría por WhatsApp antes y después de la compra.</li>
+              <li>Empaque reforzado para que llegue intacto.</li>
+            </ul>
+            <p style={{ marginTop: 16 }}>
+              <RotateCcw size={14} style={{ display: 'inline', verticalAlign: '-2px', marginRight: 6 }} />
+              ¿Dudas con la referencia? <a href={enlaceWa} target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a>{' '}
+              y te confirmamos compatibilidad antes de que pagues.
+            </p>
+          </section>
         </div>
       </div>
 
-      <PlantillaCatalogoDetalle producto={producto} />
-
-      <SeccionResenas reviews={reviews} />
-
+      {/* Reseñas reales de la base. Si no hay, la sección entera no existe. */}
+      <SeccionResenas reviews={reviews || []} />
     </div>
   )
 }
-
-export default PlantillaCatalogo
-
-
-
-
-
-
-
-
-
-
-
-
-
-

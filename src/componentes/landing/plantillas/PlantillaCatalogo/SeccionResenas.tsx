@@ -15,43 +15,52 @@ interface Props {
   reviews: Resena[]
 }
 
+/**
+ * Opiniones de clientes. Se pinta SÓLO con reseñas reales que vengan de la base:
+ * si no hay ninguna (hoy `usarLandingData` devuelve la lista vacía a propósito, hasta
+ * que exista la tabla `resenas`), la sección desaparece en vez de rellenarse con
+ * testimonios inventados.
+ *
+ * Los colores quemados de antes (#ff6b35, #27ae60, #d4edda, #f39c12) se cambiaron por
+ * tokens --vda-*: con el tema claro el badge verde sobre verde era ilegible.
+ */
 export default function SeccionResenas({ reviews }: Props) {
   if (!reviews || reviews.length === 0) return null
+
   return (
-    <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--vda-linea)' }}>
-      <h2 style={{ color: 'var(--vda-tinta)', marginBottom: '1.5rem', fontSize: '1.5rem' }}>
-        ⭐ Opiniones de clientes ({reviews.length})
-      </h2>
-      <div style={{ display: 'grid', gap: '1rem' }}>
-        {reviews.map((r) => (
-          <div key={r.id} style={{ background: 'var(--vda-superficie)', border: '1px solid var(--vda-linea)', borderRadius: '10px', padding: '1.25rem', boxShadow: 'var(--vda-sombra-card)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#ff6b35', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '1rem', flexShrink: 0 }}>
-                {(r.nombre || 'A')[0].toUpperCase()}
-              </div>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.95rem', color: 'var(--vda-tinta)' }}>{r.nombre}</strong>
-                  {r.verificada && (
-                    <span style={{ fontSize: '0.75rem', color: '#27ae60', background: '#d4edda', padding: '1px 6px', borderRadius: '4px' }}>
-                      ✓ Compra verificada
-                    </span>
+    <section className="pcat-resenas">
+      <h2>Opiniones de clientes ({reviews.length})</h2>
+      <div className="pcat-resenas-grid">
+        {reviews.map((r) => {
+          const estrellas = Math.min(5, Math.max(0, Number(r.calificacion) || 0))
+          return (
+            <article key={r.id} className="pcat-resena">
+              <div className="pcat-resena-cab">
+                <div className="pcat-resena-avatar" aria-hidden="true">
+                  {(r.nombre || 'A')[0].toUpperCase()}
+                </div>
+                <div>
+                  <div className="pcat-resena-nombre">
+                    {r.nombre || 'Cliente'}
+                    {r.verificada && <span className="pcat-resena-verificada"> Compra verificada</span>}
+                  </div>
+                  {estrellas > 0 && (
+                    <div className="pcat-resena-estrellas" aria-label={`${estrellas} de 5 estrellas`}>
+                      {'★'.repeat(estrellas)}{'☆'.repeat(5 - estrellas)}
+                    </div>
                   )}
                 </div>
-                <div style={{ color: '#f39c12', fontSize: '1rem', letterSpacing: '2px' }}>
-                  {'★'.repeat(r.calificacion || 5)}{'☆'.repeat(5 - (r.calificacion || 5))}
-                </div>
+                {r.fecha && (
+                  <time className="pcat-resena-fecha" dateTime={r.fecha}>
+                    {new Date(r.fecha).toLocaleDateString('es-CO', { year: 'numeric', month: 'short', day: 'numeric' })}
+                  </time>
+                )}
               </div>
-              {r.fecha && (
-                <span style={{ marginLeft: 'auto', fontSize: '0.8rem', color: 'var(--vda-tinta-muted)' }}>
-                  {new Date(r.fecha).toLocaleDateString('es-CO', { year: 'numeric', month: 'short', day: 'numeric' })}
-                </span>
-              )}
-            </div>
-            <p style={{ margin: 0, color: 'var(--vda-tinta-dim)', fontSize: '0.95rem', lineHeight: 1.5 }}>{r.comentario}</p>
-          </div>
-        ))}
+              {r.comentario && <p>{r.comentario}</p>}
+            </article>
+          )
+        })}
       </div>
-    </div>
+    </section>
   )
 }

@@ -16,6 +16,7 @@ import { notFound } from 'next/navigation'
 import { serializarJsonLd } from '@/utilidades/jsonLd'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
 import ProductoCliente from './ProductoCliente'
+import ProductosRelacionados from '@/componentes/relacionados/ProductosRelacionados'
 import { consultarProductoPorSlug } from '@/servicios/consultaProducto'
 
 const SITIO = 'https://ventadeacordeones.com'
@@ -37,6 +38,38 @@ const getProducto = cache(async (slug: string) => {
     .maybeSingle()
   if (error) console.error('[producto SEO] Supabase:', error.message)
   return data
+})
+
+/**
+ * Reseñas APROBADAS del producto, para el `aggregateRating` del JSON-LD.
+ *
+ * Google solo da estrellas en resultados cuando la valoración sale de reseñas de
+ * personas reales Y esas reseñas se ven en la misma página (lo que prohíbe son las
+ * autogeneradas y las agregadas de terceros sin permiso). Por eso se leen de
+ * `resenas_productos`, que es exactamente lo que pinta <ResenasProducto/> en la ficha:
+ * el marcado y lo visible dicen lo mismo.
+ *
+ * Si la tabla todavía no existe (SQL sin ejecutar) o no hay ninguna aprobada, devuelve
+ * lista vacía y el JSON-LD sale idéntico a como está hoy, sin valoración.
+ */
+const getResenasAprobadas = cache(async (slug: string) => {
+  const { data, error } = await supabaseServidor
+    .from('resenas_productos')
+    // El embed !inner filtra por el slug sin necesitar el id del producto (la consulta
+    // de metadata no lo trae) y se resuelve en una sola ida a la BD.
+    .select('calificacion, titulo, comentario, nombre_autor, creado_el, productos!inner(slug)')
+    .eq('productos.slug', slug)
+    .eq('aprobada', true)
+    .order('creado_el', { ascending: false })
+    .limit(100)
+  if (error) {
+    // Mientras el SQL no se haya ejecutado en Supabase la tabla no existe: es un estado
+    // esperado, no un fallo, así que no se ensucia el log de cada ficha del catálogo.
+    const tablaPendiente = error.code === 'PGRST205' || error.code === '42P01'
+    if (!tablaPendiente) console.error('[producto SEO] reseñas:', error.message)
+    return [] as any[]
+  }
+  return (data || []) as any[]
 })
 
 // Ficha completa para RENDERIZAR en el servidor. `cache()` evita repetir la consulta entre
@@ -225,8 +258,15 @@ export default async function PaginaProductoRoute({
 
   const canonical = `${SITIO}/producto/${p.slug}`
   const categoria = categoriaDe(p)
-  const resenas = Number(p.total_resenas) || 0
-  const calificacion = Number(p.calificacion_promedio) || 0
+  // La valoración del JSON-LD sale de las reseñas reales aprobadas, NO de las columnas
+  // `total_resenas`/`calificacion_promedio` (que se pueden teclear a mano en el panel y
+  // fue justo lo que sostuvo el "4.9 · 247 reseñas" inventado).
+  const resenasReales = await getResenasAprobadas(slug)
+  const resenas = resenasReales.length
+  const calificacion =
+    resenas > 0
+      ? Math.round((resenasReales.reduce((s, r) => s + (Number(r.calificacion) || 0), 0) / resenas) * 100) / 100
+      : 0
 
   const jsonLd = {
     '@context': 'https://schema.org/',
@@ -255,14 +295,31 @@ export default async function PaginaProductoRoute({
           : 'https://schema.org/OutOfStock',
       seller: { '@id': `${SITIO}/#organization` },
     },
-    // Sólo si la BD trae valoraciones REALES: Google penaliza reseñas inventadas.
+    // Sólo si hay reseñas REALES y aprobadas: Google penaliza las inventadas.
     ...(resenas > 0 && calificacion > 0
       ? {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: calificacion,
             reviewCount: resenas,
+            bestRating: 5,
+            worstRating: 1,
           },
+          // Hasta 3 reseñas literales, las mismas que el visitante ve en la ficha.
+          // Marcar reseñas que no están en la página es motivo de perder el rich result.
+          review: resenasReales.slice(0, 3).map((r: any) => ({
+            '@type': 'Review',
+            author: { '@type': 'Person', name: campoUtil(r.nombre_autor) || 'Cliente' },
+            datePublished: String(r.creado_el || '').slice(0, 10),
+            ...(campoUtil(r.titulo) ? { name: campoUtil(r.titulo) } : {}),
+            reviewBody: recortar(r.comentario, 500),
+            reviewRating: {
+              '@type': 'Rating',
+              ratingValue: Number(r.calificacion) || 0,
+              bestRating: 5,
+              worstRating: 1,
+            },
+          })),
         }
       : {}),
   }
@@ -300,6 +357,14 @@ export default async function PaginaProductoRoute({
         dangerouslySetInnerHTML={{ __html: serializarJsonLd(breadcrumbLd) }}
       />
       <ProductoCliente initialData={await getProductoCompleto(slug)} />
+      {/* Relacionados renderizados en el SERVIDOR: cierra la ficha con 4 productos
+          comprables y, de paso, mete enlaces internos reales entre fichas en el HTML. */}
+      <ProductosRelacionados
+        slugActual={p.slug}
+        precio={Number(p.precio) || 0}
+        categoriaSlug={categoria?.slug ?? null}
+        categoriaNombre={categoria?.nombre ?? null}
+      />
     </>
   )
 }

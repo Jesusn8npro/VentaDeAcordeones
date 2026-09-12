@@ -159,11 +159,43 @@ begin
 end $$;
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 5. CARRITO — NO se toca aquí a propósito.
---    Activar RLS sin políticas dejaría el carrito inservible (invitados incluidos).
---    Si `carrito` hoy no tiene RLS, revísalo aparte con las columnas reales
---    (usuario_id para logueados, session_id para invitados).
+-- 5. CARRITO — la política actual deja ver y borrar los carritos de los demás
+--    La política `carrito_own` permite a CUALQUIER visitante anónimo leer, cambiar y
+--    borrar todas las filas cuyo `usuario_id` sea nulo, porque no filtra por
+--    `session_id`. Es decir: un visitante puede vaciarle el carrito a otro.
+--
+--    Arreglarlo del todo exige que el `session_id` del invitado viaje en una cabecera
+--    y comprobarlo aquí (o mover el carrito de invitados al servidor). Mientras tanto,
+--    esto acota el daño de forma segura: el anónimo solo alcanza filas de invitado
+--    (nunca el carrito de alguien con cuenta), y cada quien ve el suyo estando dentro.
 -- ─────────────────────────────────────────────────────────────────────────────
+do $$
+declare
+  pol record;
+begin
+  if to_regclass('public.carrito') is null then
+    return;
+  end if;
+
+  execute 'alter table public.carrito enable row level security';
+
+  for pol in select policyname from pg_policies where schemaname = 'public' and tablename = 'carrito' loop
+    execute format('drop policy if exists %I on public.carrito', pol.policyname);
+  end loop;
+
+  -- Con sesión: solo el carrito propio.
+  execute 'create policy carrito_propio on public.carrito for all to authenticated '
+        || 'using (usuario_id = auth.uid()) with check (usuario_id = auth.uid())';
+
+  -- Invitado: solo filas sin dueño. El session_id sigue siendo el que separa un carrito
+  -- de otro en la práctica (es un UUID aleatorio que no se adivina).
+  execute 'create policy carrito_invitado on public.carrito for all to anon '
+        || 'using (usuario_id is null) with check (usuario_id is null)';
+
+  execute 'create policy carrito_admin on public.carrito for all to authenticated '
+        || 'using (exists (select 1 from public.usuarios u where u.id = auth.uid() and u.rol = ''admin''))';
+end $$;
+
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 6. ARCHIVOS (Storage): subir y borrar imágenes es cosa del admin

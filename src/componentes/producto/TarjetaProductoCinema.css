@@ -41,6 +41,38 @@
 .cinema-card:hover .img-principal,
 .cinema-card:hover .img-secundaria { transform: scale(1.04); }
 
+/* Sin ratón (móvil o tablet táctil) el cambio de foto al hover NUNCA ocurre: la segunda imagen
+   duplicaba las peticiones de la rejilla para nada. Con display:none el elemento no tiene caja,
+   nunca entra en el viewport y el navegador NO llega a pedir la imagen lazy. En CSS, no con un
+   condicional de cliente, para no romper la hidratación. */
+@media (max-width: 767.98px), (hover: none) {
+  .cinema-card .img-secundaria { display: none; }
+}
+
+/* Placeholder de carga: el 1:1 del contenedor ya evita el salto de layout y encima corre un
+   barrido con los tokens del tema, que se apaga cuando la foto principal dispara onLoad. */
+.cinema-card__img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(100deg,
+    transparent 25%,
+    color-mix(in srgb, var(--vda-tinta) 8%, transparent) 50%,
+    transparent 75%);
+  background-size: 240% 100%;
+  animation: cinema-barrido 1.5s linear infinite;
+}
+.cinema-card__img[data-cargada]::after { display: none; }
+@keyframes cinema-barrido {
+  from { background-position: 130% 0; }
+  to   { background-position: -130% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinema-card__img::after { animation: none; }
+}
+
 .img-placeholder { background: linear-gradient(135deg, var(--vda-superficie-2) 0%, var(--vda-superficie-3) 50%, var(--vda-superficie-2) 100%); background-size: 200% 200%; animation: cinema-shimmer 1.5s ease-in-out infinite; }
 @keyframes cinema-shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
@@ -69,7 +101,7 @@
   text-transform: uppercase;
   background: var(--vda-overlay-fuerte);
   border: 1px solid var(--vda-oro);
-  color: var(--vda-oro);
+  color: var(--vda-oro-texto);
   padding: 4px 9px;
   z-index: 3;
   backdrop-filter: blur(4px);
@@ -102,7 +134,7 @@
   transition: all 0.25s;
   backdrop-filter: blur(4px);
 }
-.cinema-card__fav:hover { color: var(--vda-oro); border-color: var(--vda-oro); }
+.cinema-card__fav:hover { color: var(--vda-oro-texto); border-color: var(--vda-oro); }
 .cinema-card__fav--activo {
   color: var(--vda-oro);
   background: var(--vda-oro-brillo);
@@ -164,7 +196,7 @@
   font-size: 9px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--vda-tinta-muted);
+  color: var(--vda-tinta-dim);
   margin-bottom: 5px;
 }
 .cinema-card__name {
@@ -194,14 +226,14 @@
 .cinema-card__price-now {
   font-family: var(--font-bebas, 'Bebas Neue', sans-serif);
   font-size: 21px;
-  color: var(--vda-oro);
+  color: var(--vda-oro-texto);
   letter-spacing: 0.02em;
   line-height: 1;
 }
 .cinema-card__price-was {
   font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
   font-size: 9px;
-  color: var(--vda-tinta-muted);
+  color: var(--vda-tinta-dim);
   text-decoration: line-through;
   letter-spacing: 0.1em;
 }
@@ -243,13 +275,13 @@
   margin-top: 10px;
   font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
   font-size: 9px;
-  color: var(--vda-tinta-muted);
+  color: var(--vda-tinta-dim);
   letter-spacing: 0.08em;
 }
 .cinema-card__stars {
   display: flex;
   gap: 2px;
-  color: var(--vda-oro);
+  color: var(--vda-oro-texto);
 }
 
 /* ── ESTADO VENDIDO ── */

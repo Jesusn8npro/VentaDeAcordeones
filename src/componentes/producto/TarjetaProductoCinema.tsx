@@ -11,7 +11,7 @@ import './TarjetaProductoCinema.css'
 
 // Ancho real de la foto en cada rejilla (2 col en móvil y tablet, 3 desde 1000 px, 4 desde 1300 px).
 // Fuera del componente para no recrear la cadena en cada render de las tarjetas.
-const SIZES_TARJETA = '(max-width: 640px) 46vw, (max-width: 1000px) 48vw, (max-width: 1300px) 32vw, 330px'
+const SIZES_TARJETA = '(max-width: 640px) 46vw, (max-width: 1000px) 48vw, (max-width: 1300px) 30vw, 260px'
 
 // Apaga el placeholder del contenedor sin pasar por el estado de React: una rejilla de 24 tarjetas
 // no puede permitirse 24 renders extra sólo para quitar un shimmer.
@@ -110,7 +110,8 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
           aria-label={favorito ? 'Quitar de favoritos' : 'Agregar a favoritos'}
           type="button"
         >
-          <Heart size={14} fill={favorito ? 'var(--vda-oro)' : 'none'} color={favorito ? 'var(--vda-oro)' : 'currentColor'} />
+          {/* currentColor: el icono hereda el color del botón, que sale de los tokens del tema */}
+          <Heart size={14} fill={favorito ? 'currentColor' : 'none'} color="currentColor" />
         </button>
 
         {srcPrincipal ? (
@@ -205,8 +206,8 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
                 <Star
                   key={i}
                   size={10}
-                  fill={i < Math.round(scorePromedio) ? 'var(--vda-oro)' : 'none'}
-                  color="var(--vda-oro)"
+                  fill={i < Math.round(scorePromedio) ? 'currentColor' : 'none'}
+                  color="currentColor"
                 />
               ))}
             </div>

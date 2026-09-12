@@ -1,0 +1,59 @@
+/* BotonGuardarCarritoWhatsapp.css — accion discreta, nunca compite con "Ir al checkout" */
+
+.vda-guardar-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  color: var(--vda-tinta-dim);
+  /* Solo se anima background-color: su valor en reposo es `transparent`, no un token.
+     Animar `color` o `border-color` (que si salen de --vda-*) deja congelado el valor
+     ANTIGUO al cambiar de tema en caliente: el boton se quedaba con el gris del tema claro
+     sobre fondo negro hasta recargar la pagina. Verificado en el navegador. */
+  transition: background-color 0.2s ease;
+}
+.vda-guardar-wa:hover,
+.vda-guardar-wa:focus-visible { color: var(--vda-oro); }
+.vda-guardar-wa:focus-visible {
+  outline: 2px solid var(--vda-oro);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.vda-guardar-wa__icono { flex-shrink: 0; }
+
+/* En 375px el texto baja de linea antes que desbordar el cajon */
+.vda-guardar-wa__texto { overflow-wrap: anywhere; text-align: left; }
+
+/* ── VARIANTE LINEA: enlace plano para el pie del cajon lateral ── */
+.vda-guardar-wa--linea { padding: 4px 0; }
+.vda-guardar-wa--linea:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── VARIANTE BLOQUE: boton secundario de ancho completo para la pagina del carrito ── */
+.vda-guardar-wa--bloque {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--vda-linea-fuerte);
+  border-radius: 10px;
+  background: transparent;
+}
+.vda-guardar-wa--bloque:hover,
+.vda-guardar-wa--bloque:focus-visible {
+  border-color: color-mix(in srgb, var(--vda-oro) 45%, transparent);
+  background: color-mix(in srgb, var(--vda-oro) 6%, transparent);
+}
+
+@media (max-width: 400px) {
+  .vda-guardar-wa { font-size: 12px; }
+  .vda-guardar-wa--bloque { padding: 10px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vda-guardar-wa { transition: none; }
+}

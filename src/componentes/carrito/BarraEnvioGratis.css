@@ -1,0 +1,117 @@
+/* BarraEnvioGratis.css — progreso hacia el envío gratis.
+   Todos los colores salen de los tokens --vda-* para que la barra cambie sola
+   entre tema claro y oscuro (ver src/estilos/diseno.css). */
+
+.vda-envio {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--vda-linea);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--vda-oro) 5%, var(--vda-superficie));
+  /* min-width:0 en un flex/grid padre evita que el texto largo estire el contenedor
+     y saque scroll horizontal en 375 px. */
+  min-width: 0;
+}
+
+/* Conseguido: se tiñe de éxito, no de oro, para que se lea como "logrado". */
+.vda-envio.es-conseguido {
+  border-color: color-mix(in srgb, var(--vda-exito) 45%, transparent);
+  background: color-mix(in srgb, var(--vda-exito) 9%, var(--vda-superficie));
+}
+
+/* Variante para el cajón lateral: va sobre la superficie del drawer, sin caja propia. */
+.vda-envio.es-cajon {
+  border: 0;
+  border-radius: 0;
+  padding: 14px 20px;
+  background: color-mix(in srgb, var(--vda-oro) 4%, transparent);
+}
+.vda-envio.es-cajon.es-conseguido {
+  background: color-mix(in srgb, var(--vda-exito) 8%, transparent);
+}
+
+.vda-envio-mensaje {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--vda-tinta-dim);
+  min-width: 0;
+}
+
+.vda-envio-icono {
+  flex-shrink: 0;
+  color: var(--vda-oro-texto);
+}
+.vda-envio.es-conseguido .vda-envio-icono { color: var(--vda-exito); }
+
+.vda-envio-texto { min-width: 0; }
+
+.vda-envio-monto {
+  font-weight: 800;
+  color: var(--vda-oro-texto);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.vda-envio.es-conseguido .vda-envio-mensaje {
+  color: var(--vda-exito);
+  font-weight: 700;
+}
+
+/* — Pista y relleno — */
+.vda-envio-pista {
+  position: relative;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--vda-tinta) 12%, transparent);
+}
+
+.vda-envio-relleno {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--vda-oro-suave), var(--vda-oro));
+  /* La barra crece con easing de salida: el salto al añadir un producto se ve
+     como avance, no como un corte seco. */
+  transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 400ms ease;
+  will-change: width;
+}
+
+.vda-envio.es-conseguido .vda-envio-relleno {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--vda-exito) 70%, var(--vda-oro)), var(--vda-exito));
+}
+
+/* Brillo que recorre la barra una sola vez al conseguir el envío gratis.
+   Es feedback del logro, no un elemento permanente que distraiga. */
+.vda-envio.es-conseguido .vda-envio-pista::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--vda-tinta) 55%, transparent),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: vda-envio-brillo 900ms ease-out 1;
+}
+
+@keyframes vda-envio-brillo {
+  to { transform: translateX(100%); }
+}
+
+/* — Accesibilidad: sin movimiento si el sistema lo pide — */
+@media (prefers-reduced-motion: reduce) {
+  .vda-envio-relleno { transition: none; }
+  .vda-envio.es-conseguido .vda-envio-pista::after { animation: none; display: none; }
+}
+
+@media (max-width: 420px) {
+  .vda-envio-mensaje { font-size: 12.5px; }
+}

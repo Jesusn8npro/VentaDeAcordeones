@@ -1,0 +1,137 @@
+/* FranjaConfianza.css — franja de garantias verificables
+   Usa solo tokens --vda-* : el tema claro/oscuro se resuelve solo via [data-theme="light"]. */
+
+.vda-confianza {
+  --vdc-borde: var(--vda-linea);
+  --vdc-borde-activo: color-mix(in srgb, var(--vda-oro) 42%, transparent);
+  --vdc-fondo-hover: color-mix(in srgb, var(--vda-oro) 6%, transparent);
+  --vdc-acento: var(--vda-oro);
+  --vdc-texto: var(--vda-tinta);
+  --vdc-texto-dim: var(--vda-tinta-muted);
+
+  width: 100%;
+  /* min-width:0 evita que la rejilla desborde dentro de columnas estrechas (375px) */
+  min-width: 0;
+}
+
+.vda-confianza__titulo {
+  margin: 0 0 12px;
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vdc-texto-dim);
+}
+
+.vda-confianza__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.vda-confianza__item { min-width: 0; }
+
+.vda-confianza__enlace {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+  transition: background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+.vda-confianza__enlace:hover,
+.vda-confianza__enlace:focus-visible {
+  background: var(--vdc-fondo-hover);
+  border-color: var(--vdc-borde-activo);
+  /* Micro-desplazamiento: confirma que el punto es comprobable, sin ser un boton chillon */
+  transform: translateX(2px);
+}
+.vda-confianza__enlace:focus-visible {
+  outline: 2px solid var(--vdc-acento);
+  outline-offset: 2px;
+}
+
+.vda-confianza__icono {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  color: var(--vdc-acento);
+  background: color-mix(in srgb, var(--vda-oro) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vda-oro) 18%, transparent);
+}
+
+.vda-confianza__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.vda-confianza__punto-titulo {
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--vdc-texto);
+  /* Sin truncar: en 375px preferimos que baje de linea a que se corte una garantia */
+  overflow-wrap: anywhere;
+}
+
+.vda-confianza__punto-detalle {
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--vdc-texto-dim);
+  overflow-wrap: anywhere;
+}
+
+/* Texto solo para lectores de pantalla (nombre local: el global puede no existir aqui) */
+.vda-confianza .sr-only-vda {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── VARIANTE PDP: encaja bajo la franja existente de la ficha ── */
+.vda-confianza--pdp {
+  padding-top: 18px;
+  border-top: 1px solid var(--vdc-borde);
+}
+.vda-confianza--pdp .vda-confianza__lista {
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 10px;
+}
+
+/* ── VARIANTE CARRITO: columna unica, mas compacta (cajon de 420px o pagina) ── */
+.vda-confianza--carrito .vda-confianza__lista { grid-template-columns: 1fr; }
+.vda-confianza--carrito .vda-confianza__enlace { padding: 9px 10px; gap: 10px; }
+.vda-confianza--carrito .vda-confianza__icono { width: 28px; height: 28px; border-radius: 8px; }
+
+/* ── MOVIL: una sola columna desde 560px hacia abajo, sin desbordes en 375px ── */
+@media (max-width: 560px) {
+  .vda-confianza--pdp .vda-confianza__lista { grid-template-columns: 1fr; }
+  .vda-confianza__punto-titulo { font-size: 12.5px; }
+  .vda-confianza__punto-detalle { font-size: 11px; }
+  .vda-confianza__enlace { padding: 10px 8px; gap: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vda-confianza__enlace { transition: none; }
+  .vda-confianza__enlace:hover { transform: none; }
+}

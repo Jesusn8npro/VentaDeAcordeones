@@ -1,10 +1,12 @@
 /* ImagenOptimizada.css */
 
+/* Los grises estaban quemados (#f1f3f5 / #e9ecef): en tema oscuro dejaban un rectángulo claro
+   dentro de la tarjeta negra mientras cargaba. Ahora salen de los tokens y siguen al tema. */
 .imagen-optimizada {
   position: relative;
   display: inline-block;
   overflow: hidden;
-  background: #f1f3f5;
+  background: var(--vda-superficie-2);
 }
 
 .imagen-optimizada img {
@@ -26,7 +28,7 @@
 .imagen-skeleton {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #f1f3f5 25%, #e9ecef 50%, #f1f3f5 75%);
+  background: linear-gradient(90deg, var(--vda-superficie-2) 25%, var(--vda-superficie-3) 50%, var(--vda-superficie-2) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.4s infinite;
 }
@@ -34,6 +36,10 @@
 @keyframes skeleton-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imagen-skeleton { animation: none; }
 }
 
 .imagen-optimizada.thumbnail {

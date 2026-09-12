@@ -664,6 +664,47 @@
 }
 @media (max-width: 760px) {
   .cinema-pdp { --pad-x: 22px; }
+  /* En móvil la foto iba DESPUÉS de la tira de miniaturas y ocupaba un cuadrado a ancho completo:
+     entre cabecera, migas, miniaturas y foto, el nombre y el precio caían fuera de la primera
+     pantalla. Ahora la foto va primero, las miniaturas debajo, y la altura se limita a 55vh (con
+     un tope por ancho para pantallas cortas). En escritorio no cambia nada. */
+  .cinema-pdp .pdp-main-image {
+    order: 1;
+    aspect-ratio: auto;
+    height: min(55vh, 80vw);
+    max-height: 55vh;
+  }
+  .cinema-pdp .pdp-thumbs { order: 2; }
+  /* Las migas iban en una sola línea sin poder encogerse: con un nombre de producto largo
+     medían 383 px en un móvil de 375 y sacaban la página 8 px del viewport (scroll horizontal).
+     Ahora la tira se desplaza dentro de su caja, sin barra visible, y la página no desborda. */
+  .cinema-pdp .pdp-crumbs {
+    padding-top: 12px;
+    padding-bottom: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cinema-pdp .pdp-crumbs::-webkit-scrollbar { display: none; }
+  .cinema-pdp .pdp-crumbs > * { flex: 0 0 auto; }
+  /* Menos aire entre foto y miniaturas: cada píxel cuenta para que el precio entre en pantalla. */
+  .cinema-pdp .pdp-gallery { gap: 10px; }
+  .cinema-pdp .pdp-layout  { padding-top: 10px; }
+
+  /* En móvil el precio quedaba a ~1300 px del inicio: entre el título y el bloque de precios se
+     colaba la descripción larga (446 px de texto). En una pantalla de 812 px eso son tres scrolls
+     para ver cuánto cuesta. La columna de info es un grid, así que se reordena SOLO en móvil:
+     marca → título → valoración → precio → botones → descripción → el resto.
+     El HTML no se toca (en escritorio, con la galería al lado, el orden original funciona bien). */
+  .cinema-pdp .pdp-info { gap: 14px; }
+  .cinema-pdp .pdp-info > *            { order: 8; }
+  .cinema-pdp .pdp-info > .pdp-brand-pill { order: 1; }
+  .cinema-pdp .pdp-info > .pdp-title      { order: 2; }
+  .cinema-pdp .pdp-info > .pdp-meta-row   { order: 3; }
+  .cinema-pdp .pdp-info > .pdp-pricing    { order: 4; }
+  .cinema-pdp .pdp-info > .pdp-actions    { order: 5; }
+  .cinema-pdp .pdp-info > .pdp-buynow     { order: 6; }
+  .cinema-pdp .pdp-info > .pdp-desc       { order: 7; }
   .cinema-pdp .pdp-trust-strip  { grid-template-columns: 1fr; }
   .cinema-pdp .pdp-pricing      { grid-template-columns: 1fr; }
   .cinema-pdp .pdp-mode-price   { font-size: 24px; }

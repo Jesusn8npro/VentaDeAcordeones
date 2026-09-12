@@ -14,7 +14,7 @@ import './TarjetaProductoLujo.es.css'
 // Ancho real de la foto dentro de la tarjeta en cada rejilla (2 col móvil, 2 tablet, 3 desde
 // 1000 px, 4 desde 1300 px), descontando el padding 7 % de `.imagen`. Va fuera del componente
 // para no recrear la cadena en cada render de las 24 tarjetas de la tienda.
-const SIZES_TARJETA = '(max-width: 640px) 40vw, (max-width: 1000px) 44vw, (max-width: 1300px) 29vw, 300px'
+const SIZES_TARJETA = '(max-width: 640px) 40vw, (max-width: 1000px) 41vw, (max-width: 1300px) 26vw, 240px'
 
 // Apaga el placeholder animado del contenedor en cuanto la foto está en pantalla. Se marca con un
 // atributo en el DOM en vez de con estado: así una rejilla de 24 tarjetas no dispara 24 renders.
@@ -305,7 +305,8 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
           <div className="info-secundaria">
             <div className="insignia-ahorro" role="note" aria-label="Ahorro sobre el precio de lista">
               <div className="lado-izquierdo">
-                <CircleDollarSign size={12} color="#fff" />
+                {/* currentColor: el icono sigue al texto de la insignia, que cambia con el tema */}
+                <CircleDollarSign size={12} color="currentColor" />
                 <span>${new Intl.NumberFormat('es-CO').format(ahorroValor)} Ahorro extra</span>
               </div>
             </div>

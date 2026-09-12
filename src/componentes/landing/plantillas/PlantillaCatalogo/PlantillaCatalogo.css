@@ -339,21 +339,22 @@
 }
 
 /* Confianza: sólo hechos comprobables del negocio */
+/* Tarjetas sueltas y no una rejilla con separadores de 1px: con 3 datos en dos
+   columnas, la celda sobrante del truco del `gap` pintado dejaba un bloque de color
+   vacío en móvil. Así cada dato lleva su propio borde y no sobra nada. */
 .pcat-confianza {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 10px;
   margin-top: 4px;
-  border: 1px solid var(--vda-linea);
-  border-radius: 14px;
-  background: var(--vda-linea);
-  overflow: hidden;
 }
 .pcat-confianza-item {
   display: flex;
   gap: 10px;
   align-items: center;
-  padding: 14px;
+  padding: 13px 14px;
+  border: 1px solid var(--vda-linea);
+  border-radius: 13px;
   background: var(--vda-superficie);
 }
 .pcat-confianza-item svg { color: var(--vda-oro); flex: 0 0 auto; }

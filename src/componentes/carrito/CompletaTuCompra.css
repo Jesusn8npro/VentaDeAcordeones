@@ -1,0 +1,214 @@
+/* CompletaTuCompra.css — accesorios complementarios dentro del carrito.
+   Colores solo con tokens --vda-* (tema claro y oscuro sin duplicar reglas). */
+
+.vda-cross {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid var(--vda-linea);
+  border-radius: 16px;
+  background: var(--vda-superficie);
+  /* Sin esto, el carril horizontal del móvil empuja el ancho del grid padre
+     y saca scroll lateral en 375 px. */
+  min-width: 0;
+  overflow: hidden;
+}
+
+.vda-cross-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.vda-cross-cabecera h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--vda-tinta);
+  letter-spacing: -0.01em;
+}
+
+.vda-cross-icono { color: var(--vda-oro-texto); flex-shrink: 0; }
+
+.vda-cross-sub {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--vda-tinta-muted);
+}
+
+/* — Lista — */
+.vda-cross-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vda-cross-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--vda-linea);
+  border-radius: 12px;
+  background: var(--vda-superficie-2);
+  overflow: hidden;
+  min-width: 0;
+  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+}
+.vda-cross-item:hover {
+  border-color: color-mix(in srgb, var(--vda-oro) 55%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -16px var(--vda-oro-brillo);
+}
+
+.vda-cross-figura {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  background: var(--vda-superficie-3);
+  overflow: hidden;
+}
+.vda-cross-figura img { object-fit: cover; }
+
+.vda-cross-sinfoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 26px;
+  font-weight: 800;
+  color: color-mix(in srgb, var(--vda-oro) 60%, transparent);
+}
+
+/* Etiqueta "con este llegas al envío gratis": es un dato calculado del carrito,
+   no una urgencia inventada. */
+.vda-cross-puente {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  background: var(--vda-exito);
+  color: #fff;
+}
+
+.vda-cross-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.vda-cross-nombre {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--vda-tinta);
+  text-decoration: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* overflow-wrap evita que un nombre sin espacios reviente la tarjeta en móvil. */
+  overflow-wrap: anywhere;
+}
+.vda-cross-nombre:hover { color: var(--vda-oro-texto); }
+
+.vda-cross-precio {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--vda-oro-texto);
+  font-variant-numeric: tabular-nums;
+  margin-top: auto;
+}
+.vda-cross-precio del {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--vda-tinta-muted);
+}
+
+/* Solo se pinta cuando el stock real es bajo (viene de la BD, no es un adorno). */
+.vda-cross-stock {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--vda-naranja);
+}
+
+.vda-cross-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--vda-oro);
+  color: #000;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: filter 180ms ease, transform 120ms ease;
+}
+.vda-cross-boton:hover:not(:disabled) { filter: brightness(1.08); }
+.vda-cross-boton:active:not(:disabled) { transform: scale(0.97); }
+.vda-cross-boton:disabled { opacity: 0.65; cursor: default; }
+.vda-cross-boton:focus-visible { outline: 2px solid var(--vda-tinta); outline-offset: 2px; }
+
+.vda-cross-boton.es-anadido { background: var(--vda-exito); color: #fff; }
+
+.vda-cross-error {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: var(--vda-peligro);
+}
+
+/* — Esqueleto de carga — */
+.vda-cross-esqueleto {
+  border-radius: 12px;
+  background: var(--vda-superficie-2);
+  height: 210px;
+  animation: vda-cross-latido 1.3s ease-in-out infinite;
+}
+@keyframes vda-cross-latido {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* — Variante cajón lateral: sin caja, ancho completo del drawer — */
+.vda-cross.es-cajon {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--vda-linea);
+  border-radius: 0;
+  background: transparent;
+  padding: 16px 20px;
+}
+.vda-cross.es-cajon .vda-cross-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.vda-cross.es-cajon .vda-cross-cabecera h3 { font-size: 15px; }
+/* En el cajón el ancho es fijo (~460 px): con foto cuadrada cada tarjeta medía
+   más de 300 px de alto y empujaba el checkout fuera de la vista. */
+.vda-cross.es-cajon .vda-cross-figura { aspect-ratio: 4 / 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vda-cross-item,
+  .vda-cross-boton { transition: none; }
+  .vda-cross-item:hover { transform: none; }
+  .vda-cross-esqueleto { animation: none; }
+}
+
+@media (max-width: 420px) {
+  .vda-cross { padding: 14px; }
+  .vda-cross-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+}

@@ -10,6 +10,9 @@ import { usarCupones } from '../../../hooks/usarCupones'
 import { usarEpayco } from '../../../hooks/usarEpayco'
 import { pedidosServicio } from '../../../servicios/pedidosServicio'
 import ItemCarrito from '../../../componentes/carrito/ItemCarrito'
+import BarraEnvioGratis from '../../../componentes/carrito/BarraEnvioGratis'
+import BotonGuardarCarritoWhatsapp from '../../../componentes/confianza/BotonGuardarCarritoWhatsapp'
+import CompletaTuCompra from '../../../componentes/carrito/CompletaTuCompra'
 import FormularioEnvio from '../../../componentes/checkout/FormularioEnvio'
 import PasoPago from '../../../componentes/checkout/PasoPago'
 import { formatearPrecioCOP } from '../../../utilidades/formatoPrecio'
@@ -180,6 +183,11 @@ export default function PaginaCarrito() {
                     <ItemCarrito key={item.id} item={item} onActualizarCantidad={actualizarCantidad} onEliminar={eliminarDelCarrito} mostrarDescripcion />
                   ))}
                 </div>
+
+                {/* Cross-sell justo debajo de lo que ya eligió: es el momento en que el
+                    cliente repasa el pedido y se acuerda de lo que le falta (correa,
+                    estuche, audífonos). Un clic lo añade sin salir del carrito. */}
+                <CompletaTuCompra />
               </div>
             )}
 
@@ -226,6 +234,10 @@ export default function PaginaCarrito() {
                 <div className="resumen-linea total"><span>Total</span><span className="precio-total">{formatearPrecioCOP(total - (descuentoCupon || 0))}</span></div>
               </div>
 
+              {/* Va pegada al total, que es donde el cliente mira el coste del envío:
+                  ahí es donde "te faltan $X" se convierte en una acción concreta. */}
+              <BarraEnvioGratis subtotal={subtotal} envio={envio} />
+
               {paso <= 3 && (
                 <div className="seccion-cupon">
                   <h4><Tag size={16} /> Código de descuento</h4>
@@ -251,9 +263,13 @@ export default function PaginaCarrito() {
                 </div>
               )}
 
+              {/* Asi se cierran de verdad las ventas grandes de este negocio: el cliente
+                  se lleva su carrito a WhatsApp y lo termina hablando con un maestro. */}
+              <BotonGuardarCarritoWhatsapp variante="bloque" />
+
               <div className="garantias">
-                <div className="garantia-item"><Shield size={16} /><span>Compra 100% segura</span></div>
-                <div className="garantia-item"><Truck size={16} /><span>Envío gratis +$50.000</span></div>
+                <div className="garantia-item"><Shield size={16} /><span>Pago seguro con ePayco</span></div>
+                <div className="garantia-item"><Truck size={16} /><span>Envío gratis desde $50.000</span></div>
                 <div className="garantia-item"><Star size={16} /><span>Garantía del fabricante</span></div>
               </div>
             </div>

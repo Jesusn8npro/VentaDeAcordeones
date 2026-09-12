@@ -3,10 +3,12 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Truck, Shield, MapPin, Globe, Plus, Minus, Check, ShoppingCart, Zap, Search } from 'lucide-react'
+import { Plus, Minus, Check, ShoppingCart, Search } from 'lucide-react'
 import { useCarrito } from '../../../../contextos/CarritoContext'
 import { optimizarUrlSupabase } from '../../../ImagenOptimizada'
 import CompraRapida from '../../../checkout/CompraRapida'
+import FranjaConfianza from '../../../confianza/FranjaConfianza'
+import ResenasProducto from '../../../resenas/ResenasProducto'
 import './PlantillaCinema.css'
 
 const fmtCOP = (n: number) => `$${new Intl.NumberFormat('es-CO').format(n)}`
@@ -82,22 +84,14 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
   // Prueba social SOLO con datos reales. Antes, cuando un producto no tenia reseñas (que es
   // el caso de todo el catalogo), la ficha inventaba "4.9", "247 reseñas" y "500+ vendidos
   // este mes". Eso es publicidad engañosa y Google penaliza las reseñas fabricadas.
+  // `hayResenas` solo decide la estrellita junto al título, y sale de columnas que
+  // recalcula la propia BD desde las reseñas APROBADAS (trigger de
+  // SQL_Para_SUPABASE/2026-09-11_resenas_verificadas.sql): no se pueden inflar a mano.
   const hayResenas = resenas > 0 && score > 0
-  const ratingBars = hayResenas
-    ? [5, 4, 3, 2, 1].map(s => {
-        const widths: Record<number, string> = { 5: '88%', 4: '9%', 3: '2%', 2: '0.5%', 1: '0.5%' }
-        const counts: Record<number, number> = {
-          5: Math.round(resenas * 0.88),
-          4: Math.round(resenas * 0.09),
-          3: Math.round(resenas * 0.02),
-          2: 1,
-          1: 1,
-        }
-        return { s, width: widths[s], count: counts[s] }
-      })
-    : []
-
-  const reseñasData = Array.isArray(reviews) && reviews.length > 0 ? reviews.slice(0, 3) : []
+  // El reparto por estrellas y los testimonios los sirve <ResenasProducto/> desde
+  // /api/resenas. Antes se calculaban aquí con porcentajes inventados (88/9/2%) y
+  // con `reviews`, que venía de la configuración de la landing, no de clientes reales;
+  // por eso esa prop ya no se usa aunque se mantiene en la firma del componente.
 
   const acordeones = [
     {
@@ -317,37 +311,15 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
             alCerrar={() => setCompraRapida(false)}
           />
 
-          {/* Trust strip */}
-          <div className="pdp-trust-strip">
-            <div className="pdp-trust-item">
-              <Truck size={20} />
-              <div>
-                <strong>Envío Gratis</strong>
-                <span>Compras desde $50.000</span>
-              </div>
-            </div>
-            <div className="pdp-trust-item">
-              <Shield size={20} />
-              <div>
-                <strong>{garantiaMeses > 0 ? `Garantía ${garantiaMeses} meses` : 'Garantía Incluida'}</strong>
-                <span>Estructural + servicio</span>
-              </div>
-            </div>
-            <div className="pdp-trust-item">
-              <MapPin size={20} />
-              <div>
-                <strong>Hecho en Colombia</strong>
-                <span>Taller propio</span>
-              </div>
-            </div>
-            <div className="pdp-trust-item">
-              <Globe size={20} />
-              <div>
-                <strong>Envíos a 42 países</strong>
-                <span>Seguro de tránsito incluido</span>
-              </div>
-            </div>
-          </div>
+          {/* La tira de garantias que habia aqui se retiro: repetia lo que ya dicen los
+              "perks" de arriba y la franja de confianza de abajo (tres bloques de garantias
+              seguidos), y afirmaba "Envios a 42 paises" y "Hecho en Colombia" en fichas de
+              acordeones alemanes, dos datos que no se sostienen. */}
+
+          {/* Garantias verificables: cada punto enlaza a la pagina del sitio que lo respalda.
+              En un instrumento de varios millones el freno es "¿y si me estafan?", y eso solo
+              se responde dejando que el comprador compruebe, no con sellos decorativos. */}
+          <FranjaConfianza variante="pdp" titulo="Por qué puedes comprar tranquilo" />
 
           {/* Acordeones */}
           <div className="pdp-accordions">
@@ -366,51 +338,11 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
         </div>
       </div>
 
-      {/* Reseñas: la seccion entera desaparece si el producto todavia no tiene ninguna,
-          en vez de rellenarla con una nota media y unas barras inventadas. */}
-      {hayResenas && (
-      <section className="pdp-reviews">
-        <div className="pdp-reviews-head">
-          <div className="pdp-reviews-left">
-            <div className="pdp-reviews-eyebrow">— Reseñas Verificadas</div>
-            <h2 className="pdp-reviews-title">
-              {score.toFixed(1)} / 5{' '}
-              <span className="pdp-reviews-sub">de nuestros clientes</span>
-            </h2>
-          </div>
-          <div className="pdp-rating-bars">
-            {ratingBars.map(({ s, width, count }) => (
-              <div key={s} className="pdp-rb">
-                <span className="pdp-rb-stars">{'★'.repeat(s)}</span>
-                <div className="pdp-rb-bar"><span style={{ width }}></span></div>
-                <span className="pdp-rb-cnt">{count}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Solo reseñas reales. Antes, si no llegaba ninguna, se pintaban tres testimonios
-            escritos a mano ("Camilo R. · Medellín", "Yulissa M. · Miami"…) firmados por personas
-            que no existen. Sin reseñas la rejilla simplemente no se renderiza. */}
-        {reseñasData.length > 0 && (
-          <div className="pdp-tst-grid">
-            {reseñasData.map((r: any, i: number) => (
-              <div key={i} className="pdp-tst">
-                <div className="pdp-tst-stars">{'★'.repeat(r.calificacion || r.rating || 5)}</div>
-                <p className="pdp-tst-text">"{r.comentario || r.texto || r.comment || ''}"</p>
-                <div className="pdp-tst-person">
-                  <div className="pdp-tst-avatar"><span>{(r.nombre || r.name || 'U').charAt(0).toUpperCase()}</span></div>
-                  <div>
-                    <div className="pdp-tst-name">{r.nombre || r.name || 'Cliente'}</div>
-                    <div className="pdp-tst-loc">{r.ciudad || r.location || 'Colombia'}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-      )}
+      {/* Reseñas verificadas: las sirve la BD, y solo puede escribirlas quien tiene un
+          pedido PAGADO con este producto (se comprueba en el servidor, en /api/resenas).
+          Si el producto no tiene ninguna aprobada, el componente no pinta la sección:
+          deja una nota discreta para que quien ya lo compró cuente su experiencia. */}
+      <ResenasProducto productoId={producto.id} nombreProducto={nombre} />
     </div>
   )
 }

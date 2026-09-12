@@ -29,11 +29,16 @@ export const CATS: Cat[] = [
           { label:'Para niños',                 href:'/tienda/categoria/acordeones-para-ninos' },
           { label:'Nuevos',                     href:'/tienda/categoria/acordeones-nuevos' },
         ] },
+        // Solo GCF y ADG llevan a la tienda: son las que hay en catálogo. FBbEb y Do/Fa/Sib
+        // se hacen por encargo y su búsqueda devolvía CERO productos, así que el menú
+        // mandaba a una página vacía. Ahora llevan a la guía, que explica cada tonalidad y
+        // remata en WhatsApp para encargarla.
         { title:'Tonalidades', items:[
           { label:'GCF · 5 letras · de fábrica',   href:'/tienda?q=GCF' },
           { label:'ADG · de fábrica',   href:'/tienda?q=ADG' },
-          { label:'FBbEb · por encargo', href:'/tienda?q=FBbEb' },
-          { label:'Do/Fa/Sib · por encargo',         href:'/tienda?q=Do%20Fa%20Sib' },
+          { label:'FBbEb · por encargo', href:'/guia-tonalidades#fbbeb' },
+          { label:'Do/Fa/Sib · por encargo',         href:'/guia-tonalidades#cfbb' },
+          { label:'¿Cuál me conviene? · Guía', href:'/guia-tonalidades' },
         ] },
         { title:'Servicios', items:[
           { label:'Personalizar mi acordeón', href: PERSONALIZADOS },

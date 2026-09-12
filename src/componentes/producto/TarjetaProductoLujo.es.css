@@ -40,8 +40,16 @@
   font-size: 12px;
   font-weight: 600;
 }
-.insignia-descuento { background: var(--vda-superficie); color: #d84040; border: 1px solid #f4c4c4; }
-.insignia-destacado { background: #ffe7d6; color: #c05a00; border: 1px solid #ffd1a8; }
+.insignia-descuento {
+  background: var(--vda-superficie);
+  color: var(--vda-peligro);
+  border: 1px solid color-mix(in srgb, var(--vda-peligro) 35%, transparent);
+}
+.insignia-destacado {
+  background: color-mix(in srgb, var(--vda-naranja) 14%, var(--vda-superficie));
+  color: var(--vda-naranja-fuerte);
+  border: 1px solid color-mix(in srgb, var(--vda-naranja) 32%, transparent);
+}
 .insignia-estado    { background: var(--vda-superficie-2); color: var(--vda-tinta-dim); border: 1px solid var(--vda-linea); }
 
 /* ── IMAGEN ── */
@@ -189,10 +197,10 @@
   border-radius: 0;
   font-size: 10px;
   font-weight: 800;
-  color: #fff;
-  background: linear-gradient(90deg, #ff5a1f, #ff7a00);
-  box-shadow: 0 4px 10px rgba(255,122,0,0.25);
-  border: 1px solid rgba(255,122,0,0.35);
+  color: #190d02;
+  background: linear-gradient(90deg, var(--vda-naranja-fuerte), var(--vda-naranja));
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--vda-naranja) 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vda-naranja) 35%, transparent);
   line-height: 1.05;
   gap: 0;
 }
@@ -214,10 +222,10 @@
   margin-top: 4px;
   font-size: 11px;
 }
-.estrella         { color: #ff7a00; }
+.estrella         { color: var(--vda-naranja); }
 .conteo-calificacion,
 .resenas-calificacion { color: var(--vda-tinta-muted); margin-left: 2px; }
-.ventas           { color: #4f7d3a; font-weight: 600; }
+.ventas           { color: var(--vda-exito); font-weight: 600; }
 .ventas-en-linea  { display: none; }
 
 /* ── PRECIO ── */
@@ -236,8 +244,9 @@
   white-space: nowrap;
 }
 .precio-actual  { color: var(--vda-tinta); font-weight: 800; font-size: 18px; }
-.precio-original { color: var(--vda-tinta-muted); text-decoration: line-through; font-size: 13px; }
-.precio-actual.naranja { color: #ff7a00; }
+/* El precio tachado seguía siendo información de venta: con "muted" daba 3.7:1 a 9 px. */
+.precio-original { color: var(--vda-tinta-dim); text-decoration: line-through; font-size: 13px; }
+.precio-actual.naranja { color: var(--vda-naranja); }
 .precio-actual.negro   { color: var(--vda-tinta); }
 .ventas-pie { margin-left: auto; font-size: 12px; color: var(--vda-tinta-muted); font-weight: 600; }
 
@@ -266,7 +275,7 @@
   color: var(--vda-tinta-dim);
   gap: 4px;
 }
-.ahorro { color: #1f8b4c; font-weight: 700; }
+.ahorro { color: var(--vda-exito); font-weight: 700; }
 .stock  { color: var(--vda-tinta-muted); }
 
 /* ── BLOQUE DINÁMICO ── */
@@ -298,7 +307,7 @@
   text-overflow: ellipsis;
 }
 .icono-informacion { color: var(--vda-tinta-muted); flex-shrink: 0; }
-.mas-comprados     { color: #1f8b4c; font-weight: 700; }
+.mas-comprados     { color: var(--vda-exito); font-weight: 700; }
 
 @keyframes aparecer-suave {
   from { opacity: 0; transform: translateY(4px); }
@@ -311,7 +320,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 22px;
-  border: 1px solid #ff9d00;
+  border: 1px solid color-mix(in srgb, var(--vda-naranja) 60%, transparent);
   border-radius: 6px;
   overflow: hidden;
   font-weight: 600;
@@ -320,8 +329,8 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #ff7a00;
-  color: #fff;
+  background: var(--vda-naranja);
+  color: #190d02;
   padding: 1px 4px;
 }
 .insignia-ahorro .lado-derecho {
@@ -329,22 +338,29 @@
   align-items: center;
   gap: 4px;
   background: var(--vda-superficie);
-  color: #ff7a00;
+  color: var(--vda-naranja);
   padding: 1px 4px;
-  border-left: 1px solid #ffd1a8;
+  border-left: 1px solid color-mix(in srgb, var(--vda-naranja) 32%, transparent);
 }
 .insignia-ahorro .tiempo { font-variant-numeric: tabular-nums; font-size: 11px; }
 
 /* ── ESCASEZ ── */
 .escasez {
   font-size: 12px;
-  color: #c05a00;
-  background: #fff5eb;
-  border: 1px solid #ffd8b4;
+  color: var(--vda-naranja-fuerte);
+  background: color-mix(in srgb, var(--vda-naranja) 12%, var(--vda-superficie));
+  border: 1px solid color-mix(in srgb, var(--vda-naranja) 30%, transparent);
   border-radius: 8px;
   padding: 4px 6px;
   font-weight: 600;
 }
+
+/* ── TEMA CLARO: texto sobre los bloques naranjas ──
+   En oscuro el naranja es vivo (#ff7a00) y lo que se lee encima es el casi negro; en claro el
+   token pasa a un naranja profundo (#c2410c) y ahí el que se lee es el blanco. Antes había blanco
+   sobre naranja vivo en ambos temas: 2.6:1, ilegible. */
+[data-theme="light"] .cinta-mega-oferta,
+[data-theme="light"] .insignia-ahorro .lado-izquierdo { color: #fff; }
 
 /* ── RESPONSIVE MÓVIL ── */
 @media (max-width: 765px) {
@@ -357,7 +373,7 @@
   .contenido-lujo  { gap: 2px; }
   .fila-titulo     { min-height: 34px; }
   .info-dinamica   { margin-top: 2px; min-height: 22px; height: 22px; }
-  .estrella        { width: 15px; height: 15px; color: #ff7a00; }
+  .estrella        { width: 15px; height: 15px; color: var(--vda-naranja); }
   .conteo-calificacion,
   .resenas-calificacion { display: none; }
   .ventas-en-linea { display: inline; margin-left: 6px; font-size: 10px; color: var(--vda-tinta-muted); }
@@ -366,7 +382,7 @@
   .tarjeta-lujo .precio       { gap: 3px; }
   .tarjeta-lujo .precio-info  { gap: 2px; }
   .tarjeta-lujo .precio .precio-actual   { font-size: 14px; color: var(--vda-tinta); font-weight: 800; }
-  .tarjeta-lujo .precio .precio-original { font-size: 10px; color: var(--vda-tinta-muted); text-decoration: line-through; }
+  .tarjeta-lujo .precio .precio-original { font-size: 10px; color: var(--vda-tinta-dim); text-decoration: line-through; }
 }
 
 @media (max-width: 480px) {

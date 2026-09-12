@@ -1,6 +1,8 @@
 /* PaginaTienda.css — columna de productos de la tienda: cabecera editorial, toolbar sticky,
    chips de filtros activos, grid responsivo (4 / 3 / 2), skeletons, paginación y estados vacíos.
-   Solo tokens --vda-* (claro/oscuro automático); el único color fijo es el texto #000 sobre oro. */
+   Solo tokens --vda-* (claro/oscuro automático); el único color fijo es el texto #000 sobre oro.
+   Ojo: el oro de marca se usa como FONDO (con texto #000) o como TEXTO. Como texto sobre el crema
+   del tema claro sólo daba 2.5:1, así que ahí va --vda-oro-texto, la variante profunda (4.8:1). */
 
 /* ── Cabecera ── */
 .tienda-cabecera {
@@ -20,8 +22,9 @@
   font-size: 12px;
   color: var(--vda-tinta-muted);
 }
-.tienda-migas a { color: var(--vda-tinta-muted); text-decoration: none; transition: color .15s; }
-.tienda-migas a:hover { color: var(--vda-oro); }
+/* --vda-tinta-muted daba 3.3:1 sobre el crema: a 12 px la miga "Inicio" casi no se leía. */
+.tienda-migas a { color: var(--vda-tinta-dim); text-decoration: none; transition: color .15s; }
+.tienda-migas a:hover { color: var(--vda-oro-texto); }
 .tienda-migas [aria-current] { color: var(--vda-tinta-dim); }
 .tienda-kicker {
   margin: 0 0 6px;
@@ -30,7 +33,7 @@
   font-weight: 600;
   letter-spacing: .24em;
   text-transform: uppercase;
-  color: var(--vda-oro);
+  color: var(--vda-oro-texto);
 }
 .tienda-titulo {
   margin: 0 0 10px;
@@ -57,7 +60,7 @@
   border: 1px solid var(--vda-oro);
   border-radius: 999px;
   background: var(--vda-oro-brillo);
-  color: var(--vda-oro);
+  color: var(--vda-oro-texto);
   font-family: var(--vda-fuente-mono);
   font-size: 11px;
   font-weight: 700;
@@ -216,7 +219,7 @@
   cursor: pointer;
   transition: background .15s, color .15s;
 }
-.tienda-chip svg { color: var(--vda-oro); transition: color .15s; }
+.tienda-chip svg { color: var(--vda-oro-texto); transition: color .15s; }
 .tienda-chip:hover { background: var(--vda-oro); color: #000; }
 .tienda-chip:hover svg { color: #000; }
 .tienda-chip-limpiar {
@@ -232,7 +235,7 @@
   text-underline-offset: 3px;
   cursor: pointer;
 }
-.tienda-chip-limpiar:hover { color: var(--vda-oro); }
+.tienda-chip-limpiar:hover { color: var(--vda-oro-texto); }
 
 /* ── Grid ── */
 .tienda-grid {
@@ -336,7 +339,7 @@
 .btn-oro:hover { background: var(--vda-oro-suave); border-color: var(--vda-oro-suave); }
 .btn-oro:disabled { opacity: .6; cursor: progress; }
 .btn-contorno { border: 1px solid var(--vda-linea-fuerte); background: transparent; color: var(--vda-tinta); }
-.btn-contorno:hover { border-color: var(--vda-oro); color: var(--vda-oro); }
+.btn-contorno:hover { border-color: var(--vda-oro); color: var(--vda-oro-texto); }
 .btn-oro:active, .btn-contorno:active { transform: scale(.98); }
 .btn-oro:focus-visible, .btn-contorno:focus-visible, .tienda-chip:focus-visible, .toolbar-vista button:focus-visible, .btn-filtros-movil:focus-visible {
   outline: 2px solid var(--vda-oro);
@@ -363,7 +366,7 @@
   margin-bottom: 18px;
   border-radius: 50%;
   background: var(--vda-oro-brillo);
-  color: var(--vda-oro);
+  color: var(--vda-oro-texto);
 }
 .tienda-vacio h2 {
   margin: 0 0 8px;

@@ -1,0 +1,195 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   "También te puede interesar" — bloque de relacionados al final de la ficha.
+   Todo el color sale de los tokens --vda-*: el mismo CSS sirve en claro y en
+   oscuro sin una sola regla duplicada ni @media prefers-color-scheme.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.rel-seccion {
+  border-top: 1px solid var(--vda-linea);
+  background: var(--vda-fondo);
+  padding: 48px 0 64px;
+}
+
+.rel-contenedor {
+  width: 100%;
+  max-width: var(--vda-contenedor);
+  margin: 0 auto;
+  /* min() en vez de var(--vda-pad-x) fijo: a 375 px el padding de 56 px se comía
+     la mitad del ancho y las tarjetas quedaban ilegibles. */
+  padding: 0 min(var(--vda-pad-x), 5vw);
+  box-sizing: border-box;
+}
+
+.rel-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.rel-titulo {
+  font-family: var(--vda-fuente-display);
+  font-size: clamp(22px, 5vw, 34px);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: var(--vda-tinta);
+  margin: 0;
+}
+
+.rel-titulo em {
+  font-style: normal;
+  color: var(--vda-oro-texto);
+}
+
+.rel-ver-mas {
+  font-family: var(--vda-fuente-display);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--vda-tinta-muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+.rel-ver-mas:hover { color: var(--vda-oro-texto); border-bottom-color: var(--vda-oro); }
+
+/* 2 columnas en móvil (nunca 1: el bloque debe verse como "hay más tienda"),
+   4 a partir de 900 px. minmax(0,1fr) evita que un nombre largo desborde la rejilla. */
+.rel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (min-width: 900px) {
+  .rel-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+}
+
+.rel-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  text-decoration: none;
+  background: var(--vda-superficie);
+  border: 1px solid var(--vda-linea);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.35s ease;
+}
+.rel-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--vda-oro);
+  box-shadow: var(--vda-sombra-card);
+}
+.rel-card:focus-visible {
+  outline: 2px solid var(--vda-oro);
+  outline-offset: 3px;
+}
+
+.rel-foto {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--vda-superficie-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.rel-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rel-card:hover .rel-foto img { transform: scale(1.05); }
+
+.rel-sin-foto {
+  font-family: var(--vda-fuente-display);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--vda-tinta-muted);
+}
+
+.rel-descuento {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: var(--vda-fuente-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--vda-oro);
+  color: #000;
+}
+
+.rel-cuerpo {
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rel-marca {
+  font-family: var(--vda-fuente-display);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--vda-tinta-muted);
+  text-transform: uppercase;
+}
+
+/* 2 líneas máximo: con nombres de catálogo tan largos, sin el clamp las tarjetas
+   de la fila quedaban de alturas distintas. */
+.rel-nombre {
+  font-size: 13.5px;
+  line-height: 1.32;
+  color: var(--vda-tinta);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.rel-precios {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+.rel-precio {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--vda-oro-texto);
+  white-space: nowrap;
+}
+.rel-antes {
+  font-size: 11.5px;
+  color: var(--vda-tinta-muted);
+  text-decoration: line-through;
+  white-space: nowrap;
+}
+
+.rel-stock {
+  font-family: var(--vda-fuente-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--vda-exito);
+}
+
+@media (max-width: 380px) {
+  .rel-grid { gap: 10px; }
+  .rel-cuerpo { padding: 10px 10px 12px; }
+  .rel-nombre { font-size: 12.5px; }
+}
+
+/* Respeta a quien pide menos movimiento en el sistema. */
+@media (prefers-reduced-motion: reduce) {
+  .rel-card, .rel-foto img { transition: none; }
+  .rel-card:hover { transform: none; }
+  .rel-card:hover .rel-foto img { transform: none; }
+}

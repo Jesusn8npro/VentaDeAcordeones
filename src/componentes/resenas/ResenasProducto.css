@@ -1,0 +1,438 @@
+/* Reseñas verificadas — todo con tokens --vda-* para que funcione igual en claro
+   y en oscuro. `--container` y `--pad-x` se heredan de la plantilla que lo aloja
+   (PlantillaCinema los define); los fallbacks son para cualquier otro sitio. */
+
+.vres,
+.vres-vacio {
+  max-width: var(--container, 1400px);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@keyframes vres-entrar {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes vres-girar { to { transform: rotate(360deg); } }
+
+/* ── Bloque discreto cuando todavía no hay ni una reseña ──────────────────── */
+.vres-vacio {
+  padding: 26px var(--pad-x, 20px) 30px;
+  border-top: 1px solid var(--vda-linea);
+  display: grid;
+  gap: 12px;
+  animation: vres-entrar 0.3s ease-out both;
+}
+.vres-vacio-txt {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--vda-tinta-muted);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.vres-vacio-txt svg { color: var(--vda-exito); flex-shrink: 0; }
+.vres-vacio-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+}
+
+.vres-wa,
+.vres-enlace-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: var(--vda-superficie-2);
+  color: var(--vda-tinta-dim);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.vres-wa:hover,
+.vres-enlace-btn:hover {
+  color: var(--vda-tinta);
+  border-color: var(--vda-oro);
+  transform: translateY(-1px);
+}
+.vres-enlace-btn svg { color: var(--vda-oro); }
+
+/* ── Sección con reseñas reales ───────────────────────────────────────────── */
+.vres {
+  padding: 56px var(--pad-x, 20px);
+  border-top: 1px solid var(--vda-linea);
+  animation: vres-entrar 0.35s ease-out both;
+}
+
+.vres-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.vres-eyebrow {
+  font-family: var(--vda-fuente-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--vda-oro);
+  margin-bottom: 10px;
+}
+.vres-media {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--vda-tinta);
+}
+.vres-media strong {
+  font-family: var(--vda-fuente-display, inherit);
+  font-size: clamp(38px, 6vw, 58px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+}
+.vres-media-sub {
+  font-size: 15px;
+  color: var(--vda-tinta-muted);
+}
+.vres-total {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--vda-tinta-dim);
+}
+
+.vres-estrellas {
+  display: inline-flex;
+  gap: 2px;
+  margin-top: 8px;
+}
+.vres-star {
+  color: var(--vda-tinta-muted);
+  fill: transparent;
+}
+.vres-star.llena {
+  color: var(--vda-oro);
+  fill: var(--vda-oro);
+}
+
+/* Reparto por estrellas: los anchos salen de los conteos reales. */
+.vres-barras {
+  display: grid;
+  gap: 7px;
+  min-width: min(260px, 100%);
+  flex: 1 1 260px;
+  max-width: 420px;
+}
+.vres-barra {
+  display: grid;
+  grid-template-columns: 28px 1fr 28px;
+  align-items: center;
+  gap: 10px;
+}
+.vres-barra-n,
+.vres-barra-cnt {
+  font-family: var(--vda-fuente-mono, monospace);
+  font-size: 11px;
+  color: var(--vda-tinta-muted);
+}
+.vres-barra-cnt { text-align: right; }
+.vres-barra-riel {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--vda-superficie-3);
+  overflow: hidden;
+}
+.vres-barra-riel span {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--vda-oro-suave), var(--vda-oro));
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Lista ────────────────────────────────────────────────────────────────── */
+.vres-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+  gap: 16px;
+}
+.vres-item {
+  border: 1px solid var(--vda-linea);
+  border-radius: 14px;
+  background: var(--vda-superficie);
+  padding: 18px 18px 16px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.vres-item:hover {
+  border-color: color-mix(in srgb, var(--vda-oro) 45%, transparent);
+  transform: translateY(-2px);
+}
+.vres-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.vres-sello {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vda-exito);
+}
+.vres-item-titulo {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--vda-tinta);
+  overflow-wrap: anywhere;
+}
+.vres-item-txt {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--vda-tinta-dim);
+  overflow-wrap: anywhere;
+}
+.vres-item-pie {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+  padding-top: 12px;
+  border-top: 1px solid var(--vda-linea);
+}
+.vres-avatar {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vda-fondo);
+  background: var(--vda-oro);
+}
+.vres-item-autor {
+  display: grid;
+  min-width: 0;
+}
+.vres-item-autor strong {
+  font-size: 12.5px;
+  color: var(--vda-tinta);
+  overflow-wrap: anywhere;
+}
+.vres-item-autor span {
+  font-size: 11px;
+  color: var(--vda-tinta-muted);
+}
+.vres-respuesta {
+  border-left: 2px solid var(--vda-oro);
+  padding: 8px 0 2px 10px;
+  display: grid;
+  gap: 4px;
+}
+.vres-respuesta strong {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vda-oro-texto, var(--vda-oro));
+}
+.vres-respuesta p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--vda-tinta-dim);
+}
+
+.vres-mas {
+  margin: 18px auto 0;
+  display: block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: transparent;
+  color: var(--vda-tinta-dim);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.vres-mas:hover { color: var(--vda-tinta); border-color: var(--vda-oro); }
+
+.vres-invita { margin: 0 0 18px; }
+.vres-ok {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 18px;
+  font-size: 13px;
+  color: var(--vda-exito);
+}
+
+/* ── Formulario ───────────────────────────────────────────────────────────── */
+.vres-form {
+  display: grid;
+  gap: 14px;
+  margin: 0 0 26px;
+  padding: 20px;
+  border: 1px solid var(--vda-linea);
+  border-radius: 16px;
+  background: var(--vda-superficie-2);
+  animation: vres-entrar 0.25s ease-out both;
+}
+.vres-form-fila {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.vres-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 12px;
+}
+.vres-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-muted);
+}
+.vres-campo {
+  display: grid;
+  gap: 6px;
+  position: relative;
+  min-width: 0;
+}
+.vres-campo input,
+.vres-campo textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: var(--vda-superficie);
+  color: var(--vda-tinta);
+  font-family: inherit;
+  font-size: 13.5px;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.vres-campo input::placeholder,
+.vres-campo textarea::placeholder { color: var(--vda-tinta-muted); }
+.vres-campo input:focus,
+.vres-campo textarea:focus {
+  outline: none;
+  border-color: var(--vda-oro);
+  box-shadow: 0 0 0 3px var(--vda-oro-brillo);
+}
+.vres-contador {
+  justify-self: end;
+  font-family: var(--vda-fuente-mono, monospace);
+  font-size: 10px;
+  color: var(--vda-tinta-muted);
+}
+
+.vres-picker { display: inline-flex; gap: 4px; }
+.vres-picker-btn {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: var(--vda-tinta-muted);
+  line-height: 0;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.18s ease;
+}
+.vres-picker-btn svg { fill: transparent; }
+.vres-picker-btn.on { color: var(--vda-oro); }
+.vres-picker-btn.on svg { fill: var(--vda-oro); }
+.vres-picker-btn:hover { transform: scale(1.16); }
+.vres-picker-btn:focus-visible {
+  outline: 2px solid var(--vda-oro);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.vres-form-pie {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.vres-enviar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  background: var(--vda-oro);
+  color: #111;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.vres-enviar:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.06); }
+.vres-enviar:disabled { opacity: 0.6; cursor: default; }
+.vres-girando { animation: vres-girar 0.9s linear infinite; }
+.vres-nota {
+  font-size: 11.5px;
+  color: var(--vda-tinta-muted);
+  max-width: 34ch;
+}
+.vres-error {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--vda-peligro);
+}
+
+/* ── Móvil: nada se sale a 375px ──────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .vres { padding: 40px var(--pad-x, 18px); }
+  .vres-vacio { padding: 22px var(--pad-x, 18px) 26px; }
+  .vres-cabecera { gap: 22px; margin-bottom: 26px; }
+  .vres-barras { max-width: 100%; flex-basis: 100%; }
+  .vres-form { padding: 16px; }
+  .vres-form-pie { gap: 10px; }
+  .vres-enviar { width: 100%; justify-content: center; }
+  .vres-nota { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vres, .vres-vacio, .vres-form { animation: none; }
+  .vres-barra-riel span { transition: none; }
+  .vres-item:hover, .vres-picker-btn:hover, .vres-enviar:hover:not(:disabled) { transform: none; }
+}
+
+/* ── Tema claro (el oscuro es el de por defecto, como en todo el sitio) ───── */
+[data-theme='light'] .vres-item {
+  box-shadow: 0 10px 30px -22px rgba(120, 90, 30, 0.35);
+}
+/* El dorado claro (#c79100) es oscuro: el texto del botón se queda en tinta negra,
+   que contra ese fondo da ~6:1 de contraste (en blanco se quedaba en 3:1). */
+[data-theme='light'] .vres-enviar { color: #14110c; }

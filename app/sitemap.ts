@@ -19,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/sobre-la-tienda', '/terminos-condiciones', '/politica-privacidad',
     '/preguntas-frecuentes', '/politica-envio', '/cambios-devoluciones',
     '/blog', '/ayuda', '/acordeones-personalizados', '/accesorios', '/instrumentos', '/audio',
-    '/taller', '/testimonios',
+    '/taller', '/testimonios', '/guia-tonalidades',
     ...CLUSTERS.map((c) => `/${c.base}/${c.slug}`),
   ].map((p) => ({
     url: `${SITIO}${p || '/'}`,

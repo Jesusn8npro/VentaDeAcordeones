@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import DrawerDerecho from './DrawerDerecho'
 import { useCarrito } from '@/contextos/CarritoContext'
+import BarraEnvioGratis from '@/componentes/carrito/BarraEnvioGratis'
+import BotonGuardarCarritoWhatsapp from '@/componentes/confianza/BotonGuardarCarritoWhatsapp'
+import CompletaTuCompra from '@/componentes/carrito/CompletaTuCompra'
 import { I } from '../navIconos'
 
 function formatCOP(n: number) {
@@ -10,8 +13,6 @@ function formatCOP(n: number) {
   return '$ ' + new Intl.NumberFormat('es-CO').format(n)
 }
 function formatCOPFull(n: number) { return '$ ' + new Intl.NumberFormat('es-CO').format(n) + ' COP' }
-
-const FREE_SHIP_THRESHOLD = 2_000_000
 
 function ItemCarrito({ item, light }: { item: any; light: boolean }) {
   const { actualizarCantidad, eliminarDelCarrito } = useCarrito()
@@ -68,8 +69,6 @@ export default function CarritoDrawer({ open, onClose, light }: Props) {
   const { items, totalItems, subtotal, envio, descuentos, total, limpiarCarrito } = useCarrito() as any
   const isEmpty = !items || items.length === 0
   const sub = subtotal || 0
-  const freeShipDelta = Math.max(0, FREE_SHIP_THRESHOLD - sub)
-  const freeShipPct = Math.min(100, (sub / FREE_SHIP_THRESHOLD) * 100)
   const hair = light ? 'border-ink-100' : 'border-white/[.06]'
 
   const footer = !isEmpty ? (
@@ -124,25 +123,18 @@ export default function CarritoDrawer({ open, onClose, light }: Props) {
       footer={footer}
       light={light}
     >
+      {/* Antes este bloque usaba un umbral fijo de $2.000.000 que no existía en ninguna
+          parte: el carrito ya daba envío gratis desde $50.000 (carritoReducer.ts), así
+          que la barra mentía y nunca llegaba al 100 %. Ahora comparte componente y regla
+          con la página del carrito. */}
       {!isEmpty && (
-        <div className={`px-5 py-4 border-b ${hair} ${light ? 'bg-ink-50/60' : 'bg-white/[.02]'}`}>
-          {freeShipDelta > 0 ? (
-            <div>
-              <div className={`text-[12px] mb-2 ${light ? 'text-ink-700' : 'text-white/75'}`}>
-                Te faltan <span className="cond font-bold text-gold">{formatCOPFull(freeShipDelta)}</span> para envío gratis
-              </div>
-              <div className={`h-1.5 rounded-full overflow-hidden ${light ? 'bg-ink-100' : 'bg-white/10'}`}>
-                <div
-                  className="h-full bg-gradient-to-r from-gold-300 to-gold rounded-full transition-all duration-700"
-                  style={{ width: `${freeShipPct}%` }}
-                />
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 text-[13px] text-gold cond font-semibold tracking-wide">
-              <I.Truck className="h-4 w-4" /> ¡Tienes envío gratis a toda Colombia!
-            </div>
-          )}
+        <div className={`border-b ${hair}`}>
+          <BarraEnvioGratis subtotal={sub} envio={envio || 0} variante="cajon" />
+          {/* Salida a WhatsApp con el carrito escrito: quien duda ante un acordeon de
+              varios millones prefiere hablar antes de pagar. */}
+          <div className="px-4 pb-3">
+            <BotonGuardarCarritoWhatsapp variante="linea" />
+          </div>
         </div>
       )}
 
@@ -157,7 +149,11 @@ export default function CarritoDrawer({ open, onClose, light }: Props) {
           </p>
         </div>
       ) : (
-        <div>{(items as any[]).map((item) => <ItemCarrito key={item.id} item={item} light={light} />)}</div>
+        <div>
+          {(items as any[]).map((item) => <ItemCarrito key={item.id} item={item} light={light} />)}
+          {/* `activo={open}`: mientras el cajón está cerrado no se pide nada al servidor. */}
+          <CompletaTuCompra variante="cajon" activo={open} onNavegar={onClose} />
+        </div>
       )}
     </DrawerDerecho>
   )
