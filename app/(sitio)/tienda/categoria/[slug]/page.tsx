@@ -15,7 +15,7 @@ export const revalidate = 900
 const getCategoria = cache(async (slug: string) => {
   const { data, error } = await supabaseServidor
     .from('categorias')
-    .select('nombre, descripcion, slug, imagen_url')
+    .select('id, nombre, descripcion, slug, imagen_url')
     .eq('slug', slug)
     .eq('activo', true)
     .maybeSingle()
@@ -126,7 +126,18 @@ export default async function PaginaTiendaCategoriaRoute({
         dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
       />
       <Suspense fallback={null}>
-        <TiendaCategoriaCliente />
+        {/* La categoría ya se consultó arriba para el <title>: se reaprovecha en vez de
+            dejar que el navegador la vuelva a pedir. Así el H1 correcto ya viaja en el
+            HTML de la primera respuesta. */}
+        <TiendaCategoriaCliente
+          categoriaInicial={{
+            id: c.id,
+            nombre: c.nombre,
+            slug: c.slug,
+            descripcion: typeof c.descripcion === 'string' ? c.descripcion : '',
+            enOferta: 0,
+          }}
+        />
       </Suspense>
     </>
   )

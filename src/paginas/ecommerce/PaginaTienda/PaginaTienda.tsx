@@ -37,7 +37,15 @@ const textoDescripcion = (d: unknown): string => {
 
 interface CategoriaActual { id: string; nombre: string; slug: string; descripcion: string; enOferta: number }
 
-export default function PaginaTienda() {
+/**
+ * `categoriaInicial` la pasa el servidor en /tienda/categoria/[slug].
+ *
+ * Sin ella, el H1 de las 20 categorías salía como "Todos los productos" en el HTML
+ * que ve Google: el nombre se resolvía con un fetch del navegador que llega DESPUÉS
+ * del primer render, y el rastreador no espera a eso. Se comprobó con curl sobre
+ * producción: las 20 fichas de categoría tenían el mismo H1 genérico.
+ */
+export default function PaginaTienda({ categoriaInicial }: { categoriaInicial?: CategoriaActual | null } = {}) {
   const params = useParams()
   const slug = typeof params?.slug === 'string' ? params.slug : undefined
   const router = useRouter()
@@ -50,8 +58,8 @@ export default function PaginaTienda() {
     [searchParams],
   )
 
-  const [categoria, setCategoria] = useState<CategoriaActual | null>(null)
-  const [cargandoCategoria, setCargandoCategoria] = useState(!!slug)
+  const [categoria, setCategoria] = useState<CategoriaActual | null>(categoriaInicial ?? null)
+  const [cargandoCategoria, setCargandoCategoria] = useState(!!slug && !categoriaInicial)
   const [drawerAbierto, setDrawerAbierto] = useState(false)
 
   // Categoría de la ruta /tienda/categoria/[slug]
