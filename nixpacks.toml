@@ -2,6 +2,10 @@
 [variables]
 NODE_ENV = "production"
 PORT = "3000"
+# El build de Next se come mucha memoria y el contenedor lo mata sin dejar mas rastro
+# que un "exit code 137". AcademiaNext (que si despliega) lleva esta variable; este
+# proyecto no la tenia.
+NODE_OPTIONS = "--max-old-space-size=4096"
 
 # IMPORTANTE: las NEXT_PUBLIC_* se incrustan en el bundle del navegador en el
 # BUILD. EasyPanel solo inyecta sus envs en runtime, no en build → por eso
@@ -40,7 +44,14 @@ nixPkgs = ["nodejs_22", "python3", "pkg-config", "vips"]
 cmds = ["npm install --include=dev --no-audit --no-fund"]
 
 [phases.build]
-cmd = "npm run build"
+# `cmds` (lista), no `cmd`: con la clave equivocada Nixpacks ignora la fase y usa
+# la que detecta por su cuenta. AcademiaNext usa `cmds` y despliega bien.
+cmds = ["npm run build"]
 
 [start]
 cmd = "npm run start"
+
+# .node-version y .nvmrc (ambos con "22") acompanan a este archivo a proposito:
+# si EasyPanel ignora el nixpkgsArchive de arriba —cosa que hace a veces—, Nixpacks
+# cae a Node 20.6.1 y Next 16 exige >= 20.9, asi que el build revienta. Esos dos
+# ficheros son la red de seguridad que si respeta siempre.
