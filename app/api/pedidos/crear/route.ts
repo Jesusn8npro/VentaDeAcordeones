@@ -3,6 +3,8 @@ import { leerBody } from '../../_lib/parseBody'
 import { ipDe, permitir } from '../../_lib/rateLimit'
 import { obtenerSupabaseAdmin } from '../../_lib/supabaseAdmin'
 import { crearSesionEpayco } from '../../_lib/epayco'
+import { enviarCorreo, correoDeLaTienda } from '../../_lib/correo'
+import { correoPedidoRegistrado, correoAvisoTienda } from '../../_lib/plantillasCorreo'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -295,6 +297,28 @@ export async function POST(req: Request) {
         urlRespuesta: `${sitio}/respuesta-epayco?ref=${encodeURIComponent(pedido.numero_pedido)}`,
         urlConfirmacion: `${sitio}/api/epayco/confirmar`,
       })
+    }
+
+    // ── 7. Avisos por correo ──────────────────────────────────────────────────
+    // Van sin `await`: un correo lento (o Resend caído) no puede dejar al cliente
+    // esperando delante del botón de pagar. El pedido ya está guardado.
+    const datosCorreo = {
+      numeroPedido: pedido.numero_pedido,
+      nombreCliente: `${nombre} ${apellido}`.trim(),
+      total: Number(pedido.total),
+      subtotal: Number(pedido.subtotal),
+      costoEnvio: Number(pedido.costo_envio),
+      descuento: Number(pedido.descuento_aplicado),
+      productos: lineas,
+    }
+
+    const alCliente = correoPedidoRegistrado(datosCorreo)
+    void enviarCorreo({ para: email, asunto: alCliente.asunto, html: alCliente.html, texto: alCliente.texto })
+
+    const tienda = correoDeLaTienda()
+    if (tienda) {
+      const aviso = correoAvisoTienda({ ...datosCorreo, email, telefono, ciudad, estado: 'pendiente' })
+      void enviarCorreo({ para: tienda, asunto: aviso.asunto, html: aviso.html, texto: aviso.texto, responderA: email })
     }
 
     return NextResponse.json({

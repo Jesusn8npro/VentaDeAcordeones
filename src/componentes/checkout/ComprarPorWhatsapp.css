@@ -1,0 +1,97 @@
+/* Botón de cierre de venta por WhatsApp.
+   Los colores se declaran completos en :root y se REDEFINEN en oscuro: una variable
+   que solo existiera dentro del bloque oscuro dejaría el botón sin color en claro. */
+
+:root {
+  --cwa-verde: #1faa54;
+  --cwa-verde-alto: #179045;
+  --cwa-borde: rgba(31, 170, 84, 0.38);
+  --cwa-suave-fondo: rgba(31, 170, 84, 0.07);
+  --cwa-suave-texto: #14151a;
+  --cwa-suave-tenue: #5c6370;
+}
+
+[data-theme='dark'] .cwa,
+.dark .cwa {
+  --cwa-borde: rgba(45, 209, 106, 0.42);
+  --cwa-suave-fondo: rgba(45, 209, 106, 0.1);
+  --cwa-suave-texto: #f2f4f8;
+  --cwa-suave-tenue: #9aa3b2;
+}
+
+.cwa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cwa-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  font-size: 14.5px;
+  letter-spacing: 0.2px;
+}
+
+.cwa-texto small {
+  font-size: 11.5px;
+  font-weight: 500;
+  opacity: 0.82;
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+
+/* Sólido: para cuando WhatsApp ES la vía de compra (importe sobre el tope de la pasarela). */
+.cwa--principal {
+  background: var(--cwa-verde);
+  color: #fff;
+  border: 1px solid transparent;
+  box-shadow: 0 6px 18px -8px rgba(31, 170, 84, 0.75);
+}
+
+.cwa--principal:hover {
+  background: var(--cwa-verde-alto);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -10px rgba(31, 170, 84, 0.85);
+}
+
+/* Contorno: convive con "Comprar ahora" sin robarle el protagonismo. */
+.cwa--suave {
+  background: var(--cwa-suave-fondo);
+  color: var(--cwa-suave-texto);
+  border: 1px solid var(--cwa-borde);
+}
+
+.cwa--suave:hover {
+  background: rgba(31, 170, 84, 0.13);
+  transform: translateY(-1px);
+}
+
+.cwa:active {
+  transform: translateY(0);
+}
+
+.cwa--suave .cwa-texto small {
+  color: var(--cwa-suave-tenue);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cwa {
+    transition: none;
+  }
+  .cwa:hover {
+    transform: none;
+  }
+}

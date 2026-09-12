@@ -7,11 +7,15 @@ import { Plus, Minus, Check, ShoppingCart, Search } from 'lucide-react'
 import { useCarrito } from '../../../../contextos/CarritoContext'
 import { optimizarUrlSupabase } from '../../../ImagenOptimizada'
 import CompraRapida from '../../../checkout/CompraRapida'
+import ComprarPorWhatsapp from '../../../checkout/ComprarPorWhatsapp'
 import FranjaConfianza from '../../../confianza/FranjaConfianza'
 import ResenasProducto from '../../../resenas/ResenasProducto'
 import './PlantillaCinema.css'
 
 const fmtCOP = (n: number) => `$${new Intl.NumberFormat('es-CO').format(n)}`
+
+// Tope de ePayco: por encima de este importe la pasarela rechaza el cobro.
+const TOPE_PAGO_EN_LINEA = 5_000_000
 
 export default function PlantillaCinema({ producto, reviews }: { producto: any; reviews?: any[] }) {
   const { agregarAlCarrito } = useCarrito()
@@ -300,9 +304,24 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
             </button>
           </div>
 
-          <button className="pdp-buynow" onClick={() => setCompraRapida(true)}>
-            COMPRAR AHORA · {fmtCOP(displayPrice * qty)}
-          </button>
+          {/* Por encima del tope de la pasarela (5.000.000) el pago en linea no existe:
+              ahi WhatsApp no es la alternativa, es LA via, y por eso manda el boton. */}
+          {displayPrice * qty <= TOPE_PAGO_EN_LINEA && (
+            <button className="pdp-buynow" onClick={() => setCompraRapida(true)}>
+              COMPRAR AHORA · {fmtCOP(displayPrice * qty)}
+            </button>
+          )}
+
+          <ComprarPorWhatsapp
+            nombre={producto?.nombre || ''}
+            slug={producto?.slug}
+            precio={displayPrice}
+            cantidad={qty}
+            variante={displayPrice * qty > TOPE_PAGO_EN_LINEA ? 'principal' : 'suave'}
+            motivo={displayPrice * qty > TOPE_PAGO_EN_LINEA ? 'tope' : null}
+            origen="ficha-cinema"
+            className="pdp-wa"
+          />
 
           <CompraRapida
             producto={producto}

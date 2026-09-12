@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 import Script from 'next/script'
 import { Inter, Poppins, Bebas_Neue, Cormorant_Garamond, JetBrains_Mono, Barlow_Condensed } from 'next/font/google'
 import Providers from './providers'
+import GoogleAnalytics from '@/componentes/analitica/GoogleAnalytics'
 import { serializarJsonLd } from '@/utilidades/jsonLd'
 import '@/estilos/index.css'
 
@@ -35,10 +37,17 @@ const cormorant = Cormorant_Garamond({
   variable: '--font-cormorant',
 })
 
+// preload: false en estas dos a proposito. next/font precarga TODAS las familias que
+// cuelgan del <html> en TODAS las paginas: eran 9 woff2 y 176 KB compitiendo con el LCP
+// en cada visita. Barlow solo se usa en el modal de compra rapida y JetBrains en detalles
+// de la tarjeta de producto, asi que ninguna pinta el primer render. Se siguen
+// descargando cuando una regla las necesita; con display:'swap' el texto ya era visible
+// antes de que llegara la fuente, asi que no se ve nada distinto.
 const barlowCondensed = Barlow_Condensed({
   subsets: ['latin'],
   weight: ['600', '800'],
   display: 'swap',
+  preload: false,
   variable: '--font-barlow',
 })
 
@@ -46,6 +55,7 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '700'],
   display: 'swap',
+  preload: false,
   variable: '--font-jetbrains',
 })
 
@@ -226,6 +236,13 @@ export default function RootLayout({
           {`(function(){try{document.addEventListener('dragstart',function(e){e.preventDefault();},{passive:false});}catch(_){}})();`}
         </Script>
 
+
+        {/* Google Analytics 4. Va al final y con strategy afterInteractive: gtag.js pesa
+            ~90 KB y no pinta nada, asi que cargarlo antes le restaria puntos al LCP.
+            El <Suspense> es obligatorio porque dentro se usa useSearchParams. */}
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
 
         {/* El SDK de ePayco ya no se carga en todas las paginas: lo pide el hook usarEpayco
             justo antes de abrir el checkout (src/hooks/usarEpayco.ts). */}

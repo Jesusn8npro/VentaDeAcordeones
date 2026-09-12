@@ -57,7 +57,10 @@ const nextConfig = {
     const scriptSrc =
       "script-src 'self' 'unsafe-inline' " +
       (esDev ? "'unsafe-eval' " : '') +
-      'https://cdn.epayco.co https://checkout.epayco.co'
+      'https://cdn.epayco.co https://checkout.epayco.co ' +
+      // gtag.js de Google Analytics (GA4). Se carga desde googletagmanager.com aunque la
+      // propiedad sea de Analytics: es el mismo script para GA4 y Tag Manager.
+      'https://www.googletagmanager.com'
     const csp =
       `default-src 'self'; ${scriptSrc}; ` +
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
@@ -66,7 +69,10 @@ const nextConfig = {
       // decodificador Draco levanta un Worker desde blob: (landing 3D /landingdelujo).
       "worker-src 'self' blob:; " +
       "font-src 'self' https://fonts.gstatic.com; " +
-      "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co; " +
+      "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co "
+      // GA4 envia cada evento por fetch/sendBeacon a estos tres dominios; sin ellos la
+      // etiqueta carga pero no se registra ni una sola visita.
+      + "https://www.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; " +
       // instagram.com en frame-src: los reels de @ventadeacordeones1 se abren en un iframe /embed al hacer clic.
       // 'self' en frame-src: la pestaña "Vista previa" del admin muestra la ficha /producto/<slug> en un iframe.
       "frame-src 'self' https://*.epayco.co https://checkout.epayco.co https://www.instagram.com; " +

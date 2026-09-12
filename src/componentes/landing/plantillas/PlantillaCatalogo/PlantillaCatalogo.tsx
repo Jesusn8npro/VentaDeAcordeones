@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { useCarrito } from '../../../../contextos/CarritoContext'
 import { formatearPrecioCOP } from '../../../../utilidades/formatoPrecio'
+import ComprarPorWhatsapp from '../../../checkout/ComprarPorWhatsapp'
 import SeccionResenas from './SeccionResenas'
 import './PlantillaCatalogo.css'
 
@@ -292,9 +293,16 @@ export default function PlantillaCatalogo({ producto, reviews }: { producto?: an
             <p className="pcat-error"><AlertCircle size={15} /> {errorCarrito}</p>
           )}
 
-          <a className="pcat-btn pcat-btn--fantasma" href={enlaceWa} target="_blank" rel="noopener noreferrer">
-            <MessageCircle size={16} /> Preguntar por WhatsApp
-          </a>
+          {/* Antes decia "Preguntar por WhatsApp": invitaba a dudar, no a comprar. Ahora el
+              mensaje sale redactado como una compra decidida y el clic se mide en Analytics. */}
+          <ComprarPorWhatsapp
+            nombre={nombre}
+            slug={producto.slug}
+            precio={precio}
+            cantidad={cantidad}
+            variante="suave"
+            origen="ficha-catalogo"
+          />
 
           <div className="pcat-confianza">
             <div className="pcat-confianza-item">

@@ -1,4 +1,6 @@
 import { obtenerSupabaseAdmin } from './supabaseAdmin'
+import { enviarCorreo, correoDeLaTienda } from './correo'
+import { correoPedidoPagado, correoAvisoTienda } from './plantillasCorreo'
 
 /**
  * Aplica al pedido el resultado de un cobro de ePayco.
@@ -102,6 +104,14 @@ export async function aplicarPagoEpayco(
     return { ok: false, estado: 'sin_pedido', error: 'Pedido no encontrado', codigoHttp: 404 }
   }
 
+  // Los datos del cliente hacen falta para el correo de "pago aprobado". Van en una
+  // consulta aparte porque el select de arriba solo pide lo justo para cobrar.
+  const { data: cliente } = await supabase
+    .from('pedidos')
+    .select('nombre_cliente, email_cliente, telefono_cliente, subtotal, costo_envio, descuento_aplicado, direccion_envio')
+    .eq('id', pedido.id)
+    .maybeSingle()
+
   // ── El dinero recibido tiene que coincidir con lo que vale el pedido ──────────────
   const montoPagado = normalizarMonto(x_amount)
   const totalPedido = normalizarMonto(pedido.total)
@@ -183,6 +193,45 @@ export async function aplicarPagoEpayco(
           .update({ stock: Math.max(0, prod.stock - cantidad) })
           .eq('id', productoId)
       }
+    }
+  }
+
+  // ── Correos: solo en la PRIMERA aprobación, para no repetirlos en cada reintento ──
+  // Sin `await`: ePayco espera una respuesta rápida de este webhook y un correo lento
+  // haría que reintentara la confirmación.
+  if (primeraVez) {
+    const datosCorreo = {
+      numeroPedido: pedido.numero_pedido,
+      nombreCliente: String(cliente?.nombre_cliente || 'cliente'),
+      total: totalPedido,
+      subtotal: Number(cliente?.subtotal) || undefined,
+      costoEnvio: Number(cliente?.costo_envio) || undefined,
+      descuento: Number(cliente?.descuento_aplicado) || undefined,
+      productos: Array.isArray(pedido.productos) ? pedido.productos : [],
+    }
+
+    const correoCliente = String(cliente?.email_cliente || '').trim()
+    if (correoCliente) {
+      const aviso = correoPedidoPagado(datosCorreo)
+      void enviarCorreo({ para: correoCliente, asunto: aviso.asunto, html: aviso.html, texto: aviso.texto })
+    }
+
+    const tienda = correoDeLaTienda()
+    if (tienda) {
+      const interno = correoAvisoTienda({
+        ...datosCorreo,
+        email: correoCliente || undefined,
+        telefono: String(cliente?.telefono_cliente || '') || undefined,
+        ciudad: (cliente?.direccion_envio as any)?.ciudad || undefined,
+        estado: 'pagado',
+      })
+      void enviarCorreo({
+        para: tienda,
+        asunto: interno.asunto,
+        html: interno.html,
+        texto: interno.texto,
+        responderA: correoCliente || undefined,
+      })
     }
   }
 

@@ -24,6 +24,11 @@ NEXT_PUBLIC_EPAYCO_URL_RESPONSE = "https://ventadeacordeones.com/respuesta-epayc
 # nunca llegó a ejecutarse desde el servidor de ePayco → ningún pago se confirmaba.
 NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION = "https://ventadeacordeones.com/api/epayco/confirmar"
 
+# Google Analytics 4. Va aqui y no solo en el panel porque las NEXT_PUBLIC_* se
+# incrustan en el BUILD: si solo estuviera como env de EasyPanel, el bundle saldria
+# sin ID y no se registraria ni una visita.
+NEXT_PUBLIC_GA_ID = "G-BR165RMQ66"
+
 # MODO MANTENIMIENTO (gate por login). "true" = el publico ve "Estamos actualizando"
 # y SOLO el admin logueado ve la tienda. Cualquier otro valor = tienda abierta.
 #
