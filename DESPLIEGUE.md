@@ -62,18 +62,33 @@ update public.usuarios set rol = 'admin' where email = 'acordeon91@gmail.com';
 
 ## 2. Variables de entorno en EasyPanel — obligatorio
 
-Añade estas dos, que hoy **no existen**:
+Pega **las 21 variables** del `.env` local (ya están todas puestas y verificadas el
+12 de septiembre de 2026). Las que antes faltaban y hoy ya están:
 
 | Variable | Valor | Para qué |
 |---|---|---|
-| `EPAYCO_CUST_ID` | Tu `p_cust_id_cliente` del panel de ePayco | Validar la firma de cada confirmación de pago |
-| `ADMIN_API_KEY` | Una cadena larga y aleatoria | Cierra `/api/meta/actualizar-feed`, que hoy queda abierto si falta |
+| `EPAYCO_CUST_ID` | `37257` | Validar la firma de cada confirmación de pago |
+| `ADMIN_API_KEY` | (ya generada en el `.env`) | Cierra `/api/meta/actualizar-feed`, que si falta queda abierto |
+| `RESEND_API_KEY` | (cuenta nueva `jesusgonzalezoficial2@gmail.com`) | Correos |
 
 Comprueba que estas ya están (son las que mueven el dinero):
 
 - `SUPABASE_SERVICE_ROLE_KEY` — sin ella no se pueden crear pedidos ni confirmar pagos.
-- `EPAYCO_P_KEY` (o `EPAYCO_PRIVATE_KEY`) — sin ella no se valida ninguna firma.
+- `EPAYCO_PRIVATE_KEY` — abre la sesión de pago.
 - `RESEND_API_KEY` — correos de confirmación.
+
+### `EPAYCO_P_KEY` — la única que falta, y no bloquea las ventas
+
+El **P_KEY** del panel de ePayco es **distinto** del PRIVATE_KEY y es el que se usa para
+firmar cada confirmación. Hasta ahora no estaba puesto en ningún sitio (el `.env` tenía un
+texto de relleno), así que ninguna firma cuadraba y **ningún pedido llegaba a marcarse como
+pagado**. Eso ya está resuelto sin el P_KEY: cuando la firma no cuadra, el servidor le
+pregunta a la API pública de validación de ePayco qué pasó de verdad con esa transacción, y
+además el cliente dispara esa misma verificación al volver de pagar (`/api/epayco/verificar`).
+
+Aun así, **ponlo cuando puedas** (Panel ePayco → Configuración → Llaves → P_KEY) como
+`EPAYCO_P_KEY` en EasyPanel: es una comprobación más y evita una llamada extra a ePayco en
+cada cobro.
 
 `nixpacks.toml` ya trae `NEXT_PUBLIC_MANTENIMIENTO_ACTIVO = "false"`: al desplegar, el sitio
 queda abierto al público. Si quieres volver a cerrarlo, cámbialo a `"true"` y vuelve a desplegar.
