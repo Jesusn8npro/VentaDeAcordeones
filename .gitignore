@@ -59,3 +59,7 @@ guias_dise*/
 public/images/catalogo/
 
 .env.backup-*
+
+# Flujos exportados de n8n: llevaban una clave de API real hardcodeada dentro y el
+# repositorio es publico. Se versionan solo si pasan por revision; por defecto, fuera.
+flujos_n8n_y_promts/**/*.json
