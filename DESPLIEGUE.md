@@ -25,15 +25,21 @@ no puede volver a cerrar la tienda. Puedes borrar la variable vieja del panel cu
 
 ## 1. Base de datos (Supabase) — obligatorio
 
-Abre **Supabase → SQL Editor**, pega el contenido de
-[`SQL_Para_SUPABASE/2026-09-11_blindaje_lanzamiento.sql`](SQL_Para_SUPABASE/2026-09-11_blindaje_lanzamiento.sql)
-y pulsa *Run*. Se puede ejecutar varias veces sin problema.
+Abre **Supabase → SQL Editor** y ejecuta **dos archivos**, en este orden. Los dos se
+pueden ejecutar varias veces sin problema.
+
+1. [`SQL_Para_SUPABASE/2026-09-11_blindaje_lanzamiento.sql`](SQL_Para_SUPABASE/2026-09-11_blindaje_lanzamiento.sql) — el blindaje.
+2. [`SQL_Para_SUPABASE/2026-09-11_resenas_verificadas.sql`](SQL_Para_SUPABASE/2026-09-11_resenas_verificadas.sql) — las reseñas de clientes.
+   Crea la tabla, comprueba sola que quien opina compró de verdad, y deja cada reseña
+   pendiente de que tú la apruebes. Sin este archivo, la sección de reseñas simplemente
+   no aparece y el resto del sitio funciona igual.
 
 Qué arregla:
 
 | Problema | Efecto si no se corrige |
 |---|---|
 | La política de `usuarios` dejaba cambiar la columna `rol` | Cualquier persona registrada se hacía administrador |
+| La política de `carrito` no filtraba por sesión | Un visitante anónimo podía leer y vaciar el carrito de los demás |
 | `pedidos` y `productos` abiertos a escritura | Un cliente podía editar precios o marcar su pedido como pagado |
 | `leadschat` legible por cualquier autenticado | Los datos de contacto de tus clientes quedaban expuestos |
 | Sin políticas de Storage | Cualquiera podía subir archivos a tus buckets |
@@ -125,3 +131,23 @@ La primera debe dar `200`, la segunda `404` (no `200`), y la tercera debe listar
 - **Testimonios**: sustituir los textos genéricos por frases reales de clientes y poner el enlace
   real de Google Maps.
 - **Un producto sin foto**: `acorde-n-hohner-corona-ii-gcf` (Corona II GCF).
+
+---
+
+## Lo que descubrimos vendiendo (12 sep 2026)
+
+**ePayco no cobra más de $5.000.000 por transacción.** Lo dice su propia respuesta al
+intentarlo. Tienes **25 productos activos por encima de ese límite**, incluidos casi todos
+los acordeones Hohner. Mientras no te suban el límite, esos pedidos quedan reservados con
+su número y el cliente pasa a WhatsApp para cerrarlos: la tienda ya lo hace sola. Pídele
+a ePayco que amplíe el límite del comercio.
+
+**Tus fotos de catálogo son pequeñas.** Miden entre 149 y 341 píxeles de ancho en
+Supabase, y en un teléfono moderno se muestran a 145 puntos con doble o triple densidad:
+se ven borrosas y no hay forma de arreglarlo desde el código, porque ampliar una foto
+pequeña no añade detalle. Vale la pena volver a subir los recortes a unos 700 píxeles
+desde los originales que tienes en el disco.
+
+**El descuento automático del 10%** en compras sobre $100.000 regala $598.390 en un
+carrito de $5.983.900 y no se anuncia en ninguna parte. Ya aparece con su nombre en el
+resumen, pero sigue siendo dinero que sale sin promocionarlo. O se promociona, o se quita.
