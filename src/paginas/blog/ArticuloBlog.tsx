@@ -392,8 +392,20 @@ export default function ArticuloBlog({ initialData }: { initialData?: any }) {
               </div>
             </header>
 
+            {/* La portada es el elemento más grande de la primera pantalla, o sea el LCP.
+                Iba con loading="lazy", que es exactamente lo contrario de lo que necesita:
+                el navegador la dejaba para el final y el LCP se disparaba. Ahora se pide
+                con prioridad alta y se declara el tamaño para que no salte el maquetado. */}
             <div className="articulo-imagen">
-              <img src={cabecera.portada} alt={cabecera.titulo} loading="lazy" decoding="async" />
+              <img
+                src={cabecera.portada}
+                alt={cabecera.titulo}
+                width={1200}
+                height={675}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+              />
             </div>
 
             <ReproductorAudio texto={textoParaHablar} />

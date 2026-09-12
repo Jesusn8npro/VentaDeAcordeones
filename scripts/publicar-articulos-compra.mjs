@@ -29,6 +29,20 @@ const p = (contenido) => ({ tipo: 'parrafo', contenido })
 const ul = (items) => ({ tipo: 'lista', items, ordenada: false })
 const ol = (items) => ({ tipo: 'lista', items, ordenada: true })
 
+/**
+ * Bloque de preguntas frecuentes.
+ *
+ * No es relleno: el renderizador del artículo convierte este bloque en schema FAQPage,
+ * que es lo que hace que Google muestre las preguntas desplegables debajo del
+ * resultado. Cada pregunta va redactada tal y como la escribe la gente en el buscador
+ * ("¿cuánto cuesta…?", "¿cuál me sirve para…?"), porque el que coincide con la
+ * búsqueda es el que aparece.
+ */
+const faq = (pares) => ({
+  tipo: 'faq',
+  preguntas: pares.map(([pregunta, respuesta]) => ({ pregunta, respuesta })),
+})
+
 const ctaTienda = (textoWa) => ({
   items: [
     { href: '/tienda', texto: 'Ver acordeones disponibles' },
@@ -89,6 +103,13 @@ const ARTICULOS = [
         'No compres marcas desconocidas por ahorrar: sale más caro.',
       ]),
       p('Si tienes dudas, escríbenos por WhatsApp al **+57 314 486 5310** y te decimos el modelo exacto según lo que toques, tu nivel y tu presupuesto. La asesoría no cuesta nada y no compromete a nada.'),
+      faq([
+        ['¿Cuánto cuesta un acordeón para principiantes en Colombia?', 'El punto de entrada real es el Hohner Rey Vallenato a $3.610.000, y la Corona II GCF queda en $2.850.000. Por debajo de eso solo hay instrumentos de marca desconocida que se desafinan solos y terminan desanimando al que empieza.'],
+        ['¿Qué tonalidad de acordeón debo comprar si estoy empezando?', 'ADG si vas a tocar vallenato tradicional o si todavía no sabes. BEsAs si tocas estilo moderno o acompañas voces agudas. La regla práctica: pregunta en qué tonalidad andan los músicos con los que vas a tocar y compra esa.'],
+        ['¿Sirve un acordeón barato de $400.000 para aprender?', 'No lo recomendamos. Se desafinan solos, los botones se traban y el fuelle pide más fuerza de la debida. El principiante cree que el problema es él, se frustra y abandona. En el taller vemos instrumentos así con dos meses de uso y sin arreglo rentable.'],
+        ['¿Qué le tengo que comprar además del acordeón?', 'El estuche desde el primer día (desde $180.000): la mayoría de los daños que llegan al taller vienen de transportar el acordeón sin él. Las correas de fábrica sirven para empezar; si vas a tocar de pie más de una hora, unas buenas te salvan la espalda.'],
+        ['¿Qué acordeón le compro a un niño?', 'Si tiene menos de 8 años y todavía no sabes si le va a gustar, un acordeón pequeño desde $119.000 está bien: sirve para que agarre el gusto y el movimiento del fuelle sin cargar un instrumento de cinco kilos.'],
+      ]),
     ],
     cta: ctaTienda('Hola, quiero asesoría para comprar mi primer acordeón'),
   },
@@ -131,6 +152,13 @@ const ARTICULOS = [
       p('En la tienda todos los acordeones son nuevos, con garantía y afinados antes de despachar. Puedes verlos en [acordeones Rey Vallenato](/tienda/categoria/acordeones-rey-vallenato) y [Hohner Premium](/tienda/categoria/acordeones-hohner-premium).'),
       h2('¿Ya compraste uno usado?'),
       p('Tráelo. En el [taller de Bogotá](/blog/donde-reparar-acordeon-en-bogota) lo revisamos y te decimos qué tiene, qué cuesta y si vale la pena arreglarlo antes de que te gastes más. Es mejor saberlo ahora que cuando falle en una presentación.'),
+      faq([
+        ['¿Qué hay que revisar en un acordeón usado antes de comprarlo?', 'Seis cosas: que el fuelle no se hunda solo ni deje escapar aire, que la misma nota suene igual abriendo y cerrando, que todos los botones respondan (incluidos los bajos), que las lengüetas no tengan óxido, y que la cera no esté agrietada ni despegada.'],
+        ['¿Cuándo NO vale la pena comprar un acordeón usado?', 'Cuando la reparación estimada pasa del 30 % del precio de uno nuevo. Un usado a $2.200.000 que necesita fuelle ($350.000), afinación y un par de lengüetas te deja cerca de los $3.000.000 con un instrumento viejo y sin garantía.'],
+        ['¿Cuánto cuesta arreglar un acordeón usado?', 'Depende de lo que tenga. El cambio de fuelle arranca en $350.000 y es de lo más común. La afinación completa y el cambio de lengüetas son trabajo de taller y se cotizan al revisarlo.'],
+        ['¿Es mejor comprar nuevo si es mi primer acordeón?', 'Casi siempre sí. Sin experiencia es muy difícil detectar una lengüeta cansada o un fuelle a punto de irse, y un vendedor apurado no te lo va a decir. Un acordeón nuevo trae garantía y afinación de fábrica.'],
+        ['¿Revisan acordeones usados que compré en otro lado?', 'Sí. Tráelo al taller de Bogotá y te decimos qué tiene, qué cuesta y si vale la pena arreglarlo, antes de que gastes más.'],
+      ]),
     ],
     cta: {
       items: [
@@ -191,6 +219,13 @@ const ARTICULOS = [
         'Te mandamos fotos del avance mientras se arma.',
       ]),
       p('Si quieres ver el detalle de los acabados de cerca, tenemos una [página dedicada a los personalizados](/acordeones-personalizados) con fotos en grande.'),
+      faq([
+        ['¿Cuánto cuesta un acordeón Hohner personalizado?', 'Los que tenemos listos van de $5.290.000 a $6.500.000, según cuántos elementos lleve y qué tan elaborada sea la parrilla.'],
+        ['¿Personalizar el acordeón le cambia el sonido?', 'No. Se reemplazan piezas exteriores: diapasón, botones, fuelle y parrilla. Lengüetas, cera y mecánica quedan exactamente como salieron de fábrica.'],
+        ['¿Puedo personalizar el acordeón que ya tengo?', 'Sí, pieza por pieza y sin comprar uno nuevo. Parrillas desde $280.000, fuelles desde $350.000 y correas bordadas desde $180.000. Así repartes el gasto y conservas el instrumento al que ya estás acostumbrado.'],
+        ['¿Cuánto tarda un acordeón personalizado?', 'Un cambio de fuelle o una parrilla estándar se hacen en días. Un diseño tallado a medida, con bordado y botones a juego, toma más porque las piezas se fabrican para ti. Te damos fecha concreta antes de que pagues nada.'],
+        ['¿Le pueden poner mi nombre al acordeón?', 'Sí: bordado en el fuelle, tallado o calado en la parrilla, o pintado. También iniciales, el nombre del grupo, una corona o una imagen religiosa.'],
+      ]),
     ],
     cta: {
       items: [
@@ -250,6 +285,13 @@ const ARTICULOS = [
       p('Por eso insistimos tanto en la asesoría antes de comprar. Si nos dices qué tocas, con quién y en qué tonalidad andan tus compañeros, la probabilidad de que te llegue el equivocado baja casi a cero. Las condiciones de cambio están en [términos y condiciones](/terminos-condiciones).'),
       h2('¿Prefieres verlo en persona?'),
       p('Si estás en Bogotá o vas a pasar, puedes venir al taller y probarlo antes de decidir. Escríbenos y coordinamos.'),
+      faq([
+        ['¿Cuánto tarda en llegar un acordeón a mi ciudad?', 'A ciudades principales, de 48 a 72 horas hábiles. A ciudades intermedias, de 3 a 5 días. A municipios, de 5 a 8 días. A zonas rurales, de 8 a 10 días. Los tiempos cuentan desde el despacho, que es unas 24 horas hábiles después de confirmar el pago.'],
+        ['¿Envían acordeones a toda Colombia?', 'Sí, a todo el país, en su estuche y protegido por fuera para el transporte. Antes de empacarlo lo revisamos botón por botón, lo afinamos si hace falta y lo fotografiamos para dejar registro de cómo salió.'],
+        ['¿Qué hago si el acordeón llega golpeado?', 'Grábate abriendo el paquete: un video de la caja cerrada y de la apertura resuelve el reclamo en minutos. Escríbenos el mismo día con el número de pedido y nosotros gestionamos con la transportadora. Si el daño es del transporte, se repone.'],
+        ['¿Cómo sigo mi pedido?', 'Al comprar recibes un número con formato VDA-… Con ese número consultas el estado en la página a la que vuelves después de pagar, te llegan correos al registrarse el pedido y al aprobarse el pago, y te atendemos por WhatsApp de inmediato.'],
+        ['¿Puedo ir a probar el acordeón antes de comprarlo?', 'Sí, si estás en Bogotá o vas a pasar. Escríbenos y coordinamos la visita al taller.'],
+      ]),
     ],
     cta: {
       items: [
@@ -299,6 +341,13 @@ const ARTICULOS = [
         'Con tu número `VDA-…` te atendemos por WhatsApp en cualquier momento.',
       ]),
       p('Si pagaste y algo no cuadra, escríbenos con el número de pedido. Nunca pierdas tiempo volviendo a pagar: el pedido ya quedó guardado.'),
+      faq([
+        ['¿Cómo puedo pagar un acordeón?', 'Con tarjeta de crédito o débito, por PSE desde tu banco, contra entrega en algunos productos y ciudades, o por transferencia coordinada con un asesor para los instrumentos de mayor valor.'],
+        ['¿Puedo pagar el acordeón a cuotas?', 'Sí, con tarjeta de crédito puedes diferir a cuotas con tu propio banco. Las cuotas y los intereses los define tu banco, no nosotros, y los ves antes de confirmar el pago.'],
+        ['¿Por qué algunos acordeones se compran por WhatsApp?', 'Porque la pasarela de pagos tiene un tope de $5.000.000 por transacción y varios acordeones lo superan. El pedido queda registrado igual en la tienda y el pago se coordina por WhatsApp con ese número por delante: transferencia, pago en dos partes o el medio que te sirva.'],
+        ['¿Son seguros los datos de mi tarjeta?', 'Los datos de la tarjeta no pasan por nuestra tienda ni se guardan aquí. Los recibe directamente la pasarela de pagos, que es la entidad autorizada para procesarlos.'],
+        ['Pagué por PSE y mi pedido sigue en verificación, ¿qué hago?', 'PSE a veces tarda en confirmar. No vuelvas a pagar: el pedido ya quedó guardado. Escríbenos con tu número VDA-… y lo revisamos.'],
+      ]),
     ],
     cta: {
       items: [
