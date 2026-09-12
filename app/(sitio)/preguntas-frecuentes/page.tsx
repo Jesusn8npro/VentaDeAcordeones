@@ -11,7 +11,7 @@ const canonical = `${SITIO}/preguntas-frecuentes`
 
 const TITULO = 'Preguntas Frecuentes: envíos, pagos y garantía'
 const DESCRIPCION =
-  'Resuelve tus dudas sobre compras, envíos, pagos y garantía de acordeones en VentaDeAcordeones.com.'
+  'Envíos a toda Colombia y al exterior, pagos con tarjeta o PSE, garantía Hohner y taller propio en Bogotá. Escríbenos por WhatsApp al +57 314 486 5310.'
 
 export const metadata: Metadata = {
   title: TITULO,

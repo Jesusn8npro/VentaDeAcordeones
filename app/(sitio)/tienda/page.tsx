@@ -15,7 +15,7 @@ const SITIO = 'https://ventadeacordeones.com'
 // nuevos no aparecían en el HTML rastreable.
 export const revalidate = 900
 
-const TITULO = 'Tienda de Acordeones — VentaDeAcordeones.com'
+const TITULO = 'Tienda de acordeones y accesorios en Colombia'
 const DESCRIPCION =
   'Catálogo completo de acordeones y accesorios en Colombia. Las mejores marcas y precios con envíos a todo el país.'
 const CANONICAL = `${SITIO}/tienda`

@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LayoutGrid, List, SlidersHorizontal, X, ChevronDown, SearchX, RefreshCw } from 'lucide-react'
-import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { clienteSupabase } from '../../../configuracion/supabase'
 import DisposicionTienda from '../../../componentes/tienda/DisposicionTienda'
 import PanelFiltros from '../../../componentes/tienda/PanelFiltros'
@@ -54,8 +53,6 @@ export default function PaginaTienda() {
   const [categoria, setCategoria] = useState<CategoriaActual | null>(null)
   const [cargandoCategoria, setCargandoCategoria] = useState(!!slug)
   const [drawerAbierto, setDrawerAbierto] = useState(false)
-
-  useTituloPagina(categoria?.nombre || 'Tienda de Acordeones')
 
   // Categoría de la ruta /tienda/categoria/[slug]
   useEffect(() => {

@@ -176,12 +176,16 @@ export async function generateMetadata({
   // Aquí NO se lanza notFound(): sólo metadata noindex. El 404 real lo emite la página.
   if (!p) {
     return {
-      title: 'Producto no encontrado — VentaDeAcordeones.com',
+      title: 'Producto no encontrado',
       robots: { index: false, follow: true },
     }
   }
 
-  const titulo = p.meta_title || `${p.nombre} — VentaDeAcordeones.com`
+  // El layout ya añade "| VentaDeAcordeones.com" con title.template. Si el meta_title de la
+  // BD trae la marca (muchos la traen), se quita aquí para no servir el nombre dos veces:
+  // "Corona III — VentaDeAcordeones.com | VentaDeAcordeones.com".
+  const sinMarca = (t: string) => t.replace(/\s*[—|–\-]\s*VentaDeAcordeones\.com\s*$/i, '').trim()
+  const titulo = sinMarca(p.meta_title || p.nombre)
   const descripcion = descripcionMeta(p)
   const canonical = `${SITIO}/producto/${p.slug}`
   const img = imagenAbsoluta(p.producto_imagenes?.[0]?.imagen_principal)

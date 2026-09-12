@@ -15,7 +15,7 @@ const SITIO = 'https://ventadeacordeones.com'
 // nuevos no aparecían en el HTML rastreable.
 export const revalidate = 900
 
-const TITULO = 'Blog — VentaDeAcordeones.com'
+const TITULO = 'Blog de acordeones: guías, consejos y novedades'
 const DESCRIPCION =
   'Guías expertas de compra, tendencias y consejos para elegir tu acordeón y accesorios musicales en Colombia.'
 

@@ -5,6 +5,35 @@ import { createClient } from "jsr:@supabase/supabase-js@2"
 // ---------------------------------------------------------------------------
 // CORS
 // ---------------------------------------------------------------------------
+// Solo el sitio puede llamar a esta funcion: con "*" cualquier pagina de internet podia
+// usar el chat (y por tanto los creditos de OpenAI de la tienda) desde su propio dominio.
+const ORIGENES_PERMITIDOS = [
+  "https://ventadeacordeones.com",
+  "https://www.ventadeacordeones.com",
+  "http://localhost:3000",
+  "http://localhost:3001",
+]
+
+// Limite por chat: 20 mensajes cada 5 minutos. En memoria, que es lo que tiene una
+// edge function; frena el abuso normal sin montar infraestructura extra.
+const VENTANA_MS = 5 * 60 * 1000
+const MAX_MENSAJES = 20
+const contadores = new Map<string, { n: number; desde: number }>()
+
+const dentroDelLimite = (clave: string): boolean => {
+  const ahora = Date.now()
+  const actual = contadores.get(clave)
+  if (!actual || ahora - actual.desde > VENTANA_MS) {
+    contadores.set(clave, { n: 1, desde: ahora })
+    return true
+  }
+  actual.n++
+  return actual.n <= MAX_MENSAJES
+}
+
+const ES_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const MAX_LARGO_MENSAJE = 2000
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, apikey, x-client-info",
@@ -204,6 +233,37 @@ Deno.serve(async (req: Request) => {
       return new Response(
         JSON.stringify({ error: "chat_id y mensaje son requeridos" }),
         { status: 400, headers: { ...CORS, "Content-Type": "application/json" } },
+      )
+    }
+
+    // El chat_id tiene que ser un UUID: con un valor libre se podia apuntar al lead de
+    // otra persona y sobrescribir sus datos de contacto en la tabla leadschat.
+    if (!ES_UUID.test(String(chat_id))) {
+      return new Response(
+        JSON.stringify({ error: "chat_id no valido" }),
+        { status: 400, headers: { ...CORS, "Content-Type": "application/json" } },
+      )
+    }
+
+    if (typeof mensaje !== "string" || mensaje.length > MAX_LARGO_MENSAJE) {
+      return new Response(
+        JSON.stringify({ error: "El mensaje es demasiado largo" }),
+        { status: 400, headers: { ...CORS, "Content-Type": "application/json" } },
+      )
+    }
+
+    const origen = req.headers.get("origin") ?? ""
+    if (origen && !ORIGENES_PERMITIDOS.includes(origen)) {
+      return new Response(
+        JSON.stringify({ error: "Origen no permitido" }),
+        { status: 403, headers: { ...CORS, "Content-Type": "application/json" } },
+      )
+    }
+
+    if (!dentroDelLimite(String(chat_id))) {
+      return new Response(
+        JSON.stringify({ error: "Demasiados mensajes seguidos. Espera unos minutos o escribenos por WhatsApp." }),
+        { status: 429, headers: { ...CORS, "Content-Type": "application/json" } },
       )
     }
 

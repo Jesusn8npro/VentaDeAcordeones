@@ -1,8 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import DrawerDerecho from './DrawerDerecho'
 import { I } from '../navIconos'
+
+const URL_WA = 'https://wa.me/573144865310?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n'
 
 function timeAgo(t: number) {
   const s = Math.floor((Date.now() - t) / 1000)
@@ -12,13 +15,13 @@ function timeAgo(t: number) {
   return `hace ${Math.floor(s / 86400)} d`
 }
 
-const NOTIFS_INICIALES = [
-  { id: 'n1', kind: 'order',  title: 'Pedido #VA-8421 enviado',             body: 'Llegó al centro de distribución Bogotá.',         time: Date.now() - 1000*60*8,    read: false },
-  { id: 'n2', kind: 'promo',  title: '30% OFF en repuestos hoy',             body: 'Solo por hoy en fuelles, voces y tornillería.',   time: Date.now() - 1000*60*55,   read: false },
-  { id: 'n3', kind: 'system', title: 'Acordeón Hohner Corona III en stock',  body: 'Vuelve a estar disponible la tonalidad Sol Do Fa.', time: Date.now() - 1000*60*60*3, read: false },
-  { id: 'n4', kind: 'order',  title: 'Reseña pendiente · Pedido #VA-8211',  body: '¿Qué tal tu nuevo estuche rígido?',               time: Date.now() - 1000*60*60*22, read: true },
-  { id: 'n5', kind: 'promo',  title: 'Curso Vallenato · cohorte abierta',   body: 'Faltan 4 cupos para la cohorte de mayo.',         time: Date.now() - 1000*60*60*48, read: true },
-]
+interface Notif { id: string; kind: string; title: string; body: string; time: number; read: boolean }
+
+// Vacío a propósito. Antes había 5 notificaciones inventadas (pedidos #VA-8421 y #VA-8211,
+// "30% OFF en repuestos hoy", una cohorte de curso): cualquier visitante abría la campana y veía
+// pedidos que nunca hizo y promociones que no existen. Hasta que haya una tabla real de avisos
+// por usuario, el drawer muestra un estado vacío honesto con salida a la tienda y a WhatsApp.
+const NOTIFS_INICIALES: Notif[] = []
 
 const KIND_META: Record<string, { icon: keyof typeof I; label: string; tone: string }> = {
   order:  { icon: 'Truck', label: 'Pedido',  tone: 'text-blue-400' },
@@ -54,10 +57,13 @@ export default function NotificacionesDrawer({ open, onClose, light }: Props) {
       open={open}
       onClose={onClose}
       title="NOTIFICACIONES"
-      subtitle={unread > 0 ? `${unread} sin leer` : 'Estás al día'}
+      subtitle={notifs.length === 0 ? 'Sin avisos por ahora' : unread > 0 ? `${unread} sin leer` : 'Estás al día'}
       accentBadge={unread > 0 ? unread : null}
       light={light}
     >
+      {/* Los filtros solo tienen sentido si hay algo que filtrar; sin avisos quedaba una barra
+          muerta encima del estado vacío. */}
+      {notifs.length > 0 && (
       <div className={`px-5 py-3 border-b ${hair} flex items-center gap-1.5 overflow-x-auto no-scrollbar`}>
         {FILTERS.map((f) => {
           const active = filter === f.id
@@ -83,16 +89,39 @@ export default function NotificacionesDrawer({ open, onClose, light }: Props) {
           MARCAR TODO LEÍDO
         </button>
       </div>
+      )}
 
       {filtered.length === 0 ? (
         <div className="px-6 py-14 text-center">
           <div className={`mx-auto h-20 w-20 rounded-full flex items-center justify-center ${light ? 'bg-ink-100' : 'bg-white/[.05]'}`}>
             <I.Bell className={`h-9 w-9 ${light ? 'text-ink-300' : 'text-white/30'}`} />
           </div>
-          <h3 className="cond mt-5 text-[18px] font-extrabold tracking-[0.06em]">SIN NOTIFICACIONES</h3>
+          <h3 className="cond mt-5 text-[18px] font-extrabold tracking-[0.06em]">AÚN NO TIENES AVISOS</h3>
           <p className={`mt-1.5 text-[13px] max-w-xs mx-auto ${light ? 'text-ink-500' : 'text-white/55'}`}>
-            Cuando tengas actualizaciones de pedidos u ofertas aparecerán aquí.
+            Aquí verás el estado de tus pedidos y los avisos de tu cuenta. Mientras tanto, escríbenos y te atendemos directo desde el taller.
           </p>
+          <div className="mt-7 flex flex-col items-center gap-2.5">
+            <Link
+              href="/tienda"
+              onClick={onClose}
+              className="cond inline-flex items-center gap-2 bg-gold text-black text-[12px] font-bold tracking-[0.16em] px-5 py-2.5 rounded-sm hover:bg-gold-300 transition-colors"
+            >
+              EXPLORAR LA TIENDA
+              <I.ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <a
+              href={URL_WA}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`cond inline-flex items-center gap-2 text-[12px] font-bold tracking-[0.16em] px-5 py-2.5 rounded-sm border transition-colors
+                ${light
+                  ? 'border-ink-200 text-ink-700 hover:border-gold hover:text-ink-900'
+                  : 'border-white/15 text-white/70 hover:border-gold hover:text-gold'}`}
+            >
+              <I.Phone className="h-3.5 w-3.5" />
+              ESCRÍBENOS POR WHATSAPP
+            </a>
+          </div>
         </div>
       ) : (
         <ul>

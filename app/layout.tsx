@@ -194,7 +194,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es-CO" className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${barlowCondensed.variable}`}>
+    <html lang="es-CO" suppressHydrationWarning className={`${inter.variable} ${poppins.variable} ${bebasNeue.variable} ${cormorant.variable} ${jetbrainsMono.variable} ${barlowCondensed.variable}`}>
       <head>
         {/* Performance: preconnect a recursos externos críticos */}
         <link

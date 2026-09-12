@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import SesionCerradaCliente from './SesionCerradaCliente'
 
 export const metadata: Metadata = {
-  title: 'Sesión cerrada — VentaDeAcordeones.com',
+  title: 'Sesión cerrada',
   robots: { index: false, follow: false },
 }
 

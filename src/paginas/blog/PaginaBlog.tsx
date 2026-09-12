@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { BookOpen, Users, Star, Clock } from 'lucide-react'
-import { useTituloPagina } from '../../hooks/useTitulosPagina'
 import './PaginaBlog.css'
 import SidebarBlog from './SidebarBlog'
 import { clienteSupabase } from '../../configuracion/supabase'
@@ -35,7 +34,6 @@ const portadaSegura = (url) => {
  * - Totalmente adaptado al estilo de la tienda (tonos modernos y legibles).
  */
 export default function PaginaBlog() {
-  useTituloPagina('Blog')
   const [articulos, setArticulos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)

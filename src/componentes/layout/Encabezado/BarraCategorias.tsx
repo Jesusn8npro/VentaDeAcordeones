@@ -153,12 +153,16 @@ export default function BarraCategorias({ light, scrolled }: { light: boolean; s
             )
           })}
         </div>
-        <Link href="/tienda" onMouseEnter={close} className="self-center flex items-center gap-1.5 xl:gap-2 pl-2.5 xl:pl-3 pr-1 py-1.5 rounded-md border border-gold/50 bg-gold/[.08] flash-pulse shrink-0" aria-label="Flash sale hoy 30% off">
+        {/* Antes decía "FLASH SALE HOY · 30% OFF": no existe esa promoción. Ahora enlaza al filtro
+            real de la tienda (?oferta=1 → conDescuento, ver filtrosTienda.ts) y la cifra es el
+            mayor descuento vigente en catálogo (fuelles $790.000 → $650.000 = 17,7%, se redondea
+            a la baja). Si cambian los precios hay que recalcular este tope. */}
+        <Link href="/tienda?oferta=1" onMouseEnter={close} className="self-center flex items-center gap-1.5 xl:gap-2 pl-2.5 xl:pl-3 pr-1 py-1.5 rounded-md border border-gold/50 bg-gold/[.08] flash-pulse shrink-0" aria-label="Ver productos con descuento">
           <I.Bolt className="h-4 w-4 text-gold flash-text shrink-0" />
           <span className="cond text-[11px] xl:text-[12px] font-bold tracking-[0.14em] xl:tracking-[0.16em] text-gold flash-text whitespace-nowrap">
-            <span className="hidden 2xl:inline">FLASH SALE HOY · </span>30% OFF
+            <span className="hidden 2xl:inline">OFERTAS VIGENTES · </span>HASTA -17%
           </span>
-          <span className="cond text-[10px] xl:text-[11px] font-bold tracking-[0.16em] xl:tracking-[0.18em] bg-gold text-black px-2 xl:px-2.5 py-1 rounded-sm hover:bg-gold-300 transition-colors whitespace-nowrap">VER OFERTA</span>
+          <span className="cond text-[10px] xl:text-[11px] font-bold tracking-[0.16em] xl:tracking-[0.18em] bg-gold text-black px-2 xl:px-2.5 py-1 rounded-sm hover:bg-gold-300 transition-colors whitespace-nowrap">VER OFERTAS</span>
         </Link>
       </div>
       {activeCat && (

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import RestablecerContrasenaCliente from './RestablecerContrasenaCliente'
 
 export const metadata: Metadata = {
-  title: 'Restablecer contraseña — VentaDeAcordeones.com',
+  title: 'Restablecer contraseña',
   robots: { index: false, follow: false },
 }
 

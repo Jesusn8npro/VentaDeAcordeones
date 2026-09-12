@@ -33,7 +33,7 @@ export function crearRutaCluster(base: BaseCluster) {
   async function generateMetadata({ params }: { params: Promise<{ cluster: string }> }): Promise<Metadata> {
     const { cluster } = await params
     const c = buscar(cluster)
-    if (!c) return { title: 'Página no encontrada — VentaDeAcordeones.com', robots: { index: false, follow: true } }
+    if (!c) return { title: 'Página no encontrada', robots: { index: false, follow: true } }
     const url = `${SITIO}/${base}/${c.slug}`
     const img = c.imagen.startsWith('http') ? c.imagen : `${SITIO}${c.imagen}`
     return {

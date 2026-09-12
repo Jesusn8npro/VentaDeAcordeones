@@ -349,7 +349,9 @@ export default function ArticuloBlog({ initialData }: { initialData?: any }) {
     fecha: formatearFecha(articuloData.fecha_publicacion),
     lecturaMin: articuloData.lectura_min ?? 0,
     rating: articuloData.calificacion ?? 0,
-    portada: articuloData.portada_url || 'https://picsum.photos/1200/700'
+    // Sin picsum.photos: era una peticion a un tercero desde produccion y un host que
+    // ni siquiera esta en images.remotePatterns. Se usa la portada propia del sitio.
+    portada: articuloData.portada_url || '/images/og/portada.jpg'
   };
 
   const resumenBreveActual = articuloData.resumen_breve;
@@ -436,7 +438,11 @@ export default function ArticuloBlog({ initialData }: { initialData?: any }) {
                     const target = item.estilo === 'whatsapp' ? '_blank' : undefined;
                     const rel = item.estilo === 'whatsapp' ? 'noopener noreferrer' : undefined;
                     return (
-                      <a key={idx} className={`btn-cta ${estilo}`} href={item.href} target={target} rel={rel}>{item.texto}</a>
+                      // El href viene de la BD (lo escribe quien redacta el articulo): si no es una
+                      // ruta segura no se pinta como enlace, para que un `javascript:` no llegue al DOM.
+                      esRutaSegura(item.href ?? '')
+                        ? <a key={idx} className={`btn-cta ${estilo}`} href={item.href} target={target} rel={rel}>{item.texto}</a>
+                        : <span key={idx} className={`btn-cta ${estilo}`}>{item.texto}</span>
                     );
                   })}
                 </div>

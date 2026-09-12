@@ -30,16 +30,19 @@ Deno.serve(async (req: Request) => {
     })
     const { data: { user }, error: authError } = await userClient.auth.getUser()
 
-    // Permitir llamadas desde service_role (webhooks) o usuarios autenticados
+    // Dos vias de entrada: el backend (con EMAIL_INTERNO_TOKEN, un secreto propio para
+    // esto) o una persona autenticada. La persona autenticada solo puede disparar el
+    // correo de SU pedido: antes cualquiera con sesion podia enviar el correo de
+    // cualquier pedido con solo cambiar el id, y el "secreto" interno que se comparaba
+    // era la propia service role key viajando en una cabecera.
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
-    if (authError || !user) {
-      // Verificar que viene con service role (llamada interna)
-      const serviceKey = req.headers.get("x-service-key")
-      if (serviceKey !== SUPABASE_SERVICE_ROLE_KEY) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401, headers: CORS
-        })
-      }
+    const tokenInterno = Deno.env.get("EMAIL_INTERNO_TOKEN")
+    const esLlamadaInterna = Boolean(tokenInterno) && req.headers.get("x-interno-token") === tokenInterno
+
+    if (!esLlamadaInterna && (authError || !user)) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401, headers: { ...CORS, "Content-Type": "application/json" }
+      })
     }
 
     const { pedido_id } = await req.json()
@@ -54,6 +57,18 @@ Deno.serve(async (req: Request) => {
       .select("*")
       .eq("id", pedido_id)
       .single()
+
+    if (!esLlamadaInterna && pedido && user) {
+      const { data: perfil } = await supabase
+        .from("usuarios").select("rol").eq("id", user.id).maybeSingle()
+      const esDueno = pedido.usuario_id === user.id
+      const esAdmin = perfil?.rol === "admin"
+      if (!esDueno && !esAdmin) {
+        return new Response(JSON.stringify({ error: "Unauthorized" }), {
+          status: 403, headers: { ...CORS, "Content-Type": "application/json" }
+        })
+      }
+    }
 
     if (pedidoError || !pedido) {
       return new Response(JSON.stringify({ error: "Pedido no encontrado" }), {

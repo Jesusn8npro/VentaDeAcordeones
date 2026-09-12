@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { ShoppingCart, ArrowLeft, ArrowRight, Trash2, CheckCircle, Tag, Shield, Truck, Star, AlertCircle } from 'lucide-react'
 import { useCarrito } from '../../../contextos/CarritoContext'
 import { useAuth } from '../../../contextos/ContextoAutenticacion'
@@ -26,7 +25,6 @@ const PASOS = [
 const DATOS_VACIO = { nombre: '', apellido: '', email: '', telefono: '', direccion: '', ciudad: '', departamento: '', codigoPostal: '', instrucciones: '', tipoDocumento: '', numeroDocumento: '' }
 
 export default function PaginaCarrito() {
-  useTituloPagina('Mi Carrito')
   const { usuario } = useAuth()
   const { items, cargando, totalItems, subtotal, descuentos, envio, total, actualizarCantidad, eliminarDelCarrito, limpiarCarrito } = useCarrito()
   const { codigoCupon, setCodigoCupon, cuponAplicado, descuentoCupon, cargandoCupon, errorCupon, validarCupon, aplicarCupon, limpiarCupon, registrarUsoCupon } = usarCupones()

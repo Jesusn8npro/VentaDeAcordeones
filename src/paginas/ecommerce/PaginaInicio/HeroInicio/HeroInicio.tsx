@@ -34,12 +34,15 @@ const DIAPOSITIVAS = [
   },
   {
     hashtag: 'EdiciónVallenata',
-    titulo: ['Rey Vallenato', 'con 30% OFF', 'por tiempo limitado'],
+    // Antes prometía "30% OFF por tiempo limitado": el Rey Vallenato NO tiene descuento en la
+    // base de datos (precio único, sin precio_original). El gancho ahora se apoya en lo que sí
+    // es cierto y verificable: existencias reales, tonalidades de fábrica, taller y garantía.
+    titulo: ['Rey Vallenato', 'en GCF y ADG', 'con stock real'],
     acento: 1,
-    sub: 'Hohner Rey Vallenato con nácar, en stock y listos para enviar a toda Colombia y al mundo.',
+    sub: 'Hohner Rey Vallenato con nácar, en las tonalidades de fábrica GCF y ADG. Disponibles hoy para enviar a toda Colombia y al exterior, con garantía y afinación en nuestro taller.',
     cta1: { texto: 'Ver Acordeones', href: '/tienda' },
     cta2: { texto: 'Personaliza el Tuyo', href: '/acordeones-personalizados' },
-    tag: 'COLECCIÓN 2026',
+    tag: 'EN STOCK · GARANTÍA HOHNER',
     variante: '',
     imagen: `${HERO}/blanco-tricolor.webp`,
     alt: 'Acordeón Hohner blanco con fuelle dorado',

@@ -2,14 +2,12 @@
 
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
-import { useTituloPagina } from '../../../hooks/useTitulosPagina'
 import { Heart, Search, Grid, List, ShoppingCart, Eye, Trash2, Star } from 'lucide-react'
 import { useFavoritos } from '../../../contextos/FavoritosContext'
 import TarjetaProductoLujo from '../../../componentes/producto/TarjetaProductoLujo'
 import './PaginaFavoritos.css'
 
 const PaginaFavoritos = () => {
-  useTituloPagina('Mis Favoritos')
   const { favoritos, quitarFavorito, cargando } = useFavoritos()
   const [busqueda, setBusqueda] = useState('')
   const [ordenamiento, setOrdenamiento] = useState('recientes')

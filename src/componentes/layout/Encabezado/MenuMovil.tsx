@@ -170,12 +170,14 @@ export default function MenuMovil({ open, onClose, light, onOpenCart, onOpenFavo
             })}
           </ul>
 
-          <Link href="/tienda" onClick={handleClose} className="mt-4 mx-2 flex items-center justify-between gap-3 p-4 rounded-md border border-gold/50 bg-gold/[.08] flash-pulse">
+          {/* Mismo cambio que en BarraCategorias: no hay "flash sale". Enlaza al filtro real
+              ?oferta=1 y muestra el mayor descuento vigente del catálogo (17,7% → -17%). */}
+          <Link href="/tienda?oferta=1" onClick={handleClose} className="mt-4 mx-2 flex items-center justify-between gap-3 p-4 rounded-md border border-gold/50 bg-gold/[.08] flash-pulse">
             <span className="flex items-center gap-2">
               <I.Bolt className="h-5 w-5 text-gold flash-text" />
-              <span className="cond text-[13px] font-bold tracking-[0.14em] text-gold flash-text">FLASH SALE · 30% OFF</span>
+              <span className="cond text-[13px] font-bold tracking-[0.14em] text-gold flash-text">OFERTAS · HASTA -17%</span>
             </span>
-            <span className="cond text-[11px] font-bold tracking-[0.18em] bg-gold text-black px-3 py-1.5 rounded-sm">VER OFERTA</span>
+            <span className="cond text-[11px] font-bold tracking-[0.18em] bg-gold text-black px-3 py-1.5 rounded-sm">VER OFERTAS</span>
           </Link>
         </nav>
 

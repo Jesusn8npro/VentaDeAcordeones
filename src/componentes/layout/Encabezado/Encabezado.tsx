@@ -34,11 +34,14 @@ function Logo({ light }: { light: boolean }) {
 }
 
 // ── TopBar ────────────────────────────────────────────────────
+// Solo promesas verificables. Antes la cinta anunciaba "Soporte 24/7" (el negocio tiene horario),
+// "Descarga la App · 10% off" (no existe app ni ese cupón) y "envío gratis +$2M COP", cifra que
+// además contradecía la regla real del carrito (carritoReducer.ts: gratis desde $50.000).
 const TOP_MSGS = [
-  { icon: 'Truck', text: 'Envío gratis en compras +$2M COP', short: 'Envío gratis +$2M' },
-  { icon: 'Phone', text: 'Soporte 24/7 · WhatsApp +57 314 486 5310', short: 'Soporte 24/7' },
-  { icon: 'App',   text: 'Descarga la App · 10% off tu primer pedido', short: 'Descarga la App' },
-  { icon: 'Star',  text: '+12.000 acordeones entregados en LATAM', short: '+12K entregados' },
+  { icon: 'Truck', text: 'Envío gratis en compras +$50.000 COP', short: 'Envío gratis +$50.000' },
+  { icon: 'Phone', text: 'WhatsApp directo +57 314 486 5310', short: 'WhatsApp 314 486 5310' },
+  { icon: 'Tool',  text: 'Taller propio en Bogotá · afinación a mano', short: 'Taller propio en Bogotá' },
+  { icon: 'Shield', text: 'Distribuidor Hohner · garantía de fábrica', short: 'Garantía Hohner' },
 ]
 
 function TopBar({ light, onToggle }: { light: boolean; onToggle: () => void }) {
@@ -53,8 +56,10 @@ function TopBar({ light, onToggle }: { light: boolean; onToggle: () => void }) {
                 <Icon className="h-3.5 w-3.5 text-gold shrink-0" />
                 <span className="tracking-wide whitespace-nowrap">
                   <span className="hidden lg:inline">
+                    {/* Palabras que van en dorado: las que cargan el dato (cifras, marca, ciudad).
+                        Se actualizó junto con TOP_MSGS — antes doraba "24/7" y "App". */}
                     {m.text.split(' ').map((w, k) =>
-                      /\+|\$|24\/7|App/.test(w)
+                      /\+|\$|Bogotá|Hohner|WhatsApp/.test(w)
                         ? <span key={k} className="text-gold font-semibold"> {w}</span>
                         : <span key={k}> {w}</span>
                     )}

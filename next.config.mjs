@@ -35,13 +35,15 @@ const nextConfig = {
   // Next 16 usa Turbopack por defecto; resuelve tsconfig paths (@/*) y .ts/.tsx
   // sin config. Los specifiers '.js'→'.ts' se corrigieron en el código.
 
-  // Headers de seguridad + CSP. Alineada con la política PROPIA del app
-  // (src/configuracion/seguridad/utilidades.ts getSecurityHeaders): la de
-  // server.js estaba incompleta y bloqueaba las Google Fonts que importa
-  // src/estilos/index.css. Añadidos: fonts.googleapis/gstatic, wss://*.supabase.co
-  // (Supabase Realtime: TarjetaProductoLujo usa .channel().subscribe()),
-  // api.openai.com. En DESARROLLO se añade 'unsafe-eval' (React/Turbopack dev
-  // lo requiere; en prod React no usa eval → no se relaja la seguridad real).
+  // Headers de seguridad + CSP.
+  // - fonts.googleapis/gstatic: next/font carga las familias del layout.
+  // - wss://*.supabase.co: se deja permitido para Supabase Realtime. Hoy no hay ningún
+  //   .channel() en el código (se quitó el que abría un socket por tarjeta de producto),
+  //   pero el SDK puede volver a usarlo en cuanto se añada una suscripción.
+  // - api.openai.com se retiró: la clave de OpenAI vive en el servidor (edge function),
+  //   el navegador no debe hablar con ella nunca.
+  // En DESARROLLO se añade 'unsafe-eval' (React/Turbopack dev lo requiere; en producción
+  // React no usa eval, así que la seguridad real no se relaja).
   async headers() {
     const esDev = process.env.NODE_ENV !== 'production'
     const scriptSrc =
@@ -98,6 +100,20 @@ const nextConfig = {
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
           { key: 'Content-Security-Policy', value: csp },
         ],
+      },
+    ]
+  },
+
+  // Redirecciones permanentes (308) de URL "bonita" → URL real en base de datos.
+  // El slug de la Corona II se generó con una transliteración rota ("acordeón" → "acorde-n-"),
+  // y no se toca la BD para no romper enlaces ya indexados: la forma correcta redirige a la real,
+  // así cualquiera que escriba/enlace /producto/acordeon-hohner-corona-ii-gcf llega al producto.
+  async redirects() {
+    return [
+      {
+        source: '/producto/acordeon-hohner-corona-ii-gcf',
+        destination: '/producto/acorde-n-hohner-corona-ii-gcf',
+        permanent: true,
       },
     ]
   },

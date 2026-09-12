@@ -71,11 +71,23 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
   const toggleAcc = (key: string) =>
     setAccsAbiertos(prev => ({ ...prev, [key]: !prev[key] }))
 
-  const ratingBars = [5, 4, 3, 2, 1].map(s => {
-    const widths: Record<number, string> = { 5: '88%', 4: '9%', 3: '2%', 2: '0.5%', 1: '0.5%' }
-    const counts: Record<number, number> = { 5: Math.round((resenas || 247) * 0.88), 4: Math.round((resenas || 247) * 0.09), 3: Math.round((resenas || 247) * 0.02), 2: 1, 1: 1 }
-    return { s, width: widths[s], count: counts[s] }
-  })
+  // Prueba social SOLO con datos reales. Antes, cuando un producto no tenia reseñas (que es
+  // el caso de todo el catalogo), la ficha inventaba "4.9", "247 reseñas" y "500+ vendidos
+  // este mes". Eso es publicidad engañosa y Google penaliza las reseñas fabricadas.
+  const hayResenas = resenas > 0 && score > 0
+  const ratingBars = hayResenas
+    ? [5, 4, 3, 2, 1].map(s => {
+        const widths: Record<number, string> = { 5: '88%', 4: '9%', 3: '2%', 2: '0.5%', 1: '0.5%' }
+        const counts: Record<number, number> = {
+          5: Math.round(resenas * 0.88),
+          4: Math.round(resenas * 0.09),
+          3: Math.round(resenas * 0.02),
+          2: 1,
+          1: 1,
+        }
+        return { s, width: widths[s], count: counts[s] }
+      })
+    : []
 
   const reseñasData = Array.isArray(reviews) && reviews.length > 0 ? reviews.slice(0, 3) : []
 
@@ -195,17 +207,29 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
           {marca && <div className="pdp-brand-pill">{marca}</div>}
           <h1 className="pdp-title">{nombre}</h1>
 
-          <div className="pdp-meta-row">
-            <div className="pdp-stars">
-              <span className="stars">{'★'.repeat(Math.max(1, Math.round(score || 5)))}</span>
-              <strong>{score > 0 ? score.toFixed(1) : '4.9'}</strong>
-              <span className="cnt">({resenas > 0 ? resenas : 247} reseñas)</span>
+          {(hayResenas || ventas > 0 || producto.stock > 0) && (
+            <div className="pdp-meta-row">
+              {hayResenas && (
+                <div className="pdp-stars">
+                  <span className="stars">{'★'.repeat(Math.max(1, Math.round(score)))}</span>
+                  <strong>{score.toFixed(1)}</strong>
+                  <span className="cnt">({resenas} {resenas === 1 ? 'reseña' : 'reseñas'})</span>
+                </div>
+              )}
+              {ventas > 0 ? (
+                <div className="pdp-trust-meta">
+                  <span className="trust-dot"></span>
+                  <strong>{ventas}+</strong> vendidos
+                </div>
+              ) : producto.stock > 0 ? (
+                /* Sin ventas registradas se muestra un dato cierto y util: hay existencias. */
+                <div className="pdp-trust-meta">
+                  <span className="trust-dot"></span>
+                  <strong>Disponible</strong> · envio a toda Colombia
+                </div>
+              ) : null}
             </div>
-            <div className="pdp-trust-meta">
-              <span className="trust-dot"></span>
-              <strong>{ventas > 0 ? `${ventas}+` : '500+'}</strong> vendidos este mes
-            </div>
-          </div>
+          )}
 
           {descripcion && <p className="pdp-desc">{descripcion}</p>}
 
@@ -312,13 +336,15 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
         </div>
       </div>
 
-      {/* Reviews */}
+      {/* Reseñas: la seccion entera desaparece si el producto todavia no tiene ninguna,
+          en vez de rellenarla con una nota media y unas barras inventadas. */}
+      {hayResenas && (
       <section className="pdp-reviews">
         <div className="pdp-reviews-head">
           <div className="pdp-reviews-left">
             <div className="pdp-reviews-eyebrow">— Reseñas Verificadas</div>
             <h2 className="pdp-reviews-title">
-              {score > 0 ? score.toFixed(1) : '4.9'} / 5{' '}
+              {score.toFixed(1)} / 5{' '}
               <span className="pdp-reviews-sub">de nuestros clientes</span>
             </h2>
           </div>
@@ -370,6 +396,7 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
           <button className="pdp-btn-primary">Escribir reseña</button>
         </div>
       </section>
+      )}
     </div>
   )
 }
