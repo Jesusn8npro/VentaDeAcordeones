@@ -23,11 +23,11 @@ const PROD = '/migradas/productos'
 const DIAPOSITIVAS = [
   {
     hashtag: 'NuestroOficio',
-    titulo: ['Acordeones', 'y todo para', 'tu música'],
+    titulo: ['Acordeones Hohner', 'y todo para', 'tu música'],
     sub: 'Guitarras, bajos, baterías y sonido. Los acordeones vallenatos son nuestra firma, afinados a mano en nuestro taller de Bogotá.',
     cta1: { texto: 'Ver Acordeones', href: '/tienda' },
     cta2: { texto: 'Otros Instrumentos', tipo: 'wa' },
-    tag: 'TIENDA OFICIAL · DESDE 1998',
+    tag: 'OFICIO ACORDEONERO · DESDE 1998',
     variante: 'pearl',
     imagen: `${HERO}/rey-vallenato-negro.webp`,
     alt: 'Acordeón Hohner Rey Vallenato negro',

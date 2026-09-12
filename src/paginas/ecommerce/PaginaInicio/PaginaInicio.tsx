@@ -17,7 +17,7 @@ import Boletin from './Boletin/Boletin'
 import CtaFinalInicio from './CtaFinalInicio/CtaFinalInicio'
 import ReelsInstagram from '@/componentes/social/ReelsInstagram'
 
-export default function PaginaInicio() {
+export default function PaginaInicio({ destacados, ofertas }: { destacados?: any[]; ofertas?: any[] }) {
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
@@ -60,8 +60,8 @@ export default function PaginaInicio() {
       <HeroInicio />
       <MarqueeBeneficios />
       <IconosCategorias />
-      <VentaRelampago />
-      <ProductosDestacados />
+      <VentaRelampago iniciales={ofertas} />
+      <ProductosDestacados iniciales={destacados} />
       <RepuestosTecnicos />
       <OtrosInstrumentos />
       <SeccionPersonalizados />

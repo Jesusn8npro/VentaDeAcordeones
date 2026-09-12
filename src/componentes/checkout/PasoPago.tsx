@@ -35,7 +35,7 @@ export default function PasoPago({
           <h4>Resumen de compra:</h4>
           <div className="resumen-detalles">
             <div className="detalle-linea"><span>Productos</span><span>{formatearPrecioCOP(subtotal)}</span></div>
-            {descuentos > 0 && <div className="detalle-linea descuento"><span>Descuentos</span><span>-{formatearPrecioCOP(descuentos)}</span></div>}
+            {descuentos > 0 && <div className="detalle-linea descuento"><span>Descuento por compra +$100.000 (10%)</span><span>-{formatearPrecioCOP(descuentos)}</span></div>}
             {cuponAplicado && descuentoCupon > 0 && (
               <div className="detalle-linea descuento">
                 <span>Cupón ({cuponAplicado.codigo})</span>

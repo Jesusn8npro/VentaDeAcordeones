@@ -1,5 +1,44 @@
 import type { Metadata } from 'next'
 import InicioCliente from './InicioCliente'
+import { supabaseServidor } from '@/configuracion/supabaseServidor'
+
+// Los listados de la portada se consultan en el SERVIDOR y viajan dentro del HTML.
+// Antes los pedía el navegador tras hidratar: la portada salía con huecos, el contenido
+// daba un salto al llegar los datos y los buscadores no veían ni un producto.
+export const revalidate = 900
+
+const SELECT_TARJETA = `
+  id, nombre, slug, precio, precio_original, marca, estado,
+  categorias(nombre),
+  producto_imagenes(imagen_principal)
+`
+
+async function obtenerListados() {
+  try {
+    const [destacados, ofertas] = await Promise.all([
+      supabaseServidor
+        .from('productos')
+        .select(SELECT_TARJETA)
+        .eq('activo', true)
+        .gt('stock', 0)
+        .order('creado_el', { ascending: false })
+        .limit(8),
+      supabaseServidor
+        .from('productos')
+        .select(SELECT_TARJETA)
+        .eq('activo', true)
+        .gt('stock', 0)
+        .not('precio_original', 'is', null)
+        .order('creado_el', { ascending: false })
+        .limit(4),
+    ])
+    return { destacados: destacados.data || [], ofertas: ofertas.data || [] }
+  } catch (e: any) {
+    // Si la consulta falla, los componentes la repiten desde el navegador.
+    console.error('[home] Supabase:', e?.message)
+    return { destacados: [], ofertas: [] }
+  }
+}
 
 export const metadata: Metadata = {
   title: { absolute: 'Acordeones Hohner en Colombia: Venta, Personalizados y Taller | VentaDeAcordeones.com' },
@@ -18,6 +57,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function HomePage() {
-  return <InicioCliente />
+export default async function HomePage() {
+  const { destacados, ofertas } = await obtenerListados()
+  return <InicioCliente destacados={destacados} ofertas={ofertas} />
 }

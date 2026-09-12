@@ -104,10 +104,12 @@ function TarjetaFlash({ producto }: { producto: any }) {
   )
 }
 
-export default function VentaRelampago() {
-  const [productos, setProductos] = useState<any[]>([])
+/** `iniciales` viene del servidor (app/page.tsx) para que las ofertas salgan ya en el HTML. */
+export default function VentaRelampago({ iniciales }: { iniciales?: any[] }) {
+  const [productos, setProductos] = useState<any[]>(iniciales || [])
 
   useEffect(() => {
+    if (iniciales?.length) return
     // Solo productos con precio_original: son los que de verdad están rebajados. Antes, si había
     // menos de dos, se rellenaba con "los 4 más nuevos" bajo un título de ofertas, así que se
     // anunciaban como rebajados productos a precio de lista.

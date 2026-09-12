@@ -125,12 +125,19 @@ function SkeletonCard() {
   )
 }
 
-export default function ProductosDestacados() {
+/**
+ * `iniciales` llega desde el Server Component (app/page.tsx): con los productos ya
+ * consultados, las tarjetas salen dentro del HTML y no hay hueco ni salto de layout
+ * mientras el navegador pide los datos. Si no llegan (por ejemplo, si falla la
+ * consulta del servidor), se piden desde el navegador como antes.
+ */
+export default function ProductosDestacados({ iniciales }: { iniciales?: any[] }) {
   const [pestaña, setPestaña] = useState('todos')
-  const [todos, setTodos] = useState<any[]>([])
-  const [cargando, setCargando] = useState(true)
+  const [todos, setTodos] = useState<any[]>(iniciales || [])
+  const [cargando, setCargando] = useState(!iniciales?.length)
 
   useEffect(() => {
+    if (iniciales?.length) return
     clienteSupabase
       .from('productos')
       .select(`

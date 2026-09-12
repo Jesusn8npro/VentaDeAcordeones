@@ -211,7 +211,9 @@ export default function PaginaCarrito() {
               <h3>Resumen del pedido</h3>
               <div className="resumen-lineas">
                 <div className="resumen-linea"><span>Subtotal ({totalItems})</span><span>{formatearPrecioCOP(subtotal)}</span></div>
-                {descuentos > 0 && <div className="resumen-linea descuento"><span>Descuentos</span><span>-{formatearPrecioCOP(descuentos)}</span></div>}
+                {/* El carrito aplica un 10% automatico desde $100.000 (carritoReducer.ts). Se nombra
+                    para que el cliente sepa por que baja el total y no parezca un error de cuentas. */}
+                {descuentos > 0 && <div className="resumen-linea descuento"><span>Descuento por compra +$100.000 (10%)</span><span>-{formatearPrecioCOP(descuentos)}</span></div>}
                 {cuponAplicado && descuentoCupon > 0 && (
                   <div className="resumen-linea descuento"><span>Cupón: {cuponAplicado.codigo}</span><span>-{formatearPrecioCOP(descuentoCupon)}</span></div>
                 )}
