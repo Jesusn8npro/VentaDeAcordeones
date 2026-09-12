@@ -103,8 +103,22 @@ export default function PaginaRespuestaEpayco() {
       const codRespuesta = p('x_cod_response')
       const numeroPedido = p('ref')
 
-      // 1. Registrar la respuesta de ePayco cuando llega (no bloquea la pantalla si falla).
+      // 1. Verificar el pago contra ePayco y dejar el pedido en su estado real.
+      //    Esta es la vía principal: la confirmación servidor a servidor depende del
+      //    P_KEY del panel, y mientras ese no esté puesto el cliente pagaría sin que el
+      //    pedido llegue a marcarse como pagado. Aquí el servidor le pregunta a ePayco
+      //    por el ref y guarda lo que ePayco conteste (nada de lo que diga esta URL).
+      let verificado: { estado?: string; numero_pedido?: string } | null = null
       if (refPayco) {
+        try {
+          const r = await fetch('/api/epayco/verificar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ref_payco: refPayco }),
+          })
+          if (r.ok) verificado = await r.json()
+        } catch { /* si falla, abajo se usa el estado que ya tenga el pedido */ }
+
         try {
           await servicioEpayco.registrarTransaccion({
             referenciaPago: refPayco,
@@ -126,11 +140,16 @@ export default function PaginaRespuestaEpayco() {
 
       if (!refPayco && !pedido) { setCargando(false); return }
 
-      // 3. Estado: manda ePayco si contestó; si no, lo que diga el pedido en base de datos.
+      // 3. Estado: manda lo verificado con ePayco en el servidor; luego el pedido en base
+      //    de datos; y solo si no hay ninguna de las dos, lo que traiga la URL (que es
+      //    editable a mano y por eso nunca decide sola que un pago fue aprobado).
       let estado: EstadoPago = 'pendiente'
-      if (respuesta === 'Aceptada' || codRespuesta === '1') estado = 'exitoso'
+      const estadoReal = verificado?.estado || pedido?.estado
+      if (estadoReal === 'pagado') estado = 'exitoso'
+      else if (estadoReal === 'rechazado') estado = 'rechazado'
+      else if (estadoReal === 'pendiente' || estadoReal === 'revision') estado = 'pendiente'
+      else if (respuesta === 'Aceptada' || codRespuesta === '1') estado = 'pendiente'
       else if (respuesta === 'Rechazada' || respuesta === 'Fallida' || codRespuesta === '2' || codRespuesta === '4') estado = 'rechazado'
-      else if (!respuesta && pedido) estado = pedido.estado === 'pagado' ? 'exitoso' : 'pendiente'
 
       const montoEpayco = p('x_amount') ? parseFloat(p('x_amount') as string) : null
       const tecnicos = [

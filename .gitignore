@@ -57,3 +57,5 @@ guias_dise*/
 
 # Recortes locales del catálogo (la web usa las copias en Supabase Storage)
 public/images/catalogo/
+
+.env.backup-*

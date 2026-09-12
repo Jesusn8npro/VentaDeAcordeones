@@ -112,3 +112,37 @@ export async function crearSesionEpayco(datos: DatosSesionEpayco): Promise<strin
     return null
   }
 }
+
+/**
+ * Consulta el estado REAL de una transacción en la API pública de validación de ePayco.
+ *
+ * Por qué existe: la firma que ePayco manda en la confirmación se calcula con el
+ * **P_KEY** del panel, que NO es el PRIVATE_KEY. Mientras el P_KEY no esté bien puesto,
+ * la firma no cuadra y ningún pedido pasaría nunca a 'pagado' (el cliente pagaría y la
+ * tienda no se enteraría). Esta consulta no usa ninguna clave: se le pide a ePayco, por
+ * el ref de la transacción, qué pasó de verdad — y su respuesta manda sobre lo que diga
+ * el navegador, que es manipulable.
+ *
+ * Devuelve los campos x_* tal cual los da ePayco, o `null` si no hay datos.
+ */
+export async function consultarTransaccionEpayco(refPayco: string): Promise<Record<string, any> | null> {
+  const ref = String(refPayco || '').trim()
+  if (!ref || !/^[A-Za-z0-9._-]{4,64}$/.test(ref)) return null
+
+  try {
+    const res = await fetch(`https://secure.epayco.co/validation/v1/reference/${encodeURIComponent(ref)}`, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(12_000),
+    })
+    if (!res.ok) {
+      console.warn(`[epayco/validacion] HTTP ${res.status} para ref ${ref}`)
+      return null
+    }
+    const cuerpo = await res.json()
+    if (cuerpo?.success === false || !cuerpo?.data) return null
+    return cuerpo.data as Record<string, any>
+  } catch (error: any) {
+    console.warn('[epayco/validacion] No se pudo consultar:', error?.message)
+    return null
+  }
+}
