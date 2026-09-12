@@ -1,0 +1,431 @@
+/* BloqueAcordeon.css — plantilla de acordeón en el creador de productos.
+ *
+ * El resto del panel de admin está forzado a claro (FormularioProducto.css fija fondos
+ * blancos y `color-scheme: light` en los inputs), así que este bloque define sus propios
+ * tokens en claro y los remapea a los `--vda-*` cuando el sitio está en oscuro. Así
+ * encaja con el formulario que lo rodea y no se rompe al cambiar de tema. */
+
+.bloque-acordeon {
+  --ba-superficie: #ffffff;
+  --ba-superficie-2: #f4f6f8;
+  --ba-linea: #e1e5e9;
+  --ba-tinta: #1f2937;
+  --ba-tinta-dim: #55606d;
+  --ba-acento: #b4892b;
+  --ba-acento-suave: #fdf5e3;
+  --ba-peligro: #b91c1c;
+  --ba-peligro-suave: #fee2e2;
+  --ba-ok: #065f46;
+  --ba-ok-suave: #d1fae5;
+
+  border-left-color: var(--ba-acento);
+}
+
+[data-theme='dark'] .bloque-acordeon {
+  --ba-superficie: var(--vda-superficie);
+  --ba-superficie-2: var(--vda-superficie-2);
+  --ba-linea: var(--vda-linea);
+  --ba-tinta: var(--vda-tinta);
+  --ba-tinta-dim: var(--vda-tinta-dim);
+  --ba-acento: var(--vda-oro);
+  --ba-acento-suave: color-mix(in srgb, var(--vda-oro) 14%, transparent);
+  --ba-peligro: var(--vda-peligro);
+  --ba-peligro-suave: color-mix(in srgb, var(--vda-peligro) 16%, transparent);
+  --ba-ok: var(--vda-exito);
+  --ba-ok-suave: color-mix(in srgb, var(--vda-exito) 16%, transparent);
+}
+
+/* Nada de este bloque puede desbordar en 375px. */
+.bloque-acordeon,
+.bloque-acordeon * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.bloque-acordeon__intro {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ba-tinta-dim);
+}
+
+/* ── Acciones ── */
+.bloque-acordeon__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 14px;
+}
+
+.bloque-acordeon__acciones small {
+  font-size: 12px;
+  color: var(--ba-tinta-dim);
+}
+
+.ba-btn {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--ba-linea);
+  background: var(--ba-superficie);
+  color: var(--ba-tinta);
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.ba-btn:hover {
+  border-color: var(--ba-acento);
+  transform: translateY(-1px);
+}
+
+.ba-btn:active {
+  transform: translateY(0);
+}
+
+.ba-btn--primario {
+  background: var(--ba-acento);
+  border-color: var(--ba-acento);
+  color: #fff;
+}
+
+.ba-btn--primario:hover {
+  filter: brightness(1.07);
+}
+
+.ba-btn--mini {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.ba-btn--texto {
+  background: none;
+  border: none;
+  color: var(--ba-tinta-dim);
+  text-decoration: underline;
+  padding: 4px 0;
+}
+
+/* ── Conflictos de la plantilla ── */
+.ba-conflictos {
+  background: var(--ba-acento-suave);
+  border: 1px solid color-mix(in srgb, var(--ba-acento) 40%, transparent);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--ba-tinta);
+}
+
+.ba-conflictos ul {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.ba-conflictos li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ── Subtítulos ── */
+.ba-subtitulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ba-tinta-dim);
+}
+
+.ba-contador {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ba-ok-suave);
+  color: var(--ba-ok);
+}
+
+/* ── Ficha técnica ── */
+.ba-grid-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.ba-grid-campos .campo {
+  margin-bottom: 0;
+}
+
+/* ── Grupos de chips ── */
+.ba-grupo {
+  margin-bottom: 14px;
+}
+
+.ba-grupo__nombre {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ba-tinta-dim);
+  margin-bottom: 8px;
+}
+
+.ba-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 8px;
+}
+
+.ba-chip-caja {
+  border: 1px solid var(--ba-linea);
+  border-radius: 10px;
+  background: var(--ba-superficie);
+  overflow: hidden;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ba-chip-caja.activa {
+  border-color: var(--ba-acento);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ba-acento) 35%, transparent);
+}
+
+.ba-chip {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--ba-tinta);
+  cursor: pointer;
+}
+
+.ba-chip:hover {
+  background: var(--ba-superficie-2);
+}
+
+.ba-chip__icono {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ba-chip__texto {
+  flex: 1;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.ba-chip__marca {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--ba-superficie-2);
+  color: var(--ba-tinta-dim);
+}
+
+.ba-chip.activo .ba-chip__marca {
+  background: var(--ba-acento);
+  color: #fff;
+}
+
+.ba-chip-valor {
+  padding: 0 10px 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.ba-chip-valor input,
+.ba-libre input {
+  width: 100%;
+  padding: 7px 9px;
+  font: inherit;
+  font-size: 13px;
+  border: 1px solid var(--ba-linea);
+  border-radius: 6px;
+  background: var(--ba-superficie);
+  color: var(--ba-tinta);
+}
+
+.ba-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.ba-opcion {
+  font: inherit;
+  font-size: 11.5px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--ba-linea);
+  background: var(--ba-superficie-2);
+  color: var(--ba-tinta-dim);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ba-opcion:hover {
+  border-color: var(--ba-acento);
+}
+
+.ba-opcion.activa {
+  background: var(--ba-acento);
+  border-color: var(--ba-acento);
+  color: #fff;
+}
+
+/* ── Añadir característica libre ── */
+.ba-libre {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 620px) {
+  .ba-libre {
+    grid-template-columns: 1.2fr 1fr auto;
+    align-items: center;
+  }
+}
+
+/* ── Vista previa ── */
+.ba-vacio {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ba-tinta-dim);
+  font-style: italic;
+}
+
+.ba-previa {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.ba-previa li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--ba-linea);
+  border-radius: 8px;
+  background: var(--ba-superficie-2);
+  font-size: 13px;
+  color: var(--ba-tinta);
+}
+
+.ba-previa__icono {
+  flex-shrink: 0;
+}
+
+.ba-previa__titulo {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.ba-previa__valor {
+  flex: 1;
+  color: var(--ba-tinta-dim);
+  overflow-wrap: anywhere;
+}
+
+.ba-quitar {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ba-tinta-dim);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ba-quitar:hover {
+  background: var(--ba-peligro-suave);
+  color: var(--ba-peligro);
+}
+
+/* ── Avisos ── */
+.ba-revision {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.ba-aviso {
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 13px;
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ba-aviso ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+
+.ba-aviso--bloqueo {
+  background: var(--ba-peligro-suave);
+  color: var(--ba-peligro);
+  display: block;
+}
+
+.ba-aviso--sugerencia {
+  background: var(--ba-acento-suave);
+  color: var(--ba-tinta);
+  display: block;
+}
+
+.ba-aviso--relleno {
+  background: var(--ba-superficie-2);
+  color: var(--ba-tinta-dim);
+  border: 1px dashed var(--ba-linea);
+  margin-bottom: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ba-btn,
+  .ba-chip-caja,
+  .ba-opcion {
+    transition: none;
+  }
+  .ba-btn:hover {
+    transform: none;
+  }
+}

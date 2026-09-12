@@ -150,7 +150,8 @@ const CreadorProductosPR = ({ modo = 'crear', slug = null, onSuccess = null }) =
           stock_minimo: data.stock_minimo || 5,
           destacado: data.destacado || false,
           activo: data.activo !== false,
-          landing_tipo: data.landing_tipo || 'temu',
+          // Vacio = la ficha se elige sola segun el producto (SelectorPlantilla).
+          landing_tipo: data.landing_tipo || '',
           peso: data.peso || '',
           dimensiones: data.dimensiones || null,
           marca: data.marca || '',

@@ -1,10 +1,12 @@
 import React from 'react'
 import ConvertidorAJson from './ConvertidorAJson'
 import SeccionesProductoJSON from './SeccionesProductoJSON'
+import BloqueAcordeon from './BloqueAcordeon'
 
 interface Categoria {
   id: string
   nombre: string
+  slug?: string
 }
 
 interface FormularioProductoUIProps {
@@ -19,6 +21,10 @@ interface FormularioProductoUIProps {
   manejarCambioEntero: (campo: string, valor: string) => void
   manejarEnvio: (e: React.FormEvent) => void
   descargarJSON: () => void
+  /** Escritura en bloque: la plantilla de acordeón toca varios campos de una vez. */
+  actualizarDatosProducto: (datos: Record<string, any>) => void
+  /** El producto ya tiene imagen principal guardada en `producto_imagenes`. */
+  tieneImagenPrincipal: boolean
 }
 
 const FormularioProductoUI: React.FC<FormularioProductoUIProps> = ({
@@ -33,6 +39,8 @@ const FormularioProductoUI: React.FC<FormularioProductoUIProps> = ({
   manejarCambioEntero,
   manejarEnvio,
   descargarJSON,
+  actualizarDatosProducto,
+  tieneImagenPrincipal,
 }) => {
   return (
     <div className="formulario-producto">
@@ -96,6 +104,17 @@ const FormularioProductoUI: React.FC<FormularioProductoUIProps> = ({
             />
           </div>
         </section>
+
+        {/* La plantilla va justo después del nombre: se escribe el nombre, se pulsa
+            "Rellenar como acordeón personalizado" y el resto del formulario queda con la
+            estructura de siempre. Ver src/paginas/admin/CreadorDeProductosPR/plantillaAcordeon.ts */}
+        <BloqueAcordeon
+          datosProducto={datosProducto}
+          actualizarDatosProducto={actualizarDatosProducto}
+          categorias={categorias}
+          tieneImagenPrincipal={tieneImagenPrincipal}
+          modo={modo}
+        />
 
         {/* Precios y Stock */}
         <section className="seccion">
@@ -286,16 +305,23 @@ const FormularioProductoUI: React.FC<FormularioProductoUIProps> = ({
 
           <div className="fila">
             <div className="campo">
-              <label>Tipo de Landing</label>
+              <label>Ficha del producto</label>
+              {/* Las opciones Temu y Amazon apuntaban a una plantilla que ya no existe
+                  (se borró: tenía testimonios de banco de imágenes y descuentos falsos).
+                  Por defecto la ficha se elige sola según el producto, y estas opciones
+                  sirven para forzar una concreta. Ver src/componentes/landing/SelectorPlantilla.tsx */}
               <select
-                value={datosProducto.landing_tipo || 'temu'}
+                value={datosProducto.landing_tipo || ''}
                 onChange={(e) => manejarCambio('landing_tipo', e.target.value)}
               >
-                <option value="temu">⭐ Temu (estándar)</option>
-                <option value="amazon">🛒 Amazon</option>
-                <option value="clasico">📄 Clásico</option>
-                <option value="cinema">🎬 Cinema (negro/dorado)</option>
+                <option value="">Automática (recomendada)</option>
+                <option value="forzar-cinema">🎬 Siempre la ficha de acordeón</option>
+                <option value="forzar-catalogo">📄 Siempre la ficha sencilla</option>
               </select>
+              <small className="ayuda-campo">
+                Automática: ficha de acordeón para instrumentos desde $1.500.000 o que sean
+                acordeones; ficha sencilla para accesorios, audio y repuestos.
+              </small>
             </div>
 
             <div className="campo">

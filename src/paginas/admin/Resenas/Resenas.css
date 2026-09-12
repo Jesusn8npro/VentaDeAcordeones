@@ -1,0 +1,488 @@
+/* ============================================================================
+   PANEL DE MODERACIÓN DE RESEÑAS — admin
+   Colores SOLO con tokens --vda-* (definidos en src/estilos/diseno.css): así la
+   pantalla cambia sola con el tema claro/oscuro y no hay neutros quemados.
+   Único literal permitido: #000 como texto SOBRE el oro, igual que hace
+   `.vda-btn-primario` en diseno.css (el oro es claro en ambos temas).
+   ========================================================================== */
+
+.res-adm {
+  max-width: 1100px;
+  margin: 0 auto;
+  color: var(--vda-tinta);
+  /* Los comentarios y los correos pueden traer palabras muy largas: se parten
+     antes que reventar el ancho en un móvil de 375px. */
+  overflow-wrap: anywhere;
+}
+
+/* ── Cabecera ─────────────────────────────────────────────────────────────── */
+.res-adm-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.res-adm-titulos { min-width: 0; }
+
+.res-adm-titulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--vda-fuente-display);
+  font-size: clamp(1.6rem, 5vw, 2.1rem);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: var(--vda-tinta);
+}
+
+/* Contador de pendientes: es lo único que el dueño tiene que ver al entrar. */
+.res-adm-contador {
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--vda-oro);
+  color: #000;
+  box-shadow: 0 0 0 4px var(--vda-oro-brillo);
+  animation: res-adm-latido 2.4s ease-in-out infinite;
+}
+
+.res-adm-subtitulo {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  color: var(--vda-tinta-muted);
+}
+
+/* ── Filtros ──────────────────────────────────────────────────────────────── */
+.res-adm-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.res-adm-filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: transparent;
+  color: var(--vda-tinta-dim);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.res-adm-filtro:hover { border-color: var(--vda-oro); color: var(--vda-oro-texto); transform: translateY(-1px); }
+
+.res-adm-filtro.activo {
+  border-color: var(--vda-oro);
+  color: var(--vda-oro-texto);
+  background: color-mix(in srgb, var(--vda-oro) 12%, transparent);
+}
+
+.res-adm-filtro-num {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  background: color-mix(in srgb, var(--vda-tinta) 10%, transparent);
+  color: var(--vda-tinta);
+}
+
+.res-adm-filtro.activo .res-adm-filtro-num { background: var(--vda-oro); color: #000; }
+
+/* ── Botones ──────────────────────────────────────────────────────────────── */
+.res-adm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.res-adm-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.res-adm-btn-pri {
+  background: var(--vda-oro);
+  color: #000;
+}
+
+.res-adm-btn-pri:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px -10px var(--vda-oro);
+}
+
+.res-adm-btn-sec {
+  background: transparent;
+  border-color: var(--vda-linea-fuerte);
+  color: var(--vda-tinta-dim);
+}
+
+.res-adm-btn-sec:not(:disabled):hover {
+  border-color: var(--vda-oro);
+  color: var(--vda-oro-texto);
+  transform: translateY(-1px);
+}
+
+.res-adm-btn-peligro {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--vda-peligro) 40%, transparent);
+  color: var(--vda-peligro);
+}
+
+.res-adm-btn-peligro:not(:disabled):hover {
+  background: color-mix(in srgb, var(--vda-peligro) 12%, transparent);
+  border-color: var(--vda-peligro);
+}
+
+/* ── Avisos, carga y vacíos ───────────────────────────────────────────────── */
+.res-adm-aviso {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.87rem;
+  margin-bottom: 14px;
+}
+
+.res-adm-aviso-error {
+  background: color-mix(in srgb, var(--vda-peligro) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vda-peligro) 35%, transparent);
+  color: var(--vda-peligro);
+}
+
+.res-adm-cargando {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 16px;
+  justify-content: center;
+  color: var(--vda-tinta-muted);
+  font-size: 0.9rem;
+}
+
+.res-adm-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--vda-tinta) 18%, transparent);
+  border-top-color: var(--vda-oro);
+  animation: res-adm-girar 0.8s linear infinite;
+}
+
+.res-adm-girando { animation: res-adm-girar 0.9s linear infinite; }
+
+.res-adm-vacio {
+  text-align: center;
+  padding: 44px 20px;
+  border: 1px dashed var(--vda-linea-fuerte);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--vda-superficie) 70%, transparent);
+}
+
+.res-adm-vacio-icono { color: var(--vda-oro); opacity: 0.85; }
+
+.res-adm-vacio-titulo {
+  margin: 12px 0 6px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--vda-tinta);
+}
+
+.res-adm-vacio-texto {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--vda-tinta-muted);
+}
+
+.res-adm-codigo {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: var(--vda-fuente-mono);
+  font-size: 0.8em;
+  background: color-mix(in srgb, var(--vda-tinta) 8%, transparent);
+  color: var(--vda-tinta-dim);
+}
+
+/* ── Lista de reseñas ─────────────────────────────────────────────────────── */
+.res-adm-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.res-adm-tarjeta {
+  position: relative;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--vda-linea);
+  background: var(--vda-superficie);
+  box-shadow: 0 12px 32px -24px var(--vda-overlay);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  animation: res-adm-entrar 0.32s ease both;
+}
+
+.res-adm-tarjeta:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--vda-oro) 45%, var(--vda-linea));
+  box-shadow: 0 18px 40px -26px var(--vda-overlay-fuerte);
+}
+
+/* Franja dorada = esta reseña espera una decisión. */
+.res-adm-tarjeta.pendiente { border-left: 3px solid var(--vda-oro); }
+
+.res-adm-producto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.res-adm-miniatura {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--vda-linea);
+  background: var(--vda-superficie-2);
+}
+
+.res-adm-miniatura-vacia { display: inline-block; }
+
+.res-adm-producto-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.res-adm-producto-nombre {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--vda-tinta);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+a.res-adm-producto-nombre:hover { color: var(--vda-oro-texto); text-decoration: underline; }
+
+.res-adm-fecha { font-size: 0.76rem; color: var(--vda-tinta-muted); }
+
+.res-adm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.res-adm-chip-espera {
+  background: color-mix(in srgb, var(--vda-oro) 16%, transparent);
+  border-color: color-mix(in srgb, var(--vda-oro) 40%, transparent);
+  color: var(--vda-oro-texto);
+}
+
+.res-adm-chip-ok,
+.res-adm-chip-verificada {
+  background: color-mix(in srgb, var(--vda-exito) 14%, transparent);
+  border-color: color-mix(in srgb, var(--vda-exito) 38%, transparent);
+  color: var(--vda-exito);
+}
+
+.res-adm-valoracion {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.res-adm-estrellas { display: inline-flex; align-items: center; gap: 2px; }
+.res-adm-estrella-llena { color: var(--vda-oro); fill: var(--vda-oro); }
+.res-adm-estrella-vacia { color: color-mix(in srgb, var(--vda-tinta) 22%, transparent); }
+
+.res-adm-estrellas-num {
+  margin-left: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--vda-tinta-dim);
+}
+
+.res-adm-resena-titulo {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--vda-tinta);
+}
+
+.res-adm-comentario {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--vda-tinta-dim);
+  white-space: pre-wrap;
+}
+
+.res-adm-autor {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  color: var(--vda-tinta-muted);
+}
+
+.res-adm-respuesta {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border-left: 2px solid var(--vda-oro);
+  background: color-mix(in srgb, var(--vda-oro) 8%, transparent);
+}
+
+.res-adm-respuesta-etiqueta {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vda-oro-texto);
+  margin-bottom: 3px;
+}
+
+.res-adm-respuesta-texto {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--vda-tinta-dim);
+}
+
+/* ── Editor de respuesta ──────────────────────────────────────────────────── */
+.res-adm-editor {
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: var(--vda-superficie-2);
+  animation: res-adm-entrar 0.22s ease both;
+}
+
+.res-adm-editor-etiqueta {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--vda-tinta-dim);
+  margin-bottom: 6px;
+}
+
+.res-adm-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--vda-linea-fuerte);
+  background: var(--vda-superficie);
+  color: var(--vda-tinta);
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.res-adm-textarea:focus {
+  outline: none;
+  border-color: var(--vda-oro);
+  box-shadow: 0 0 0 3px var(--vda-oro-brillo);
+}
+
+.res-adm-textarea::placeholder { color: var(--vda-tinta-muted); }
+
+.res-adm-editor-pie {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.res-adm-contador-chars {
+  margin-right: auto;
+  font-size: 0.74rem;
+  color: var(--vda-tinta-muted);
+}
+
+/* ── Acciones ─────────────────────────────────────────────────────────────── */
+.res-adm-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Foco visible con teclado en todo lo interactivo. */
+.res-adm button:focus-visible,
+.res-adm a:focus-visible {
+  outline: 2px solid var(--vda-oro);
+  outline-offset: 2px;
+}
+
+/* ── Animaciones ──────────────────────────────────────────────────────────── */
+@keyframes res-adm-entrar {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes res-adm-girar {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes res-adm-latido {
+  0%, 100% { box-shadow: 0 0 0 4px var(--vda-oro-brillo); }
+  50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--vda-oro) 8%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .res-adm *,
+  .res-adm-contador {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── Móvil (375px sin desbordes) ──────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .res-adm-tarjeta { padding: 14px; }
+  .res-adm-cabecera { flex-direction: column; align-items: stretch; }
+  .res-adm-cabecera .res-adm-btn-sec { align-self: flex-start; }
+  .res-adm-acciones .res-adm-btn { flex: 1 1 140px; }
+  .res-adm-filtro { flex: 1 1 auto; justify-content: center; }
+  .res-adm-vacio { padding: 32px 14px; }
+}

@@ -74,7 +74,9 @@ export const construirDatosParaGuardar = (datosProducto: Record<string, any>, mo
   promociones: toJsonb(datosProducto.promociones),
   meta_title: datosProducto.meta_title ? datosProducto.meta_title.trim() : null,
   meta_description: datosProducto.meta_description ? datosProducto.meta_description.trim() : null,
-  landing_tipo: datosProducto.landing_tipo ? datosProducto.landing_tipo.trim() : 'temu',
+  // Sin valor = la ficha se elige sola segun el producto (SelectorPlantilla.tsx).
+  // Antes ponia 'temu', una plantilla que ya no existe.
+  landing_tipo: datosProducto.landing_tipo ? datosProducto.landing_tipo.trim() : null,
   garantia_meses: toInt(datosProducto.garantia_meses),
   ...(modo === 'editar' && { actualizado_el: new Date().toISOString() })
 })

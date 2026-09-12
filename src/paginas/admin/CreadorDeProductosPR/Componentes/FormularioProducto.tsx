@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import './FormularioProducto.css'
 import { usarCategorias } from '../../../../hooks/usarCategorias'
 import FormularioProductoUI from './FormularioProductoUI'
+import { validarAcordeon, tieneHuecosSinRellenar } from '../plantillaAcordeon'
 
 const FormularioProducto = ({
   datosProducto = {},
@@ -9,7 +10,8 @@ const FormularioProducto = ({
   modo = 'crear',
   onGuardar,
   onError,
-  cargando = false
+  cargando = false,
+  tieneImagenPrincipal = false
 }) => {
   const [errores, setErrores] = useState({})
   const [camposJSON, setCamposJSON] = useState({})

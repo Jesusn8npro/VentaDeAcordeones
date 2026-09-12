@@ -19,7 +19,12 @@ import {
   ChatIcon
 } from '../iconos/IconosAdmin'
 import WidgetBarraLateral from './WidgetBarraLateral'
+import { usarResenasPendientes } from './usarResenasPendientes'
 import './BarraLateralAdmin.css'
+
+// Ruta con aviso numérico: las reseñas nuevas quedan ocultas hasta que el admin
+// las aprueba, así que el menú tiene que avisar de que hay trabajo esperando.
+const RUTA_RESENAS = '/admin/resenas'
 
 const elementosNavegacion = [
   {
@@ -36,6 +41,7 @@ const elementosNavegacion = [
       { nombre: 'Categorías', ruta: '/admin/categorias', pro: false },
       { nombre: 'Cupones de Descuento', ruta: '/admin/cupones', pro: false },
       { nombre: 'Pedidos', ruta: '/admin/pedidos', pro: false },
+      { nombre: 'Reseñas', ruta: RUTA_RESENAS, pro: false },
       { nombre: 'Inventario', ruta: '/admin/inventario', pro: false },
       { nombre: 'Feed Meta', ruta: '/admin/feed-meta', pro: false },
     ],
@@ -98,6 +104,7 @@ const otrosElementos = [
 const BarraLateralAdmin = () => {
   const { estaExpandida, movilAbierto, estaEnHover, setEstaEnHover, alternarSubmenu, submenuAbierto, setSubmenuAbierto } = useBarraLateral()
   const pathname = usePathname()
+  const resenasPendientes = usarResenasPendientes()
 
   const [alturaSubmenu, setAlturaSubmenu] = useState<Record<string, number>>({})
   const refsSubmenu = useRef<Record<string, HTMLElement | null>>({})
@@ -190,6 +197,21 @@ const BarraLateralAdmin = () => {
               {(estaExpandida || estaEnHover || movilAbierto) && (
                 <span className="barra-lateral-menu-texto">{nav.nombre}</span>
               )}
+              {/* Aviso de reseñas por moderar en el grupo que las contiene: número
+                  cuando hay sitio y un punto cuando el menú está colapsado (solo
+                  iconos), para que el trabajo pendiente se vea en los dos estados. */}
+              {resenasPendientes > 0 &&
+                nav.subItems?.some((s: any) => s.ruta === RUTA_RESENAS) &&
+                (estaExpandida || estaEnHover || movilAbierto ? (
+                  <span
+                    className="barra-lateral-aviso-numero"
+                    title={`${resenasPendientes} reseña(s) por revisar`}
+                  >
+                    {resenasPendientes > 99 ? '99+' : resenasPendientes}
+                  </span>
+                ) : (
+                  <span className="barra-lateral-aviso-punto" aria-hidden="true" />
+                ))}
               {(estaExpandida || estaEnHover || movilAbierto) && (
                 <ChevronDownIcon
                   className={`barra-lateral-menu-flecha ${
@@ -250,6 +272,14 @@ const BarraLateralAdmin = () => {
                     >
                       {subItem.nombre}
                       <span className="barra-lateral-submenu-insignias">
+                        {subItem.ruta === RUTA_RESENAS && resenasPendientes > 0 && (
+                          <span
+                            className="barra-lateral-aviso-numero"
+                            title={`${resenasPendientes} reseña(s) esperando aprobación`}
+                          >
+                            {resenasPendientes > 99 ? '99+' : resenasPendientes}
+                          </span>
+                        )}
                         {subItem.new && (
                           <span
                             className={`barra-lateral-submenu-insignia ${
@@ -282,7 +312,7 @@ const BarraLateralAdmin = () => {
         </li>
       ))}
     </ul>
-  ), [estaExpandida, estaEnHover, movilAbierto, submenuAbierto, estaActivo, manejarAlternarSubmenu, alturaSubmenu])
+  ), [estaExpandida, estaEnHover, movilAbierto, submenuAbierto, estaActivo, manejarAlternarSubmenu, alturaSubmenu, resenasPendientes])
 
   // Memoizar el componente completo para evitar re-renders innecesarios
   return useMemo(() => (
