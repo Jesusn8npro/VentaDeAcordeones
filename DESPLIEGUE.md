@@ -23,7 +23,14 @@ no puede volver a cerrar la tienda. Puedes borrar la variable vieja del panel cu
 
 ---
 
-## 1. Base de datos (Supabase) — obligatorio
+## 1. Base de datos (Supabase) — ✅ HECHO el 12 de septiembre de 2026
+
+Los dos archivos ya se ejecutaron contra tu proyecto. Verificado en la misma sesión:
+trigger que protege el rol activo, 3 políticas nuevas en el carrito, 2 en pedidos, 2 en
+productos, 6 en reseñas, los 4 buckets con límite de tamaño, y **tu usuario sigue siendo
+administrador**. Si algún día necesitas repetirlo, es idempotente.
+
+### Detalle original
 
 Abre **Supabase → SQL Editor** y ejecuta **dos archivos**, en este orden. Los dos se
 pueden ejecutar varias veces sin problema.

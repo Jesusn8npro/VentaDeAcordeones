@@ -235,33 +235,14 @@ exception when insufficient_privilege then
 end $$;
 
 -- ─────────────────────────────────────────────────────────────────────────────
--- 7. REGISTRO DE CONFIRMACIONES DE PAGO
---    El webhook guarda aquí TODA confirmación de ePayco (aprobada o no) para
---    poder auditar un cobro después. Nadie puede leerla salvo el admin.
+-- 7. REGISTRO DE CONFIRMACIONES DE PAGO — ya existía, no se toca
+--    EJECUTADO EL 2026-09-12: al correr este archivo, la tabla
+--    `transacciones_epayco_logs` ya estaba creada de antes, con OTROS nombres de
+--    columna (epayco_ref_payco, tipo_evento, estado_nuevo, signature_valida...).
+--    El `create table if not exists` no hacía nada y el índice sobre `numero_pedido`
+--    reventaba, tumbando la transacción entera. Por eso se quitó de aquí y el
+--    webhook (app/api/epayco/confirmar) escribe con las columnas reales.
 -- ─────────────────────────────────────────────────────────────────────────────
-create table if not exists public.transacciones_epayco_logs (
-  id             bigserial primary key,
-  ref_payco      text,
-  transaction_id text,
-  numero_pedido  text,
-  cod_response   text,
-  respuesta      text,
-  monto          numeric,
-  moneda         text,
-  aprobado       boolean default false,
-  payload        jsonb,
-  creado_el      timestamptz not null default now()
-);
-
-create index if not exists idx_epayco_logs_numero_pedido on public.transacciones_epayco_logs (numero_pedido);
-create index if not exists idx_epayco_logs_creado on public.transacciones_epayco_logs (creado_el desc);
-
-alter table public.transacciones_epayco_logs enable row level security;
-
-drop policy if exists epayco_logs_admin on public.transacciones_epayco_logs;
-create policy epayco_logs_admin on public.transacciones_epayco_logs
-  for select to authenticated
-  using (exists (select 1 from public.usuarios u where u.id = auth.uid() and u.rol = 'admin'));
 
 commit;
 

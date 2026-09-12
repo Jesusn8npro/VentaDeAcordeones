@@ -92,23 +92,23 @@ export async function POST(req: Request) {
     }
 
     // Traza de TODA confirmación recibida (aprobada o no), antes de tocar el pedido.
-    // Si la tabla no existe todavía, no se interrumpe el cobro.
+    // Las columnas son las que ya tenía la tabla `transacciones_epayco_logs` del proyecto
+    // (se creó antes, con otro nombre de campos): por eso no se usan `ref_payco` ni
+    // `numero_pedido` a secas. Si el insert falla, el cobro sigue su curso igualmente.
     try {
       await supabase.from('transacciones_epayco_logs').insert([
         {
-          ref_payco: String(x_ref_payco ?? ''),
-          transaction_id: String(x_transaction_id ?? ''),
-          numero_pedido: String(x_id_invoice ?? ''),
+          epayco_ref_payco: String(x_ref_payco ?? ''),
+          epayco_transaction_id: String(x_transaction_id ?? ''),
+          tipo_evento: 'confirmacion',
+          estado_nuevo: pagoAprobado ? 'pagado' : String(x_response ?? 'rechazado'),
           cod_response: String(x_cod_response ?? ''),
-          respuesta: x_response ?? null,
-          monto: normalizarMonto(x_amount),
-          moneda: String(x_currency_code ?? ''),
-          aprobado: pagoAprobado,
-          payload: body,
+          mensaje_response: `${x_response ?? ''} · ${normalizarMonto(x_amount)} ${String(x_currency_code ?? '')} · pedido ${String(x_id_invoice ?? '—')}`,
+          signature_valida: true,
         },
       ])
     } catch {
-      /* tabla de log opcional */
+      /* el registro es para auditar, nunca para bloquear un cobro */
     }
 
     // ── Localizar el pedido: por numero_pedido (x_id_invoice) y, si no, por id (x_extra1) ──
