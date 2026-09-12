@@ -27,7 +27,12 @@ export async function POST(req: Request) {
   } = body
 
   const pKey = process.env.EPAYCO_PRIVATE_KEY || process.env.EPAYCO_P_KEY
-  const custId = x_cust_id_cliente || process.env.VITE_EPAYCO_CUSTOMER_ID
+  // El customer id sale del entorno; el del cuerpo es el ultimo recurso porque lo
+  // elige quien envia la peticion. Antes leia VITE_EPAYCO_CUSTOMER_ID, que era un
+  // resto de cuando el proyecto era Vite: en Next esa variable no existe y nunca
+  // tenia valor, asi que siempre se usaba el del cuerpo.
+  const custId =
+    process.env.EPAYCO_CUST_ID || process.env.EPAYCO_CUSTOMER_ID || x_cust_id_cliente
 
   if (!pKey) return NextResponse.json({ valida: null, motivo: 'sin_configuracion' })
 

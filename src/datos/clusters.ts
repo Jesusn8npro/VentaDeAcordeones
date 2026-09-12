@@ -3,9 +3,17 @@
 // schema) y enlaces cruzados. Las imágenes son recortes transparentes generados con
 // scripts/procesar-imagenes-productos.mjs (public/images/productos/<slug>.webp).
 
-export type BaseCluster = 'accesorios' | 'instrumentos' | 'audio'
+export type BaseCluster = 'accesorios' | 'instrumentos' | 'audio' | 'acordeones'
 
 export const BASES: Record<BaseCluster, { nombre: string; titulo: string; descripcion: string; h1: [string, string]; intro: string; wa: string }> = {
+  acordeones: {
+    nombre: 'Acordeones',
+    titulo: 'Acordeones Hohner en Colombia: Rey Vallenato, Corona y Personalizados',
+    descripcion: 'Acordeones Hohner nuevos con garantia: Rey Vallenato desde $3.610.000, Corona II y III, Bravo y personalizados con diapason nacarado. Taller propio en Bogota, envio a toda Colombia.',
+    h1: ['Acordeones Hohner', 'afinados antes de salir del taller'],
+    intro: 'Rey Vallenato, Corona II, Corona III, Bravo, Compadre y personalizados con diapason nacarado, botones a juego, fuelle y parrilla a medida. Todos nuevos, revisados botton por boton y afinados aqui en Bogota antes de despachar. Te asesoramos por WhatsApp para acertar con la tonalidad.',
+    wa: 'Hola, quiero asesoria para elegir un acordeon',
+  },
   accesorios: {
     nombre: 'Accesorios',
     titulo: 'Accesorios para Acordeón: Parrillas, Fuelles y Correas',
@@ -56,6 +64,158 @@ export const NUMERO_WA = '573144865310'
 export const SITIO = 'https://ventadeacordeones.com'
 
 export const CLUSTERS: Cluster[] = [
+  {
+    slug: 'rey-vallenato',
+    base: 'acordeones',
+    categoriaSlug: 'acordeones-rey-vallenato',
+    nombre: 'Rey Vallenato',
+    h1: ['Acordeón Hohner Rey Vallenato', 'el que usan los que ya tocan'],
+    titulo: 'Acordeón Hohner Rey Vallenato: Precio y Tonalidades en Colombia',
+    descripcion:
+      'Acordeón Hohner Rey Vallenato nuevo desde $3.610.000 en ADG y BEsAs, negro, rojo y naranja. Afinado en nuestro taller de Bogotá antes de despachar. Envío a toda Colombia.',
+    eyebrow: 'Acordeones · Rey Vallenato',
+    intro:
+      'Es el punto de entrada real al acordeón vallenato: tres hileras, 31 teclas, 12 bajos y el sonido con el que se graba y se toca en tarima. No es un acordeón «de principiante» con el que te quedas corto en un año: es el que usan músicos que ya tocan en grupo. Disponible en ADG y BEsAs.',
+    imagen: '/images/hero/rey-vallenato-negro.webp',
+    icono: 'cat-acordeon',
+    palabras: ['rey vallenato'],
+    chips: ['Desde $3.610.000', 'ADG y BEsAs', 'Afinado antes de enviar', 'Garantía incluida'],
+    beneficios: [
+      { titulo: 'Afinado aquí, no de caja', texto: 'Llega de Alemania y se mueve con el viaje y el clima. Lo revisamos botón por botón y lo afinamos en Bogotá antes de despacharlo.' },
+      { titulo: 'La tonalidad correcta', texto: 'ADG para vallenato tradicional, BEsAs para acordeoneros modernos y para acompañar voces. Te ayudamos a elegir según con quién tocas.' },
+      { titulo: 'Taller propio', texto: 'Si algo pasa, no te mandamos a otro lado: el mismo taller que lo afinó te lo atiende.' },
+      { titulo: 'Envío asegurado', texto: '48 a 72 horas hábiles a ciudades principales, en su estuche y protegido para el transporte.' },
+    ],
+    guia: {
+      titulo: 'ADG o BEsAs: cómo decidir',
+      parrafos: [
+        'Un acordeón diatónico trae tres tonalidades fijas, y eso define con quién vas a poder tocar. La regla práctica es simple: pregunta en qué tonalidad andan los músicos con los que vas a tocar y compra esa. Si vas a tocar solo y no sabes, ADG es la apuesta segura del vallenato colombiano.',
+        'BEsAs (SiMibLab) se ha vuelto muy común entre acordeoneros modernos y funciona mejor para acompañar voces femeninas. Si dudas, escríbenos: preguntamos qué tocas, tu nivel y tu grupo, y te decimos cuál pedir.',
+      ],
+      lista: ['ADG: vallenato tradicional y parrandas', 'BEsAs: estilo moderno y voces agudas', 'Colores: negro, rojo y naranja', 'Suma el estuche desde el primer día'],
+    },
+    faq: [
+      { p: '¿Cuánto cuesta un Hohner Rey Vallenato?', r: 'Hoy está en $3.610.000 nuevo, con garantía y afinado antes de despachar. El precio final siempre se ve en la ficha del producto.' },
+      { p: '¿Sirve para empezar desde cero?', r: 'Sí, y es lo que recomendamos. Comprar algo más barato de marca desconocida suele terminar en frustración: se desafinan solos y los botones se traban.' },
+      { p: '¿Qué tonalidad me conviene?', r: 'ADG si tocas vallenato tradicional o no sabes todavía. BEsAs si tocas estilo moderno o acompañas voces agudas. Pregunta a tu grupo en cuál andan.' },
+      { p: '¿Viene con estuche?', r: 'Consúltanos por el modelo exacto. Si no lo incluye, tenemos estuches desde $180.000 y te lo mandamos en el mismo envío.' },
+    ],
+    waTexto: 'Hola, quiero un acordeón Hohner Rey Vallenato',
+  },
+  {
+    slug: 'hohner-premium',
+    base: 'acordeones',
+    categoriaSlug: 'acordeones-hohner-premium',
+    nombre: 'Hohner Premium',
+    h1: ['Hohner Corona, Bravo y Compadre', 'la gama alta de la marca'],
+    titulo: 'Acordeón Hohner Corona II, Corona III y Bravo: Precios en Colombia',
+    descripcion:
+      'Acordeones Hohner Corona II desde $2.850.000, Corona III desde $5.590.000, Bravo II y III y Compadre. Nuevos, con garantía y afinados en Bogotá. Envío a toda Colombia.',
+    eyebrow: 'Acordeones · Gama Premium',
+    intro:
+      'Corona II, Corona III, Bravo II y III, Compadre y Arrieta. Son los acordeones con los que se graba disco y se hace gira: más registros, mejor respuesta del fuelle y acabados que aguantan años de tarima. Todos nuevos, con garantía y afinados aquí antes de salir.',
+    imagen: '/images/hero/rojo-xtreme.webp',
+    icono: 'cat-acordeon',
+    palabras: ['corona', 'bravo', 'compadre'],
+    chips: ['Corona II y III', 'Bravo 48 y 72 bajos', 'Compadre ADG', 'Garantía y taller propio'],
+    beneficios: [
+      { titulo: 'Más registros', texto: 'La Corona III y los Bravo suman registros que abren el sonido: sirven para grabar y para tocar géneros distintos sin cambiar de instrumento.' },
+      { titulo: 'Fuelle que responde', texto: 'La gama alta pide menos fuerza para el mismo volumen. Se nota en presentaciones largas.' },
+      { titulo: 'Revisión antes de enviar', texto: 'Botón por botón, abriendo y cerrando, y afinación si hace falta. Registro fotográfico de cómo sale.' },
+      { titulo: 'Repuestos a la mano', texto: 'Parrillas, fuelles, correas y estuches originales del mismo taller si algún día hacen falta.' },
+    ],
+    guia: {
+      titulo: 'Corona II, Corona III o Bravo',
+      parrafos: [
+        'La Corona II ($2.850.000) es la puerta de entrada a la familia Corona: el sonido Hohner clásico a un precio contenido. La Corona III (desde $5.590.000) suma registros y cuerpo, y es la que se busca para grabar.',
+        'Los Bravo (48 y 72 bajos) van por otro camino: más bajos y más posibilidades armónicas, pensados para quien acompaña o toca más allá del vallenato. El Compadre ADG ($3.634.900) queda en medio, con muy buena relación entre precio y respuesta.',
+      ],
+      lista: ['Corona II: entrada a la familia Corona', 'Corona III: para grabar y para tarima', 'Bravo: más bajos, más armonía', 'Compadre: equilibrio precio-respuesta'],
+    },
+    faq: [
+      { p: '¿Cuál es la diferencia entre Corona II y Corona III?', r: 'La III trae más registros y más cuerpo de sonido. Si vas a grabar o tocas varios géneros, la III lo justifica. Si arrancas en vallenato, la II cumple de sobra.' },
+      { p: '¿Qué significa 48 o 72 bajos?', r: 'Es cuántos botones tiene la mano izquierda. Más bajos dan más acordes disponibles; hacen falta si acompañas o tocas fuera del vallenato tradicional.' },
+      { p: '¿Son nuevos?', r: 'Todos los acordeones de la tienda son nuevos, con garantía y afinados en nuestro taller de Bogotá antes de despachar.' },
+      { p: '¿Puedo pagarlo si cuesta más de 5 millones?', r: 'Sí. La pasarela tiene un tope de $5.000.000 por transacción, así que esos se cierran por WhatsApp con el pedido ya registrado. Mira las formas de pago en el blog.' },
+    ],
+    waTexto: 'Hola, quiero un acordeón Hohner Corona o Bravo',
+  },
+  {
+    slug: 'personalizados',
+    base: 'acordeones',
+    categoriaSlug: 'acordeones-hohner-personalizados',
+    nombre: 'Personalizados',
+    h1: ['Acordeones personalizados', 'que no se parecen a ningún otro'],
+    titulo: 'Acordeón Hohner Personalizado: Nacarado, Fuelle y Parrilla a Medida',
+    descripcion:
+      'Acordeones Hohner personalizados desde $5.290.000: diapasón nacarado, botones a juego, fuelle con tu nombre y parrilla tallada. Hechos en nuestro taller de Bogotá.',
+    eyebrow: 'Acordeones · Personalizados',
+    intro:
+      'Un Hohner de fábrica desarmado pieza por pieza y armado con diapasón nacarado, botones a juego, fuelle en tus colores o con tu nombre y parrilla tallada a medida. Lo que suena no se toca: lengüetas, cera y mecánica quedan intactas. Lo que cambia es todo lo que se ve.',
+    imagen: '/images/personalizados/premium-nacar.webp',
+    icono: 'cat-acordeon',
+    palabras: ['personalizado', 'nácar', 'xtreme', 'tricolor'],
+    chips: ['Desde $5.290.000', 'Diapasón nacarado', 'Fuelle con tu nombre', 'Parrilla tallada'],
+    beneficios: [
+      { titulo: 'El sonido no se toca', texto: 'Se cambian diapasón, botones, fuelle y parrilla. Lengüetas, cera y mecánica siguen siendo las de fábrica.' },
+      { titulo: 'Tu nombre o tu escudo', texto: 'Bordado en el fuelle, tallado en la parrilla o pintado. Iniciales, nombre del grupo, una corona o una imagen religiosa.' },
+      { titulo: 'Fotos del avance', texto: 'Te mandamos cómo va mientras se arma, para que no compres a ciegas algo que se fabrica para ti.' },
+      { titulo: 'Fecha cerrada', texto: 'Antes de que pagues nada te damos una fecha concreta de entrega, no un «más o menos».' },
+    ],
+    guia: {
+      titulo: 'Entre más elementos, más cambia',
+      parrafos: [
+        'Puedes personalizar cuatro cosas: diapasón nacarado (el frente, lo que más se nota en tarima y en video), botones a juego o en contraste, fuelle en colores o con bordado, y parrilla tallada con tu diseño. Con los cuatro, el instrumento no se parece a ninguno.',
+        'Si ya tienes tu acordeón, también se hace pieza por pieza: parrillas desde $280.000, fuelles desde $350.000 y correas bordadas desde $180.000. Repartes el gasto y conservas el instrumento al que ya te acostumbraste.',
+      ],
+      lista: ['Diapasón nacarado en el color que elijas', 'Botones a juego o en contraste', 'Fuelle con tu nombre o tricolor', 'Parrilla tallada a medida'],
+    },
+    faq: [
+      { p: '¿Cuánto cuesta un acordeón personalizado?', r: 'Los que tenemos listos van de $5.290.000 a $6.500.000 según cuántos elementos lleven y qué tan elaborada sea la parrilla.' },
+      { p: '¿Cambia el sonido al personalizarlo?', r: 'No. Se reemplazan piezas exteriores; lengüetas, cera y mecánica quedan como salieron de fábrica.' },
+      { p: '¿Puedo personalizar el acordeón que ya tengo?', r: 'Sí, pieza por pieza. Parrillas desde $280.000, fuelles desde $350.000, correas bordadas desde $180.000.' },
+      { p: '¿Cuánto tarda?', r: 'Un fuelle o parrilla estándar, días. Un diseño tallado a medida con bordado toma más, porque las piezas se fabrican para ti. Te damos fecha concreta antes de cobrar.' },
+    ],
+    waTexto: 'Hola, quiero un acordeón personalizado',
+  },
+  {
+    slug: 'amplificadores',
+    base: 'audio',
+    categoriaSlug: 'amplificadores',
+    nombre: 'Amplificadores',
+    h1: ['Amplificadores', 'para ensayo, tarima y estudio'],
+    titulo: 'Amplificadores Fender para Bajo y Guitarra en Colombia',
+    descripcion:
+      'Amplificadores Fender desde $439.000 para ensayo, tarima y estudio. Distribuidor en Bogotá con envío a toda Colombia y asesoría para elegir la potencia.',
+    eyebrow: 'Audio · Amplificadores',
+    intro:
+      'De los combos de ensayo a los que aguantan tarima. Te ayudamos a no pagar de más ni quedarte corto: la potencia que necesitas depende de dónde vas a tocar, no de cuánto quieras gastar.',
+    imagen: '/images/clusters/grabacion.webp',
+    icono: 'cat-audio',
+    palabras: ['amplificador', 'rumble', 'champion'],
+    chips: ['Desde $439.000', 'Ensayo y tarima', 'Fender', 'Envío a toda Colombia'],
+    beneficios: [
+      { titulo: 'La potencia justa', texto: 'Un combo de ensayo no sirve en tarima y uno de tarima es un desperdicio en casa. Te decimos cuál según dónde tocas.' },
+      { titulo: 'Marca con respaldo', texto: 'Fender: repuestos y servicio disponibles, no una marca que desaparece al año.' },
+      { titulo: 'Combo con lo demás', texto: 'Si también necesitas micrófono, cables o monitores, te armamos el paquete con mejor precio.' },
+      { titulo: 'Envío asegurado', texto: 'Embalado para transporte y con seguimiento, a toda Colombia.' },
+    ],
+    guia: {
+      titulo: 'Cuánta potencia necesitas',
+      parrafos: [
+        'Para practicar en casa o ensayar en un cuarto, entre 15 y 40 vatios sobra. Para ensayar con batería acústica ya hacen falta 40 a 100. Para tarima sin refuerzo de PA, de 100 para arriba.',
+        'Ojo con el bajo: pide bastante más potencia que la guitarra para el mismo volumen percibido. Un amplificador de guitarra de 40 vatios y uno de bajo de 40 no se oyen igual.',
+      ],
+      lista: ['Casa y práctica: 15-40 vatios', 'Ensayo con batería: 40-100', 'Tarima: 100 o más', 'El bajo pide más potencia que la guitarra'],
+    },
+    faq: [
+      { p: '¿Cuál me sirve para ensayar con batería?', r: 'A partir de 40 vatios para guitarra. Si es bajo, apunta a 100 o más: el bajo necesita más potencia para el mismo volumen percibido.' },
+      { p: '¿Sirve para amplificar mi acordeón?', r: 'Para acordeón conviene más un sistema de PA o un monitor activo que un combo de guitarra. Escríbenos y te decimos qué combinación usar.' },
+      { p: '¿Tienen garantía?', r: 'Sí, garantía del fabricante y respaldo nuestro. Consúltanos por el modelo exacto.' },
+      { p: '¿Hacen envíos?', r: 'A toda Colombia, embalado para transporte y con seguimiento.' },
+    ],
+    waTexto: 'Hola, busco un amplificador',
+  },
   {
     slug: 'parrillas-de-acordeon',
     base: 'accesorios',

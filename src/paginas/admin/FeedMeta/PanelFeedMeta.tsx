@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './PanelFeedMeta.css'
+import { clienteSupabase } from '../../../configuracion/supabase'
 import LogsActividad from './LogsActividad'
 import PasosConfiguracionMeta from './PasosConfiguracionMeta'
 import {
@@ -91,8 +92,17 @@ export default function PanelFeedMeta() {
         setProgreso(prev => Math.min(prev + 10, 90));
       }, 200);
 
+      // Se manda el token de la sesion, NO la ADMIN_API_KEY: esa clave no puede viajar
+      // al navegador porque quedaria publica para cualquiera que abra el inspector.
+      // El servidor valida el token y comprueba contra la base de datos que el rol sea
+      // admin, asi que este token por si solo no autoriza nada de mas.
+      const { data: sesion } = await clienteSupabase.auth.getSession()
+      const token = sesion?.session?.access_token
+      if (!token) throw new Error('Tu sesion expiro. Vuelve a entrar.')
+
       const response = await fetch(`${API_BASE}/api/meta/actualizar-feed`, {
-        method: 'POST'
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
       });
       const ct = response.headers.get('content-type') || ''
       if (!ct.includes('application/json')) {

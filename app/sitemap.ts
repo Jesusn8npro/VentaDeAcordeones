@@ -18,7 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '', '/tienda', '/contacto', '/quienes-somos', '/trabaja-con-nosotros',
     '/sobre-la-tienda', '/terminos-condiciones', '/politica-privacidad',
     '/preguntas-frecuentes', '/politica-envio', '/cambios-devoluciones',
-    '/blog', '/ayuda', '/acordeones-personalizados', '/accesorios', '/instrumentos', '/audio',
+    '/blog', '/ayuda', '/acordeones-personalizados', '/acordeones', '/accesorios', '/instrumentos', '/audio',
     '/taller', '/testimonios', '/guia-tonalidades',
     ...CLUSTERS.map((c) => `/${c.base}/${c.slug}`),
   ].map((p) => ({
