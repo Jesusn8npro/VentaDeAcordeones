@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import type { Metadata } from 'next'
 import RespuestaEpaycoCliente from './RespuestaEpaycoCliente'
 
@@ -7,5 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function PaginaRespuestaEpaycoRoute() {
-  return <RespuestaEpaycoCliente />
+  return <Suspense fallback={null}>
+        <RespuestaEpaycoCliente />
+      </Suspense>
 }

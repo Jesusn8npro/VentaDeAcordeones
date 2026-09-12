@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 // Catálogo completo /tienda — metadata estática (catálogo) + BreadcrumbList
 // + índice de productos rastreable renderizado en servidor.
 // El grid interactivo sigue siendo client-side (PaginaTienda): Google no ejecuta ese
@@ -75,7 +76,9 @@ export default async function PaginaTiendaRoute() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
       />
-      <TiendaCliente />
+      <Suspense fallback={null}>
+        <TiendaCliente />
+      </Suspense>
       {/* sr-only (no display:none): invisible para el usuario, rastreable por Google y
           navegable con lector de pantalla. prefetch={false} para no disparar egress
           por enlaces que nadie ve. */}

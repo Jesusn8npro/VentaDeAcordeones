@@ -1,6 +1,6 @@
 // /tienda/categoria/[slug] — SEO server-side por categoría (tabla `categorias`).
 // Reutiliza PaginaTienda (igual que el App.tsx original mapeaba esta ruta).
-import { cache } from 'react'
+import { cache, Suspense } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { serializarJsonLd } from '@/utilidades/jsonLd'
@@ -125,7 +125,9 @@ export default async function PaginaTiendaCategoriaRoute({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializarJsonLd(jsonLd) }}
       />
-      <TiendaCategoriaCliente />
+      <Suspense fallback={null}>
+        <TiendaCategoriaCliente />
+      </Suspense>
     </>
   )
 }
