@@ -24,9 +24,16 @@ NEXT_PUBLIC_EPAYCO_URL_RESPONSE = "https://ventadeacordeones.com/respuesta-epayc
 # nunca llegó a ejecutarse desde el servidor de ePayco → ningún pago se confirmaba.
 NEXT_PUBLIC_EPAYCO_URL_CONFIRMATION = "https://ventadeacordeones.com/api/epayco/confirmar"
 
-# Google Analytics 4. Va aqui y no solo en el panel porque las NEXT_PUBLIC_* se
-# incrustan en el BUILD: si solo estuviera como env de EasyPanel, el bundle saldria
-# sin ID y no se registraria ni una visita.
+# Google Analytics 4.
+#
+# ⚠️ COMPROBADO EL 2026-09-12: poner una NEXT_PUBLIC_* SOLO aqui NO basta. Este archivo
+# se desplego con NEXT_PUBLIC_GA_ID puesto y el bundle salio sin el ID (se busco
+# "G-BR165RMQ66" en todos los chunks servidos: no aparecia en ninguno), asi que la
+# etiqueta no registraba ni una visita. EasyPanel no aplica este bloque [variables] al
+# build; las que si llegan son las del panel (pestana Entorno).
+#
+# Regla, entonces: toda NEXT_PUBLIC_* va SIEMPRE en el panel de EasyPanel. Aqui se deja
+# como respaldo y para que el valor quede versionado junto al codigo, no como unica via.
 NEXT_PUBLIC_GA_ID = "G-BR165RMQ66"
 
 # MODO MANTENIMIENTO (gate por login). "true" = el publico ve "Estamos actualizando"
