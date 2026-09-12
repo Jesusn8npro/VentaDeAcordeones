@@ -26,8 +26,16 @@ const nextConfig = {
       { protocol: 'https', hostname: 'cdn.shopify.com' },
     ],
     formats: ['image/avif', 'image/webp'],
+    // deviceSizes = anchos para imágenes a pantalla completa (sizes="100vw").
+    // imageSizes  = anchos para imágenes que ocupan una FRACCIÓN del ancho (tarjetas, miniaturas).
+    // Faltaban los escalones intermedios: una tarjeta de la tienda mide ~145 CSS px (≈290 px reales
+    // en un móvil a 2x) y, como el siguiente escalón disponible era 384, el navegador pedía 384 px
+    // siempre. Con 160/192/320 elige el escalón justo por encima y cada miniatura pesa menos.
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 64, 96, 128, 256, 384],
+    imageSizes: [16, 32, 48, 64, 96, 128, 160, 192, 256, 320, 384],
+    // Next 16 sólo sirve las calidades declaradas aquí. 65 es para las miniaturas de tarjeta: a
+    // 145 px no se distingue de 75 y el archivo baja ~25 %. 75 sigue siendo el resto del sitio.
+    qualities: [65, 75],
     // 31 días: las imágenes optimizadas (/_next/image) se sirven desde la caché del servidor y no se vuelven
     // a pedir a Supabase Storage en cada visita → menos egress (datos) facturado.
     minimumCacheTTL: 2678400,

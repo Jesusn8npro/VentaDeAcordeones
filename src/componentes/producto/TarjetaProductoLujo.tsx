@@ -172,23 +172,37 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             alt={nombre}
             className="imagen imagen-principal"
             loading="lazy"
+            decoding="async"
             width={320}
             height={320}
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
-            onError={() => setErrPrincipal(true)}
+            // El ancho REAL que ocupa la foto, no el de la tarjeta: `.imagen` lleva padding 7 %, así
+            // que en móvil (rejilla de 2) son ~145 px de 375 → 40vw, no 45vw. Pedir de más obligaba
+            // al navegador a bajar el escalón de 384 px en cada miniatura.
+            sizes={SIZES_TARJETA}
+            // 65 en vez de 75: a este tamaño no se nota y cada archivo pesa ~25 % menos.
+            quality={65}
+            onLoad={marcarCargada}
+            onError={(e) => { marcarCargada(e); setErrPrincipal(true) }}
           />
         ) : (
           <div className="imagen imagen-principal imagen-placeholder" aria-hidden="true" />
         )}
+        {/* Segunda foto SÓLO para el cambio al pasar el ratón. En móvil el CSS la oculta con
+            display:none y, al ser lazy, el navegador ni siquiera la pide: la rejilla pasa de 2
+            peticiones por tarjeta a 1. Se deja en el HTML (no en un condicional de cliente) para
+            no romper la hidratación ni provocar un segundo render de toda la rejilla. */}
         {srcSecundaria && !errSecundaria ? (
           <Image
             src={srcSecundaria}
-            alt={`${nombre} alternativa`}
+            alt=""
+            aria-hidden="true"
             className="imagen imagen-secundaria"
             loading="lazy"
+            decoding="async"
             width={320}
             height={320}
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
+            sizes={SIZES_TARJETA}
+            quality={65}
             onError={() => setErrSecundaria(true)}
           />
         ) : (

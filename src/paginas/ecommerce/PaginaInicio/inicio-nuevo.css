@@ -1657,9 +1657,16 @@
 }
 [data-theme="light"] .marquee-track span:nth-child(odd) { color: var(--vda-oro-suave); }
 [data-theme="light"] .prod-fav { background: rgba(255,255,255,0.8); }
-[data-theme="light"] .prod-tag { background: rgba(255,255,255,0.88); }
-[data-theme="light"] .prod-tag.new,
-[data-theme="light"] .prod-tag.sale { color: #fff; }
+/* La etiqueta de la tarjeta en modo claro. Antes esta regla ponia fondo blanco a TODAS
+   las variantes y ademas texto blanco en .new y .sale: el resultado era blanco sobre
+   blanco, asi que en el movil solo se veia un recuadro vacio con el borde de color. */
+[data-theme="light"] .prod-tag:not(.new):not(.sale) {
+  background: rgba(255,255,255,0.92);
+  color: var(--vda-tinta);
+  border-color: var(--vda-linea-fuerte);
+}
+[data-theme="light"] .prod-tag.new { background: var(--vda-oro); color: #14110c; border-color: var(--vda-oro); }
+[data-theme="light"] .prod-tag.sale { background: var(--vda-peligro); color: #fff; border-color: var(--vda-peligro); }
 [data-theme="light"] .prod-quick button { background: rgba(255,255,255,0.85); color: var(--vda-tinta); border-color: var(--vda-linea-fuerte); }
 [data-theme="light"] .prod-quick button:hover { background: var(--vda-oro); color: #fff; border-color: var(--vda-oro); }
 [data-theme="light"] .today-tab.active,

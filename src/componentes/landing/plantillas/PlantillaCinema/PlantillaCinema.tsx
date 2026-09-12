@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Truck, Shield, MapPin, Globe, Plus, Minus, Check, ShoppingCart, Zap, Search } from 'lucide-react'
 import { useCarrito } from '../../../../contextos/CarritoContext'
 import { optimizarUrlSupabase } from '../../../ImagenOptimizada'
+import CompraRapida from '../../../checkout/CompraRapida'
 import './PlantillaCinema.css'
 
 const fmtCOP = (n: number) => `$${new Intl.NumberFormat('es-CO').format(n)}`
@@ -15,6 +16,9 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
   const [imgActiva, setImgActiva] = useState(0)
   const [qty, setQty] = useState(1)
   const [agregado, setAgregado] = useState(false)
+  // "Comprar ahora" abre el pago en un paso, sin pasar por el carrito ni por los cuatro
+  // pasos del checkout. Antes este boton hacia exactamente lo mismo que "Anadir al carrito".
+  const [compraRapida, setCompraRapida] = useState(false)
   // Antes había un modo "CUOTAS / MES · -15% pago anual" que no existe como oferta real y que,
   // además, metía el producto al carrito a `precio * 0.85`: cualquiera podía pagar un 15% menos
   // con un clic. Se retiró el modo y el precio mostrado es siempre el de catálogo.
@@ -302,9 +306,16 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
             </button>
           </div>
 
-          <button className="pdp-buynow" onClick={agregarCarrito}>
+          <button className="pdp-buynow" onClick={() => setCompraRapida(true)}>
             COMPRAR AHORA · {fmtCOP(displayPrice * qty)}
           </button>
+
+          <CompraRapida
+            producto={producto}
+            abierto={compraRapida}
+            cantidadInicial={qty}
+            alCerrar={() => setCompraRapida(false)}
+          />
 
           {/* Trust strip */}
           <div className="pdp-trust-strip">

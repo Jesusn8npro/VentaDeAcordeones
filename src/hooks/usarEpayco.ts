@@ -21,7 +21,10 @@ import pedidosServicio from '../servicios/pedidosServicio';
  * Antes vivia en app/layout.tsx, asi que CADA pagina del sitio descargaba el script
  * de la pasarela aunque la visita no llegara nunca a pagar.
  */
-const URL_SDK_EPAYCO = 'https://checkout.epayco.co/checkout.js'
+// SDK v2. El antiguo (checkout.js) abre un iframe contra new-checkout.epayco.co, que
+// responde con X-Frame-Options DENY, y el modal se queda en blanco. El v2 consume un
+// sessionId creado en el servidor y abre el modal dentro de la propia página.
+const URL_SDK_EPAYCO = 'https://checkout.epayco.co/checkout-v2.js'
 let promesaSdk = null
 
 export const cargarSdkEpayco = () => {
@@ -50,6 +53,21 @@ export const cargarSdkEpayco = () => {
     }
   })
   return promesaSdk
+}
+
+/**
+ * Abre el modal de pago con una sesión creada por el servidor.
+ * El navegador no conoce ni el importe ni la referencia: solo pasa el sessionId.
+ */
+export const abrirPagoConSesion = async (sessionId) => {
+  await cargarSdkEpayco()
+  if (!window.ePayco?.checkout?.configure) {
+    throw new Error('No se pudo abrir el sistema de pagos. Revisa tu conexión e intenta nuevamente.')
+  }
+  const manejador = window.ePayco.checkout.configure({ sessionId, external: false })
+  if (typeof manejador.openNew === 'function') manejador.openNew()
+  else manejador.open({})
+  return manejador
 }
 
 export const usarEpayco = () => {
@@ -109,6 +127,20 @@ export const usarEpayco = () => {
       if (!datosEpayco || !datosEpayco.cliente || !datosEpayco.pedido) {
         throw new Error('Datos de pago incompletos. Verifica la información del cliente y pedido.');
       }
+
+      // Camino preferente: el servidor ya creó la sesión de pago con el importe del
+      // pedido, así que aquí solo hay que abrirla. Es lo que hace que el navegador no
+      // pueda decidir cuánto se cobra.
+      if (datosEpayco.sessionId) {
+        await abrirPagoConSesion(datosEpayco.sessionId);
+        setTransaccionActual({ referencia: datosEpayco.pedido.referencia, estado: 'abierto', datos: null });
+        setCargando(false);
+        return { exito: true, sesion: true, mensaje: 'Pasarela abierta' };
+      }
+
+      // Respaldo: si la pasarela no devolvió sesión (caída o configuración incompleta),
+      // se abre el checkout clásico para no dejar al cliente sin poder pagar.
+      console.warn('[pago] Sin sesión de servidor: se abre el checkout clásico');
 
       // Descarga del SDK bajo demanda (solo en el momento de pagar).
       await cargarSdkEpayco();

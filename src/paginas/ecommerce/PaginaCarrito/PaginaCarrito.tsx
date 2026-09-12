@@ -94,6 +94,9 @@ export default function PaginaCarrito() {
       const totalFinal  = pedido.total
       const numeroPedido = pedido.numero_pedido
       await procesarPagoOnPage({
+        // Sesión creada por el servidor junto con el pedido: el importe ya está fijado
+        // en la pasarela y no viaja por el navegador.
+        sessionId: pedido.sessionId,
         cliente: datosEnvio,
         pedido: {
           id:          pedido.id,

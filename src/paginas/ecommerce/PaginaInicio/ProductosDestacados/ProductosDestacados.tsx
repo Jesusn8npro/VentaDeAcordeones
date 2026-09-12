@@ -35,7 +35,12 @@ function TarjetaProducto({ producto }: { producto: any }) {
     ? Math.round((1 - producto.precio / producto.precio_original) * 100)
     : null
 
-  const etiqueta = descuento ? `-${descuento}%` : (producto.estado?.toUpperCase() || 'NUEVO')
+  // `estado` en la BD vale 'activo' para casi todo el catalogo, y "ACTIVO" no le dice nada
+  // a quien compra. Solo se etiqueta lo que aporta: el descuento real o un producto nuevo.
+  const estadoLegible = producto.estado && !['activo', 'inactivo', 'borrador'].includes(String(producto.estado).toLowerCase())
+    ? String(producto.estado).toUpperCase()
+    : null
+  const etiqueta = descuento ? `-${descuento}%` : estadoLegible
   const claseEtiqueta = descuento ? 'sale' : 'new'
   const href = producto.slug ? `/producto/${producto.slug}` : '/tienda'
   const marca = producto.marca || producto.categorias?.nombre || ''
@@ -51,7 +56,7 @@ function TarjetaProducto({ producto }: { producto: any }) {
   return (
     <Link href={href} className="prod clickable">
       <div className="prod-img">
-        <span className={`prod-tag${claseEtiqueta === 'sale' ? ' sale' : ' new'}`}>{etiqueta}</span>
+        {etiqueta && <span className={`prod-tag${claseEtiqueta === 'sale' ? ' sale' : ' new'}`}>{etiqueta}</span>}
         <button
           className={`prod-fav${favorito ? ' liked' : ''}`}
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setFavorito((f) => !f) }}

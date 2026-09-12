@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { leerBody } from '../../_lib/parseBody'
 import { ipDe, permitir } from '../../_lib/rateLimit'
 import { obtenerSupabaseAdmin } from '../../_lib/supabaseAdmin'
+import { crearSesionEpayco } from '../../_lib/epayco'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -30,6 +31,13 @@ const MAX_ITEMS = 20
 // Extra de instalación/accesorio que ofrece el modal de pago contra entrega.
 // El precio vive AQUÍ, no en el navegador: antes el cliente mandaba el total ya sumado.
 const PRECIO_UPSELL = 32_000
+
+// Límites que impone ePayco por transacción. Un pedido de 5.590.000 (un Corona III) se
+// rechaza con "Amount must be between 5000 and 5000000": el cliente pulsaba Pagar y solo
+// veía un error. Ahora se detecta ANTES de llamar a la pasarela y se le ofrece cerrar la
+// compra por WhatsApp, que es como se venden esos acordeones igualmente.
+const PAGO_MINIMO_EPAYCO = 5_000
+const PAGO_MAXIMO_EPAYCO = 5_000_000
 const METODOS_PAGO = new Set(['epayco', 'contra_entrega'])
 
 /**
@@ -247,6 +255,43 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No pudimos registrar el pedido. Intenta de nuevo.' }, { status: 502 })
     }
 
+    // ── 6. Sesión de pago, también en el servidor ────────────────────────────
+    // El navegador recibe un identificador de sesión, no el importe: la pasarela ya
+    // sabe cuánto cobrar porque se lo dijimos nosotros con el total del pedido.
+    let sessionId: string | null = null
+    let pagoEnLinea: string | null = null
+    const total_ = Number(pedido.total)
+    if (metodoPago === 'epayco' && total_ > PAGO_MAXIMO_EPAYCO) {
+      pagoEnLinea = 'monto_alto'
+    } else if (metodoPago === 'epayco' && total_ < PAGO_MINIMO_EPAYCO) {
+      pagoEnLinea = 'monto_bajo'
+    } else if (metodoPago === 'epayco') {
+      const sitio = process.env.NEXT_PUBLIC_URL_BASE || 'https://ventadeacordeones.com'
+      const nombrePedido =
+        lineas.length === 1
+          ? String(lineas[0].nombre).slice(0, 70)
+          : `${lineas.length} productos · VentaDeAcordeones.com`
+      sessionId = await crearSesionEpayco({
+        referencia: pedido.numero_pedido,
+        nombreProducto: nombrePedido,
+        descripcion: nombrePedido,
+        total: Number(pedido.total),
+        // Los precios del catálogo ya son finales; el IVA no se desglosa aparte
+        // (mismo criterio que tenía el checkout anterior).
+        base: Number(pedido.total),
+        iva: 0,
+        nombre,
+        apellido,
+        email,
+        telefono,
+        direccion,
+        tipoDocumento: tipoDocumento || 'CC',
+        numeroDocumento: numeroDocumento || '0',
+        urlRespuesta: `${sitio}/respuesta-epayco?ref=${encodeURIComponent(pedido.numero_pedido)}`,
+        urlConfirmacion: `${sitio}/api/epayco/confirmar`,
+      })
+    }
+
     return NextResponse.json({
       id: pedido.id,
       numero_pedido: pedido.numero_pedido,
@@ -256,6 +301,11 @@ export async function POST(req: Request) {
       descuento_aplicado: pedido.descuento_aplicado,
       cupon: cuponCodigo,
       productos: lineas,
+      sessionId,
+      // Cuando el pago en línea no es posible, el pedido igual queda registrado: la venta
+      // se cierra por WhatsApp con ese número delante.
+      pagoEnLinea: pagoEnLinea || (sessionId ? 'ok' : 'pasarela_caida'),
+      limitePagoEnLinea: PAGO_MAXIMO_EPAYCO,
     })
   } catch (error: any) {
     console.error('[pedidos/crear]', error?.message)
