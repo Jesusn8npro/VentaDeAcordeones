@@ -9,7 +9,15 @@ import { useCarrito } from '../../contextos/CarritoContext'
 import { optimizarUrlSupabase } from '../ImagenOptimizada'
 import './TarjetaProductoCinema.css'
 
+// Ancho real de la foto en cada rejilla (2 col en móvil y tablet, 3 desde 1000 px, 4 desde 1300 px).
+// Fuera del componente para no recrear la cadena en cada render de las tarjetas.
+const SIZES_TARJETA = '(max-width: 640px) 46vw, (max-width: 1000px) 48vw, (max-width: 1300px) 32vw, 330px'
 
+// Apaga el placeholder del contenedor sin pasar por el estado de React: una rejilla de 24 tarjetas
+// no puede permitirse 24 renders extra sólo para quitar un shimmer.
+const marcarCargada = (e: React.SyntheticEvent<HTMLImageElement>) => {
+  e.currentTarget?.closest('.cinema-card__img')?.setAttribute('data-cargada', '1')
+}
 
 function TarjetaProductoCinema({ producto }: { producto: any }) {
   if (!producto) return null
@@ -112,22 +120,34 @@ function TarjetaProductoCinema({ producto }: { producto: any }) {
             className="img-principal"
             width={400}
             height={400}
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
+            // Aquí la foto va a sangre (object-fit: cover, sin padding), así que el ancho real
+            // coincide con el de la tarjeta: 2 columnas en móvil/tablet, 3 desde 1000, 4 desde 1300.
+            sizes={SIZES_TARJETA}
+            // 65 en vez de 75: a ~170 px de ancho no se distingue y el archivo pesa ~25 % menos.
+            quality={65}
             loading="lazy"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
+            decoding="async"
+            onLoad={marcarCargada}
+            onError={(e) => { marcarCargada(e); (e.currentTarget as HTMLImageElement).style.display = 'none' }}
           />
         ) : (
           <div className="img-principal img-placeholder" aria-hidden="true" />
         )}
+        {/* Segunda foto SÓLO para el cambio al pasar el ratón. En móvil el CSS la oculta con
+            display:none y, al ser lazy, el navegador ni siquiera la pide: una petición por tarjeta
+            en vez de dos. Se deja en el HTML para no romper la hidratación. */}
         {srcSecundaria ? (
           <Image
             src={srcSecundaria}
-            alt={`${nombre} alternativa`}
+            alt=""
+            aria-hidden="true"
             className="img-secundaria"
             width={400}
             height={400}
-            sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 260px"
+            sizes={SIZES_TARJETA}
+            quality={65}
             loading="lazy"
+            decoding="async"
             onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none' }}
           />
         ) : (

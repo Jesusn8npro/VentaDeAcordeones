@@ -15,10 +15,12 @@ import PasoPago from '../../../componentes/checkout/PasoPago'
 import { formatearPrecioCOP } from '../../../utilidades/formatoPrecio'
 import './PaginaCarrito.css'
 
+// Antes eran cuatro pasos (carrito, envio, pago, confirmacion) y habia que pulsar
+// "Siguiente" dos veces antes de poder pagar. Los datos de envio y el pago se ven ahora
+// en la misma pantalla: menos clics, menos abandono.
 const PASOS = [
   { id: 1, titulo: 'Carrito',      icono: ShoppingCart },
-  { id: 2, titulo: 'Envío',        icono: Truck       },
-  { id: 3, titulo: 'Pago',         icono: Shield      },
+  { id: 2, titulo: 'Datos y pago', icono: Shield      },
   { id: 4, titulo: 'Confirmación', icono: CheckCircle },
 ]
 
@@ -181,17 +183,17 @@ export default function PaginaCarrito() {
               </div>
             )}
 
-            {/* Paso 2 — Envío */}
-            {paso === 2 && <FormularioEnvio datosEnvio={datosEnvio} manejarCambio={manejarCambio} />}
-
-            {/* Paso 3 — Pago */}
-            {paso === 3 && (
-              <PasoPago
-                subtotal={subtotal} descuentos={descuentos} envio={envio} total={total}
-                descuentoCupon={descuentoCupon} cuponAplicado={cuponAplicado}
-                cargandoPago={cargandoPago} errorPago={errorPago}
-                procesarPago={procesarPago}
-              />
+            {/* Paso 2 — Datos de envio y pago, en la misma pantalla */}
+            {paso === 2 && (
+              <>
+                <FormularioEnvio datosEnvio={datosEnvio} manejarCambio={manejarCambio} />
+                <PasoPago
+                  subtotal={subtotal} descuentos={descuentos} envio={envio} total={total}
+                  descuentoCupon={descuentoCupon} cuponAplicado={cuponAplicado}
+                  cargandoPago={cargandoPago} errorPago={errorPago}
+                  procesarPago={procesarPago}
+                />
+              </>
             )}
 
             {/* Paso 4 — Confirmación local */}
@@ -244,15 +246,15 @@ export default function PaginaCarrito() {
 
               {paso < 4 && (
                 <div className="botones-navegacion">
-                  {paso > 1 && <button onClick={() => setPaso(p => p - 1)} className="boton-anterior"><ArrowLeft size={16} /> Anterior</button>}
-                  {paso < 3 && <button onClick={() => setPaso(p => p + 1)} className="boton-siguiente">Siguiente <ArrowRight size={16} /></button>}
+                  {paso === 2 && <button onClick={() => setPaso(1)} className="boton-anterior"><ArrowLeft size={16} /> Volver al carrito</button>}
+                  {paso === 1 && <button onClick={() => setPaso(2)} className="boton-siguiente">Continuar <ArrowRight size={16} /></button>}
                 </div>
               )}
 
               <div className="garantias">
                 <div className="garantia-item"><Shield size={16} /><span>Compra 100% segura</span></div>
                 <div className="garantia-item"><Truck size={16} /><span>Envío gratis +$50.000</span></div>
-                <div className="garantia-item"><Star size={16} /><span>Garantía de satisfacción</span></div>
+                <div className="garantia-item"><Star size={16} /><span>Garantía del fabricante</span></div>
               </div>
             </div>
           </div>

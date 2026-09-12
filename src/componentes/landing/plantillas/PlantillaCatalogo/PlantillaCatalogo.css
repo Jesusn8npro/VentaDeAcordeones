@@ -1,0 +1,520 @@
+/* ================================================================
+   PlantillaCatalogo — ficha de producto para accesorios, audio,
+   percusión y repuestos (todo lo que no es un instrumento de alto
+   valor, que se sigue pintando con PlantillaCinema).
+
+   Todo el color sale de los tokens --vda-* de src/estilos/diseno.css,
+   que ya se invierten solos con [data-theme="light"]. Aquí NO hay un
+   solo color quemado: así la ficha funciona en claro y en oscuro sin
+   duplicar reglas ni depender de .dark.
+
+   Todo está anidado bajo .pcat para no tocar estilos de otras páginas.
+================================================================ */
+
+.pcat {
+  max-width: var(--vda-contenedor);
+  margin: 0 auto;
+  padding: 20px clamp(16px, 4vw, 56px) clamp(56px, 8vw, 96px);
+  font-family: var(--vda-fuente-cuerpo);
+  color: var(--vda-tinta);
+  /* Sin esto, un nombre larguísimo o una tabla de specs empujaban la página
+     a lo ancho en móvil y aparecía el scroll horizontal. */
+  overflow-x: clip;
+}
+
+.pcat *,
+.pcat *::before,
+.pcat *::after { box-sizing: border-box; }
+
+.pcat img { max-width: 100%; }
+
+/* ── Migas de pan ───────────────────────────────────────────────── */
+.pcat-camino {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--vda-tinta-muted);
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+.pcat-camino a {
+  color: var(--vda-tinta-dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.pcat-camino a:hover { color: var(--vda-oro); }
+.pcat-camino-sep { opacity: 0.45; }
+.pcat-camino-actual {
+  color: var(--vda-tinta);
+  /* El nombre del producto puede ser larguísimo: se recorta en vez de romper la fila. */
+  max-width: min(100%, 42ch);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Rejilla principal ──────────────────────────────────────────── */
+.pcat-principal {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+/* ── Galería ────────────────────────────────────────────────────── */
+.pcat-galeria {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.pcat-foto {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  border: 1px solid var(--vda-linea);
+  background:
+    radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--vda-oro) 9%, transparent) 0%, transparent 62%),
+    var(--vda-superficie);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* `contain` y no `cover`: muchas fotos son recortes del producto sobre fondo
+   plano; recortarlas al cuadro cortaba correas, fuelles y parrillas por la mitad. */
+.pcat-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: clamp(14px, 3vw, 38px);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pcat-foto:hover img { transform: scale(1.035); }
+
+.pcat-foto-vacia {
+  display: grid;
+  gap: 10px;
+  place-items: center;
+  color: var(--vda-tinta-muted);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Insignias sobre la foto: sólo se pintan con datos reales (rebaja o estado). */
+.pcat-insignias {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  z-index: 2;
+}
+.pcat-insignia {
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--vda-oro);
+  color: var(--vda-fondo);
+}
+.pcat-insignia--agotado {
+  background: color-mix(in srgb, var(--vda-peligro) 90%, var(--vda-fondo));
+  color: #fff;
+}
+
+.pcat-miniaturas {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scroll-snap-type: x proximity;
+}
+.pcat-miniatura {
+  flex: 0 0 auto;
+  width: 72px;
+  height: 72px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--vda-linea);
+  background: var(--vda-superficie);
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pcat-miniatura img { width: 100%; height: 100%; object-fit: contain; }
+.pcat-miniatura:hover { border-color: var(--vda-linea-fuerte); transform: translateY(-2px); }
+.pcat-miniatura.activa {
+  border-color: var(--vda-oro);
+  box-shadow: 0 0 0 1px var(--vda-oro), 0 8px 22px -12px var(--vda-oro-brillo);
+}
+
+/* ── Columna de compra ──────────────────────────────────────────── */
+.pcat-compra { min-width: 0; display: grid; gap: 18px; align-content: start; }
+
+.pcat-eyebrow {
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--vda-oro);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.pcat-eyebrow:hover { opacity: 0.75; }
+
+.pcat-titulo {
+  font-family: var(--vda-fuente-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.96;
+  letter-spacing: 0.01em;
+  font-size: clamp(30px, 5vw, 48px);
+  margin: -6px 0 0;
+  color: var(--vda-tinta);
+  /* Nombres como "combo-takstar-tarjeta-mx1-microfono..." no pueden desbordar. */
+  overflow-wrap: anywhere;
+}
+
+.pcat-marca {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  justify-self: start;
+  font-family: var(--vda-fuente-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vda-tinta-dim);
+  border: 1px solid var(--vda-linea-fuerte);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+/* Precio */
+.pcat-precios { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+.pcat-precio {
+  font-family: var(--vda-fuente-display);
+  font-size: clamp(32px, 6vw, 46px);
+  line-height: 1;
+  color: var(--vda-oro);
+  letter-spacing: 0.01em;
+}
+.pcat-precio-antes {
+  font-size: 16px;
+  color: var(--vda-tinta-muted);
+  text-decoration: line-through;
+}
+.pcat-rebaja {
+  font-family: var(--vda-fuente-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--vda-exito) 18%, transparent);
+  color: var(--vda-exito);
+  border: 1px solid color-mix(in srgb, var(--vda-exito) 40%, transparent);
+}
+.pcat-precio-nota {
+  font-size: 12.5px;
+  color: var(--vda-tinta-muted);
+  margin: -10px 0 0;
+}
+
+/* Disponibilidad */
+.pcat-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  color: var(--vda-tinta-dim);
+}
+.pcat-punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vda-exito);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--vda-exito) 18%, transparent);
+}
+.pcat-stock--bajo .pcat-punto { background: var(--vda-oro); box-shadow: 0 0 0 4px var(--vda-oro-brillo); }
+.pcat-stock--sin .pcat-punto { background: var(--vda-peligro); box-shadow: 0 0 0 4px color-mix(in srgb, var(--vda-peligro) 18%, transparent); }
+
+/* Acciones */
+.pcat-acciones {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+.pcat-cantidad {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--vda-linea-fuerte);
+  border-radius: 12px;
+  background: var(--vda-superficie);
+  overflow: hidden;
+}
+.pcat-cantidad button {
+  width: 42px;
+  height: 100%;
+  min-height: 52px;
+  border: 0;
+  background: transparent;
+  color: var(--vda-tinta);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.pcat-cantidad button:hover:not(:disabled) { background: var(--vda-superficie-3); color: var(--vda-oro); }
+.pcat-cantidad button:disabled { opacity: 0.35; cursor: not-allowed; }
+.pcat-cantidad span {
+  min-width: 34px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.pcat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 22px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-family: var(--vda-fuente-cuerpo);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.25s ease,
+    color 0.25s ease, border-color 0.25s ease;
+}
+.pcat-btn--oro { background: var(--vda-oro); color: var(--vda-fondo); }
+.pcat-btn--oro:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--vda-oro), 0 14px 38px -12px var(--vda-oro-brillo);
+}
+.pcat-btn--oro:disabled {
+  background: var(--vda-superficie-3);
+  color: var(--vda-tinta-muted);
+  cursor: not-allowed;
+}
+.pcat-btn--hecho { background: var(--vda-exito); color: var(--vda-fondo); }
+.pcat-btn--fantasma {
+  background: transparent;
+  color: var(--vda-tinta);
+  border-color: var(--vda-linea-fuerte);
+}
+.pcat-btn--fantasma:hover {
+  transform: translateY(-2px);
+  border-color: var(--vda-oro);
+  color: var(--vda-oro);
+}
+.pcat-btn .pcat-btn-icono { transition: transform 0.3s ease; }
+.pcat-btn:hover .pcat-btn-icono { transform: translateX(3px); }
+
+.pcat-error {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--vda-peligro);
+  margin: -6px 0 0;
+}
+
+/* Confianza: sólo hechos comprobables del negocio */
+.pcat-confianza {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  margin-top: 4px;
+  border: 1px solid var(--vda-linea);
+  border-radius: 14px;
+  background: var(--vda-linea);
+  overflow: hidden;
+}
+.pcat-confianza-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 14px;
+  background: var(--vda-superficie);
+}
+.pcat-confianza-item svg { color: var(--vda-oro); flex: 0 0 auto; }
+.pcat-confianza-item strong { display: block; font-size: 12.5px; color: var(--vda-tinta); }
+.pcat-confianza-item span { display: block; font-size: 11.5px; color: var(--vda-tinta-muted); }
+
+.pcat-resumen {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--vda-tinta-dim);
+  margin: 0;
+}
+
+/* ── Bloques inferiores ─────────────────────────────────────────── */
+.pcat-detalle {
+  margin-top: clamp(48px, 7vw, 88px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 32px);
+  align-items: start;
+}
+.pcat-bloque {
+  border: 1px solid var(--vda-linea);
+  border-radius: 18px;
+  background: var(--vda-superficie);
+  padding: clamp(20px, 3vw, 30px);
+  min-width: 0;
+}
+.pcat-bloque h2 {
+  font-family: var(--vda-fuente-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(19px, 2.4vw, 24px);
+  margin: 0 0 16px;
+  color: var(--vda-tinta);
+}
+.pcat-bloque p {
+  margin: 0 0 12px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--vda-tinta-dim);
+  overflow-wrap: anywhere;
+}
+.pcat-bloque p:last-child { margin-bottom: 0; }
+.pcat-bloque a { color: var(--vda-oro); text-decoration: underline; text-underline-offset: 3px; }
+
+.pcat-columna { display: grid; gap: clamp(20px, 3vw, 32px); min-width: 0; }
+
+/* Especificaciones: sólo filas con dato real */
+.pcat-specs { display: grid; gap: 0; }
+.pcat-spec {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px dashed var(--vda-linea);
+  font-size: 14px;
+}
+.pcat-spec:last-child { border-bottom: 0; }
+.pcat-spec span { color: var(--vda-tinta-muted); }
+.pcat-spec strong {
+  color: var(--vda-tinta);
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.pcat-lista { margin: 0; padding-left: 18px; display: grid; gap: 9px; }
+.pcat-lista li { font-size: 14px; line-height: 1.6; color: var(--vda-tinta-dim); }
+
+/* ── Reseñas (sólo si hay reales en la base) ────────────────────── */
+.pcat-resenas { margin-top: clamp(40px, 6vw, 72px); }
+.pcat-resenas h2 {
+  font-family: var(--vda-fuente-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(20px, 3vw, 28px);
+  margin: 0 0 20px;
+  color: var(--vda-tinta);
+}
+.pcat-resenas-grid { display: grid; gap: 14px; }
+.pcat-resena {
+  border: 1px solid var(--vda-linea);
+  border-radius: 16px;
+  background: var(--vda-superficie);
+  padding: 18px;
+}
+.pcat-resena-cab { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.pcat-resena-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--vda-oro); color: var(--vda-fondo);
+  font-weight: 700; flex: 0 0 auto;
+}
+.pcat-resena-nombre { font-size: 14px; color: var(--vda-tinta); font-weight: 600; }
+.pcat-resena-estrellas { color: var(--vda-oro); letter-spacing: 2px; font-size: 14px; }
+.pcat-resena-verificada {
+  font-size: 11px;
+  color: var(--vda-exito);
+  border: 1px solid color-mix(in srgb, var(--vda-exito) 40%, transparent);
+  background: color-mix(in srgb, var(--vda-exito) 14%, transparent);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.pcat-resena-fecha { margin-left: auto; font-size: 12px; color: var(--vda-tinta-muted); }
+.pcat-resena p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--vda-tinta-dim); }
+
+/* ── Producto no encontrado ─────────────────────────────────────── */
+.pcat-vacio {
+  display: grid;
+  place-items: center;
+  gap: 14px;
+  text-align: center;
+  min-height: 50vh;
+  padding: 40px 20px;
+  color: var(--vda-tinta-dim);
+}
+.pcat-vacio h2 { font-family: var(--vda-fuente-display); font-size: 28px; color: var(--vda-tinta); margin: 0; }
+
+/* ── Foco visible para teclado ──────────────────────────────────── */
+.pcat a:focus-visible,
+.pcat button:focus-visible {
+  outline: 2px solid var(--vda-oro);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ── Entrada suave (respeta prefers-reduced-motion) ─────────────── */
+@keyframes pcat-entrar {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.pcat-anim { animation: pcat-entrar 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pcat-anim-2 { animation-delay: 0.06s; }
+.pcat-anim-3 { animation-delay: 0.12s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pcat *, .pcat *::before, .pcat *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .pcat-detalle { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .pcat-principal { grid-template-columns: minmax(0, 1fr); }
+  .pcat-galeria { position: static; }
+  /* En móvil la foto no puede comerse la pantalla: como es cuadrada, limitar el
+     ANCHO a 55vh deja la altura por debajo de ese 55% del viewport. */
+  .pcat-foto { width: min(100%, 55vh); margin-inline: auto; }
+  .pcat-miniaturas { justify-content: center; }
+}
+
+@media (max-width: 520px) {
+  .pcat-acciones { grid-template-columns: minmax(0, 1fr); }
+  .pcat-cantidad { justify-self: start; }
+  .pcat-resena-fecha { margin-left: 0; width: 100%; }
+}

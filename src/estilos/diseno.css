@@ -20,6 +20,13 @@
   --vda-tinta-muted: #7a7a7a;
   --vda-peligro: #ff3b3b;
   --vda-exito: #2ecc71;
+  /* Oro cuando se usa como TEXTO. Sobre negro el oro de marca se lee perfecto, así que en oscuro
+     es el mismo; en claro hace falta una versión más profunda (ver bloque light). */
+  --vda-oro-texto: var(--vda-oro);
+  /* Naranja de ofertas/precio rebajado. Estaba quemado a #ff7a00 en las tarjetas y sobre fondo
+     claro daba 2.6:1 de contraste: el precio, que es lo más importante, casi no se leía. */
+  --vda-naranja: #ff7a00;
+  --vda-naranja-fuerte: #ff5a1f;
   --vda-fondo-header: rgba(0, 0, 0, 0.88);
   --vda-fondo-header-fuerte: rgba(0, 0, 0, 0.96);
   --vda-sombra-card: 0 24px 60px -20px rgba(0,0,0,0.9);
@@ -56,6 +63,18 @@
   --vda-superficie-mas-profunda: #efece2;
   --vda-overlay: rgba(40, 30, 10, 0.55);
   --vda-overlay-fuerte: rgba(40, 30, 10, 0.7);
+  /* ── Colores de estado en tema claro ──
+     Los valores del tema oscuro son claros por definición y sobre el fondo crema quedaban
+     ilegibles: el verde #2ecc71 daba 1.9:1 y el rojo #ff3b3b 3.2:1 (se usan casi siempre como
+     TEXTO sobre un fondo del 12 % de sí mismos). Estas versiones profundas pasan de 4.5:1 sobre
+     blanco y, donde se usan como fondo con texto blanco, también mejoran el contraste. */
+  --vda-exito: #147a45;
+  --vda-peligro: #c81e1e;
+  --vda-naranja: #c2410c;
+  --vda-naranja-fuerte: #9a3412;
+  /* El oro de marca (#c79100) funciona como FONDO con texto negro (7.4:1), pero como texto sobre
+     crema sólo da 2.5:1. Para textos se usa esta variante (4.8:1) y el fondo sigue siendo el oro. */
+  --vda-oro-texto: #8a6500;
 }
 
 /* ============ TIPOGRAFÍA COMPARTIDA ============ */

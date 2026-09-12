@@ -11,6 +11,16 @@ import EtiquetaVendido from './EtiquetaVendido'
 import { optimizarUrlSupabase } from '../ImagenOptimizada'
 import './TarjetaProductoLujo.es.css'
 
+// Ancho real de la foto dentro de la tarjeta en cada rejilla (2 col móvil, 2 tablet, 3 desde
+// 1000 px, 4 desde 1300 px), descontando el padding 7 % de `.imagen`. Va fuera del componente
+// para no recrear la cadena en cada render de las 24 tarjetas de la tienda.
+const SIZES_TARJETA = '(max-width: 640px) 40vw, (max-width: 1000px) 44vw, (max-width: 1300px) 29vw, 300px'
+
+// Apaga el placeholder animado del contenedor en cuanto la foto está en pantalla. Se marca con un
+// atributo en el DOM en vez de con estado: así una rejilla de 24 tarjetas no dispara 24 renders.
+const marcarCargada = (e) => {
+  e.currentTarget?.closest('.zona-imagen-lujo')?.setAttribute('data-cargada', '1')
+}
 
 function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   if (!producto) return null
@@ -334,7 +344,9 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
             {[0,1,2,3,4].map((i) => {
               const lleno = i < Math.round(scorePromedio)
               return (
-                <Star key={`rt-${i}`} size={16} className="estrella" fill={lleno ? '#ff7a00' : 'none'} color="#ff7a00" />
+                // currentColor: el naranja sale del token `--vda-naranja` vía `.estrella`, que en
+                // tema claro es más oscuro. Quemado a #ff7a00 quedaba casi invisible sobre blanco.
+                <Star key={`rt-${i}`} size={16} className="estrella" fill={lleno ? 'currentColor' : 'none'} color="currentColor" />
               )
             })}
             {/* En móvil ocultamos promedio y reseñas y mostramos ventas */}

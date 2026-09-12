@@ -86,6 +86,38 @@
 .tarjeta-lujo:hover .imagen-principal { opacity: 0; transform: scale(1.02); }
 .tarjeta-lujo:hover .imagen-secundaria { opacity: 1; transform: scale(1.02); }
 
+/* Sin ratón (móvil o tablet táctil) el cambio de foto al hover NUNCA llega a ocurrir, así que la
+   segunda imagen era la mitad del ancho de banda de la rejilla tirado a la basura. Con display:none
+   el elemento no tiene caja, nunca entra en el viewport y el navegador NO llega a pedir la imagen
+   lazy. Se resuelve en CSS (y no con un condicional de cliente) para no romper la hidratación. */
+@media (max-width: 767.98px), (hover: none) {
+  .tarjeta-lujo .imagen-secundaria { display: none; }
+}
+
+/* Placeholder de carga: la caja ya reserva su 1:1 (sin salto de layout) y encima corre un barrido
+   suave con los tokens del tema. Se apaga solo cuando la foto principal dispara onLoad/onError. */
+.zona-imagen-lujo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(100deg,
+    transparent 25%,
+    color-mix(in srgb, var(--vda-tinta) 8%, transparent) 50%,
+    transparent 75%);
+  background-size: 240% 100%;
+  animation: barrido-carga 1.5s linear infinite;
+}
+.zona-imagen-lujo[data-cargada]::after { display: none; }
+@keyframes barrido-carga {
+  from { background-position: 130% 0; }
+  to   { background-position: -130% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .zona-imagen-lujo::after { animation: none; }
+}
+
 /* ── ACCIONES FLOTANTES ── */
 .acciones-flotantes {
   position: absolute;
