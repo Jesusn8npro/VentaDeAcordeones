@@ -48,7 +48,9 @@ const ESTADISTICAS = [
   { hasta: 27,   sufijo: '',  etiqueta: 'Años de Oficio',           decimales: 0, plus: true },
   { hasta: 3400, sufijo: '',  etiqueta: 'Instrumentos Entregados',  decimales: 0, plus: true },
   { hasta: 42,   sufijo: '',  etiqueta: 'Países Atendidos',          decimales: 0, plus: false },
-  { hasta: 4.9,  sufijo: '★', etiqueta: 'Reseñas Verificadas',       decimales: 1, plus: false },
+  // "4.9★ Reseñas Verificadas" se retiró: no hay ni una sola reseña en el sistema, así que
+  // era una nota media inventada. La garantía sí es un compromiso real y comprobable.
+  { hasta: 6,    sufijo: '',  etiqueta: 'Meses de Garantía',          decimales: 0, plus: false },
 ]
 
 export default function EstadisticasMarca() {

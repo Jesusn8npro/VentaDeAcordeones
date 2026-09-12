@@ -59,7 +59,7 @@ export async function generateMetadata({
 
   if (!p) {
     return {
-      title: 'Landing no encontrada — VentaDeAcordeones.com',
+      title: 'Landing no encontrada',
       robots: { index: false, follow: true },
     }
   }

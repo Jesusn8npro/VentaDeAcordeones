@@ -188,18 +188,20 @@ export default function PreguntasFrecuentes() {
             <a href="https://wa.me/573144865310" className="faq__contacto-card whatsapp">
               <MessageSquare className="faq__contacto-icono" />
               <h3>WhatsApp</h3>
-              <p>Respuesta inmediata 24/7</p>
+              {/* No hay atención 24/7: es un taller con horario. */}
+              <p>+57 314 486 5310 · en horario de atención</p>
               <span className="faq__badge">Recomendado</span>
             </a>
             <a href="mailto:acordeon91@gmail.com" className="faq__contacto-card email">
               <Mail className="faq__contacto-icono" />
               <h3>Email</h3>
-              <p>Respondemos en menos de 2 horas</p>
+              <p>acordeon91@gmail.com</p>
             </a>
-            <a href="tel:+5712345678" className="faq__contacto-card telefono">
+            {/* El número era un marcador de posición (+57 1 234 5678): no existía. */}
+            <a href="tel:+573144865310" className="faq__contacto-card telefono">
               <Phone className="faq__contacto-icono" />
               <h3>Teléfono</h3>
-              <p>Lunes a Viernes 8AM – 6PM</p>
+              <p>+57 314 486 5310 · Lunes a Viernes 8AM – 6PM</p>
             </a>
           </div>
         </div>

@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import NotFoundCliente from './not-found-cliente'
 
 export const metadata: Metadata = {
-  title: 'Página no encontrada — VentaDeAcordeones.com',
+  title: 'Página no encontrada',
   robots: { index: false, follow: true },
 }
 

@@ -10,22 +10,14 @@ import { useCarrito } from '@/contextos/CarritoContext'
 
 const fmtCOP = (n: number) => `$${n.toLocaleString('es-CO')} COP`
 
-const BASE = 'https://ventadeacordeones.com/storage'
+// Se eliminó FALLBACK_PRODUCTOS: eran 8 productos con precios inventados que se pintaban cuando
+// Supabase no devolvía nada (Blanco Tricolor a $9.600.000 cuando vale $5.290.000, Premium Dorado
+// a $14.500.000 "antes $16.800.000" cuando vale $5.390.000 antes $5.900.000). Mostrar precios que
+// no existen es peor que no mostrar la sección, así que ahora sin datos la sección no se pinta.
 
-// Shown when Supabase returns no products
-const FALLBACK_PRODUCTOS = [
-  { id: 'fb1', nombre: 'Rey del Vallenato',          marca: 'Hohner',           precio: 9450000,  slug: 'acordeon-rey-del-vallenato',             producto_imagenes: [{ imagen_principal: `${BASE}/2024/01/Acordeon-Rey-Vallenato.jpg` }] },
-  { id: 'fb2', nombre: 'Blanco Original',             marca: 'Hohner',           precio: 8200000,  slug: 'acordeon-hohner-blanco-total',            producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-Blanco-HOHNER-ORIGINAL-600x600.jpg` }] },
-  { id: 'fb3', nombre: 'Xtreme Azul Personalizado',  marca: 'Hohner',           precio: 10500000, slug: 'acordeon-hohner-xtreme-color-azul',        producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-XTREME-azul-personalizado-600x600.jpg` }] },
-  { id: 'fb4', nombre: 'Azul de Lujo',               marca: 'Hohner',           precio: 9800000,  slug: 'acordeon-hohner-azul-de-lujo',            producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-vallenato-hohner-azul-personalizado-600x600.jpg` }] },
-  { id: 'fb5', nombre: 'Dos Colores Personalizado',  marca: 'Hohner',           precio: 11200000, slug: 'acordeon-hohner-personalizado-de-dos-colores', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-de-botones-de-dos-colores-600x600.jpg` }] },
-  { id: 'fb6', nombre: 'Verde Personalizado',        marca: 'Hohner',           precio: 10800000, slug: 'acordeon-hohner-xtreme-color-verde',       producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-color-verde-personalizado-600x600.jpg` }] },
-  { id: 'fb7', nombre: 'Blanco Tricolor Colombia',   marca: 'Hohner',           precio: 9600000,  slug: 'acordeon-hohner-blanco-tricolor',          producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-con-bandera-de-colombia-600x600.jpg` }] },
-  { id: 'fb8', nombre: 'Premium Dorado',             marca: 'Hohner',           precio: 14500000, precio_original: 16800000, slug: 'acordeon-hohner-premium-dorado-elegancia-musical-en-oro', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-blanco-premium-con-botones-dorados.jpg` }] },
-]
-
+// "Más Vendidos" era falso: la consulta ordena por fecha de creación, no por ventas.
 const PESTAÑAS = [
-  { id: 'todos',     etiqueta: 'Más Vendidos' },
+  { id: 'todos',     etiqueta: 'Destacados' },
   { id: 'descuento', etiqueta: 'Oferta Especial' },
   { id: 'nuevo',     etiqueta: 'Novedades' },
 ]
@@ -156,15 +148,17 @@ export default function ProductosDestacados() {
       })
   }, [])
 
-  const fuente = todos.length > 0 ? todos : FALLBACK_PRODUCTOS as any[]
-
   const lista = (() => {
     if (pestaña === 'descuento') {
-      const oferta = fuente.filter((p) => p.precio_original && p.precio_original > p.precio)
-      return (oferta.length ? oferta : fuente).slice(0, 4)
+      // Si no hay rebajas vigentes la pestaña se queda vacía. Antes caía de vuelta a `fuente`,
+      // así que enseñaba productos a precio de lista bajo el rótulo "Oferta Especial".
+      return todos.filter((p) => p.precio_original && p.precio_original > p.precio).slice(0, 4)
     }
-    return fuente.slice(0, 4)
+    return todos.slice(0, 4)
   })()
+
+  // Sin datos reales no se pinta la sección (antes entraban aquí los productos de relleno).
+  if (!cargando && todos.length === 0) return null
 
   return (
     <section className="section" id="productos">
@@ -184,12 +178,20 @@ export default function ProductosDestacados() {
           ))}
         </div>
       </div>
-      <div className="prod-grid">
-        {cargando
-          ? [1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)
-          : lista.map((p) => <TarjetaProducto key={p.id + '-' + pestaña} producto={p} />)
-        }
-      </div>
+      {cargando ? (
+        <div className="prod-grid">
+          {[1, 2, 3, 4].map((i) => <SkeletonCard key={i} />)}
+        </div>
+      ) : lista.length > 0 ? (
+        <div className="prod-grid">
+          {lista.map((p) => <TarjetaProducto key={p.id + '-' + pestaña} producto={p} />)}
+        </div>
+      ) : (
+        /* Solo ocurre en la pestaña de ofertas cuando no hay ninguna rebaja vigente. */
+        <p style={{ textAlign: 'center', padding: '56px 16px', color: 'var(--vda-tinta-muted)' }}>
+          Ahora mismo no tenemos productos rebajados. Mira el catálogo completo.
+        </p>
+      )}
       <div style={{ textAlign: 'center', marginTop: '40px' }}>
         <Link href="/tienda" className="btn btn-ghost">
           Ver Catálogo Completo

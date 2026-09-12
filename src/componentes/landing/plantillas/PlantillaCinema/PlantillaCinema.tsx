@@ -38,6 +38,8 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
   })()
 
   const categoria: string = producto.categorias?.nombre || producto.categoria_nombre || ''
+  // Los extras (estuche, correa, afinación) solo aplican a acordeones, no a accesorios ni audio.
+  const esAcordeon = /acorde/i.test(`${categoria} ${producto.nombre || ''}`)
   const score: number = producto.score_promedio || producto.calificacion_promedio || 0
   const resenas: number = producto.total_resenas || producto.reseñas_total || 0
   const ventas: number = producto.numero_de_ventas || producto.ventas_totales || 0
@@ -114,12 +116,20 @@ export default function PlantillaCinema({ producto, reviews }: { producto: any; 
       title: 'Qué incluye',
       content: (
         <ul className="pdp-acc-body pdp-acc-list">
+          {/* Esta lista prometía estuche rígido, correa de cuero y certificado de afinación en
+              TODAS las fichas: también en una correa de $180.000, en unos fuelles o en una
+              parrilla. Ahora los extras del acordeón solo se listan cuando el producto es un
+              acordeón; el resto muestra lo que de verdad se entrega con cualquier pedido. */}
           <li><Check size={14} /> {nombre} — unidad principal</li>
-          <li><Check size={14} /> Estuche rígido profesional con espuma a medida</li>
-          <li><Check size={14} /> Correa de cuero original</li>
-          <li><Check size={14} /> Manual de usuario y certificado de afinación</li>
-          <li><Check size={14} /> Paño de limpieza microfibra</li>
-          <li><Check size={14} /> Tarjeta de garantía y soporte técnico</li>
+          {esAcordeon && (
+            <>
+              <li><Check size={14} /> Estuche de transporte</li>
+              <li><Check size={14} /> Correa de sujeción</li>
+              <li><Check size={14} /> Revisión y afinación en nuestro taller antes de enviarlo</li>
+            </>
+          )}
+          <li><Check size={14} /> Factura a tu nombre y garantía del fabricante</li>
+          <li><Check size={14} /> Soporte por WhatsApp con un técnico de acordeones</li>
         </ul>
       ),
     },

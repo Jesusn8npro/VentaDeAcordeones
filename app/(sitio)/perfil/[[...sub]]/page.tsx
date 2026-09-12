@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import PerfilCliente from './PerfilCliente'
 
 export const metadata: Metadata = {
-  title: 'Mi perfil — VentaDeAcordeones.com',
+  title: 'Mi perfil',
   robots: { index: false, follow: false },
 }
 

@@ -103,10 +103,12 @@ const PoliticaEnvio = () => {
           </div>
           <div className="seccion-contenido">
             <div className="info-box">
+              {/* El umbral debe coincidir con la regla del carrito (carritoReducer.ts: envío
+                  gratis desde $50.000). Antes decía $150.000 y lo llamaba "promoción por tiempo
+                  limitado", una caducidad que no existe. */}
               <h4>Envío Gratis</h4>
-              <p>• Disponible para compras superiores a $150.000 COP</p>
+              <p>• Disponible para compras desde $50.000 COP</p>
               <p>• Aplica solo en ciudades principales</p>
-              <p>• Promoción por tiempo limitado</p>
               <p>• No acumulable con otras promociones</p>
             </div>
             <div className="tiempo-box">

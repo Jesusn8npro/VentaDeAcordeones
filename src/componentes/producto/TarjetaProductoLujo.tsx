@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Heart, Eye, ShoppingCart, Star, BadgePercent, Flame, Clock, CircleDollarSign, AlertCircle, Zap, TrendingUp, Info } from 'lucide-react'
+import { Heart, Eye, ShoppingCart, Star, BadgePercent, Flame, CircleDollarSign, Zap, TrendingUp, Info } from 'lucide-react'
 import { useFavoritos } from '../../contextos/FavoritosContext'
 import { useCarrito } from '../../contextos/CarritoContext'
 import EtiquetaVendido from './EtiquetaVendido'
@@ -18,7 +18,6 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   const router = useRouter()
   const { esFavorito, alternarFavorito } = useFavoritos()
   const { agregarAlCarrito } = useCarrito()
-  const [tiempoRestante, setTiempoRestante] = React.useState(null)
   const [infoIndex, setInfoIndex] = React.useState(0)
 
   const nombre = producto?.nombre || 'Producto'
@@ -56,28 +55,10 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   const srcPrincipal = optimizarUrlSupabase(imagenPrincipal || '') || null
   const srcSecundaria = optimizarUrlSupabase(imagenSecundaria || imagenPrincipal || '') || srcPrincipal
 
-  // Cuenta regresiva: objetivo aleatorio entre 1 y 12 horas
-  React.useEffect(() => {
-    const horas = Math.floor(Math.random() * 12) + 1
-    const minutos = Math.floor(Math.random() * 60)
-    const segundos = Math.floor(Math.random() * 60)
-    const objetivo = Date.now() + ((horas * 3600 + minutos * 60 + segundos) * 1000)
-    const intervalo = setInterval(() => {
-      const diff = objetivo - Date.now()
-      if (diff <= 0) {
-        setTiempoRestante({ h: 0, m: 0, s: 0 })
-        clearInterval(intervalo)
-        return
-      }
-      const h = Math.floor(diff / 3600000)
-      const m = Math.floor((diff % 3600000) / 60000)
-      const s = Math.floor((diff % 60000) / 1000)
-      setTiempoRestante({ h, m, s })
-    }, 1000)
-    return () => clearInterval(intervalo)
-  }, [])
-
-  const dos = (n) => String(n).padStart(2, '0')
+  // Se eliminó la cuenta regresiva de la tarjeta. El objetivo se sorteaba con Math.random() entre
+  // 1 y 12 horas en CADA carga, así que la misma rebaja "vencía" a una hora distinta en cada
+  // visita: urgencia inventada sobre una promoción que no tiene fecha de fin. De paso desaparece
+  // un setInterval de 1 s por tarjeta (una rejilla de 12+ productos repintaba 12+ veces/segundo).
 
   // Sin canal Realtime aquí: cada tarjeta abría un websocket `stock-producto-{id}`, así que un
   // listado de 12+ productos consumía 12+ conexiones del plan Supabase y JS en cada render.
@@ -95,13 +76,6 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
     }, intervaloMs)
     return () => clearInterval(intervalo)
   }, [])
-
-  const nombreCategoria = producto?.categorias?.nombre
-    || producto?.categoria_nombre 
-    || producto?.categoria 
-    || producto?.categoria_principal 
-    || producto?.categoria?.nombre 
-    || 'la categoría'
 
   const estadoSanitizado = (estado ?? '').toString().trim().toLowerCase()
   const estadoValido = estadoSanitizado && !['nuevo','new','novedad','nuevo!'].includes(estadoSanitizado) ? estado : null
@@ -305,18 +279,11 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
 
         {ahorroValor !== null && (
           <div className="info-secundaria">
-            <div className="insignia-ahorro" role="note" aria-label="Ahorro y tiempo restante">
+            <div className="insignia-ahorro" role="note" aria-label="Ahorro sobre el precio de lista">
               <div className="lado-izquierdo">
                 <CircleDollarSign size={12} color="#fff" />
                 <span>${new Intl.NumberFormat('es-CO').format(ahorroValor)} Ahorro extra</span>
               </div>
-              {tiempoRestante && (
-                <div className="lado-derecho">
-                  <Clock size={11} color="#ff7a00" />
-                  <span className="tiempo">{`${dos(tiempoRestante.h)}:${dos(tiempoRestante.m)}:${dos(tiempoRestante.s)}`}</span>
-                  <AlertCircle size={11} color="#ff7a00" />
-                </div>
-              )}
             </div>
           </div>
         )}
@@ -331,10 +298,12 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
               <span>Unidades disponibles: {stock ?? '—'}</span>
             </div>
           )}
+          {/* Antes decía "Más comprados en categoría: X" en todas las tarjetas por igual, sin
+              ningún dato de ventas detrás. Se cambia por un hecho comprobable del negocio. */}
           {infoIndex === 1 && (
             <div className="item-informacion aparecer" key={`info-${infoIndex}`}>
               <TrendingUp size={12} className="icono-informacion" />
-              <span><span className="mas-comprados">Más comprados</span> en categoría: {nombreCategoria}</span>
+              <span><span className="mas-comprados">Envío a toda Colombia</span> · taller propio en Bogotá</span>
             </div>
           )}
           {infoIndex === 2 && (

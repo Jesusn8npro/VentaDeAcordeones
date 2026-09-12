@@ -333,7 +333,7 @@ const PaginaRespuestaEpayco = () => {
         <div className="acciones-respuesta">
           {estadoTransaccion === 'exitoso' && (
             <>
-              <Link href="/mis-pedidos" className="boton-accion boton-exito">
+              <Link href="/perfil/pedidos" className="boton-accion boton-exito">
                 <Package size={20} />
                 Ver Mis Pedidos
               </Link>

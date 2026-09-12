@@ -10,41 +10,15 @@ import { useCarrito } from '@/contextos/CarritoContext'
 
 const fmtCOP = (n: number) => `$${n.toLocaleString('es-CO')} COP`
 
-const BASE = 'https://ventadeacordeones.com/storage'
-
-const FALLBACK_FLASH = [
-  { id: 'ff1', nombre: 'Rey del Vallenato', marca: 'Hohner', precio: 6615000, precio_original: 9450000, slug: 'acordeon-rey-del-vallenato',   producto_imagenes: [{ imagen_principal: `${BASE}/2024/01/Acordeon-Rey-Vallenato.jpg` }] },
-  { id: 'ff2', nombre: 'Premium Dorado',    marca: 'Hohner', precio: 11160000, precio_original: 14500000, slug: 'acordeon-hohner-premium-dorado-elegancia-musical-en-oro', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-blanco-premium-con-botones-dorados.jpg` }] },
-  { id: 'ff3', nombre: 'Xtreme Azul',       marca: 'Hohner', precio: 8400000, precio_original: 10500000, slug: 'acordeon-hohner-xtreme-color-azul', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-XTREME-azul-personalizado-600x600.jpg` }] },
-  { id: 'ff4', nombre: 'Verde Personalizado', marca: 'Hohner', precio: 8640000, precio_original: 10800000, slug: 'acordeon-hohner-xtreme-color-verde', producto_imagenes: [{ imagen_principal: `${BASE}/2023/08/Acordeon-hohner-color-verde-personalizado-600x600.jpg` }] },
-]
-
-function Cuenta() {
-  const [t, setT] = useState({ h: 6, m: 17, s: 56 })
-  useEffect(() => {
-    const iv = setInterval(() => {
-      setT((prev) => {
-        let { h, m, s } = prev
-        s -= 1
-        if (s < 0) { s = 59; m -= 1 }
-        if (m < 0) { m = 59; h -= 1 }
-        if (h < 0) { h = 11; m = 59; s = 59 }
-        return { h, m, s }
-      })
-    }, 1000)
-    return () => clearInterval(iv)
-  }, [])
-  const pad = (n: number) => String(n).padStart(2, '0')
-  return (
-    <div className="flash-countdown">
-      <div className="flash-cd-box">{pad(t.h)}</div>
-      <div className="flash-cd-sep">:</div>
-      <div className="flash-cd-box">{pad(t.m)}</div>
-      <div className="flash-cd-sep">:</div>
-      <div className="flash-cd-box">{pad(t.s)}</div>
-    </div>
-  )
-}
+// Se eliminaron dos cosas falsas de esta sección:
+//
+// 1) El contador `Cuenta()`, que arrancaba en 6:17:56, bajaba en bucle y al llegar a cero volvía
+//    a 11:59:59. No había ninguna promoción detrás: era urgencia inventada (y un setInterval de
+//    1 s repintando la home sin razón).
+// 2) El FALLBACK_FLASH, con precios que no existen: "Rey del Vallenato $6.615.000 antes
+//    $9.450.000" cuando el precio real es $3.610.000 y ese producto no tiene descuento; o
+//    "Premium Dorado $11.160.000" cuando vale $5.390.000. Si Supabase no responde ahora la
+//    sección no se pinta, en vez de mostrar precios inventados.
 
 function TarjetaFlash({ producto }: { producto: any }) {
   const [agregado, setAgregado] = useState(false)
@@ -134,7 +108,9 @@ export default function VentaRelampago() {
   const [productos, setProductos] = useState<any[]>([])
 
   useEffect(() => {
-    // Prefer discounted products; fallback to newest
+    // Solo productos con precio_original: son los que de verdad están rebajados. Antes, si había
+    // menos de dos, se rellenaba con "los 4 más nuevos" bajo un título de ofertas, así que se
+    // anunciaban como rebajados productos a precio de lista.
     clienteSupabase
       .from('productos')
       .select(`
@@ -147,26 +123,11 @@ export default function VentaRelampago() {
       .not('precio_original', 'is', null)
       .order('creado_el', { ascending: false })
       .limit(4)
-      .then(({ data }) => {
-        if (data && data.length >= 2) {
-          setProductos(data as any[])
-          return
-        }
-        // Fallback: any 4 products
-        clienteSupabase
-          .from('productos')
-          .select(`
-            id, nombre, slug, precio, precio_original, marca, estado,
-            categorias(nombre),
-            producto_imagenes(imagen_principal)
-          `)
-          .eq('activo', true)
-          .gt('stock', 0)
-          .order('creado_el', { ascending: false })
-          .limit(4)
-          .then(({ data: fallback }) => setProductos((fallback as any[]) || []))
-      })
+      .then(({ data }) => setProductos((data as any[]) || []))
   }, [])
+
+  // Sin rebajas vigentes no hay nada que anunciar: la sección desaparece.
+  if (productos.length === 0) return null
 
   return (
     <section className="section" id="flash">
@@ -177,18 +138,17 @@ export default function VentaRelampago() {
               <Icono nombre="rayo" tamaño={24} />
             </div>
             <div>
-              <div className="flash-name">Flash Sale <span className="gd">Hoy</span></div>
-              <div className="flash-meta">Termina en pocas horas · Stock limitado</div>
+              <div className="flash-name">Ofertas <span className="gd">Vigentes</span></div>
+              <div className="flash-meta">Rebajas reales sobre el precio de lista · Envío a toda Colombia</div>
             </div>
           </div>
-          <Cuenta />
           <div className="flash-nav">
             <button aria-label="Anterior"><Icono nombre="flecha" tamaño={16} /></button>
             <button className="primary" aria-label="Ver todos"><Icono nombre="flecha" tamaño={16} /></button>
           </div>
         </div>
         <div className="prod-grid">
-          {(productos.length > 0 ? productos : FALLBACK_FLASH as any[]).map((p) => (
+          {productos.map((p) => (
             <TarjetaFlash key={p.id} producto={p} />
           ))}
         </div>

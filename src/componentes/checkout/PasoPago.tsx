@@ -63,10 +63,13 @@ export default function PasoPago({
           </button>
         </div>
 
+        {/* Sellos verificables del checkout. Antes prometía "Soporte 24/7" (el taller tiene
+            horario) y una "garantía de satisfacción" sin política que la respalde: la garantía
+            que sí existe es la del fabricante. */}
         <div className="garantias-pago">
-          <div className="garantia"><Shield size={16} /><span>PCI DSS</span></div>
-          <div className="garantia"><Star size={16} /><span>Garantía de satisfacción</span></div>
-          <div className="garantia"><CreditCard size={16} /><span>Soporte 24/7</span></div>
+          <div className="garantia"><Shield size={16} /><span>Pago seguro PCI DSS</span></div>
+          <div className="garantia"><Star size={16} /><span>Garantía del fabricante</span></div>
+          <div className="garantia"><CreditCard size={16} /><span>Factura a tu nombre</span></div>
         </div>
       </div>
     </div>
