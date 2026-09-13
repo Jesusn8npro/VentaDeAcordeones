@@ -72,7 +72,9 @@ const nextConfig = {
       "connect-src 'self' blob: https://*.supabase.co wss://*.supabase.co https://*.epayco.co https://api.epayco.co "
       // GA4 envia cada evento por fetch/sendBeacon a estos tres dominios; sin ellos la
       // etiqueta carga pero no se registra ni una sola visita.
-      + "https://www.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; " +
+      // stats.g.doubleclick.net es el cuarto: por ahí pasan los eventos cuando Google Signals
+      // está activo (demografía y audiencias). Sin él, el navegador los bloquea en silencio.
+      + "https://www.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net; " +
       // instagram.com en frame-src: los reels de @ventadeacordeones1 se abren en un iframe /embed al hacer clic.
       // 'self' en frame-src: la pestaña "Vista previa" del admin muestra la ficha /producto/<slug> en un iframe.
       "frame-src 'self' https://*.epayco.co https://checkout.epayco.co https://www.instagram.com; " +

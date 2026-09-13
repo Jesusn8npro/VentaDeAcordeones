@@ -114,55 +114,60 @@ export default function PaginaBlog() {
         {/* Contenido principal del hero */}
         <div className="hero-claro-contenedor">
           <div className="hero-claro-textos">
+            {/* Este bloque venía de una plantilla genérica de tienda: hablaba de "compras
+                inteligentes" y de tendencias en "tecnología, hogar y vehículos". Aquí sólo se
+                venden acordeones, así que el texto responde a lo que de verdad se teclea en
+                Google antes de gastarse cinco millones. */}
             <div className="etiqueta-blog">
-              <span className="icono-blog">🎯</span>
-              Centro de Conocimiento
+              <span className="icono-blog">🪗</span>
+              Guías del taller
             </div>
-            
+
             <h1 id="titulo-hero-blog" className="hero-claro-titulo">
-              Blog de Compras Inteligentes
-              <span className="texto-destacado"> y Tendencias</span>
+              Todo lo que hay que saber
+              <span className="texto-destacado"> antes de comprar un acordeón</span>
             </h1>
-            
+
             <p className="hero-claro-descripcion">
-              Encuentra guías expertas para comprar en nuestra tienda, descubre productos 
-              innovadores, aprende sobre economía del consumidor y mantente actualizado 
-              con las últimas tendencias en tecnología, hogar, vehículos y mucho más.
+              Cuánto cuesta de verdad, qué tonalidad te sirve, en qué se diferencia un Corona III
+              de un Rey Vallenato y cómo saber si el usado que te ofrecen vale la pena. Lo
+              escribimos nosotros, desde el taller, después de reparar y afinar acordeones todos
+              los días en Bogotá.
             </p>
 
             {/* Beneficios para el comprador */}
-            <div className="hero-beneficios" role="list" aria-label="Beneficios para compradores">
-              <div className="beneficio" role="listitem">
-                <div className="beneficio-icono" aria-hidden="true">💡</div>
-                <div className="beneficio-texto">
-                  <strong>Guías de Compra</strong>
-                  <span>Consejos expertos para elegir mejor</span>
-                </div>
-              </div>
-              <div className="beneficio" role="listitem">
-                <div className="beneficio-icono" aria-hidden="true">🚀</div>
-                <div className="beneficio-texto">
-                  <strong>Productos Innovadores</strong>
-                  <span>Descubre las últimas novedades</span>
-                </div>
-              </div>
+            <div className="hero-beneficios" role="list" aria-label="Qué vas a encontrar">
               <div className="beneficio" role="listitem">
                 <div className="beneficio-icono" aria-hidden="true">💰</div>
                 <div className="beneficio-texto">
-                  <strong>Economía y Finanzas</strong>
-                  <span>Aprende a administrar mejor</span>
+                  <strong>Precios reales</strong>
+                  <span>Cuánto cuesta cada modelo en Colombia</span>
+                </div>
+              </div>
+              <div className="beneficio" role="listitem">
+                <div className="beneficio-icono" aria-hidden="true">🎵</div>
+                <div className="beneficio-texto">
+                  <strong>Qué acordeón comprar</strong>
+                  <span>Tonalidad y modelo según lo que tocas</span>
+                </div>
+              </div>
+              <div className="beneficio" role="listitem">
+                <div className="beneficio-icono" aria-hidden="true">🔧</div>
+                <div className="beneficio-texto">
+                  <strong>Mantenimiento</strong>
+                  <span>Cómo cuidarlo para que dure toda la vida</span>
                 </div>
               </div>
             </div>
 
             {/* CTA principal */}
             <div className="hero-claro-acciones">
-              <a href="#articulos" className="btn-principal-claro" title="Explorar artículos de ayuda">
-                Explorar Guías de Compra
+              <a href="#articulos" className="btn-principal-claro" title="Ver las guías de compra">
+                Ver las guías
                 <span className="flecha-clara">→</span>
               </a>
-              <a href="#articulos" className="btn-secundario-claro" title="Ver productos innovadores">
-                Descubrir Productos Novedosos
+              <a href="/tienda" className="btn-secundario-claro" title="Ir al catálogo de acordeones">
+                Ver acordeones en venta
               </a>
             </div>
           </div>
