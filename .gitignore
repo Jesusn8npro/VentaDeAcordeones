@@ -69,3 +69,8 @@ flujos_n8n_y_promts/**/*.json
 # engordaría el repo (público) para siempre. Se regeneran con:
 #   node scripts/recortar-acordeones-blanco.mjs --todas
 public/images/acordeones-sin-fondo/
+
+# Portadas del blog: mismo criterio que los recortes. Binarios derivados que viven en Storage
+# (articulos_web.portada_url apunta allí). Se regeneran con:
+#   node scripts/blog/generar-portadas.mjs --subir
+public/images/blog/
