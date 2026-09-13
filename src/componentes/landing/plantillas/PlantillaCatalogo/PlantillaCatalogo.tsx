@@ -116,8 +116,11 @@ export default function PlantillaCatalogo({ producto, reviews }: { producto?: an
 
   const stock = Number(producto.stock) || 0
   const retirado = producto.estado === 'vendido' || producto.estado === 'agotado'
+  // Los personalizados se fabrican cuando alguien los pide: no hay unidades en bodega que
+  // contar, así que ni "últimas 2" ni "en bodega" serían ciertos.
+  const porEncargo = producto.estado === 'por_encargo'
   const disponible = stock > 0 && !retirado && producto.activo !== false
-  const pocasUnidades = disponible && stock <= 3
+  const pocasUnidades = disponible && !porEncargo && stock <= 3
   // El carrito rechaza más de 10 unidades por producto (CarritoContext), así que el
   // selector no deja pedir algo que va a fallar al pulsar.
   const maximo = Math.min(stock, 10)
@@ -257,9 +260,11 @@ export default function PlantillaCatalogo({ producto, reviews }: { producto?: an
               ? producto.estado === 'vendido'
                 ? 'Vendido · escríbenos y te conseguimos otro'
                 : 'Agotado por ahora · escríbenos y te avisamos'
-              : pocasUnidades
-                ? `Últimas ${stock} ${stock === 1 ? 'unidad' : 'unidades'} disponibles`
-                : `Disponible · ${stock} unidades en bodega`}
+              : porEncargo
+                ? 'Se fabrica por pedido · entrega en 6 a 8 semanas'
+                : pocasUnidades
+                  ? `Últimas ${stock} ${stock === 1 ? 'unidad' : 'unidades'} disponibles`
+                  : `Disponible · ${stock} unidades en bodega`}
           </div>
 
           <div className="pcat-acciones">

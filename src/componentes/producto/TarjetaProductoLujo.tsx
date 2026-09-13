@@ -88,7 +88,13 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
   }, [])
 
   const estadoSanitizado = (estado ?? '').toString().trim().toLowerCase()
-  const estadoValido = estadoSanitizado && !['nuevo','new','novedad','nuevo!'].includes(estadoSanitizado) ? estado : null
+  // Estados que son fontanería de la base y no le dicen nada a quien compra. 'activo' lo llevan
+  // 150 productos y salía tal cual impreso en la tarjeta, como si fuera una etiqueta comercial.
+  const ESTADOS_MUDOS = ['nuevo', 'new', 'novedad', 'nuevo!', 'activo', 'disponible', 'publicado']
+  // 'por_encargo' sí dice algo, pero escrito como lo leería un cliente, no con el guion bajo.
+  const estadoValido = estadoSanitizado === 'por_encargo'
+    ? 'Hecho por pedido'
+    : estadoSanitizado && !ESTADOS_MUDOS.includes(estadoSanitizado) ? estado : null
   const mensajeContextual = descuentoCalculado
     ? `Ahorro disponible: ${descuentoCalculado}%`
     : (destacado ? 'Vendedor estrella' : (estadoValido || 'Entrega rápida'))
@@ -320,7 +326,8 @@ function TarjetaProductoLujo({ producto, modoAccion = 'auto' }) {
           {infoIndex === 0 && (
             <div className="item-informacion aparecer" key={`info-${infoIndex}`}>
               <Zap size={12} className="icono-informacion" />
-              <span>Unidades disponibles: {stock ?? '—'}</span>
+              {/* Un personalizado no tiene unidades que contar: se arma cuando lo piden. */}
+              <span>{estado === 'por_encargo' ? 'Se fabrica por pedido' : `Unidades disponibles: ${stock ?? '—'}`}</span>
             </div>
           )}
           {/* Antes decía "Más comprados en categoría: X" en todas las tarjetas por igual, sin
