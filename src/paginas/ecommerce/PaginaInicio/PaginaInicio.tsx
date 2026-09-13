@@ -16,8 +16,9 @@ import TestimoniosClientes from './TestimoniosClientes/TestimoniosClientes'
 import Boletin from './Boletin/Boletin'
 import CtaFinalInicio from './CtaFinalInicio/CtaFinalInicio'
 import ReelsInstagram from '@/componentes/social/ReelsInstagram'
+import type { ConteosClusters } from '@/datos/conteosClusters'
 
-export default function PaginaInicio({ destacados, ofertas }: { destacados?: any[]; ofertas?: any[] }) {
+export default function PaginaInicio({ destacados, ofertas, conteos }: { destacados?: any[]; ofertas?: any[]; conteos?: ConteosClusters }) {
   useEffect(() => {
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
@@ -59,11 +60,11 @@ export default function PaginaInicio({ destacados, ofertas }: { destacados?: any
     <>
       <HeroInicio />
       <MarqueeBeneficios />
-      <IconosCategorias />
+      <IconosCategorias conteos={conteos} />
       <VentaRelampago iniciales={ofertas} />
       <ProductosDestacados iniciales={destacados} />
       <RepuestosTecnicos />
-      <OtrosInstrumentos />
+      <OtrosInstrumentos conteos={conteos} />
       <SeccionPersonalizados />
       <ValoresMarca />
       <EstadisticasMarca />

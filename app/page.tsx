@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import InicioCliente from './InicioCliente'
 import { supabaseServidor } from '@/configuracion/supabaseServidor'
+import { obtenerConteosClusters } from '@/datos/conteosClusters'
 
 // Los listados de la portada se consultan en el SERVIDOR y viajan dentro del HTML.
 // Antes los pedía el navegador tras hidratar: la portada salía con huecos, el contenido
@@ -58,6 +59,6 @@ export const metadata: Metadata = {
 }
 
 export default async function HomePage() {
-  const { destacados, ofertas } = await obtenerListados()
-  return <InicioCliente destacados={destacados} ofertas={ofertas} />
+  const [{ destacados, ofertas }, conteos] = await Promise.all([obtenerListados(), obtenerConteosClusters()])
+  return <InicioCliente destacados={destacados} ofertas={ofertas} conteos={conteos} />
 }
