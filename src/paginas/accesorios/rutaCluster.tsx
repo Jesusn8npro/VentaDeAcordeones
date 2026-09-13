@@ -19,7 +19,7 @@ export async function productosDeCluster(c: Cluster) {
   const { data, error } = await q.order('destacado', { ascending: false }).order('precio', { ascending: true })
   if (error) { console.error('[cluster] Supabase:', error.message); return [] }
   const lista = (data || []) as any[]
-  return c.categoriaSlug ? lista : lista.filter((p) => esAccesorio(p.nombre))
+  return c.categoriaSlug || c.incluyeAcordeones ? lista : lista.filter((p) => esAccesorio(p.nombre))
 }
 
 export function crearRutaCluster(base: BaseCluster) {

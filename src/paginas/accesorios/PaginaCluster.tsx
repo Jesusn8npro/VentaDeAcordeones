@@ -56,7 +56,15 @@ export default function PaginaCluster({ cluster: c, productos }: Props) {
             </div>
             <div className="cl-hero-visual">
               <div className="cl-hero-halo" />
-              <Image src={c.imagen} alt={`${c.nombre} de acordeón`} width={900} height={900} priority sizes="(max-width: 900px) 80vw, 40vw" className="cl-hero-img" />
+              {/* Una familia que aún no tiene foto de producto propia se anuncia con su icono,
+                  no con la foto de otra cosa. Así se puede abrir la landing antes que el stock. */}
+              {c.imagen ? (
+                <Image src={c.imagen} alt={c.h1.join(' ')} width={900} height={900} priority sizes="(max-width: 900px) 80vw, 40vw" className="cl-hero-img" />
+              ) : (
+                <div className="cl-hero-icono" aria-hidden="true">
+                  <Icono nombre={c.icono} tamaño={220} />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -77,7 +85,9 @@ export default function PaginaCluster({ cluster: c, productos }: Props) {
           </div>
         ) : (
           <div className="cl-vacio">
-            <p>Estamos actualizando el catálogo de {c.nombre.toLowerCase()}. Escríbenos y te cotizamos hoy mismo.</p>
+            <p>{c.porEncargo
+              ? `No tenemos ${c.nombre.toLowerCase()} en bodega: los traemos por encargo. Dinos qué buscas y te damos precio y plazo cerrados antes de que pagues nada.`
+              : `Estamos actualizando el catálogo de ${c.nombre.toLowerCase()}. Escríbenos y te cotizamos hoy mismo.`}</p>
             <a href={wa(c.waTexto)} target="_blank" rel="noopener noreferrer" className="btn btn-primary"><Icono nombre="whatsapp" tamaño={14} /> Cotizar por WhatsApp</a>
           </div>
         )}
@@ -88,7 +98,11 @@ export default function PaginaCluster({ cluster: c, productos }: Props) {
         <div className="cl-cabecera">
           <div>
             <div className="eyebrow">— Por qué con nosotros</div>
-            <h2 className="display cl-h2">Hechos para <span className="accent">acordeoneros</span></h2>
+            {/* Estaba fijo en "acordeoneros", y se leía "Hechos para acordeoneros" en las
+                páginas de baterías, audífonos o bajos. */}
+            <h2 className="display cl-h2">
+              Hechos para <span className="accent">{c.base === 'acordeones' || c.base === 'accesorios' ? 'acordeoneros' : 'músicos'}</span>
+            </h2>
           </div>
         </div>
         <div className="cl-beneficios">

@@ -44,6 +44,13 @@ export interface Cluster {
   slug: string
   base: BaseCluster        // ruta: /<base>/<slug>
   categoriaSlug?: string   // si existe, los productos se filtran por categoría (no por palabras)
+  // Los clusters por palabras descartan los acordeones enteros (esAccesorio), porque nacieron
+  // para familias de accesorios. Este interruptor los deja pasar: lo necesita "para-ninos",
+  // que junta acordeones infantiles con baterías junior.
+  incluyeAcordeones?: boolean
+  // La familia no se tiene en bodega: se trae cuando alguien la pide. Cambia el texto del
+  // catálogo vacío, que si no suena a excusa ("estamos actualizando").
+  porEncargo?: boolean
   nombre: string           // nombre corto (menú, breadcrumbs)
   h1: [string, string]     // [línea normal, línea en oro]
   titulo: string           // <title>
@@ -177,6 +184,47 @@ export const CLUSTERS: Cluster[] = [
       { p: '¿Cuánto tarda?', r: 'Un fuelle o parrilla estándar, días. Un diseño tallado a medida con bordado toma más, porque las piezas se fabrican para ti. Te damos fecha concreta antes de cobrar.' },
     ],
     waTexto: 'Hola, quiero un acordeón personalizado',
+  },
+  {
+    // Recoge por palabras, no por categoría: los acordeones infantiles están en "Acordeones para
+    // Niños" pero las baterías junior en "Baterías", y quien busca "instrumento para niño" los
+    // quiere ver juntos.
+    slug: 'para-ninos',
+    base: 'acordeones',
+    nombre: 'Para niños',
+    h1: ['Instrumentos para niños', 'del tamaño de sus manos'],
+    titulo: 'Acordeones y Baterías para Niños en Colombia',
+    descripcion:
+      'Acordeones MPRO de 7 botones y baterías junior de 3 piezas para niños de 4 a 12 años. Instrumentos reales a escala, no juguetes. Envío a toda Colombia.',
+    eyebrow: 'Acordeones · Para niños',
+    intro:
+      'Un instrumento que suena de verdad y que el niño puede cargar. Acordeones MPRO de 7 botones para empezar el vallenato y baterías junior de 3 piezas que caben en cualquier cuarto. Afinados y revisados antes de salir.',
+    imagen: '/images/productos/acordeon-mpro-m7k2b-para-ninos-rojo.webp',
+    icono: 'cat-acordeon',
+    palabras: ['niños', 'ninos', 'junior', 'infantil'],
+    incluyeAcordeones: true,
+    chips: ['Desde los 4 años', 'MPRO · instrumentos reales', 'Livianos y a escala'],
+    beneficios: [
+      { titulo: 'Suenan de verdad', texto: 'Lengüetas y parches reales: no son juguetes de plástico con pilas.' },
+      { titulo: 'Peso que sí aguantan', texto: 'Acordeones de 7 botones y baterías de 3 piezas pensados para brazos pequeños.' },
+      { titulo: 'Para arrancar ya', texto: 'Salen afinados y listos. Si el niño estudia en la Academia, le damos la guía de primeras notas.' },
+      { titulo: 'Si le gusta, crece con él', texto: 'Cuando se le quede pequeño, te recibimos el instrumento como parte de pago del siguiente.' },
+    ],
+    guia: {
+      titulo: '¿A qué edad empezar?',
+      parrafos: [
+        'De 4 a 7 años, el acordeón MPRO de 7 botones es el punto de partida: pesa poco, se abre con facilidad y da las notas del vallenato básico. De 8 en adelante, muchos ya pueden con un Corona II de 31 botones, que es el que van a usar el resto de su vida.',
+        'Con la batería pasa igual: la junior de 3 piezas es para 4 a 9 años. Después conviene una de 5 piezas.',
+      ],
+      lista: ['Mira el peso, no solo el precio', 'De 4 a 7 años: 7 botones o batería junior', 'De 8 en adelante: ya puede con un Corona II', 'Pregúntanos antes de comprar: te decimos según la estatura'],
+    },
+    faq: [
+      { p: '¿Desde qué edad sirve?', r: 'Desde los 4 años con el acordeón de 7 botones y la batería junior de 3 piezas. Antes de eso el instrumento le pesa y se desanima.' },
+      { p: '¿Es un juguete?', r: 'No. Son instrumentos reales a escala, con lengüetas y parches de verdad. Suenan afinados y sirven para aprender.' },
+      { p: '¿Sirve para aprender vallenato?', r: 'El de 7 botones da las notas para las primeras canciones. Para tocar completo hace falta un acordeón de 31 botones, que es el paso siguiente.' },
+      { p: '¿Y si se le queda pequeño?', r: 'Te lo recibimos como parte de pago del siguiente. Escríbenos y te decimos cuánto vale el tuyo.' },
+    ],
+    waTexto: 'Hola, busco un instrumento para un niño',
   },
   {
     slug: 'amplificadores',
@@ -396,6 +444,47 @@ export const CLUSTERS: Cluster[] = [
   },
 
   // ── INSTRUMENTOS (distribuidor Miche / MPRO / Ludwig) ──
+  {
+    // Todavía sin stock propio: la landing se abre para captar la búsqueda y cerrar por encargo.
+    // Sin `imagen`, el hero usa el icono de la familia (ver PaginaCluster).
+    slug: 'bajos-electricos',
+    base: 'instrumentos',
+    categoriaSlug: 'bajos-electricos',
+    porEncargo: true,
+    nombre: 'Bajos eléctricos',
+    h1: ['Bajos eléctricos', 'para el que sostiene el grupo'],
+    titulo: 'Bajos Eléctricos en Colombia: Precio y Modelos | Por Encargo',
+    descripcion:
+      'Bajos eléctricos de 4 y 5 cuerdas, activos y pasivos, con amplificador a juego. Los traemos por encargo con garantía y envío a toda Colombia. Cotiza por WhatsApp.',
+    eyebrow: 'Instrumentos · Bajos eléctricos',
+    intro:
+      'El bajo es el que amarra la caja con el acordeón: si falla, se cae el grupo entero. Traemos bajos de 4 y 5 cuerdas por encargo, con el amplificador a juego, y te ayudamos a no pagar de más por madera que no vas a oír.',
+    imagen: '',
+    icono: 'cat-bajo',
+    palabras: ['bajo electrico', 'bajo eléctrico', 'bajo de 5 cuerdas'],
+    chips: ['4 y 5 cuerdas', 'Activos y pasivos', 'Por encargo con garantía'],
+    beneficios: [
+      { titulo: 'Con el ampli correcto', texto: 'Un bajo sin amplificador de bajo no suena: te armamos el combo completo y te decimos cuántos vatios necesitas según dónde toques.' },
+      { titulo: 'Te lo traemos', texto: 'Trabajamos con los mismos distribuidores que los amplificadores Fender. Pídelo y te damos precio y plazo cerrados.' },
+      { titulo: 'Revisado antes de entregar', texto: 'Llega al taller, se ajusta la altura de las cuerdas y la octava, y sale listo para tocar.' },
+      { titulo: 'Garantía real', texto: 'Doce meses por defectos de fábrica, atendidos aquí en Bogotá y no en otro país.' },
+    ],
+    guia: {
+      titulo: '¿De 4 o de 5 cuerdas?',
+      parrafos: [
+        'Para vallenato, cumbia y música de parranda, un bajo de 4 cuerdas hace todo lo que necesitas y es más fácil de manejar si vienes empezando. La quinta cuerda (el Si grave) se vuelve útil en gospel, salsa brava y música cristiana moderna, donde bajan de tono.',
+        'La otra decisión es activo o pasivo. El pasivo tiene el sonido clásico y no depende de batería; el activo da más pegue y te deja corregir graves y agudos desde el propio bajo, pero se queda mudo si se descarga la pila en plena tarima.',
+      ],
+      lista: ['Empezando: 4 cuerdas, pasivo', 'Gospel o salsa: mira el de 5 cuerdas', 'Presupuesta el amplificador desde el principio', 'Pregunta por el combo bajo + ampli'],
+    },
+    faq: [
+      { p: '¿Tienen bajos en existencia?', r: 'Hoy los traemos por encargo, no los tenemos en bodega. Escríbenos qué buscas y te damos precio y plazo antes de que pagues nada.' },
+      { p: '¿Cuánto se demora?', r: 'Depende del modelo. Al cotizar te damos una fecha concreta, y si no la cumplimos te devolvemos el anticipo.' },
+      { p: '¿Me sirve el amplificador de guitarra?', r: 'No. Un ampli de guitarra no está hecho para los graves del bajo y se daña el parlante. Tenemos amplificadores Fender Rumble para bajo.' },
+      { p: '¿Cuántos vatios necesito?', r: 'Para ensayar en casa, de 15 a 25 vatios. Para ensayar con batería, mínimo 100. Para tarima, se conecta a la consola y el ampli sólo te sirve de monitor.' },
+    ],
+    waTexto: 'Hola, quiero cotizar un bajo eléctrico',
+  },
   {
     slug: 'cajas-vallenatas',
     base: 'instrumentos',

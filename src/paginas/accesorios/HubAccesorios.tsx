@@ -41,7 +41,10 @@ export default function HubAccesorios({ base = 'accesorios' }: { base?: BaseClus
           {propios.map((c) => (
             <Link key={c.slug} href={`/${base}/${c.slug}`} className="cl-hub-card">
               <div className="cl-hub-visual">
-                <Image src={c.imagen} alt={c.h1.join(' ')} width={400} height={400} sizes="(max-width: 700px) 80vw, 300px" />
+                {/* Sin foto propia todavía: el icono de la familia, no la foto de otro producto. */}
+                {c.imagen
+                  ? <Image src={c.imagen} alt={c.h1.join(' ')} width={400} height={400} sizes="(max-width: 700px) 80vw, 300px" />
+                  : <div className="cl-hub-icono" aria-hidden="true"><Icono nombre={c.icono} tamaño={110} /></div>}
               </div>
               <div className="cl-hub-cuerpo">
                 <div className="eyebrow">— {c.eyebrow.split('·')[1]?.trim()}</div>
