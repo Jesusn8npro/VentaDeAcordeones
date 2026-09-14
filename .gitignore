@@ -37,6 +37,10 @@ next-env.d.ts
 .env.development.local
 .env.test.local
 .env.production.local
+# Respaldos del .env: llevan las llaves dentro y este repositorio es PÚBLICO.
+.env.bak*
+.env.*.bak
+*.env.backup
 
 # Supabase
 .supabase
