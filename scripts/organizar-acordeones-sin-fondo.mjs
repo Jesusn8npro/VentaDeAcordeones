@@ -118,15 +118,31 @@ if (REVISAR) { console.log('\n(--revisar: no se copió nada)'); process.exit(0) 
 // Se rehace de cero para que no queden restos de repartos anteriores.
 fs.rmSync(DESTINO, { recursive: true, force: true })
 
+// Nombre legible para la copia de trabajo. En Storage los ficheros NO se renombran —las fichas
+// apuntan a ellos por nombre—, pero aquí sobran los prefijos de la carpeta de origen:
+// "ventas-productos-y-clientes-0-1-estuches-de-instrumentos-1-estuche-54" no le dice nada a nadie.
+const RUIDO = /^(ventas-productos-y-clientes(-\d+)*(-\d+-\d+)?-|fuelles-listos-(\d+-|\d{4}-)?|acordeon-|fotos-nuevas-a-publicar-?|xx-?)/
+const bonito = (n) => {
+  let s = n.replace(RUIDO, '').replace(/-?\d+$/, '').replace(/^[-\d]+/, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
+  return s || n.replace(/-?\d+$/, '') || n
+}
+
 let copiados = 0
 for (const [cat, años] of Object.entries(reparto)) {
   for (const [año, lista] of Object.entries(años)) {
     const dir = path.join(DESTINO, cat, año)
     fs.mkdirSync(dir, { recursive: true })
-    for (const f of lista) {
-      fs.copyFileSync(path.join(ORIGEN, f), path.join(dir, f))
-      const sm = f.replace(/\.webp$/, '-sm.webp')
-      if (fs.existsSync(path.join(ORIGEN, sm))) fs.copyFileSync(path.join(ORIGEN, sm), path.join(dir, sm))
+    // Las tomas del mismo producto se numeran juntas (-01, -02) en vez de quedar sueltas con
+    // nombres distintos, que es lo que hacía parecer que había copias de todo.
+    const contador = {}
+    for (const f of lista.sort()) {
+      const base = f.replace(/\.webp$/, '')
+      const nombre = bonito(base)
+      contador[nombre] = (contador[nombre] || 0) + 1
+      const n = String(contador[nombre]).padStart(2, '0')
+      fs.copyFileSync(path.join(ORIGEN, f), path.join(dir, `${nombre}-${n}.webp`))
+      const sm = `${base}-sm.webp`
+      if (fs.existsSync(path.join(ORIGEN, sm))) fs.copyFileSync(path.join(ORIGEN, sm), path.join(dir, `${nombre}-${n}-sm.webp`))
       copiados++   // una pieza = dos ficheros (grande y -sm)
     }
   }
