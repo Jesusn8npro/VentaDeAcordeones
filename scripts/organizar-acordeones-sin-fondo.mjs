@@ -1,44 +1,54 @@
-// Ordena los recortes ya generados dentro de W:\, por categoría y por año.
+// Deja los recortes sin fondo ordenados dentro de W:\, listos para usar.
 //
 //   node scripts/organizar-acordeones-sin-fondo.mjs --revisar   → enseña el reparto, no copia
-//   node scripts/organizar-acordeones-sin-fondo.mjs             → copia y organiza
+//   node scripts/organizar-acordeones-sin-fondo.mjs             → rehace la carpeta y copia
 //
-// Los recortes salían todos revueltos en una carpeta plana, con el nombre de la carpeta de
-// origen como único dato. Aquí se reparten en  <CATEGORÍA>/<AÑO>/  para poder buscarlos por
-// color y por época, que es como se buscan de verdad ("el verde tricolor de 2021").
+// Estructura que deja, dentro de "Acordeones fondo blanco" y SIN tocar las 66 carpetas de fotos
+// originales que ya viven ahí:
 //
-// La CATEGORÍA sale del nombre del recorte, que a su vez viene de la carpeta original. El AÑO
-// sale de la fecha del archivo de la FOTO ORIGINAL, no del recorte: el recorte se generó hoy y
-// esa fecha no dice nada.
+//   0. SIN FONDO - LISTOS PARA PUBLICAR\
+//     01. Acordeones blancos\ 2021\ ...          ← grande (1200 px) y -sm (600 px) juntos
+//     02. Acordeones premium\ ...
+//     ...
+//     90. Accesorios\ Fuelles\ 2019\ ...
+//     98. Portadas del blog\
+//     99. Revisar a mano\                        ← los que no salieron limpios
+//     LEEME.txt
+//
+// Las categorías van numeradas para que el explorador las ordene por importancia comercial y no
+// por alfabeto. El AÑO sale de la FOTO ORIGINAL (el más antiguo de su carpeta, que es cuando se
+// hizo el acordeón), nunca del recorte: el recorte se generó hoy y esa fecha no dice nada.
 import fs from 'node:fs'
 import path from 'node:path'
 
 const ORIGEN = 'public/images/acordeones-sin-fondo'
+const PORTADAS = 'public/images/blog'
 const FOTOS = 'W:/1. Venta de acordeones/Acordeones fondo blanco'
-const DESTINO = path.join(FOTOS, '0. SIN FONDO (generadas)', 'por categoria y año')
+const DESTINO = path.join(FOTOS, '0. SIN FONDO - LISTOS PARA PUBLICAR')
 const REVISAR = process.argv.includes('--revisar')
 
-// Orden importante: gana la primera que coincida. Los accesorios van antes que los colores,
-// porque "fuelle-verde-marino" es un fuelle, no un acordeón verde.
+// Gana la primera que coincida. Los accesorios van antes que los colores, porque
+// "fuelle-verde-marino" es un fuelle, no un acordeón verde.
 const CATEGORIAS = [
-  [/fuelle/i,                         'Fuelles'],
-  [/parrilla/i,                       'Parrillas'],
-  [/estuche|maleta|funda/i,           'Estuches'],
-  [/correa/i,                         'Correas'],
-  [/broche/i,                         'Broches'],
-  [/pechera/i,                        'Pecheras'],
-  [/tricolor|colombia|bandera|panama/i, 'Acordeones tricolor'],
-  [/premium|nacar|perlado|corona/i,   'Acordeones premium'],
-  [/xtreme/i,                         'Acordeones Xtreme'],
-  [/blanco/i,                         'Acordeones blancos'],
-  [/negro|charol|gris/i,              'Acordeones negros y grises'],
-  [/azul/i,                           'Acordeones azules'],
-  [/verde/i,                          'Acordeones verdes'],
-  [/rojo|fuego|vinotinto/i,           'Acordeones rojos'],
-  [/morado|lila/i,                    'Acordeones morados'],
-  [/naranja|amarillo|dorado/i,        'Acordeones naranjas y dorados'],
-  [/marron|cafe/i,                    'Acordeones marrones'],
+  [/fuelle/i,                           '90. Accesorios/Fuelles'],
+  [/parrilla/i,                         '90. Accesorios/Parrillas'],
+  [/estuche|maleta|funda/i,             '90. Accesorios/Estuches'],
+  [/correa/i,                           '90. Accesorios/Correas'],
+  [/broche/i,                           '90. Accesorios/Broches'],
+  [/pechera/i,                          '90. Accesorios/Pecheras'],
+  [/premium|nacar|perlado|corona/i,     '01. Acordeones premium'],
+  [/tricolor|colombia|bandera|panama/i, '02. Acordeones tricolor'],
+  [/xtreme/i,                           '03. Acordeones Xtreme'],
+  [/blanco/i,                           '04. Acordeones blancos'],
+  [/azul/i,                             '05. Acordeones azules'],
+  [/verde/i,                            '06. Acordeones verdes'],
+  [/rojo|fuego|vinotinto/i,             '07. Acordeones rojos'],
+  [/negro|charol|gris/i,                '08. Acordeones negros y grises'],
+  [/morado|lila/i,                      '09. Acordeones morados'],
+  [/naranja|amarillo|dorado/i,          '10. Acordeones naranjas y dorados'],
+  [/marron|cafe/i,                      '11. Acordeones marrones'],
 ]
+
 // Los recortes de "xx" y "fotos nuevas a publicar" no llevan el color en el nombre, pero ya se
 // clasificaron uno a uno al ponerles precio. Se reaprovecha ese trabajo en vez de adivinar.
 const COLOR_POR_ARCHIVO = (() => {
@@ -51,12 +61,12 @@ const COLOR_POR_ARCHIVO = (() => {
 })()
 
 const categoriaDe = (n) => {
-  const porColor = COLOR_POR_ARCHIVO[n]
-  const texto = porColor ? `${porColor} ${n}` : n
-  return (CATEGORIAS.find(([re]) => re.test(texto)) || [null, 'Otros'])[1]
+  const color = COLOR_POR_ARCHIVO[n]
+  const texto = color ? `${color} ${n}` : n
+  return (CATEGORIAS.find(([re]) => re.test(texto)) || [null, '12. Sin clasificar'])[1]
 }
 
-// Año de la foto original: se busca la que dio origen al recorte recorriendo las carpetas.
+// Índice de años leyendo las carpetas de fotos originales.
 const indiceFechas = (() => {
   const idx = {}
   const norm = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
@@ -68,7 +78,6 @@ const indiceFechas = (() => {
       if (e.isDirectory()) walk(p, raiz || norm(e.name.replace(/^\d+\.?\s*/, '')))
       else if (/\.(jpe?g|png)$/i.test(e.name) && raiz) {
         const y = fs.statSync(p).mtime.getFullYear()
-        // Se guarda el año MÁS ANTIGUO de la carpeta: es cuando se hizo el acordeón.
         idx[raiz] = idx[raiz] ? Math.min(idx[raiz], y) : y
       }
     }
@@ -82,46 +91,87 @@ const indiceFechas = (() => {
 
 const añoDe = (nombre) => {
   const base = nombre.replace(/-\d+$/, '')
-  if (indiceFechas[base]) return indiceFechas[base]
-  // Coincidencia parcial: el recorte lleva el nombre de la carpeta más un sufijo.
+  if (indiceFechas[base]) return String(indiceFechas[base])
   const clave = Object.keys(indiceFechas).find((k) => base.startsWith(k) || k.startsWith(base))
-  return clave ? indiceFechas[clave] : 'sin fecha'
+  return clave ? String(indiceFechas[clave]) : 'sin fecha'
 }
 
 const archivos = fs.readdirSync(ORIGEN).filter((f) => f.endsWith('.webp') && !f.endsWith('-sm.webp'))
 const reparto = {}
 for (const f of archivos) {
   const nombre = f.replace(/\.webp$/, '')
-  const cat = categoriaDe(nombre)
-  const año = añoDe(nombre)
-  ;((reparto[cat] ||= {})[año] ||= []).push(f)
+  ;((reparto[categoriaDe(nombre)] ||= {})[añoDe(nombre)] ||= []).push(f)
 }
 
 console.log(`recortes: ${archivos.length}\n`)
-console.log('CATEGORÍA'.padEnd(32) + 'AÑOS')
+console.log('CARPETA'.padEnd(38) + 'N'.padStart(4) + '   AÑOS')
 let total = 0
 for (const [cat, años] of Object.entries(reparto).sort((a, b) => a[0].localeCompare(b[0]))) {
-  const detalle = Object.entries(años).sort().map(([y, v]) => `${y}:${v.length}`).join('  ')
   const n = Object.values(años).reduce((a, b) => a + b.length, 0)
   total += n
-  console.log(`  ${cat.padEnd(30)} ${String(n).padStart(3)}   ${detalle}`)
+  console.log(`  ${cat.padEnd(36)}${String(n).padStart(4)}   ${Object.entries(años).sort().map(([y, v]) => `${y}:${v.length}`).join('  ')}`)
 }
-console.log(`\ntotal repartido: ${total}`)
+console.log(`\ntotal: ${total}`)
 
 if (REVISAR) { console.log('\n(--revisar: no se copió nada)'); process.exit(0) }
+
+// Se rehace de cero para que no queden restos de repartos anteriores.
+fs.rmSync(DESTINO, { recursive: true, force: true })
 
 let copiados = 0
 for (const [cat, años] of Object.entries(reparto)) {
   for (const [año, lista] of Object.entries(años)) {
-    const dir = path.join(DESTINO, cat, String(año))
+    const dir = path.join(DESTINO, cat, año)
     fs.mkdirSync(dir, { recursive: true })
     for (const f of lista) {
       fs.copyFileSync(path.join(ORIGEN, f), path.join(dir, f))
       const sm = f.replace(/\.webp$/, '-sm.webp')
       if (fs.existsSync(path.join(ORIGEN, sm))) fs.copyFileSync(path.join(ORIGEN, sm), path.join(dir, sm))
-      copiados++
+      copiados++   // una pieza = dos ficheros (grande y -sm)
     }
   }
 }
-console.log(`\ncopiados: ${copiados}`)
+
+// Portadas del blog y los que no salieron limpios, cada uno en su sitio.
+const extra = (origen, destino) => {
+  if (!fs.existsSync(origen)) return 0
+  const dir = path.join(DESTINO, destino)
+  fs.mkdirSync(dir, { recursive: true })
+  let n = 0
+  for (const f of fs.readdirSync(origen)) {
+    const p = path.join(origen, f)
+    if (fs.statSync(p).isFile()) { fs.copyFileSync(p, path.join(dir, f)); n++ }
+  }
+  return n
+}
+const nPortadas = extra(PORTADAS, '98. Portadas del blog')
+const nRevisar = extra(path.join(ORIGEN, 'revisar'), '99. Revisar a mano')
+
+fs.writeFileSync(path.join(DESTINO, 'LEEME.txt'), [
+  'RECORTES SIN FONDO — listos para publicar',
+  '',
+  `Generado el ${new Date().toLocaleDateString('es-CO')} a partir de las fotos de esta misma carpeta.`,
+  '',
+  'QUÉ HAY AQUÍ',
+  `  ${copiados} piezas, cada una en dos tamaños:`,
+  '    nombre.webp      1200 px — para la ficha del producto y las galerías',
+  '    nombre-sm.webp    600 px — para las tarjetas del catálogo',
+  '',
+  'CÓMO ESTÁ ORDENADO',
+  '  Por categoría (numeradas por importancia, no por alfabeto) y dentro por AÑO.',
+  '  El año es el de la FOTO ORIGINAL, o sea cuando se hizo el acordeón, no el del recorte.',
+  '',
+  `  98. Portadas del blog  → ${nPortadas} imágenes 16:9 de los artículos`,
+  `  99. Revisar a mano     → ${nRevisar} archivos donde el recorte no quedó limpio`,
+  '',
+  'TODAS ESTAS PIEZAS YA ESTÁN SUBIDAS a Supabase Storage (acordeones-personalizados/).',
+  'Esta carpeta es tu copia de trabajo: si borras algo aquí, la web sigue funcionando.',
+  '',
+  'PARA REGENERARLO TODO',
+  '  node scripts/recortar-acordeones-blanco.mjs --todas',
+  '  node scripts/organizar-acordeones-sin-fondo.mjs',
+].join('\n'), 'utf8')
+
+console.log(`\ncopiadas: ${copiados} piezas (${copiados * 2} archivos: grande + sm)`)
+console.log(`portadas del blog: ${nPortadas}   a revisar: ${nRevisar}`)
 console.log(`destino: ${DESTINO}`)
