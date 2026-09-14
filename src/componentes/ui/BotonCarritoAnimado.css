@@ -1,0 +1,135 @@
+/* Botón de carrito con animaciones suaves */
+.boton-carrito-animado {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.boton-carrito-animado:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.boton-carrito-animado:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.boton-carrito-animado:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Estados del botón */
+.boton-carrito-animado.agregando {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.boton-carrito-animado.agregado {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  animation: success-bounce 0.6s ease-out;
+}
+
+.boton-carrito-animado.error {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  animation: error-shake 0.5s ease-in-out;
+}
+
+/* Spinner de carga */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Efecto de ondas para éxito */
+.ondas-efecto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.onda {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: onda-expand 1.2s ease-out infinite;
+}
+
+.onda-1 {
+  animation-delay: 0s;
+}
+
+.onda-2 {
+  animation-delay: 0.4s;
+}
+
+.onda-3 {
+  animation-delay: 0.8s;
+}
+
+/* Animaciones */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes success-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes error-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes onda-expand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .boton-carrito-animado {
+    padding: 10px 20px;
+    font-size: 13px;
+    min-width: 120px;
+  }
+}

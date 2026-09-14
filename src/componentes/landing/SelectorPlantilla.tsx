@@ -1,6 +1,7 @@
 import React from 'react'
 import PlantillaCatalogo from './plantillas/PlantillaCatalogo/PlantillaCatalogo'
 import PlantillaCinema from './plantillas/PlantillaCinema/PlantillaCinema'
+import PlantillaTemu from './plantillas/PlantillaTemu/PlantillaTemu'
 
 /**
  * SelectorPlantilla — decide con qué ficha se pinta cada producto.
@@ -19,9 +20,13 @@ import PlantillaCinema from './plantillas/PlantillaCinema/PlantillaCinema'
  * servidor y el HTML sale con la ficha correcta (nada de parpadeos ni de decidir tras
  * hidratar). Es una función pura del producto, así que servidor y navegador coinciden.
  *
- * PlantillaTemu se eliminó: no la usaba ningún producto y estaba llena de datos inventados
- * (testimonios de banco de imágenes, "+15.847 clientes", "70% OFF", contadores de urgencia).
- * Los tipos antiguos 'temu' y 'amazon' caen en la decisión automática.
+ * PlantillaTemu VOLVIÓ (13-sep-2026), pero limpia. Se había eliminado porque venía llena de
+ * datos inventados: seis testimonios con retratos de Unsplash, "+15.847 clientes", "70% OFF",
+ * "garantía de 2 años", "soporte 24/7" y relojes de cuenta atrás para ofertas inexistentes.
+ * Ahora cada sección sale de los campos del producto (`puntos_dolor`, `caracteristicas`,
+ * `testimonios`, `faq`, `garantias`, `cta_final`, `banner_animado`) y la que no tenga datos
+ * sencillamente no se pinta. Es la ficha larga de venta: úsala en los productos que quieras
+ * empujar, poniéndoles `landing_tipo = 'temu'`.
  */
 
 /**
@@ -49,6 +54,9 @@ const RE_ACCESORIO =
 const PLANTILLAS_FORZADAS: Record<string, React.ComponentType<any>> = {
   'forzar-cinema': PlantillaCinema,
   'forzar-catalogo': PlantillaCatalogo,
+  // Ficha larga de venta. Se activa poniendo landing_tipo = 'temu' en el producto.
+  temu: PlantillaTemu,
+  'forzar-temu': PlantillaTemu,
   // 'catalogo' y 'clasico' no los tiene ningún producto hoy: si aparecen es porque
   // alguien los eligió a propósito en el admin, así que también mandan.
   catalogo: PlantillaCatalogo,
@@ -58,7 +66,7 @@ const PLANTILLAS_FORZADAS: Record<string, React.ComponentType<any>> = {
 /**
  * Devuelve el componente de ficha que le toca a un producto.
  *
- * 1. `landing_tipo` forzado a mano ('forzar-cinema' / 'forzar-catalogo' / 'catalogo') manda
+ * 1. `landing_tipo` forzado a mano ('temu' / 'forzar-cinema' / 'forzar-catalogo' / 'catalogo') manda
  *    siempre, para que Jesús pueda saltarse la regla en un producto concreto.
  *    OJO: 'cinema' a secas NO cuenta como decisión manual, porque es el valor que un script
  *    escribió en todo el catálogo de golpe; si contara, esta regla no haría nada.
