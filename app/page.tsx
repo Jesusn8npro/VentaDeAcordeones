@@ -58,7 +58,37 @@ export const metadata: Metadata = {
   },
 }
 
+// La imagen grande del hero es lo último que pinta la portada, y es lo que mide Google como
+// LCP. Lleva `priority` en el componente, pero eso no basta: `PaginaInicio` es un componente de
+// CLIENTE, así que Next no llega a emitir su <link rel="preload"> en el HTML del servidor y el
+// navegador no sabe de esa imagen hasta que hidrata el JavaScript. Medido en producción: LCP de
+// 4,7 s, con la imagen empezando a bajar tardísimo.
+//
+// Aquí se emite el preload a mano, desde el servidor, con el mismo srcset y los mismos `sizes`
+// que usa el <Image> del hero, para que el navegador elija el mismo archivo y no descargue dos.
+const HERO_LCP = '/images/hero/rey-vallenato-negro.webp'
+const ANCHOS_LCP = [640, 750, 828, 1080, 1200, 1920]
+const urlOptimizada = (w: number) => `/_next/image?url=${encodeURIComponent(HERO_LCP)}&w=${w}&q=75`
+
+function PreloadHero() {
+  return (
+    <link
+      rel="preload"
+      as="image"
+      // eslint-disable-next-line react/no-unknown-property
+      imageSrcSet={ANCHOS_LCP.map((w) => `${urlOptimizada(w)} ${w}w`).join(', ')}
+      imageSizes="(max-width: 1100px) 70vw, 38vw"
+      fetchPriority="high"
+    />
+  )
+}
+
 export default async function HomePage() {
   const [{ destacados, ofertas }, conteos] = await Promise.all([obtenerListados(), obtenerConteosClusters()])
-  return <InicioCliente destacados={destacados} ofertas={ofertas} conteos={conteos} />
+  return (
+    <>
+      <PreloadHero />
+      <InicioCliente destacados={destacados} ofertas={ofertas} conteos={conteos} />
+    </>
+  )
 }
