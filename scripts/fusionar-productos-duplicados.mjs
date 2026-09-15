@@ -28,6 +28,19 @@ const FUSIONES = [
     sobra: 'Acordeón Hohner Corona III Marrón con Fuelle Dorado' },
   { queda: 'Acordeón Hohner Corona III Blanco con Fuelle Multicolor',
     sobra: 'Acordeón Hohner Corona III Blanco Armonizado' },
+  // El de Juan Carlos salió fotografiado dos veces: una copia acabó suelta en la carpeta "xx".
+  // Se queda la ficha que menciona la parrilla grabada, que es lo que lo distingue.
+  { queda: 'Acordeón Hohner Corona III Rojo con Fuelle Naranja y Parrilla Grabada',
+    sobra: 'Acordeón Hohner Corona III Rojo con Fuelle Naranja' },
+]
+
+// Nombres que no describían lo que se ve en la foto. Salieron de clasificar a ojo las fotos
+// sueltas de "xx"; un nombre que miente confunde más que uno genérico.
+const RENOMBRAR = [
+  { de: 'Acordeón Hohner Corona III Negro con Fuelle Tricolor',
+    a:  'Acordeón Hohner Corona III Rojo Vinotinto con Fuelle Tricolor' },   // no es negro, es rojo
+  { de: 'Acordeón Hohner Corona III Azul con Fuelle Blanco',
+    a:  'Acordeón Hohner Corona III Azul Nácar con Fuelle Dorado' },         // el fuelle es dorado
 ]
 
 const SECUNDARIAS = ['imagen_secundaria_1', 'imagen_secundaria_2', 'imagen_secundaria_3', 'imagen_secundaria_4']
@@ -60,4 +73,18 @@ for (const f of FUSIONES) {
   if (error) console.log(`    ERROR al borrar: ${error.message}`)
   else { hechas++; console.log('    fusionado') }
 }
-console.log(REVISAR ? '\n(--revisar: no se tocó nada)' : `\nfusiones hechas: ${hechas}`)
+let renombrados = 0
+for (const r of RENOMBRAR) {
+  const { data } = await sb.from('productos').select('id').eq('nombre', r.de).maybeSingle()
+  if (!data) { console.log(`  ya renombrado (o no existe): ${r.de.slice(0, 52)}`); continue }
+  console.log(`  RENOMBRAR: ${r.de.replace('Acordeón Hohner Corona III ', '')}`)
+  console.log(`         -> ${r.a.replace('Acordeón Hohner Corona III ', '')}`)
+  if (REVISAR) continue
+  const { error } = await sb.from('productos').update({ nombre: r.a }).eq('id', data.id)
+  if (error) console.log(`    ERROR: ${error.message}`)
+  else renombrados++
+}
+
+console.log(REVISAR
+  ? '(--revisar: no se tocó nada)'
+  : `fusiones: ${hechas}   renombrados: ${renombrados}`)
