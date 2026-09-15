@@ -149,3 +149,40 @@
 .gestion-imagen-puntos i.activo { background: #ffc300; }
 .gestion-miniatura-grande { position: fixed; z-index: 2000; width: 320px; height: 320px; border-radius: 16px; background: #fff; box-shadow: 0 24px 60px -20px rgba(0,0,0,.5); border: 1px solid var(--color-borde); padding: 12px; display: grid; place-items: center; pointer-events: none; }
 .gestion-miniatura-grande img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* ── Celdas que se editan en la propia tabla ───────────────────────────────────────────
+   Antes, cambiar la categoría de un producto obligaba a abrir su ficha, guardar y volver
+   al listado. Ahora se hace clic sobre el dato y se edita ahí mismo. El punteado sólo
+   aparece al pasar por encima, para no ensuciar la tabla de líneas. */
+.gestion-celda-editable {
+  all: unset;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  transition: background .15s ease, box-shadow .15s ease;
+}
+.gestion-celda-editable:hover {
+  background: color-mix(in srgb, currentColor 7%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 22%, transparent);
+}
+.gestion-celda-editable:focus-visible {
+  outline: 2px solid var(--vda-oro, #d4a437);
+  outline-offset: 1px;
+}
+
+.gestion-celda-campo {
+  width: 100%;
+  min-width: 90px;
+  max-width: 100%;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--vda-oro, #d4a437);
+  background: var(--vda-superficie, #fff);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+}
+.gestion-celda-campo:focus { outline: 2px solid var(--vda-oro, #d4a437); outline-offset: 1px; }

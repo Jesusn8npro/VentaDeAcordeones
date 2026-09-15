@@ -153,6 +153,34 @@ const GestionProductos = () => {
     }
   }
 
+  /**
+   * Guarda un campo suelto desde la propia tabla, sin abrir la ficha de edición.
+   * Antes, para cambiarle la categoría a un producto había que entrar a editarlo, guardar y
+   * volver al listado: con 249 productos eso es media tarde.
+   *
+   * La tabla se actualiza en pantalla ANTES de que responda el servidor y se deshace si falla,
+   * para que el cambio se sienta inmediato.
+   */
+  const guardarCampo = async (producto: any, campo: string, valor: any) => {
+    const anterior = producto[campo]
+    if (String(anterior ?? '') === String(valor ?? '')) return
+
+    const aplicar = (v: any) => setProductos(prev => prev.map(p => {
+      if (p.id !== producto.id) return p
+      const nuevo = { ...p, [campo]: v }
+      // La categoría se guarda por id, pero la fila pinta el objeto entero.
+      if (campo === 'categoria_id') nuevo.categoria = categorias.find(c => c.id === v) || null
+      return nuevo
+    }))
+
+    aplicar(valor)
+    const { error } = await clienteSupabase.from('productos').update({ [campo]: valor }).eq('id', producto.id)
+    if (error) {
+      aplicar(anterior)
+      alert(`No se pudo guardar ${campo}: ${error.message}`)
+    }
+  }
+
   const eliminarProducto = async (id) => {
     if (!confirm('¿Estás seguro de eliminar este producto?')) return
     try {
@@ -332,6 +360,8 @@ const GestionProductos = () => {
                     obtenerEstadoStock={obtenerEstadoStock}
                     onToggle={toggleSeleccion}
                     onAlternarEstado={alternarEstadoProducto}
+                    categorias={categorias}
+                    onGuardarCampo={guardarCampo}
                     onEliminar={eliminarProducto}
                   />
                 ))}
