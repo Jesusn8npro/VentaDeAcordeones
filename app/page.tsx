@@ -66,7 +66,9 @@ export const metadata: Metadata = {
 //
 // Aquí se emite el preload a mano, desde el servidor, con el mismo srcset y los mismos `sizes`
 // que usa el <Image> del hero, para que el navegador elija el mismo archivo y no descargue dos.
-const HERO_LCP = '/images/hero/rey-vallenato-negro.webp'
+// OJO: tiene que ser la MISMA que la primera diapositiva de HeroInicio. Si se cambia allí y
+// no aquí, se precarga una imagen que nadie usa y el LCP vuelve a irse a las nubes.
+const HERO_LCP = '/images/hero/real-blanco-premium-corona.webp'
 const ANCHOS_LCP = [640, 750, 828, 1080, 1200, 1920]
 const urlOptimizada = (w: number) => `/_next/image?url=${encodeURIComponent(HERO_LCP)}&w=${w}&q=75`
 

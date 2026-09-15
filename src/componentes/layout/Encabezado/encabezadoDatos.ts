@@ -49,7 +49,7 @@ export const CATS: Cat[] = [
       ],
       feature: {
         title:'Hohner Rey Vallenato', price:'desde $4.890.000', tag:'El más vendido',
-        image:'/images/hero/rey-vallenato-negro.webp', alt:'Acordeón Hohner Rey Vallenato negro',
+        image:'/images/hero/real-blanco-premium-corona.webp', alt:'Acordeón Hohner Rey Vallenato negro',
         href:'/tienda/categoria/acordeones-rey-vallenato',
       },
       ctaLabel:'Ver todos los acordeones', ctaHref:'/tienda',
@@ -78,7 +78,7 @@ export const CATS: Cat[] = [
       ],
       feature: {
         title:'Acordeón personalizado', price:'desde $5.400.000', tag:'Hecho a la medida',
-        image:'/images/personalizados/premium-nacar.webp', alt:'Acordeón personalizado con acabado nácar',
+        image:'/images/hero/real-premium-nacar.webp', alt:'Acordeón personalizado con acabado nácar',
         href: PERSONALIZADOS,
       },
       ctaLabel:'Empezar mi diseño', ctaHref: PERSONALIZADOS,
@@ -153,7 +153,7 @@ export const CATS: Cat[] = [
       ],
       feature: {
         title:'Diagnóstico y cotización en minutos', price:'Sin costo', tag:'Maestro afinador',
-        image:'/images/hero/rojo-xtreme.webp', alt:'Acordeón rojo en el taller',
+        image:'/images/hero/real-rojo-xtreme.webp', alt:'Acordeón rojo en el taller',
         href: TALLER,
       },
       ctaLabel:'Ir al taller', ctaHref: TALLER,

@@ -20,6 +20,9 @@ const PROD = '/migradas/productos'
 
 // Títulos siempre en 3 líneas de longitud parecida: así el bloque de texto no cambia de alto
 // entre diapositivas y los CTAs quedan fijos en la misma posición.
+// TODAS las fotos de aquí son acordeones que salieron de nuestro taller, recortados de las
+// fotos originales (W:\...\Acordeones fondo blanco). No poner renders ni fotos de catálogo:
+// el cliente que llega a la portada tiene que ver lo que de verdad se le va a entregar.
 const DIAPOSITIVAS = [
   {
     hashtag: 'NuestroOficio',
@@ -29,8 +32,8 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Otros Instrumentos', tipo: 'wa' },
     tag: 'OFICIO ACORDEONERO · DESDE 1998',
     variante: 'pearl',
-    imagen: `${HERO}/rey-vallenato-negro.webp`,
-    alt: 'Acordeón Hohner Rey Vallenato negro',
+    imagen: `${HERO}/real-blanco-premium-corona.webp`,
+    alt: 'Acordeón Hohner Corona III blanco premium con corona dorada, hecho en nuestro taller',
   },
   {
     hashtag: 'EdiciónVallenata',
@@ -44,8 +47,8 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Personaliza el Tuyo', href: '/acordeones-personalizados' },
     tag: 'EN STOCK · GARANTÍA HOHNER',
     variante: '',
-    imagen: `${HERO}/blanco-tricolor.webp`,
-    alt: 'Acordeón Hohner blanco con fuelle dorado',
+    imagen: `${HERO}/real-blanco-tricolor-colombia.webp`,
+    alt: 'Acordeón Hohner Corona III blanco con fuelle tricolor de Colombia',
   },
   {
     hashtag: 'PersonalizadosÚnicos',
@@ -56,8 +59,8 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Galería Custom', href: '/acordeones-personalizados' },
     tag: 'EDICIÓN PRIVADA',
     variante: 'onyx',
-    imagen: `${HERO}/azul-tricolor.webp`,
-    alt: 'Acordeón Hohner azul personalizado',
+    imagen: `${HERO}/real-verde-personalizado.webp`,
+    alt: 'Acordeón Hohner Corona III verde personalizado con fuelle dorado',
   },
   {
     hashtag: 'ReyVallenato',
@@ -68,8 +71,8 @@ const DIAPOSITIVAS = [
     cta2: { texto: 'Hablar con un Maestro', tipo: 'wa' },
     tag: 'TALLER VALLEDUPAR',
     variante: 'rojo',
-    imagen: `${HERO}/rojo-xtreme.webp`,
-    alt: 'Acordeón Hohner rojo Xtreme',
+    imagen: `${HERO}/real-rojo-xtreme.webp`,
+    alt: 'Acordeón Hohner Corona III rojo Xtreme nácar',
   },
 ]
 
