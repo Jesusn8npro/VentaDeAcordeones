@@ -341,6 +341,8 @@ const GestionProductos = () => {
                       title="Seleccionar todos"
                     />
                   </th>
+                  {/* El número decide qué sale primero en la tienda. Menor = más arriba. */}
+                  <th title="Posición en la tienda. Menor sale primero; vacío va al final.">Orden</th>
                   <th>Producto</th>
                   <th>Categoría</th>
                   <th>Precio</th>

@@ -46,11 +46,18 @@ function aplicarOrden(consulta: any, orden: OrdenTienda) {
     case 'precio-desc': consulta = consulta.order('precio', { ascending: false }); break
     case 'vendidos': consulta = consulta.order('numero_de_ventas', { ascending: false, nullsFirst: false }).order('destacado', { ascending: false }); break
     case 'novedades': consulta = consulta.order('creado_el', { ascending: false }); break
-    // Por defecto manda lo RECIÉN SUBIDO, y "destacado" sólo desempata. Antes era al revés, y
-    // como hay 39 productos marcados como destacados de principios de septiembre, todo lo que
-    // entrara después —los 72 acordeones personalizados, por ejemplo— caía detrás de ellos y
-    // el cliente veía primero lo más viejo del catálogo.
-    default: consulta = consulta.order('creado_el', { ascending: false }).order('destacado', { ascending: false })
+    // Por defecto manda el ORDEN MANUAL: Jesús decide desde el admin qué acordeones salen
+    // primero, que son los diseños que mejor venden. Los que no tengan número puesto van
+    // después (nullsFirst: false), y entre ellos gana lo más reciente.
+    //
+    // Antes mandaba `destacado`, y como hay 39 productos marcados así de principios de
+    // septiembre, todo lo que entrara después caía detrás y el cliente veía primero lo más
+    // viejo del catálogo.
+    default:
+      consulta = consulta
+        .order('orden_tienda', { ascending: true, nullsFirst: false })
+        .order('creado_el', { ascending: false })
+        .order('destacado', { ascending: false })
   }
   return consulta.order('id', { ascending: true })
 }

@@ -104,6 +104,17 @@ export default function FilaProducto({
       <td className="gestion-td-check">
         <input type="checkbox" checked={seleccionado} onChange={() => onToggle(producto.id)} className="gestion-checkbox" />
       </td>
+      <td className="gestion-td-orden">
+        <CeldaEditable
+          valor={producto.orden_tienda ?? ''}
+          tipo="numero"
+          onGuardar={onGuardarCampo ? (v: any) => onGuardarCampo(producto, 'orden_tienda', v === '' || v === 0 ? null : Number(v)) : undefined}
+          titulo="Posición en la tienda: menor sale primero. Vacío = al final."
+          mostrar={producto.orden_tienda != null
+            ? <span className="gestion-orden-num">{producto.orden_tienda}</span>
+            : <span className="gestion-orden-vacio">—</span>}
+        />
+      </td>
       <td>
         <div className="gestion-producto">
           <MiniaturaProducto producto={producto} />

@@ -186,3 +186,17 @@
   font-size: 13px;
 }
 .gestion-celda-campo:focus { outline: 2px solid var(--vda-oro, #d4a437); outline-offset: 1px; }
+
+/* Columna de orden: el número que decide qué acordeón sale primero en la tienda. */
+.gestion-td-orden { width: 66px; text-align: center; }
+.gestion-orden-num {
+  display: inline-block;
+  min-width: 26px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--vda-oro, #d4a437);
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 12px;
+}
+.gestion-orden-vacio { opacity: .35; font-size: 15px; }
